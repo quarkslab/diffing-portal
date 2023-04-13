@@ -43,7 +43,10 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.imgmath',
+    'sphinxcontrib.bibtex'
 ]
+
+bibtex_bibfiles = ['refs.bib']
 
 myst_enable_extensions = ["colon_fence", "dollarmath"]
 
