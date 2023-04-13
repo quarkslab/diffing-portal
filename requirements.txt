@@ -1,0 +1,9 @@
+sphinx
+sphinx-rtd-theme
+myst-parser
+breathe
+sphinx_fontawesome
+nbsphinx
+ipython
+sphinx-design
+sphinx-material

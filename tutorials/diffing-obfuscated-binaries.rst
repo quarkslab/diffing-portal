@@ -1,0 +1,4 @@
+Diffing obfuscated binaries
+===========================
+
+TODO:
