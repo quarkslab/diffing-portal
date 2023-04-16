@@ -43,6 +43,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.imgmath',
+    "enum_tools.autoenum"
 ]
 
 myst_enable_extensions = ["colon_fence", "dollarmath"]

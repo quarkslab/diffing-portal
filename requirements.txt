@@ -7,3 +7,4 @@ nbsphinx
 ipython
 sphinx-design
 sphinx-material
+enum-tools[sphinx]
