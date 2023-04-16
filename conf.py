@@ -107,10 +107,10 @@ html_theme_options = {
     "css_minify": True,
     "logo_icon": "&#xe869",
     "repo_type": "github",
-    "globaltoc_depth": 2,
+    "globaltoc_depth": 3,
     "color_primary": "#4051b5",
     "color_accent": "#d8f32a",#"#566df3",
-    "touch_icon": "apple-icon-152x152.png",
+    "touch_icon": "logo2.png",
     "theme_color": "#4051b5",
     "master_doc": False,
     # "nav_links": [
