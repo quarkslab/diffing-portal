@@ -40,8 +40,8 @@ Qbindiff
     :maxdepth: 2
     :hidden:
 
-    other_differ/bindiff
-    other_differ/diaphora
+    differs/bindiff
+    differs/diaphora
 
 
 
