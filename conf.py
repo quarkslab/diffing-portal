@@ -44,8 +44,13 @@ extensions = [
     'sphinx_design',
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.githubpages',
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode',
     'sphinx.ext.imgmath',
-    "enum_tools.autoenum"
+    "enum_tools.autoenum",
+    'sphinx_fontawesome',
+    "nbsphinx"
 ]
 
 myst_enable_extensions = ["colon_fence", "dollarmath"]
