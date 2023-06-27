@@ -2,11 +2,11 @@ Binexport
 =========
 
 
-`BinExport <https://github.com/google/binexport>`_ is a tool provided by Google that helps to export binary
-dissassemblies from IDA Pro as an example. It is used in particular by the differ
-`BinDiff <https://www.zynamics.com/bindiff.html>`_ or by QBinDiff. 
+`BinExport <https://github.com/google/binexport>`_ is a tool provided by Google for the the disassemblers IDA Pro,
+Binary Ninja and Ghidra that exports dissassemblies to a protobuf message. It is used in particular by the differ
+`BinDiff <https://www.zynamics.com/bindiff.html>`_ or by `QBinDiff <https://github.com/quarkslab/qbindiff>`_.
 
-BinExport, whether it is the IDA, BinaryNinja or Ghidra version, mainly relies on the GUI : it requires to manually
+BinExport, whether it is the IDA, BinaryNinja or Ghidra version, mainly relies on the GUI: it requires to manually
 launch the tools, then go the setting and export the binary into a BinExport file.
 
 
@@ -24,6 +24,7 @@ Program
     :members:
     :undoc-members:
     :exclude-members:
+    :show-inheritance:
 
 Function
 ~~~~~~~~
@@ -32,6 +33,15 @@ Function
     :members:
     :undoc-members:
     :exclude-members:
+
+Basic Block
+~~~~~~~~~~~
+
+.. autoclass:: binexport.function.BasicBlockBinExport
+    :members:
+    :undoc-members:
+    :exclude-members:
+    :show-inheritance:
 
 Instruction
 ~~~~~~~~~~~
