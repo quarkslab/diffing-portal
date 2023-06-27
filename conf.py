@@ -67,10 +67,11 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["venv/*", "idascript/idascript/*"]
+exclude_patterns = ["venv/*", "idascript/idascript/*", "quokka/*"]
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
+    'quokka': ('https://quarkslab.github.io/quokka/', None),
 }
 
 # ~ autodoc_type_aliases = {
