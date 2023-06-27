@@ -36,7 +36,7 @@ Qbindiff
     :maxdepth: 2
     :hidden:
 
-    qbindiff/doc/source/installation
+    qbindiff/doc/source/install
     qbindiff/doc/source/documentation
     qbindiff/doc/source/api/qbindiff
     qbindiff/doc/source/publication
