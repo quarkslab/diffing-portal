@@ -20,10 +20,12 @@ In this website, you could find in particular:
 - additional resources : binary diffing is essential in reverse-engineering and a lot of tools, resources, academic publications are available online. We try to maintain a state-of-the-art list of academic publications and resources and this subject.
 
 
+Exporters
+---------
+
 .. toctree::
     :caption: Exporters
     :maxdepth: 2
-    :hidden:
 
     exporter/binexport
     exporter/quokka
@@ -34,8 +36,8 @@ Qbindiff
 .. toctree::
     :caption: Qbindiff
     :maxdepth: 2
-    :hidden:
 
+    qbindiff/doc/source/intro
     qbindiff/doc/source/install
     qbindiff/doc/source/documentation
     qbindiff/doc/source/api/qbindiff
