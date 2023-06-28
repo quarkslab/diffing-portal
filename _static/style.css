@@ -71,3 +71,12 @@ html.writer-html5 .md-content dl[class]:not(.option-list):not(.field-list):not(.
     font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,Courier,monospace;
     color: #000;
 }
+
+
+.boldlink a {
+    font-weight: bold;
+    font-size: 120%;
+}
+.boldlink a > code {
+    border-width: 0px;
+}
