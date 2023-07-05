@@ -48,7 +48,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinx.ext.imgmath',
-    'sphinxcontrib.bibtex'
+    'sphinxcontrib.bibtex',
     "enum_tools.autoenum",
     'sphinx_fontawesome',
     "nbsphinx"
