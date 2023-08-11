@@ -44,7 +44,6 @@ Qbindiff
     qbindiff/doc/source/publication
 
 
-
 .. toctree::
     :caption: Third-party differs
     :maxdepth: 2
@@ -54,7 +53,6 @@ Qbindiff
     differs/diaphora
 
 
-
 Tutorials
 ---------
 
@@ -62,10 +60,10 @@ Tutorials
     :caption: Tutorials
     :maxdepth: 2
 
-    tutorials/basic-diffing.rst
-    tutorials/using-passes.rst
-    tutorials/diffing-obfuscated-binaries.rst
-
+    tutorials/basic-diffing
+    tutorials/using-passes
+    tutorials/diffing-obfuscated-binaries
+    tutorials/automating-bindiff
 
 .. toctree::
     :caption: Tools
@@ -73,8 +71,6 @@ Tutorials
     :hidden:
 
     idascript/README
-
-
 
 .. toctree::
     :caption: Resources

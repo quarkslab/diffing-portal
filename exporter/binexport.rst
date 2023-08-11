@@ -59,7 +59,6 @@ Operand
     :undoc-members:
     :exclude-members:
 
-
 Expression
 ~~~~~~~~~~
 
@@ -67,7 +66,6 @@ Expression
     :members:
     :undoc-members:
     :exclude-members:
-
 
 Types
 ~~~~~

@@ -9,3 +9,9 @@ sphinx-design
 sphinx-material
 sphinxcontrib-bibtex
 enum-tools[sphinx]
+quokka-project
+python-binexport
+python-bindiff
+idascript
+sphinx_autodoc_typehints
+# qbindiff
