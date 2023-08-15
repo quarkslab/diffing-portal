@@ -1,0 +1,8 @@
+build/
+
+idascript/
+python-bindiff/
+python-binexport/
+qbindiff/
+
+venv/
