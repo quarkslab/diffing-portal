@@ -41,7 +41,6 @@ Qbindiff
     qbindiff/doc/source/install
     qbindiff/doc/source/how
     qbindiff/doc/source/api/qbindiff
-    qbindiff/doc/source/publication
 
 
 .. toctree::
