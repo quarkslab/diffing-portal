@@ -1,7 +1,6 @@
 Bindiff
 =======
 
-<<<<<<< HEAD
 `BinDiff <https://www.zynamics.com/bindiff.html>`_ is one of the oldest and most
 widely used differ in the reverse engineering community. First conceived at Zynamics,
 it was then acquired by Google. This differ is based on properties of CallGraph to
