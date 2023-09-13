@@ -5,3 +5,20 @@ div.sphinxsidebar p.caption {
     font-weight: bold;
     font-size: 15px;
 }
+
+.relbar,
+.relbar>a:hover .direction {
+    color: #7B7B7B;
+}
+
+.nav-icon:visited {
+    color: #E5E5E5;
+}
+
+#topbar button:hover,
+#titlebar .buttons> :hover,
+#titlebar a:hover,
+.relbar a:hover,
+.relbar a:hover .icon {
+    color: #2D2D2D;
+}

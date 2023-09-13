@@ -95,6 +95,10 @@ intersphinx_mapping = {
     "quokka": ("https://quarkslab.github.io/quokka/", None),
 }
 
+autodoc_type_aliases = {
+    "ReferenceTarget": "Data | Structure | StructureMember"
+}
+
 autodoc_typehints_format = "short"
 
 # -- Options for HTML output -------------------------------------------------
