@@ -4,5 +4,6 @@ idascript/
 python-bindiff/
 python-binexport/
 qbindiff/
+quokka/
 
 venv/
