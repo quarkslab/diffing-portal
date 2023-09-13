@@ -1,5 +1,5 @@
-sphinx
-sphinx-rtd-theme
+sphinx>=7.2.4,!=7.2.5
+insipid-sphinx-theme
 myst-parser
 breathe
 sphinx_fontawesome
@@ -8,10 +8,9 @@ ipython
 sphinx-design
 sphinx-material
 sphinxcontrib-bibtex
-enum-tools[sphinx]
+#enum-tools[sphinx]  # Install manually
 quokka-project
 python-binexport
 python-bindiff
 idascript
-sphinx_autodoc_typehints
-# qbindiff
+qbindiff

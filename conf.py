@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.abspath("python-bindiff"))
 # -- Project information -----------------------------------------------------
 
 project = "Diffing Portal"
-copyright = ""
+copyright = "2023 Quarkslab"
 author = "Quarkslab"
 
 # The full version, including alpha/beta/rc tags
@@ -53,7 +53,6 @@ extensions = [
     "enum_tools.autoenum",
     "sphinx_fontawesome",
     "nbsphinx",
-    "sphinx_autodoc_typehints",
 ]
 
 bibtex_bibfiles = ["refs.bib"]
@@ -91,25 +90,18 @@ include_patterns = [
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/", None),
     "networkx": ("https://networkx.org/documentation/stable/", None),
     "quokka": ("https://quarkslab.github.io/quokka/", None),
 }
 
-# autodoc_type_aliases = {
-#     "Graph": "qbindiff.GenericGraph",
-#     "qbindiff.types.Graph": "qbindiff.abstract.GenericGraph",
-#     "qbindiff.Graph": "qbindiff.abstract.GenericGraph",
-# }
-
-typehints_fully_qualified = False
 autodoc_typehints_format = "short"
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-html_theme = "sphinx_material"  #'sphinx_rtd_theme', "sphinx_book_theme"
+html_theme = "insipid"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -118,62 +110,9 @@ html_static_path = ["_static"]
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
-html_css_files = [
-    "style.css",
-]
+html_css_files = ["style.css"]
 
 html_show_sourcelink = True
-html_sidebars = {
-    "**": [
-        "logo-text.html",
-        "globaltoc.html",
-        "localtoc.html",
-        "searchbox.html",
-    ]  # Somehow make appearing sidebar
-}
-
 
 # Set link name generated in the top bar.
 html_title = "Diffing Portal"
-
-# Material theme options (see theme.conf for more information)
-html_theme_options = {
-    "base_url": "https://quarkslab.gitlab.io/diffing-portal",
-    "repo_url": "",  # At the top right (with badges)
-    "repo_name": "Diffing Portal",
-    "google_analytics_account": "UA-XXXXX",
-    "html_minify": False,
-    "html_prettify": True,
-    "css_minify": True,
-    "logo_icon": "&#xe869",
-    "repo_type": "github",
-    "globaltoc_depth": 3,
-    "color_primary": "#4051b5",
-    "color_accent": "#d8f32a",  # "#566df3",
-    "touch_icon": "logo2.png",
-    "theme_color": "#4051b5",
-    "master_doc": False,
-    # "nav_links": [
-    #     {"href": "index", "internal": True, "title": "QBindiff++"},
-    #     {
-    #         "href": "https://squidfunk.github.io/mkdocs-material/",
-    #         "internal": False,
-    #         "title": "QBindiff--",
-    #     },
-    # ],
-    # Text written betwen top bar and nav bar
-    # "heroes": {
-    #     "index": "A responsive Material Design theme for Sphinx sites.",
-    #     "customization": "Configuration options to personalize your site.",
-    # },
-    # Versions infos
-    # "version_dropdown": False,  # Version dropdown at the top right
-    # "version_json": "_static/versions.json",
-    # "version_info": {
-    #     "Release": "https://bashtage.github.io/sphinx-material/",
-    #     "Development": "https://bashtage.github.io/sphinx-material/devel/",
-    #     "Release (rel)": "/sphinx-material/",
-    #     "Development (rel)": "/sphinx-material/devel/",
-    # },
-    "table_classes": ["plain"],
-}
