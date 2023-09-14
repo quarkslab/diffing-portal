@@ -35,7 +35,7 @@ Qbindiff
 
 .. toctree::
     :caption: Qbindiff
-    :maxdepth: 2
+    :maxdepth: 3
 
     qbindiff/doc/source/intro
     qbindiff/doc/source/install
