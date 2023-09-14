@@ -1,17 +1,31 @@
 Quokka
 ======
 
-Introduction
-------------
 
-`Quokka <https://github.com/quarkslab/quokka>`_ is a binary exporter provided by Quarkslab, similar to BinExport, but that offers more features. For example, BinExport does not export data references, Quokka does. However, Quokka is only compatible with IDA Pro (a ghidra plugin is currently under development).
+..  figure:: ../quokka/docs/img/logo.png
+    :align: center
+    :width: 30%
+
+
+
+`Quokka <https://github.com/quarkslab/quokka>`_ is a binary exporter developed by Quarkslab. It serves the same
+purpose than BinExport but it exports more data like data references that Binexport does not. The goal is to approach
+the disassembler functionalities in terms of information available.
+
+It has also been designed with space efficiency in mind. The goal is to have a minimal overhead in comparison to other
+exports or disassembler databases (e.g: .i64) so that they can be kept along with the binary. Everything that can be
+retrieve from the static executable file will be (strings, data, etc). Also Quokka leverages the variable integer length
+encoding of protobuf to reduce their size as much as possible.
+
+A thorough comparison of time, and space differences between Quokka and other exporters have been done in
+`this blogpost <TODO>`_.
+
+
+.. note::
+
+    Quokka's homepage and **documentation** is hosted at:  `https://quarkslab.github.io/quokka/ <https://quarkslab.github.io/quokka/>`_
+
 
 
 .. include:: ../quokka/docs/README.md
    :parser: myst_parser.sphinx_
-
-
-Documentation
--------------
-
-Quokka and its documentation are available `here <https://quarkslab.github.io/quokka/>`_

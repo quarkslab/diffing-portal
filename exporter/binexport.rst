@@ -2,12 +2,22 @@ Binexport
 =========
 
 
-`BinExport <https://github.com/google/binexport>`_ is a tool provided by Google for the the disassemblers IDA Pro,
-Binary Ninja and Ghidra that exports dissassemblies to a protobuf message. It is used in particular by the differ
-`BinDiff <https://www.zynamics.com/bindiff.html>`_ or by `QBinDiff <https://github.com/quarkslab/qbindiff>`_.
+`BinExport <https://github.com/google/binexport>`_ is an utility hosted on Google's github to export the disassembly
+obtained from IDA Pro, Binary Ninja and Ghidra into external file. The file is defined in `Protobuf <TODO>`_. It is
+particularly used by `BinDiff <https://www.zynamics.com/bindiff.html>`_ as input for its diffing.
 
-BinExport, whether it is the IDA, BinaryNinja or Ghidra version, mainly relies on the GUI: it requires to manually
-launch the tools, then go the setting and export the binary into a BinExport file.
+For more details: `Project homepage <TODO>`_
+
+**Limitations**:
+Besides, working like a charm, BinExport is essentially lacking the two following features:
+
+* regardless of the disassembler (IDA, Ghidra ..), binexport has to be launched manually through GUI or via a shell
+  command if the disassembler support headless mode. There are no programmatic bindings to trigger an export.
+* Exported data are very useful, but has binexport was defined as an internal format, there are no API to manipulate
+  exported data.
+
+As such, `python-binexport <https://github.com/quarkslab/python-binexport>`_ has been developed to fulfill
+these two weaknesses.
 
 
 .. include:: ../python-binexport/README.md

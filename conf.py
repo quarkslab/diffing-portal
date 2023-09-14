@@ -83,6 +83,7 @@ include_patterns = [
     "differs/*",
     "tutorials/*",
     "resources/*",
+    "tools/*",
     "idascript/README.md",
     "qbindiff/doc/source/**",
 ]
