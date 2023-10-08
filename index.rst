@@ -80,7 +80,7 @@ TODO: Figure
     :hidden:
 
     resources/academia
-
+    resources/industry
 
 How to Contribute ?
 -------------------
