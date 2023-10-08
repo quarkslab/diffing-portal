@@ -1,0 +1,120 @@
+<mxfile host="Electron" modified="2023-10-08T15:39:36.943Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="54Yf-oqkQJdddQFMm5Hc" version="22.0.2" type="device">
+  <diagram id="_apin59DS0HI5k8WO79R" name="Page-1">
+    <mxGraphModel dx="1430" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t7TJ7foM8erzeyl97hb3-13" value="&amp;nbsp; &amp;nbsp; &amp;nbsp; Differs" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;align=left;verticalAlign=bottom;spacingBottom=3;fillColor=#D8F0F2;strokeColor=#0e8088;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="260" y="180" width="650" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="t7TJ7foM8erzeyl97hb3-11" value="&amp;nbsp; &amp;nbsp; &amp;nbsp; Exporters" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;align=left;verticalAlign=bottom;spacingBottom=3;fillColor=#E8E6FC;strokeColor=#56517e;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="260" y="390" width="650" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="t7TJ7foM8erzeyl97hb3-10" value="&amp;nbsp; &amp;nbsp; &amp;nbsp; Disassemblers" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;align=left;verticalAlign=bottom;spacingBottom=3;fillColor=#FAEEE1;strokeColor=#b46504;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="260" y="610" width="650" height="120" as="geometry" />
+        </mxCell>
+        <UserObject label="" link="https://github.com/quarkslab/qbindiff/blob/main/src/qbindiff/loader/backend/binexport.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-17">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-1" target="t7TJ7foM8erzeyl97hb3-8">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/quarkslab/qbindiff/blob/main/src/qbindiff/loader/backend/quokka.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-19">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-1" target="t7TJ7foM8erzeyl97hb3-4">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;font color=&quot;#0c6c73&quot;&gt;QBinDiff&lt;/font&gt;" link="https://github.com/quarkslab/qbindiff" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;fontStyle=1;fontSize=18;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+            <mxGeometry x="650" y="284" width="150" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="t7TJ7foM8erzeyl97hb3-16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-2" target="t7TJ7foM8erzeyl97hb3-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;font color=&quot;#0c6c73&quot;&gt;BinDiff&lt;/font&gt;" link="https://github.com/google/bindiff" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-2">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;fontStyle=1;fontSize=18;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+            <mxGeometry x="370" y="284" width="140" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/google/binexport/tree/main/ida" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-20">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-3" target="t7TJ7foM8erzeyl97hb3-5">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/google/binexport/tree/main/java" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-21">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-3" target="t7TJ7foM8erzeyl97hb3-6">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/google/binexport/tree/main/binaryninja" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-22">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-3" target="t7TJ7foM8erzeyl97hb3-7">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;font color=&quot;#49456b&quot;&gt;BinExport&lt;/font&gt;" link="https://github.com/google/binexport" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-3">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;fontStyle=1;fontSize=18;fillColor=#d0cee2;strokeColor=#56517e;" vertex="1" parent="1">
+            <mxGeometry x="290" y="480" width="240" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/quarkslab/quokka/tree/main/src" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-23">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-4" target="t7TJ7foM8erzeyl97hb3-5">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/quarkslab/quokka/tree/ghidra/java" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-24">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-4" target="t7TJ7foM8erzeyl97hb3-6">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="t7TJ7foM8erzeyl97hb3-26" value="(in progress)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="t7TJ7foM8erzeyl97hb3-24">
+          <mxGeometry x="-0.0894" y="2" relative="1" as="geometry">
+            <mxPoint x="-5" y="-27" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <UserObject label="&lt;font color=&quot;#49456b&quot;&gt;Quokka&lt;/font&gt;" link="https://github.com/quarkslab/quokka" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-4">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;fontStyle=1;fontSize=18;fillColor=#d0cee2;strokeColor=#56517e;" vertex="1" parent="1">
+            <mxGeometry x="640" y="480" width="240" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;font color=&quot;#a15a04&quot;&gt;IDA&lt;/font&gt;" link="https://hex-rays.com" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-5">
+          <mxCell style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;fillColor=#fad7ac;strokeColor=#b46504;strokeWidth=2;" vertex="1" parent="1">
+            <mxGeometry x="690" y="640" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;font color=&quot;#a15a04&quot;&gt;Ghidra&lt;/font&gt;" link="https://ghidra-sre.org" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-6">
+          <mxCell style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;fillColor=#fad7ac;strokeColor=#b46504;strokeWidth=2;" vertex="1" parent="1">
+            <mxGeometry x="525" y="640" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;font color=&quot;#a15a04&quot;&gt;Binary Ninja&lt;/font&gt;" link="https://binary.ninja" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-7">
+          <mxCell style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;fillColor=#fad7ac;strokeColor=#b46504;strokeWidth=2;" vertex="1" parent="1">
+            <mxGeometry x="365" y="640" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/quarkslab/python-binexport/blob/main/binexport/program.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-18">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-8" target="t7TJ7foM8erzeyl97hb3-3">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;&lt;font color=&quot;#8a4747&quot;&gt;python-binexport&lt;/font&gt;&lt;/b&gt;" link="https://github.com/quarkslab/python-binexport" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-8">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DE7373;strokeColor=#8A4747;strokeWidth=2;" vertex="1" parent="1">
+            <mxGeometry x="485" y="400" width="140" height="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" link="https://github.com/quarkslab/python-bindiff/blob/main/bindiff/bindiff.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-14">
+          <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-9" target="t7TJ7foM8erzeyl97hb3-2">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;&lt;font color=&quot;#8a4747&quot;&gt;python-bindiff&lt;/font&gt;&lt;/b&gt;" link="https://github.com/quarkslab/python-bindiff/" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-9">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DE7373;strokeColor=#8A4747;strokeWidth=2;" vertex="1" parent="1">
+            <mxGeometry x="400" y="190" width="140" height="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="t7TJ7foM8erzeyl97hb3-25" value="* All nodes and edges are clickables!" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2;fontColor=#FF6666;" vertex="1" parent="1">
+          <mxGeometry x="270" y="730" width="270" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,16 +1,16 @@
-==========
-Diffing.io
-==========
+==============
+Diffing Portal
+==============
 
-This page aims to provide various resources on binary diffing which is handy for reverse-engineering.
+This documentation aims to provide various resources on binary diffing which is handy for reverse-engineering.
 Tools and associated publications related to diffing are slightly scattered online thus the goal is to
 reference them here by centralizing information.
 
 Diffing
 -------
 
-Binary diffing is usually performed between two binaries, usually refered as primary and secondary.
-Diffing requires comparing the two program using common artifacts. At binary-level, disassemblers usually
+Binary diffing is usually performed between two binaries, usually referred as primary and secondary.
+Diffing requires comparing the two programs using common artifacts. At binary-level, disassemblers usually
 lift the program into functions that encode the different functionalities provided by the program.
 This lifting requires identifying accurately functions content, their bounds etc. It is usually the
 last refinement steps of the disassembly before decompilation. As such, diffing is usually performed
@@ -26,9 +26,23 @@ Most differs rely on existing disassembler like IDA Pro or Ghidra for disassembl
 disassembled representation of the program. However they usually relies on an an intermediate format
 allowing to perform the diff outside of the disassembler context. The software generating this file
 is usually implemented as a disassembler plugin and is called exporter. The Figure below shows the
-relationship between exporters and differs that are referenced on this portal.
+relationships between some disassemblers, exporters and differs.
 
-TODO: Figure
+.. raw:: html
+
+    <figure class="align-center">
+
+.. raw:: html
+   :file: _static/overview_diff_tools2.svg
+
+.. raw:: html
+
+    </figure>
+
+As shown on the figure the base layer are disassemblers from which differs tries to be independents from.
+The second layer are exporters which provides an interface to disassembler by serializing the disassembly
+in a format specific file which is later read by the differ to perform the diff. The figure shows various
+tools and modules discussed on this portal, especially python-bindiff, python-binexport, qbindiff, and quokka.
 
 
 .. toctree::
