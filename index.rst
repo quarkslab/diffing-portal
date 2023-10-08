@@ -16,7 +16,7 @@ This lifting requires identifying accurately functions content, their bounds etc
 last refinement steps of the disassembly before decompilation. As such, diffing is usually performed
 at function level. Diffing aims at computing an assignment between functions from primary to secondary.
 The assignment is usually 1-to-1 but by means of optimization or obfuscation functions can be inlined
-or splitted. As such some utilities tries computing an M-to-N mapping between functions [TODO: REFS].
+or splitted. As such some utilities tries computing an M-to-N mapping between functions.
 
 
 Overview

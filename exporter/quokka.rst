@@ -18,7 +18,7 @@ retrieve from the static executable file will be (strings, data, etc). Also Quok
 encoding of protobuf to reduce their size as much as possible.
 
 A thorough comparison of time, and space differences between Quokka and other exporters have been done in
-`this blogpost <TODO>`_.
+`this blogpost <https://blog.quarkslab.com/an-experimental-study-of-different-binary-exporters.html>`_.
 
 
 .. note::
