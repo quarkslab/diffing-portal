@@ -10,7 +10,7 @@ Quokka
 
 `Quokka <https://github.com/quarkslab/quokka>`_ is a binary exporter developed by Quarkslab. It serves the same
 purpose than BinExport but it exports more data like data references that Binexport does not. The goal is to approach
-the disassembler functionalities in terms of available informations.
+the disassembler functionalities in terms of available information.
 
 It has also been designed with space efficiency in mind. The goal is to have a minimal overhead in comparison to other
 exports or disassembler databases (e.g: .i64) so that they can be kept along with the binary. Everything that can be
