@@ -10,7 +10,7 @@ this software, it has not been referenced in exporter section;
 
 Contrary to other differs, Diaphora uses a sequential process to output matches : a set of rules are defined to
 establish the matches. These rules are executed from the most reliable query to the less reliable one. Thus it
-iteratively refine the match by applying these rules.
+iteratively refines the matches by applying these rules.
 
 More details and thorough documentation can be found on Diaphora's `website <http://diaphora.re>`_
 and the associated `Github <https://github.com/joxeankoret/diaphora/>`_ repository.

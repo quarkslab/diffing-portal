@@ -15,15 +15,15 @@ lift the program into functions that encode the different functionalities provid
 This lifting requires identifying accurately functions content, their bounds etc. It is usually the
 last refinement steps of the disassembly before decompilation. As such, diffing is usually performed
 at function level. Diffing aims at computing an assignment between functions from primary to secondary.
-The assignment is usually 1-to-1 but by means of optimization or obfuscation functions can be inlined
-or splitted. As such some utilities tries computing an M-to-N mapping between functions.
+The assignment is usually 1-to-1 but by means of optimization or obfuscation, functions can be inlined
+or split. As such some utilities tries computing an M-to-N mapping between functions.
 
 
 Overview
 --------
 
-Most differs rely on existing disassembler like IDA Pro or Ghidra for disassembly as they work on a
-disassembled representation of the program. However they usually relies on an an intermediate format
+Most differs rely on existing disassemblers like IDA Pro or Ghidra for disassembly as they work on a
+disassembled representation of the program. However they usually rely on an intermediate format
 allowing to perform the diff outside of the disassembler context. The software generating this file
 is usually implemented as a disassembler plugin and is called exporter. The Figure below shows the
 relationships between some disassemblers, exporters and differs.
@@ -39,8 +39,8 @@ relationships between some disassemblers, exporters and differs.
 
     </figure>
 
-As shown on the figure the base layer are disassemblers from which differs tries to be independents from.
-The second layer are exporters which provides an interface to disassembler by serializing the disassembly
+As shown on the figure, the base layer is made of disassemblers from which differs try to be independent from.
+The second layer consists of exporters which provide an interface to disassembler by serializing the disassembly
 in a format specific file which is later read by the differ to perform the diff. The figure shows various
 tools and modules discussed on this portal, especially python-bindiff, python-binexport, qbindiff, and quokka.
 

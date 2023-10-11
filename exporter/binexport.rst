@@ -12,7 +12,7 @@ For more details: `Project homepage <https://github.com/google/binexport>`_
 Besides, working like a charm, BinExport is essentially lacking the two following features:
 
 * Regardless of the disassembler (IDA, Ghidra ..), binexport has to be launched manually through GUI or via a shell
-  command if the disassembler support headless mode. There are no programmatic bindings to trigger an export.
+  command if the disassembler supports headless mode. There are no programmatic bindings to trigger an export.
 * Exported data are very useful, but binexport was defined as an internal format, there are no API to manipulate
   exported data.
 
