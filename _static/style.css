@@ -22,3 +22,7 @@ div.sphinxsidebar p.caption {
 .relbar a:hover .icon {
     color: #2D2D2D;
 }
+
+div.body {
+    max-width: 53rem;
+}

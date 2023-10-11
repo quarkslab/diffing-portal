@@ -13,11 +13,6 @@
 import os
 import sys
 
-# sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath("idascript"))
-sys.path.insert(0, os.path.abspath("python-binexport"))
-sys.path.insert(0, os.path.abspath("python-bindiff"))
-
 # -- Project information -----------------------------------------------------
 
 project = "Diffing Portal"
@@ -84,7 +79,6 @@ include_patterns = [
     "tutorials/*",
     "resources/*",
     "tools/*",
-    "idascript/README.md",
     "qbindiff/doc/source/**",
 ]
 
@@ -94,10 +88,6 @@ intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
     "networkx": ("https://networkx.org/documentation/stable/", None),
     "quokka": ("https://quarkslab.github.io/quokka/", None),
-}
-
-autodoc_type_aliases = {
-    "ReferenceTarget": "Data | Structure | StructureMember"
 }
 
 autodoc_typehints_format = "short"
