@@ -2,40 +2,61 @@
 Diffing Portal
 ==============
 
-Introduction
-------------
+This documentation aims to provide various resources on binary diffing which is handy for reverse-engineering.
+Tools and associated publications related to diffing are slightly scattered online thus the goal is to
+reference them here by centralizing information.
 
-This portal aims to provide user-friendly resources on binary diffing. Binary diffing is a central topic in reverse-engineering but contents tend to be widespread among different tools, websites, frameworks. This portal tries to centralize the most well-known diffing tools that are used in industry with easy-to-use python packages.
+Diffing
+-------
 
-Binary diffing is usually performed between two binaries, one primary and one secondary, but diffing these binaries and evaluating the diff result is usually a complicated task. The goal of this portal is to automate as much as possible the diffing, in order to make the work of reverse-engineers easier.
-
-In this website, you could find in particular:
-
-- binary exporters : to diff two binaries, using directly executables is not feasible. It requires to use some exporters, that will translate the binary to some kind of protobuf format file. This file will then be used for diffing. We support BinExport and Quokka.
-
-- differs : there is a wide range of differs, some of them being widely used in industry, others that come from an academic background. We support the two most famous industrial differs, BinDiff and Diaphora. Plus, we opensource the Quarkslab differ, QBinDiff.
-
-- tutorials : binary diffing could be tought for beginners (and even for reverse-engineers). We provide different tutorials to show how to use the tools of this portal, as well as realistic user-cases.
-
-- additional resources : binary diffing is essential in reverse-engineering and a lot of tools, resources, academic publications are available online. We try to maintain a state-of-the-art list of academic publications and resources and this subject.
+Binary diffing is usually performed between two binaries, usually referred as primary and secondary.
+Diffing requires comparing the two programs using common artifacts. At binary-level, disassemblers usually
+lift the program into functions that encode the different functionalities provided by the program.
+This lifting requires identifying accurately functions content, their bounds etc. It is usually the
+last refinement steps of the disassembly before decompilation. As such, diffing is usually performed
+at function level. Diffing aims at computing an assignment between functions from primary to secondary.
+The assignment is usually 1-to-1 but by means of optimization or obfuscation, functions can be inlined
+or split. As such some utilities tries computing an M-to-N mapping between functions.
 
 
-Exporters
----------
+Overview
+--------
+
+Most differs rely on existing disassemblers like IDA Pro or Ghidra for disassembly as they work on a
+disassembled representation of the program. However they usually rely on an intermediate format
+allowing to perform the diff outside of the disassembler context. The software generating this file
+is usually implemented as a disassembler plugin and is called exporter. The Figure below shows the
+relationships between some disassemblers, exporters and differs.
+
+.. raw:: html
+
+    <figure class="align-center">
+
+.. raw:: html
+   :file: _static/overview_diff_tools2.svg
+
+.. raw:: html
+
+    </figure>
+
+As shown on the figure, the base layer is made of disassemblers from which differs try to be independent from.
+The second layer consists of exporters which provide an interface to disassembler by serializing the disassembly
+in a format specific file which is later read by the differ to perform the diff. The figure shows various
+tools and modules discussed on this portal, especially python-bindiff, python-binexport, qbindiff, and quokka.
+
 
 .. toctree::
     :caption: Exporters
     :maxdepth: 2
+    :hidden:
 
     exporter/binexport
     exporter/quokka
 
-Qbindiff
---------
-
 .. toctree::
     :caption: Qbindiff
     :maxdepth: 3
+    :hidden:
 
     qbindiff/doc/source/intro
     qbindiff/doc/source/install
@@ -52,24 +73,20 @@ Qbindiff
     differs/diaphora
 
 
-Tutorials
----------
-
 .. toctree::
     :caption: Tutorials
     :maxdepth: 2
+    :hidden:
 
-    tutorials/basic-diffing
-    tutorials/using-passes
-    tutorials/diffing-obfuscated-binaries
-    tutorials/automating-bindiff
+    tutorials/tutorials
+
 
 .. toctree::
     :caption: Tools
     :maxdepth: 2
     :hidden:
 
-    idascript/README
+    tools/idascript
 
 .. toctree::
     :caption: Resources
@@ -77,3 +94,11 @@ Tutorials
     :hidden:
 
     resources/academia
+    resources/industry
+
+How to Contribute ?
+-------------------
+
+This page aims at aggregating various ressources related to diffing.
+Thus, pull requests to contribute are warmly welcomed to add new utility
+link or other resources.

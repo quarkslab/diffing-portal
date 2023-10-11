@@ -13,11 +13,6 @@
 import os
 import sys
 
-# sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath("idascript"))
-sys.path.insert(0, os.path.abspath("python-binexport"))
-sys.path.insert(0, os.path.abspath("python-bindiff"))
-
 # -- Project information -----------------------------------------------------
 
 project = "Diffing Portal"
@@ -83,7 +78,7 @@ include_patterns = [
     "differs/*",
     "tutorials/*",
     "resources/*",
-    "idascript/README.md",
+    "tools/*",
     "qbindiff/doc/source/**",
 ]
 
@@ -93,10 +88,6 @@ intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
     "networkx": ("https://networkx.org/documentation/stable/", None),
     "quokka": ("https://quarkslab.github.io/quokka/", None),
-}
-
-autodoc_type_aliases = {
-    "ReferenceTarget": "Data | Structure | StructureMember"
 }
 
 autodoc_typehints_format = "short"
@@ -114,7 +105,7 @@ html_static_path = ["_static"]
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
-html_css_files = ["style.css"]
+html_css_files = ["style.css", "http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"]
 
 html_show_sourcelink = True
 
