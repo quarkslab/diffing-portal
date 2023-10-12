@@ -18,7 +18,7 @@ jobs:
         run: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
-            make libmagic1
+            make libmagic1 gcc
 
       - name: Checkout
         uses: actions/checkout@v4
