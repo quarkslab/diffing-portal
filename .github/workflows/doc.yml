@@ -3,7 +3,7 @@ name: "Build documentation"
 on:
   push:
     branches:
-      - add_ci
+      - main
 
 jobs:
   build_doc:
