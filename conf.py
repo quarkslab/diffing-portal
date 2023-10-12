@@ -105,7 +105,7 @@ html_static_path = ["_static"]
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
-html_css_files = ["style.css", "http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"]
+html_css_files = ["style.css", "https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"]
 
 html_show_sourcelink = True
 
