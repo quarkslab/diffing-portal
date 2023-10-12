@@ -78,19 +78,19 @@ jobs:
           name: doc-pages
           path: ./build/html
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
-  #   steps:
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: doc-pages
-  #         path: ./doc/_build/html
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: doc-pages
+          path: ./build/html
 
-  #     - name: "Deploy Github Pages"
-  #       uses: JamesIves/github-pages-deploy-action@v4
-  #       with:
-  #         BRANCH: gh-pages
-  #         FOLDER: doc/_build/html/
+      - name: "Deploy Github Pages"
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          BRANCH: gh-pages
+          FOLDER: ./build/html/
