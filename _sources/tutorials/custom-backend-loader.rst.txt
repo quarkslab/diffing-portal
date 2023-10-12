@@ -1,4 +1,0 @@
-Custom Backend Loader
-=====================
-
-TODO
