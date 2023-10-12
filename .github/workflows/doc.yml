@@ -66,9 +66,9 @@ jobs:
 
       - name: "Install Python dependencies"
         run: |
-          python3 -m pip install -r requirements.txt
+          python -m pip install -r requirements.txt
           python -m pip install enum-tools[sphinx]
-          pip3 install docutils==0.20.1
+          python -m pip install docutils==0.20.1
 
       - name: "Build Sphinx Doc"
         run: make html
