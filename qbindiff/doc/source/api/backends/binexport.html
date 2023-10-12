@@ -129,18 +129,241 @@
 <h1>BinExport<a class="headerlink" href="#binexport" title="Link to this heading">¶</a></h1>
 <section id="programbackendbinexport">
 <h2>ProgramBackendBinExport<a class="headerlink" href="#programbackendbinexport" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.loader.backend.binexport.</span></span><span class="sig-name descname"><span class="pre">ProgramBackendBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_cortexm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#ProgramBackendBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="abstract.html#qbindiff.loader.backend.AbstractProgramBackend" title="qbindiff.loader.backend.abstract.AbstractProgramBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractProgramBackend</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.callgraph">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callgraph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.1)"><span class="pre">DiGraph</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.callgraph" title="Link to this definition">¶</a></dt>
+<dd><p>The callgraph of the program.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.cortexm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cortexm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.cortexm" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.exec_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exec_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.exec_path" title="Link to this definition">¶</a></dt>
+<dd><p>Guess the raw binary name by removing the final .BinExport</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.fun_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fun_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.fun_names" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary with function name as key and the function address as value</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.functions">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">functions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport" title="qbindiff.loader.backend.binexport.FunctionBackendBinExport"><span class="pre">FunctionBackendBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.functions" title="Link to this definition">¶</a></dt>
+<dd><p>Returns an iterator over backend function objects</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the program.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.structures">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">structures</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../loader.html#qbindiff.loader.Structure" title="qbindiff.loader.structure.Structure"><span class="pre">Structure</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.structures" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the list of structures defined in program.
+WARNING: Not supported by BinExport</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="functionbackendbinexport">
 <h2>FunctionBackendBinExport<a class="headerlink" href="#functionbackendbinexport" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.loader.backend.binexport.</span></span><span class="sig-name descname"><span class="pre">FunctionBackendBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport" title="qbindiff.loader.backend.binexport.ProgramBackendBinExport"><span class="pre">ProgramBackendBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">be_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../../../../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#FunctionBackendBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="abstract.html#qbindiff.loader.backend.AbstractFunctionBackend" title="qbindiff.loader.backend.abstract.AbstractFunctionBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractFunctionBackend</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.addr">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.addr" title="Link to this definition">¶</a></dt>
+<dd><p>The address of the function</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.basic_blocks">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basic_blocks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport" title="qbindiff.loader.backend.binexport.BasicBlockBackendBinExport"><span class="pre">BasicBlockBackendBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.basic_blocks" title="Link to this definition">¶</a></dt>
+<dd><p>Returns an iterator over backend basic blocks objects</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.children">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.children" title="Link to this definition">¶</a></dt>
+<dd><p>Set of function children in the call graph</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.graph">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">graph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.1)"><span class="pre">DiGraph</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.graph" title="Link to this definition">¶</a></dt>
+<dd><p>The Control Flow Graph of the function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.is_import">
+<span class="sig-name descname"><span class="pre">is_import</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#FunctionBackendBinExport.is_import"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.is_import" title="Link to this definition">¶</a></dt>
+<dd><p>True if the function is imported</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the function.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.parents">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.parents" title="Link to this definition">¶</a></dt>
+<dd><p>Set of function parents in the call graph</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../loader.html#qbindiff.loader.types.FunctionType" title="qbindiff.loader.types.FunctionType"><span class="pre">FunctionType</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.type" title="Link to this definition">¶</a></dt>
+<dd><p>The type of the function (as defined by IDA)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.FunctionBackendBinExport.unload_blocks">
+<span class="sig-name descname"><span class="pre">unload_blocks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#FunctionBackendBinExport.unload_blocks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.FunctionBackendBinExport.unload_blocks" title="Link to this definition">¶</a></dt>
+<dd><p>Unload basic blocks from memory</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="basicblockbackendbinexport">
 <h2>BasicBlockBackendBinExport<a class="headerlink" href="#basicblockbackendbinexport" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.BasicBlockBackendBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.loader.backend.binexport.</span></span><span class="sig-name descname"><span class="pre">BasicBlockBackendBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport" title="qbindiff.loader.backend.binexport.ProgramBackendBinExport"><span class="pre">ProgramBackendBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">be_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../../../../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#BasicBlockBackendBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="abstract.html#qbindiff.loader.backend.AbstractBasicBlockBackend" title="qbindiff.loader.backend.abstract.AbstractBasicBlockBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBasicBlockBackend</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.addr">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.addr" title="Link to this definition">¶</a></dt>
+<dd><p>The address of the basic block</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.bytes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bytes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.bytes" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the bytes representation of the basic block</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.instructions">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport" title="qbindiff.loader.backend.binexport.InstructionBackendBinExport"><span class="pre">InstructionBackendBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.instructions" title="Link to this definition">¶</a></dt>
+<dd><p>Returns an iterator over backend instruction objects</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.program">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">program</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport" title="qbindiff.loader.backend.binexport.ProgramBackendBinExport"><span class="pre">ProgramBackendBinExport</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.program" title="Link to this definition">¶</a></dt>
+<dd><p>Wrapper on weak reference on ProgramBackendBinExport</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="instructionbackendbinexport">
 <h2>InstructionBackendBinExport<a class="headerlink" href="#instructionbackendbinexport" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.loader.backend.binexport.</span></span><span class="sig-name descname"><span class="pre">InstructionBackendBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cs_instruction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CsInsn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#InstructionBackendBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="abstract.html#qbindiff.loader.backend.AbstractInstructionBackend" title="qbindiff.loader.backend.abstract.AbstractInstructionBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractInstructionBackend</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.MAX_ID">
+<span class="sig-name descname"><span class="pre">MAX_ID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3000</span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.MAX_ID" title="Link to this definition">¶</a></dt>
+<dd><p>Max instruction ID. All the instruction IDs will be in the range [0, MAX_ID]</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.addr">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.addr" title="Link to this definition">¶</a></dt>
+<dd><p>The address of the instruction</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.bytes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bytes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.bytes" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the bytes representation of the instruction</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.comment">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">comment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.comment" title="Link to this definition">¶</a></dt>
+<dd><p>Comment associated with the instruction</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.groups">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.groups" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of groups of this instruction</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.id" title="Link to this definition">¶</a></dt>
+<dd><p>Return the capstone instruction ID</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.mnemonic">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mnemonic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.mnemonic" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the instruction mnemonic as a string</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.operands">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.binexport.OperandBackendBinExport" title="qbindiff.loader.backend.binexport.OperandBackendBinExport"><span class="pre">OperandBackendBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.operands" title="Link to this definition">¶</a></dt>
+<dd><p>Returns an iterator over backend operand objects</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.references">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">references</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../loader.html#qbindiff.loader.types.ReferenceType" title="qbindiff.loader.types.ReferenceType"><span class="pre">ReferenceType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../loader.html#qbindiff.loader.Data" title="qbindiff.loader.Data"><span class="pre">Data</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../loader.html#qbindiff.loader.Structure" title="qbindiff.loader.Structure"><span class="pre">Structure</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../loader.html#qbindiff.loader.StructureMember" title="qbindiff.loader.StructureMember"><span class="pre">StructureMember</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.references" title="Link to this definition">¶</a></dt>
+<dd><p>Returns all the references towards the instruction
+BinExport only exports data references’ address so no data type nor value.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="operandbackendbinexport">
 <h2>OperandBackendBinExport<a class="headerlink" href="#operandbackendbinexport" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.OperandBackendBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.loader.backend.binexport.</span></span><span class="sig-name descname"><span class="pre">OperandBackendBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cs_instruction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CsInsn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cs_operand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cs_operand_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#OperandBackendBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.OperandBackendBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="abstract.html#qbindiff.loader.backend.AbstractOperandBackend" title="qbindiff.loader.backend.abstract.AbstractOperandBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractOperandBackend</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.OperandBackendBinExport.is_immediate">
+<span class="sig-name descname"><span class="pre">is_immediate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/qbindiff/loader/backend/binexport.html#OperandBackendBinExport.is_immediate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.backend.binexport.OperandBackendBinExport.is_immediate" title="Link to this definition">¶</a></dt>
+<dd><p>Returns whether the operand is an immediate value (not considering addresses)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.OperandBackendBinExport.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../loader.html#qbindiff.loader.types.OperandType" title="qbindiff.loader.types.OperandType"><span class="pre">OperandType</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.OperandBackendBinExport.type" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the capstone operand type</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.OperandBackendBinExport.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.OperandBackendBinExport.value" title="Link to this definition">¶</a></dt>
+<dd><p>Return the immediate value (not addresses) used by the operand.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

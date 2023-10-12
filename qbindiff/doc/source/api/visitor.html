@@ -129,12 +129,300 @@
 <h1>Visitors<a class="headerlink" href="#visitors" title="Link to this heading">¶</a></h1>
 <section id="visitor-abstract-class">
 <h2>Visitor abstract class<a class="headerlink" href="#visitor-abstract-class" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.visitor.Visitor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.visitor.</span></span><span class="sig-name descname"><span class="pre">Visitor</span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#Visitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.Visitor" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Abstract class representing interface that a visitor
+must implements to work with a Differ object.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.visitor.Visitor.feature_extractors">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_extractors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureExtractor" title="qbindiff.features.extractor.FeatureExtractor"><span class="pre">FeatureExtractor</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.visitor.Visitor.feature_extractors" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the list of registered features extractor</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.Visitor.register_feature_extractor">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_feature_extractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureExtractor" title="qbindiff.features.extractor.FeatureExtractor"><span class="pre">FeatureExtractor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#Visitor.register_feature_extractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.Visitor.register_feature_extractor" title="Link to this definition">¶</a></dt>
+<dd><p>Register an instanciated feature extractor on the visitor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fte</strong> – Feature extractor instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.Visitor.visit">
+<span class="sig-name descname"><span class="pre">visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph:</span> <span class="pre">~qbindiff.abstract.GenericGraph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_fun:</span> <span class="pre">~collections.abc.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">Visitor.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#Visitor.visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.Visitor.visit" title="Link to this definition">¶</a></dt>
+<dd><p>Function performing the visit on a Graph object by calling visit_item with a
+FeatureCollector meant to be filled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the Graph to be visited.</p></li>
+<li><p><strong>key_fun</strong> – a function that takes 2 input arguments, namely the current item and
+the current iteration number, and returns a unique key for that item.
+By default, the iteration number is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dict in which keys are key_fun(item, i) and values are the FeatureCollector</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.Visitor.visit_item">
+<span class="sig-name descname"><span class="pre">visit_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="differ.html#qbindiff.GenericGraph" title="qbindiff.abstract.GenericGraph"><span class="pre">GenericGraph</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#Visitor.visit_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.Visitor.visit_item" title="Link to this definition">¶</a></dt>
+<dd><p>Abstract method meant to perform the visit of the item.
+It receives an environment in parameter that is meant to be filled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the graph that is being visited</p></li>
+<li><p><strong>item</strong> – item to be visited</p></li>
+<li><p><strong>collector</strong> – FeatureCollector to fill during the visit</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="novisitor">
 <h2>NoVisitor<a class="headerlink" href="#novisitor" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.visitor.NoVisitor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.visitor.</span></span><span class="sig-name descname"><span class="pre">NoVisitor</span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#NoVisitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.NoVisitor" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qbindiff.visitor.Visitor" title="qbindiff.visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<p>Trivial visitor that doesn’t traverse the graph</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.visitor.NoVisitor.feature_extractors">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_extractors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureExtractor" title="qbindiff.features.extractor.FeatureExtractor"><span class="pre">FeatureExtractor</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.visitor.NoVisitor.feature_extractors" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the list of registered features extractor</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.NoVisitor.register_feature_extractor">
+<span class="sig-name descname"><span class="pre">register_feature_extractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureExtractor" title="qbindiff.features.extractor.FeatureExtractor"><span class="pre">FeatureExtractor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#NoVisitor.register_feature_extractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.NoVisitor.register_feature_extractor" title="Link to this definition">¶</a></dt>
+<dd><p>Register an instanciated feature extractor on the visitor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fte</strong> – Feature extractor instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.NoVisitor.visit">
+<span class="sig-name descname"><span class="pre">visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph:</span> <span class="pre">~qbindiff.abstract.GenericGraph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_fun:</span> <span class="pre">~collections.abc.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">NoVisitor.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#NoVisitor.visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.NoVisitor.visit" title="Link to this definition">¶</a></dt>
+<dd><p>Function performing the visit on a Graph object by calling visit_item with a
+FeatureCollector meant to be filled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the Graph to be visited.</p></li>
+<li><p><strong>key_fun</strong> – a function that takes 2 input arguments, namely the current item and
+the current iteration number, and returns a unique key for that item.
+By default, the iteration number is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dict in which keys are key_fun(item, i) and values are the FeatureCollector</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.NoVisitor.visit_item">
+<span class="sig-name descname"><span class="pre">visit_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="differ.html#qbindiff.GenericGraph" title="qbindiff.abstract.GenericGraph"><span class="pre">GenericGraph</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#qbindiff.visitor.NoVisitor.visit_item" title="Link to this definition">¶</a></dt>
+<dd><p>Abstract method meant to perform the visit of the item.
+It receives an environment in parameter that is meant to be filled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the graph that is being visited</p></li>
+<li><p><strong>item</strong> – item to be visited</p></li>
+<li><p><strong>collector</strong> – FeatureCollector to fill during the visit</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="programvisitor">
 <h2>ProgramVisitor<a class="headerlink" href="#programvisitor" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.visitor.</span></span><span class="sig-name descname"><span class="pre">ProgramVisitor</span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qbindiff.visitor.Visitor" title="qbindiff.visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<p>Class aiming at providing a generic program visitor which calls
+the different feature extractor on the appropriate items.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.feature_extractors">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_extractors</span></span><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.feature_extractors" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the list of registered features extractor</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.register_basic_block_feature_callback">
+<span class="sig-name descname"><span class="pre">register_basic_block_feature_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.register_basic_block_feature_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.register_basic_block_feature_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Feature callback at basic block granularity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – feature callback</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.register_feature_extractor">
+<span class="sig-name descname"><span class="pre">register_feature_extractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureExtractor" title="qbindiff.features.extractor.FeatureExtractor"><span class="pre">FeatureExtractor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.register_feature_extractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.register_feature_extractor" title="Link to this definition">¶</a></dt>
+<dd><p>Register an instanciated feature extractor on the visitor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fte</strong> – Feature extractor instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.register_function_feature_callback">
+<span class="sig-name descname"><span class="pre">register_function_feature_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.register_function_feature_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.register_function_feature_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Feature callback at function granularity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – feature callback</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.register_instruction_feature_callback">
+<span class="sig-name descname"><span class="pre">register_instruction_feature_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.register_instruction_feature_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.register_instruction_feature_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Feature callback at function granularity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – feature callback</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.register_operand_feature_callback">
+<span class="sig-name descname"><span class="pre">register_operand_feature_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.register_operand_feature_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.register_operand_feature_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Feature callback at function granularity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – feature callback</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.visit">
+<span class="sig-name descname"><span class="pre">visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph:</span> <span class="pre">~qbindiff.abstract.GenericGraph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_fun:</span> <span class="pre">~collections.abc.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">Visitor.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.visit" title="Link to this definition">¶</a></dt>
+<dd><p>Function performing the visit on a Graph object by calling visit_item with a
+FeatureCollector meant to be filled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – the Graph to be visited.</p></li>
+<li><p><strong>key_fun</strong> – a function that takes 2 input arguments, namely the current item and
+the current iteration number, and returns a unique key for that item.
+By default, the iteration number is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dict in which keys are key_fun(item, i) and values are the FeatureCollector</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.visit_basic_block">
+<span class="sig-name descname"><span class="pre">visit_basic_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">basic_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.loader.BasicBlock" title="qbindiff.loader.basic_block.BasicBlock"><span class="pre">BasicBlock</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.visit_basic_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.visit_basic_block" title="Link to this definition">¶</a></dt>
+<dd><p>Visit the given basic block with the feature extractors registered beforehand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – Program that is being visited</p></li>
+<li><p><strong>basic_block</strong> – Basic Block to visit</p></li>
+<li><p><strong>collector</strong> – FeatureCollector to fill</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.visit_function">
+<span class="sig-name descname"><span class="pre">visit_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Function" title="qbindiff.loader.function.Function"><span class="pre">Function</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.visit_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.visit_function" title="Link to this definition">¶</a></dt>
+<dd><p>Visit the given function with the feature extractors registered beforehand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – Program that is being visited</p></li>
+<li><p><strong>func</strong> – Function to visit</p></li>
+<li><p><strong>collector</strong> – FeatureCollector to fill</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.visit_instruction">
+<span class="sig-name descname"><span class="pre">visit_instruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.loader.Instruction" title="qbindiff.loader.instruction.Instruction"><span class="pre">Instruction</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.visit_instruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.visit_instruction" title="Link to this definition">¶</a></dt>
+<dd><p>Visit the instruction with the feature extractor registered beforehand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – Program that is being visited</p></li>
+<li><p><strong>instruction</strong> – Instruction to visit</p></li>
+<li><p><strong>collector</strong> – FeatureCollector to fill</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.visit_item">
+<span class="sig-name descname"><span class="pre">visit_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.visit_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.visit_item" title="Link to this definition">¶</a></dt>
+<dd><p>Visit a program item according to its type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – The program that is being visited</p></li>
+<li><p><strong>item</strong> – Can be a Function, Instruction etc..</p></li>
+<li><p><strong>collector</strong> – FeatureCollector to be filled</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.visitor.ProgramVisitor.visit_operand">
+<span class="sig-name descname"><span class="pre">visit_operand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">operand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.loader.Operand" title="qbindiff.loader.operand.Operand"><span class="pre">Operand</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="extractor.html#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/visitor.html#ProgramVisitor.visit_operand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.visitor.ProgramVisitor.visit_operand" title="Link to this definition">¶</a></dt>
+<dd><p>Visit the given operand with the feature extractor registered beforehand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – Program that is being visited</p></li>
+<li><p><strong>operand</strong> – Operand</p></li>
+<li><p><strong>collector</strong> – FeatureCollector to fill</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

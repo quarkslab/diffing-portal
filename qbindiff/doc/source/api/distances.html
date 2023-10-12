@@ -127,6 +127,42 @@
             
 <section id="distances">
 <h1>Distances<a class="headerlink" href="#distances" title="Link to this heading">¶</a></h1>
+<dl class="py class enum">
+<dt class="sig sig-object py" id="qbindiff.Distance">
+<em class="property"><span class="pre">enum</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.</span></span><span class="sig-name descname"><span class="pre">Distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/types.html#Distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Distance" title="Link to this definition">¶</a></dt>
+<dd><p>Enum of different (supported) distances used to compute the similarity matrix based on chosen features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Member Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p>Valid values are as follows:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.Distance.canberra">
+<span class="sig-name descname"><span class="pre">canberra</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Distance.canberra:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#qbindiff.Distance.canberra" title="Link to this definition">¶</a></dt>
+<dd><p>canberra distance</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.Distance.euclidean">
+<span class="sig-name descname"><span class="pre">euclidean</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Distance.euclidean:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#qbindiff.Distance.euclidean" title="Link to this definition">¶</a></dt>
+<dd><p>euclidean distance</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.Distance.cosine">
+<span class="sig-name descname"><span class="pre">cosine</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Distance.cosine:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#qbindiff.Distance.cosine" title="Link to this definition">¶</a></dt>
+<dd><p>cosine distance</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.Distance.jaccard_strong">
+<span class="sig-name descname"><span class="pre">jaccard_strong</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Distance.jaccard_strong:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#qbindiff.Distance.jaccard_strong" title="Link to this definition">¶</a></dt>
+<dd><p>custom distance</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
             <div class="clearer"></div>
@@ -151,7 +187,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../how.html">How it works</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="qbindiff.html">QBinDiff API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="differ.html">Differs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Distances</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Distances</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qbindiff.Distance"><code class="docutils literal notranslate"><span class="pre">Distance</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="visitor.html">Visitors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="extractor.html">Feature extraction API</a></li>

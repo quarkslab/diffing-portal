@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qbindiff.passes.metrics &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../../../_static/insipid.js"></script>
+    <script defer src="../../../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="../../index.html" accesskey="U">Module code</a>
+            <a class="top" href="#">qbindiff.passes.metrics</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../../../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+    </nav>
+
+    <nav class="relbar">
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<h1>Source code for qbindiff.passes.metrics</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">BSD 3-Clause License</span>
+
+<span class="sd">Copyright (c) 2007-2021 The scikit-learn developers.</span>
+<span class="sd">All rights reserved.</span>
+
+<span class="sd">Redistribution and use in source and binary forms, with or without</span>
+<span class="sd">modification, are permitted provided that the following conditions are met:</span>
+
+<span class="sd">* Redistributions of source code must retain the above copyright notice, this</span>
+<span class="sd">  list of conditions and the following disclaimer.</span>
+
+<span class="sd">* Redistributions in binary form must reproduce the above copyright notice,</span>
+<span class="sd">  this list of conditions and the following disclaimer in the documentation</span>
+<span class="sd">  and/or other materials provided with the distribution.</span>
+
+<span class="sd">* Neither the name of the copyright holder nor the names of its</span>
+<span class="sd">  contributors may be used to endorse or promote products derived from</span>
+<span class="sd">  this software without specific prior written permission.</span>
+
+<span class="sd">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span>
+<span class="sd">AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<span class="sd">IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
+<span class="sd">DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE</span>
+<span class="sd">FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
+<span class="sd">DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span>
+<span class="sd">SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span>
+<span class="sd">CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span>
+<span class="sd">OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="sd">OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">distance</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">issparse</span><span class="p">,</span> <span class="n">csr_matrix</span>
+<span class="kn">from</span> <span class="nn">qbindiff.passes.fast_metrics</span> <span class="kn">import</span> <span class="n">sparse_canberra</span><span class="p">,</span> <span class="n">sparse_strong_jaccard</span>
+<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Distance</span>
+
+
+<span class="k">def</span> <span class="nf">_validate_vector</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">u</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input vector should be 1-D.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_validate_weights</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">):</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">_validate_vector</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">w</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input weights should be all non-negative&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">w</span>
+
+
+<span class="k">def</span> <span class="nf">_map_distance_to_scipy</span><span class="p">(</span><span class="n">metric</span><span class="p">:</span> <span class="n">Distance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Map a qbindiff.Distance to a scipy/scikit-learn compatible string&quot;&quot;&quot;</span>
+
+    <span class="k">match</span> <span class="n">metric</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">Distance</span><span class="o">.</span><span class="n">canberra</span> <span class="o">|</span> <span class="n">Distance</span><span class="o">.</span><span class="n">euclidean</span> <span class="o">|</span> <span class="n">Distance</span><span class="o">.</span><span class="n">cosine</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">metric</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot find a correct mapping for </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2"> to scipy&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="canberra_distances">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.canberra_distances">[docs]</a>
+<span class="k">def</span> <span class="nf">canberra_distances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the canberra distances between the vectors in X and Y using the optional</span>
+<span class="sd">    array of weights w.</span>
+
+<span class="sd">    :param X: array-like of shape (n_samples_X, n_features)</span>
+<span class="sd">              An array where each row is a sample and each column is a feature.</span>
+
+<span class="sd">    :param Y: array-like of shape (n_samples_Y, n_features)</span>
+<span class="sd">              An array where each row is a sample and each column is a feature.</span>
+
+<span class="sd">    :param w: array-like of size n_features.</span>
+<span class="sd">              The weights for each value in ``X`` and ``V``.</span>
+<span class="sd">              Default is None, which gives each value a weight of 1.0</span>
+
+<span class="sd">    :return D: ndarray of shape (n_samples_X, n_samples_Y)</span>
+<span class="sd">               D contains the pairwise canberra distances.</span>
+
+<span class="sd">    When X and/or Y are CSR sparse matrices and they are not already</span>
+<span class="sd">    in canonical format, this function modifies them in-place to</span>
+<span class="sd">    make them canonical.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">check_pairwise_arrays</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="ow">or</span> <span class="n">issparse</span><span class="p">(</span><span class="n">Y</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">sum_duplicates</span><span class="p">()</span>  <span class="c1"># this also sorts indices in-place</span>
+        <span class="n">Y</span><span class="o">.</span><span class="n">sum_duplicates</span><span class="p">()</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">_validate_weights</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights size mismatch&quot;</span><span class="p">)</span>
+        <span class="n">sparse_canberra</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">D</span>
+
+    <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">distance</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">&quot;canberra&quot;</span><span class="p">)</span>
+    <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot assign weights with non-sparse matrices&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="jaccard_strong">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.jaccard_strong">[docs]</a>
+<span class="k">def</span> <span class="nf">jaccard_strong</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute a variation of the jaccard distances between the vectors in X and Y using</span>
+<span class="sd">    the optional array of weights w.</span>
+
+<span class="sd">    The distance function between two vector ``u`` and ``v`` is the following:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \sum_{i}\frac{f(u_i, v_i)}{ | \{ i | u_i \neq 0 \lor v_i \neq 0 \} | }</span>
+
+<span class="sd">    where the function ``f`` is defined like this:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f(x, y) = \begin{cases} 0 &amp; \text{if } x = 0 \lor y = 0 \\ 1 - \frac{|x - y|}{|x| + |y|} &amp; \text{otherwise.} \end{cases}</span>
+
+<span class="sd">    If the optional weights are specified the formula becomes:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \sum_{i}\frac{w_i * f(u_i, v_i)}{ | \{ i | u_i \neq 0 \lor v_i \neq 0 \} | }</span>
+
+<span class="sd">    :param X: array-like of shape (n_samples_X, n_features)</span>
+<span class="sd">              An array where each row is a sample and each column is a feature.</span>
+
+<span class="sd">    :param Y: array-like of shape (n_samples_Y, n_features)</span>
+<span class="sd">              An array where each row is a sample and each column is a feature.</span>
+
+<span class="sd">    :param w: array-like of size n_features. The weights for each value in ``X`` and ``V``.</span>
+<span class="sd">              Default is None, which gives each value a weight of 1.0</span>
+
+<span class="sd">    :return D: ndarray of shape (n_samples_X, n_samples_Y)</span>
+<span class="sd">               D contains the pairwise strong jaccard distances.</span>
+
+<span class="sd">    When X and/or Y are CSR sparse matrices and they are not already</span>
+<span class="sd">    in canonical format, this function modifies them in-place to</span>
+<span class="sd">    make them canonical.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">check_pairwise_arrays</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="ow">or</span> <span class="n">issparse</span><span class="p">(</span><span class="n">Y</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">sum_duplicates</span><span class="p">()</span>  <span class="c1"># this also sorts indices in-place</span>
+        <span class="n">Y</span><span class="o">.</span><span class="n">sum_duplicates</span><span class="p">()</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">_validate_weights</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights size mismatch&quot;</span><span class="p">)</span>
+        <span class="n">sparse_strong_jaccard</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">D</span>
+
+    <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sparse_strong_jaccard</span><span class="p">(</span>
+            <span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="p">)</span>
+    <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot assign weights with non-sparse matrices&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="n">CUSTOM_DISTANCES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">Distance</span><span class="o">.</span><span class="n">canberra</span><span class="p">:</span> <span class="n">canberra_distances</span><span class="p">,</span>
+    <span class="n">Distance</span><span class="o">.</span><span class="n">jaccard_strong</span><span class="p">:</span> <span class="n">jaccard_strong</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="pairwise_distances">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.pairwise_distances">[docs]</a>
+<span class="k">def</span> <span class="nf">pairwise_distances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="n">Distance</span> <span class="o">=</span> <span class="n">Distance</span><span class="o">.</span><span class="n">euclidean</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the distance matrix from a vector array X and Y.</span>
+<span class="sd">    The returned matrix is the pairwise distance between the arrays from both X and Y.</span>
+
+<span class="sd">    In addition to the scikit-learn metrics, the following ones also work with</span>
+<span class="sd">    sparse matrices: &#39;canberra&#39;</span>
+
+<span class="sd">    The backend implementation of the metrics rely on scikit-learn, refer to the manual</span>
+<span class="sd">    of sklearn for more information:</span>
+
+<span class="sd">    https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html</span>
+
+<span class="sd">    **WARNING**: if the metric is a callable then it must compute the distance between</span>
+<span class="sd">    two matrices, not between two vectors. This is done so that the metric can optimize</span>
+<span class="sd">    the calculations with parallelism.</span>
+
+<span class="sd">    :param X: ndarray of shape (n_samples_X, n_features). The first feature matrix.</span>
+
+<span class="sd">    :param Y: ndarray of shape (n_samples_Y, n_features), The second feature matrix.</span>
+
+<span class="sd">    :param metric: qbindiff.Distance, default=Distance.euclidean</span>
+<span class="sd">        The metric to use when calculating distance between instances in a feature</span>
+<span class="sd">        array. The implementation of the metric might relybe provided by scikit-learn</span>
+
+<span class="sd">    :param n_jobs: int, default=None</span>
+<span class="sd">        The number of jobs to use for the computation. This works by breaking down</span>
+<span class="sd">        the pairwise matrix into n_jobs even slices and computing them in parallel.</span>
+
+<span class="sd">        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.</span>
+<span class="sd">        ``-1`` means using all processors.</span>
+
+<span class="sd">    :param \*\*kwargs: optional keyword parameters</span>
+<span class="sd">        Any further parameters are passed directly to the scikit-learn implementation</span>
+<span class="sd">        of pairwise_distances if a sklearn metric is used, otherwise they are passed</span>
+<span class="sd">        to the callable metric specified.</span>
+
+<span class="sd">    :return D: ndarray of shape (n_samples_X, n_samples_Y)</span>
+<span class="sd">        A distance matrix D such that D_{i, j} is the distance between the ith array</span>
+<span class="sd">        from X and the jth array from Y.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># If we use the canberra distance, choose the custom version, that supports sparse matrix</span>
+    <span class="c1"># and weights (not the case for scikit-learn (only sparse, no weights) and scipy</span>
+    <span class="c1"># (weights but no sparse matrix).</span>
+    <span class="c1"># All the custom distances are guaranteed to make use of parallelism</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">CUSTOM_DISTANCES</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">CUSTOM_DISTANCES</span><span class="p">[</span><span class="n">metric</span><span class="p">](</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># If we include a weight vector w, we have to use the scipy implementation (scikit-learn</span>
+    <span class="c1"># does not support weights) but scipy does not support sparse matrix.</span>
+    <span class="c1"># However, at this step, X and Y should be matrices of shape (n, 1) and (m, 1)</span>
+    <span class="c1"># so it should be OK to use .todense() (no RAM explosion).</span>
+    <span class="c1"># Be careful, some distance may return nan values (ex:correlation)</span>
+    <span class="k">elif</span> <span class="s2">&quot;w&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">distance</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">todense</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">todense</span><span class="p">(),</span> <span class="n">_map_distance_to_scipy</span><span class="p">(</span><span class="n">metric</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># Rely on scikit-learn implementation</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">pairwise_distances</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">_map_distance_to_scipy</span><span class="p">(</span><span class="n">metric</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Similarity matrix contains nan values. Consider changing the distance for &quot;</span>
+            <span class="s2">&quot;computing the similarity (check euclidean or canberra).&quot;</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dist</span></div>
+
+</pre></div>
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../../../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../../../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qbindiff.matcher.matcher &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../../../_static/insipid.js"></script>
+    <script defer src="../../../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="../../index.html" accesskey="U">Module code</a>
+            <a class="top" href="#">qbindiff.matcher.matcher</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../../../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+    </nav>
+
+    <nav class="relbar">
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<h1>Source code for qbindiff.matcher.matcher</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright 2023 Quarkslab</span>
+
+<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="sd">you may not use this file except in compliance with the License.</span>
+<span class="sd">You may obtain a copy of the License at</span>
+
+<span class="sd">    http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
+<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="sd">See the License for the specific language governing permissions and</span>
+<span class="sd">limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># built-in imports</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># Third-party imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">lapjv</span> <span class="kn">import</span> <span class="n">lapjv</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span><span class="p">,</span> <span class="n">coo_matrix</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span>
+
+<span class="c1"># Local imports</span>
+<span class="kn">from</span> <span class="nn">qbindiff.matcher.squares</span> <span class="kn">import</span> <span class="n">find_squares</span>
+<span class="kn">from</span> <span class="nn">qbindiff.matcher.belief_propagation</span> <span class="kn">import</span> <span class="n">BeliefMWM</span><span class="p">,</span> <span class="n">BeliefQAP</span>
+<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Positive</span><span class="p">,</span>
+    <span class="n">Ratio</span><span class="p">,</span>
+    <span class="n">RawMapping</span><span class="p">,</span>
+    <span class="n">AdjacencyMatrix</span><span class="p">,</span>
+    <span class="n">Matrix</span><span class="p">,</span>
+    <span class="n">SimMatrix</span><span class="p">,</span>
+    <span class="n">SparseMatrix</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">iter_csr_matrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">SparseMatrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iter over non-null items in a CSR (Compressed Sparse Row) matrix.</span>
+<span class="sd">    It returns a generator that, at each iteration, returns the tuple (row_index, column_index, value)</span>
+
+<span class="sd">    :param matrix: CSR matrix</span>
+<span class="sd">    :return: generator (row_idx, column_idx, val)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">coo_matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">tocoo</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coo_matrix</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">coo_matrix</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">coo_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span>
+
+
+<span class="k">def</span> <span class="nf">solve_linear_assignment</span><span class="p">(</span><span class="n">cost_matrix</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RawMapping</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solve the linear assignment problem given the cost_matrix</span>
+
+<span class="sd">    :param: cost matrix</span>
+<span class="sd">    :return: raw mapping</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">transposed</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">m</span>
+    <span class="k">if</span> <span class="n">transposed</span><span class="p">:</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span>
+        <span class="n">cost_matrix</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">full_cost_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">cost_matrix</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">full_cost_matrix</span><span class="p">[:</span><span class="n">n</span><span class="p">,</span> <span class="p">:</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost_matrix</span>
+    <span class="n">col_indices</span> <span class="o">=</span> <span class="n">lapjv</span><span class="p">(</span><span class="n">full_cost_matrix</span><span class="p">)[</span><span class="mi">0</span><span class="p">][:</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">transposed</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">col_indices</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">col_indices</span>
+
+
+<div class="viewcode-block" id="Matcher">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher">[docs]</a>
+<span class="k">class</span> <span class="nc">Matcher</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">similarity_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
+        <span class="n">primary_adj_matrix</span><span class="p">:</span> <span class="n">AdjacencyMatrix</span><span class="p">,</span>
+        <span class="n">secondary_adj_matrix</span><span class="p">:</span> <span class="n">AdjacencyMatrix</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># nodes mapping</span>
+        <span class="c1">#: Similarity matrix used by the Matcher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">similarity_matrix</span>
+        <span class="c1">#: Adjacency matrix of the primary graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_adj_matrix</span> <span class="o">=</span> <span class="n">primary_adj_matrix</span>
+        <span class="c1">#: Adjacency matrix of the secondary graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_adj_matrix</span> <span class="o">=</span> <span class="n">secondary_adj_matrix</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">squares_matrix</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_compute_sparse_sim_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sparsity_ratio</span><span class="p">:</span> <span class="n">Ratio</span><span class="p">,</span> <span class="n">sparse_row</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the sparse similarity matrix given the sparsity_ratio</span>
+
+<span class="sd">        :param sparsity_ratio: ratio of least probable matches to ignore</span>
+<span class="sd">        :param sparse_row: whether to use sparse rows</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sparsity_size</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">sparsity_ratio</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sparsity_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Keep the matrix as it is</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">sparsity_size</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>  <span class="c1"># Empty matrix</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">sparse_row</span><span class="p">:</span>
+            <span class="n">sparsity_size</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">sparsity_ratio</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># Sort the similarity matrix columns and keep indexes of the sorted values</span>
+            <span class="n">sorted_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;stable&quot;</span><span class="p">)</span>
+
+            <span class="n">mask</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="c1"># Replace all the discarded values with zeros</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">sorted_indexes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">sparsity_size</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="c1"># Append the mask for the current row</span>
+                <span class="n">mask</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Sort the flattened similarity matrix and keep the indexes of the sorted values</span>
+            <span class="n">sorted_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;stable&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Replace all the discarded values with zeros</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="n">sorted_indexes</span><span class="p">[:</span><span class="n">sparsity_size</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="c1"># Create a mask</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+            <span class="c1"># Create the sparse matrix</span>
+            <span class="n">csr_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">csr_data</span>
+
+    <span class="k">def</span> <span class="nf">_compute_squares_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the sparse squares matrix and store it in self._squares_matrix.</span>
+<span class="sd">        Given two graphs G1 and G2, a square is a tuple of nodes (nodeA, nodeB, nodeC, nodeD)</span>
+<span class="sd">        such that all of the followings statements are true:</span>
+<span class="sd">          - nodeA and nodeD belong to G1</span>
+<span class="sd">          - nodeB and nodeC belong to G2</span>
+<span class="sd">          - (nodeA, nodeD) is a directed edge in G1</span>
+<span class="sd">          - (nodeB, nodeC) is a directed edge in G2</span>
+<span class="sd">          - (nodeA, nodeB) is a edge in the similarity matrix (non-zero score)</span>
+<span class="sd">          - (nodeC, nodeD) is a edge in the similarity matrix (non-zero score)</span>
+<span class="sd">        Note that the nodes are not necessarily different since (nodeX, nodeX) might be</span>
+<span class="sd">        a valid edge.</span>
+
+<span class="sd">        (A) &lt;---sim_edge---&gt; (B)</span>
+<span class="sd">         |                    |</span>
+<span class="sd">         |graph_edge          |</span>
+<span class="sd">         |          graph_edge|</span>
+<span class="sd">         v                    v</span>
+<span class="sd">        (D) &lt;---sim_edge---&gt; (C)</span>
+
+<span class="sd">        The resulting square matrix is stored as a csr_matrix of size NxN where N=#{similarity edge}</span>
+<span class="sd">        Every similarity edge is given a unique increasing number from 0 to N and there is a square</span>
+<span class="sd">        between two similarity edges `e1` and `e2` &lt;=&gt; (iff) self._squares_matrix[e1][e2] == 1</span>
+
+<span class="sd">        The time complexity is O(|sparse_sim_matrix| * average_graph_degree**2)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">squares</span> <span class="o">=</span> <span class="n">find_squares</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">primary_adj_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_adj_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span>
+        <span class="p">)</span>
+
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="o">.</span><span class="n">nnz</span>
+        <span class="c1"># Give each similarity edge a unique number</span>
+        <span class="n">bipartite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+        <span class="n">bipartite</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+
+        <span class="n">get_edge</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Fast lookup</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">bipartite</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">iter_csr_matrix</span><span class="p">(</span><span class="n">bipartite</span><span class="p">):</span>
+            <span class="n">get_edge</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">C</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="c1"># Populate the sparse squares matrix</span>
+        <span class="n">squares_2n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">squares_2n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">squares_2n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">nodeA</span><span class="p">,</span> <span class="n">nodeB</span><span class="p">,</span> <span class="n">nodeC</span><span class="p">,</span> <span class="n">nodeD</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">squares</span><span class="p">):</span>
+            <span class="n">e1</span> <span class="o">=</span> <span class="n">get_edge</span><span class="p">[</span><span class="n">nodeA</span> <span class="o">*</span> <span class="n">C</span> <span class="o">+</span> <span class="n">nodeB</span><span class="p">]</span>
+            <span class="n">e2</span> <span class="o">=</span> <span class="n">get_edge</span><span class="p">[</span><span class="n">nodeD</span> <span class="o">*</span> <span class="n">C</span> <span class="o">+</span> <span class="n">nodeC</span><span class="p">]</span>
+            <span class="n">rows</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">e1</span>
+            <span class="n">rows</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">e2</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">e2</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">e1</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">squares_2n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+        <span class="c1"># Build coo matrix and convert it to csr</span>
+        <span class="n">coo_squares_matrix</span> <span class="o">=</span> <span class="n">coo_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">squares_matrix</span> <span class="o">=</span> <span class="n">coo_squares_matrix</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+
+        <span class="c1"># Sometimes a square is counted twice</span>
+        <span class="c1"># ex: (nodeA, nodeB, nodeC, nodeD) == (nodeC, nodeD, nodeA, nodeB)</span>
+        <span class="c1"># Set the data to ones to count all the squares only once</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">squares_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RawMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Nodes mapping between the two graphs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">confidence_score</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Confidence score for each match in the nodes mapping</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_confidence</span><span class="p">[</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="Matcher.process">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher.process">[docs]</a>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sparsity_ratio</span><span class="p">:</span> <span class="n">Ratio</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span> <span class="n">sparse_row</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">compute_squares</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the matching algorithm</span>
+
+<span class="sd">        :param sparsity_ratio: The ratio between null element over the entire similarity</span>
+<span class="sd">                               matrix</span>
+<span class="sd">        :param sparse_row: When building the sparse similarity matrix we can either</span>
+<span class="sd">                           filter out the elements by considering all the entries in the</span>
+<span class="sd">                           similarity matrix (sparse_row == False) or by considering</span>
+<span class="sd">                           each vector separately (sparse_row == True)</span>
+<span class="sd">        :param compute_squares: Whether to compute the squares matrix</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Computing sparse similarity matrix (ratio </span><span class="si">{</span><span class="n">sparsity_ratio</span><span class="si">}</span><span class="s2"> sparse_row </span><span class="si">{</span><span class="n">sparse_row</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_sparse_sim_matrix</span><span class="p">(</span><span class="n">sparsity_ratio</span><span class="p">,</span> <span class="n">sparse_row</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Sparse similarity matrix computed, shape: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;, nnz elements: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="o">.</span><span class="n">nnz</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">compute_squares</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Computing squares matrix&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compute_squares_matrix</span><span class="p">()</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Squares matrix computed, shape: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">squares_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;, nnz elements: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">squares_matrix</span><span class="o">.</span><span class="n">nnz</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Matcher.compute">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher.compute">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tradeoff</span><span class="p">:</span> <span class="n">Ratio</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">:</span> <span class="n">Positive</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Launch the computation for a given number of iterations, using specific QBinDiff parameters</span>
+
+<span class="sd">        :param tradeoff: tradeoff between the node similarity and the structure</span>
+<span class="sd">        :param epsilon: perturbation to add to the similarity matrix</span>
+<span class="sd">        :param maxiter: maximum number of iterations for the belief propagation</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">tradeoff</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[+] switching to Maximum Weight Matching (tradeoff is 1)&quot;</span><span class="p">)</span>
+            <span class="n">belief</span> <span class="o">=</span> <span class="n">BeliefMWM</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">belief</span> <span class="o">=</span> <span class="n">BeliefQAP</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">squares_matrix</span><span class="p">,</span> <span class="n">tradeoff</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">niter</span> <span class="ow">in</span> <span class="n">belief</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">maxiter</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">niter</span>
+
+        <span class="n">score_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_sim_matrix</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_confidence</span> <span class="o">=</span> <span class="n">belief</span><span class="o">.</span><span class="n">current_marginals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">refine</span><span class="p">(</span><span class="n">belief</span><span class="o">.</span><span class="n">current_mapping</span><span class="p">,</span> <span class="n">score_matrix</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Matcher.refine">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher.refine">[docs]</a>
+    <span class="k">def</span> <span class="nf">refine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">RawMapping</span><span class="p">,</span> <span class="n">score_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RawMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Refine the mappings between the nodes of the two graphs</span>
+<span class="sd">        by matching the unassigned nodes</span>
+
+<span class="sd">        :param mapping: initial mapping</span>
+<span class="sd">        :param score_matrix: similarity matrix</span>
+<span class="sd">        :return: updated raw mapping</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span> <span class="o">=</span> <span class="n">mapping</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">secondary</span><span class="p">)</span>
+
+        <span class="c1"># All the nodes have been assigned</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">score_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">mapping</span>
+
+        <span class="n">primary_missing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">score_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">primary</span><span class="p">)</span>
+        <span class="n">secondary_missing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">score_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">secondary</span><span class="p">)</span>
+        <span class="n">score_matrix</span> <span class="o">=</span> <span class="n">score_matrix</span><span class="p">[</span><span class="n">primary_missing</span><span class="p">][:,</span> <span class="n">secondary_missing</span><span class="p">]</span>
+        <span class="n">nnz_indices</span> <span class="o">=</span> <span class="n">score_matrix</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()</span>
+        <span class="n">score_matrix</span> <span class="o">=</span> <span class="n">score_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+        <span class="c1"># Give the zero elements a high score</span>
+        <span class="n">lap_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">score_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">score_matrix</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="c1"># LAP solves solves for the minimum cost but high scores means good match</span>
+        <span class="n">lap_scores</span><span class="p">[</span><span class="n">nnz_indices</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">score_matrix</span><span class="p">[</span><span class="n">nnz_indices</span><span class="p">]</span>
+
+        <span class="n">primary_ass</span><span class="p">,</span> <span class="n">secondary_ass</span> <span class="o">=</span> <span class="n">solve_linear_assignment</span><span class="p">(</span><span class="n">lap_scores</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">primary</span><span class="p">,</span> <span class="n">primary_missing</span><span class="p">[</span><span class="n">primary_ass</span><span class="p">])),</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">secondary</span><span class="p">,</span> <span class="n">secondary_missing</span><span class="p">[</span><span class="n">secondary_ass</span><span class="p">])</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../../../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../../../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+    </footer>
+  </body>
+</html>

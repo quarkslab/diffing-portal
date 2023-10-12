@@ -129,12 +129,280 @@
 <h1>Matching Algorithm<a class="headerlink" href="#matching-algorithm" title="Link to this heading">¶</a></h1>
 <section id="matcher">
 <h2>Matcher<a class="headerlink" href="#matcher" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.matcher.</span></span><span class="sig-name descname"><span class="pre">Matcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">similarity_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_adj_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secondary_adj_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/matcher/matcher.html#Matcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.matcher.Matcher" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tradeoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/matcher/matcher.html#Matcher.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.matcher.Matcher.compute" title="Link to this definition">¶</a></dt>
+<dd><p>Launch the computation for a given number of iterations, using specific QBinDiff parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tradeoff</strong> – tradeoff between the node similarity and the structure</p></li>
+<li><p><strong>epsilon</strong> – perturbation to add to the similarity matrix</p></li>
+<li><p><strong>maxiter</strong> – maximum number of iterations for the belief propagation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.confidence_score">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">confidence_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.Matcher.confidence_score" title="Link to this definition">¶</a></dt>
+<dd><p>Confidence score for each match in the nodes mapping</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.mapping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.Matcher.mapping" title="Link to this definition">¶</a></dt>
+<dd><p>Nodes mapping between the two graphs</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.primary_adj_matrix">
+<span class="sig-name descname"><span class="pre">primary_adj_matrix</span></span><a class="headerlink" href="#qbindiff.matcher.Matcher.primary_adj_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Adjacency matrix of the primary graph</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sparsity_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse_row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_squares</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/matcher/matcher.html#Matcher.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.matcher.Matcher.process" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize the matching algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sparsity_ratio</strong> – The ratio between null element over the entire similarity
+matrix</p></li>
+<li><p><strong>sparse_row</strong> – When building the sparse similarity matrix we can either
+filter out the elements by considering all the entries in the
+similarity matrix (sparse_row == False) or by considering
+each vector separately (sparse_row == True)</p></li>
+<li><p><strong>compute_squares</strong> – Whether to compute the squares matrix</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.refine">
+<span class="sig-name descname"><span class="pre">refine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/matcher/matcher.html#Matcher.refine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.matcher.Matcher.refine" title="Link to this definition">¶</a></dt>
+<dd><p>Refine the mappings between the nodes of the two graphs
+by matching the unassigned nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mapping</strong> – initial mapping</p></li>
+<li><p><strong>score_matrix</strong> – similarity matrix</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>updated raw mapping</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.secondary_adj_matrix">
+<span class="sig-name descname"><span class="pre">secondary_adj_matrix</span></span><a class="headerlink" href="#qbindiff.matcher.Matcher.secondary_adj_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Adjacency matrix of the secondary graph</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.Matcher.sim_matrix">
+<span class="sig-name descname"><span class="pre">sim_matrix</span></span><a class="headerlink" href="#qbindiff.matcher.Matcher.sim_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Similarity matrix used by the Matcher</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="beliefmwm">
 <h2>BeliefMWM<a class="headerlink" href="#beliefmwm" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.matcher.belief_propagation.</span></span><span class="sig-name descname"><span class="pre">BeliefMWM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.11.3)"><span class="pre">csr_matrix</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/matcher/belief_propagation.html#BeliefMWM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Computes the optimal solution to the <strong>Maxmimum Weight Matching problem</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim_matrix</strong> – similarity matrix (sparse numpy matrix)</p></li>
+<li><p><strong>epsilon</strong> – perturbation for algorithm convergence</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.best_mapping">
+<span class="sig-name descname"><span class="pre">best_mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.best_mapping" title="Link to this definition">¶</a></dt>
+<dd><p>Current best mapping</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.best_marginals">
+<span class="sig-name descname"><span class="pre">best_marginals</span></span><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.best_marginals" title="Link to this definition">¶</a></dt>
+<dd><p>Current associated marginals as a SparseMatrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.12)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/matcher/belief_propagation.html#BeliefMWM.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.compute" title="Link to this definition">¶</a></dt>
+<dd><p>Repeat the belief propagation round for a given number of iterations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>maxiter</strong> – Maximum number of iterations for the algorithm</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>generator that yield at each iteration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.current_mapping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.current_mapping" title="Link to this definition">¶</a></dt>
+<dd><p>Current mapping</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.current_marginals">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_marginals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.11.3)"><span class="pre">csr_matrix</span></a></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.current_marginals" title="Link to this definition">¶</a></dt>
+<dd><p>Current marginals in a sparse matrix</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.current_score">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.current_score" title="Link to this definition">¶</a></dt>
+<dd><p>Current score</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.epsilon">
+<span class="sig-name descname"><span class="pre">epsilon</span></span><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.epsilon" title="Link to this definition">¶</a></dt>
+<dd><p>Current epsilon</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.max_avg_score">
+<span class="sig-name descname"><span class="pre">max_avg_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.max_avg_score" title="Link to this definition">¶</a></dt>
+<dd><p>Current maximum average score</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.scores">
+<span class="sig-name descname"><span class="pre">scores</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.scores" title="Link to this definition">¶</a></dt>
+<dd><p>Scores list</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefMWM.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefMWM.weights" title="Link to this definition">¶</a></dt>
+<dd><p>The weights sparse matrix</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="beliefqap">
 <h2>BeliefQAP<a class="headerlink" href="#beliefqap" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.matcher.belief_propagation.</span></span><span class="sig-name descname"><span class="pre">BeliefQAP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.11.3)"><span class="pre">csr_matrix</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">squares</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.11.3)"><span class="pre">csr_matrix</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tradeoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/matcher/belief_propagation.html#BeliefQAP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qbindiff.matcher.belief_propagation.BeliefMWM" title="qbindiff.matcher.belief_propagation.BeliefMWM"><code class="xref py py-class docutils literal notranslate"><span class="pre">BeliefMWM</span></code></a></p>
+<p>Computes an approximate solution to the <strong>Quadratic Assignment problem</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim_matrix</strong> – similarity matrix (sparse numpy matrix)</p></li>
+<li><p><strong>squares</strong> – square matrix</p></li>
+<li><p><strong>tradeoff</strong> – trade-off value (close to 0 similarity, close to 1 squares (callgraph))</p></li>
+<li><p><strong>epsilon</strong> – perturbation value for convergence</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.best_mapping">
+<span class="sig-name descname"><span class="pre">best_mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.best_mapping" title="Link to this definition">¶</a></dt>
+<dd><p>Current best mapping</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.best_marginals">
+<span class="sig-name descname"><span class="pre">best_marginals</span></span><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.best_marginals" title="Link to this definition">¶</a></dt>
+<dd><p>Current associated marginals as a SparseMatrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.12)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.compute" title="Link to this definition">¶</a></dt>
+<dd><p>Repeat the belief propagation round for a given number of iterations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>maxiter</strong> – Maximum number of iterations for the algorithm</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>generator that yield at each iteration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.current_mapping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.current_mapping" title="Link to this definition">¶</a></dt>
+<dd><p>Current mapping</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.current_marginals">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_marginals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.11.3)"><span class="pre">csr_matrix</span></a></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.current_marginals" title="Link to this definition">¶</a></dt>
+<dd><p>Current marginals in a sparse matrix</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.current_score">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.current_score" title="Link to this definition">¶</a></dt>
+<dd><p>Current score of the solution</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.epsilon">
+<span class="sig-name descname"><span class="pre">epsilon</span></span><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.epsilon" title="Link to this definition">¶</a></dt>
+<dd><p>Current epsilon</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.max_avg_score">
+<span class="sig-name descname"><span class="pre">max_avg_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.max_avg_score" title="Link to this definition">¶</a></dt>
+<dd><p>Current maximum average score</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.numsquares">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numsquares</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.numsquares" title="Link to this definition">¶</a></dt>
+<dd><p>Number of squares</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.scores">
+<span class="sig-name descname"><span class="pre">scores</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.scores" title="Link to this definition">¶</a></dt>
+<dd><p>Scores list</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.matcher.belief_propagation.BeliefQAP.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><a class="headerlink" href="#qbindiff.matcher.belief_propagation.BeliefQAP.weights" title="Link to this definition">¶</a></dt>
+<dd><p>The weights sparse matrix</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

@@ -127,11 +127,11 @@
             
 <section id="parameters">
 <span id="parameters-chap"></span><h1>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h1>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">differ</span> <span class="pre">object</span></code> requires several parameters to compute the matching. These parameters are chosen by the user, which makes QBinDiff highly modular.</p>
+<p>The <a class="reference internal" href="api/differ.html#qbindiff.QBinDiff" title="qbindiff.QBinDiff"><code class="xref py py-class docutils literal notranslate"><span class="pre">differ</span> <span class="pre">object</span></code></a> requires several parameters to compute the matching. These parameters are chosen by the user, which makes QBinDiff highly modular.</p>
 <section id="distances">
 <h2>Distances<a class="headerlink" href="#distances" title="Link to this heading">¶</a></h2>
 <p>A distance is used to measure the distance (hence the similarity) between the feature vectors. Choosing a different distance could lead to different behaviors.
-Note that some features are performing better with a specific distance metric, for example the <code class="xref py py-class docutils literal notranslate"><span class="pre">Weisfeiler</span> <span class="pre">Lehman</span> <span class="pre">Graph</span> <span class="pre">Kernel</span></code> works best with the <code class="xref py py-class docutils literal notranslate"><span class="pre">cosine</span></code> similarity.</p>
+Note that some features are performing better with a specific distance metric, for example the <a class="reference internal" href="api/features.html#qbindiff.features.WeisfeilerLehman" title="qbindiff.features.WeisfeilerLehman"><code class="xref py py-class docutils literal notranslate"><span class="pre">Weisfeiler</span> <span class="pre">Lehman</span> <span class="pre">Graph</span> <span class="pre">Kernel</span></code></a> works best with the <a class="reference internal" href="api/distances.html#qbindiff.Distance.cosine" title="qbindiff.Distance.cosine"><code class="xref py py-class docutils literal notranslate"><span class="pre">cosine</span></code></a> similarity.</p>
 <p>Most of the distance functions that QBinDiff uses come from <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/spatial.distance.html">Scipy</a>. These distances are computed between two 1-D arrays. Candidate distances are then:</p>
 <ul class="simple">
 <li><p>braycurtis</p></li>
@@ -294,7 +294,7 @@ If the tradeoff is equal to 0, then the algorithm relies exclusively on the topo
 it’s equal to 1, then solely the similarity is used.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Some features (like <code class="xref py py-class docutils literal notranslate"><span class="pre">ChildNb</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">GraphCommunities</span></code>) might also consider the call graph topology, so even if you set the the tradeoff to 1 you still might end up considering the topology to some extent.</p>
+<p>Some features (like <a class="reference internal" href="api/features.html#qbindiff.features.ChildNb" title="qbindiff.features.ChildNb"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChildNb</span></code></a> or <a class="reference internal" href="api/features.html#qbindiff.features.GraphCommunities" title="qbindiff.features.GraphCommunities"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphCommunities</span></code></a>) might also consider the call graph topology, so even if you set the the tradeoff to 1 you still might end up considering the topology to some extent.</p>
 </div>
 </section>
 <section id="normalization">
@@ -303,7 +303,7 @@ it’s equal to 1, then solely the similarity is used.</p>
 <p>It simplify the graph by removing thunk functions, i.e. functions that are just trampolines to another function; they usually are just made of a single <cite>JMP</cite> instruction.</p>
 <p>Removing thunk functions has the benefit of reducing the size of the binary, hence improving the efficiency and the accuracy.</p>
 <p>Reverse-engineers are usually interested in matching more interesting functions rather than thunk functions, that’s why enabling the normalization pass might be beneficial.</p>
-<p>A custom normalization pass can also be set by subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">QBinDiff</span></code> and overriding the method <code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize()</span></code>.</p>
+<p>A custom normalization pass can also be set by subclassing <a class="reference internal" href="api/differ.html#qbindiff.QBinDiff" title="qbindiff.QBinDiff"><code class="xref py py-class docutils literal notranslate"><span class="pre">QBinDiff</span></code></a> and overriding the method <a class="reference internal" href="api/differ.html#qbindiff.QBinDiff.normalize" title="qbindiff.QBinDiff.normalize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize()</span></code></a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In some cases, the normalization may lead to a bug with the BinExport backend. This is due to some specificities of BinExport protobuf file. This may be fixed in the future.</p>
