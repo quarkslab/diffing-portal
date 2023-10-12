@@ -18,7 +18,7 @@ jobs:
         run: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
-            make libmagic1 git
+            make libmagic1
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -85,6 +85,9 @@ jobs:
     needs: build_doc
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v3
         with:
           name: doc-pages
