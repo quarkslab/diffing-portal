@@ -151,135 +151,18 @@ This is a experminetal new metric that combines the jaccard index and the canber
 <section id="jaccard-strong">
 <h3>Jaccard-strong<a class="headerlink" href="#jaccard-strong" title="Link to this heading">¶</a></h3>
 <p>Formally it is defined as:</p>
-<aside class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">d(u, v) = \sum_{i=0}^n\frac{f(u_i, v_i)}{ | \{ i  |  u_i \neq 0 \lor v_i \neq 0 \} | }
-
-</span>)</p>
-<p>latex exited with error
-[stdout]
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
- restricted \write18 enabled.
-entering extended mode
-(./math.tex
-LaTeX2e &lt;2022-11-01&gt; patch level 1
-L3 programming layer &lt;2023-02-22&gt;
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
-For additional information on amsmath, use the `?' option.
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
-
-! LaTeX Error: File `anyfontsize.sty' not found.
-
-Type X to quit or &lt;RETURN&gt; to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-&lt;read *&gt; 
-         
-l.8 \usepackage
-               {bm}^^M
-No pages of output.
-Transcript written on math.log.
-</p>
-</aside>
-<aside class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">with\ u, v \in \mathbb{R}^n
-
-</span>)</p>
-<p>latex exited with error
-[stdout]
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
- restricted \write18 enabled.
-entering extended mode
-(./math.tex
-LaTeX2e &lt;2022-11-01&gt; patch level 1
-L3 programming layer &lt;2023-02-22&gt;
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
-For additional information on amsmath, use the `?' option.
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
-
-! LaTeX Error: File `anyfontsize.sty' not found.
-
-Type X to quit or &lt;RETURN&gt; to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-&lt;read *&gt; 
-         
-l.8 \usepackage
-               {bm}^^M
-No pages of output.
-Transcript written on math.log.
-</p>
-</aside>
-<p>where the function <cite>f</cite> is defined like this:</p>
-<aside class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">f(x, y) =
+<div class="math">
+<p><img src="../../../_images/math/43e1957d7772a97572e7239f2c491db07133067e.png" alt="d(u, v) = \sum_{i=0}^n\frac{f(u_i, v_i)}{ | \{ i  |  u_i \neq 0 \lor v_i \neq 0 \} | }"/></p>
+</div><div class="math">
+<p><img src="../../../_images/math/5199be9e7590b9cc74dccdcea78230fc558269e6.png" alt="with\ u, v \in \mathbb{R}^n"/></p>
+</div><p>where the function <cite>f</cite> is defined like this:</p>
+<div class="math">
+<p><img src="../../../_images/math/a2338741e053e21fc7694ce5e1ef39f26267a7f2.png" alt="f(x, y) =
 \begin{cases}
  0 &amp; \text{if } x = 0 \lor y = 0 \\
  1 - \frac{|x - y|}{|x| + |y|} &amp; \text{otherwise}
- \end{cases}
-
-</span>)</p>
-<p>latex exited with error
-[stdout]
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
- restricted \write18 enabled.
-entering extended mode
-(./math.tex
-LaTeX2e &lt;2022-11-01&gt; patch level 1
-L3 programming layer &lt;2023-02-22&gt;
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
-For additional information on amsmath, use the `?' option.
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
-
-! LaTeX Error: File `anyfontsize.sty' not found.
-
-Type X to quit or &lt;RETURN&gt; to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-&lt;read *&gt; 
-         
-l.8 \usepackage
-               {bm}^^M
-No pages of output.
-Transcript written on math.log.
-</p>
-</aside>
-</section>
+ \end{cases}"/></p>
+</div></section>
 </section>
 <section id="epsilon">
 <h2>Epsilon<a class="headerlink" href="#epsilon" title="Link to this heading">¶</a></h2>

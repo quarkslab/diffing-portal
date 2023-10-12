@@ -179,126 +179,15 @@ from X and the jth array from Y.</p>
 <dd><p>Compute a variation of the jaccard distances between the vectors in X and Y using
 the optional array of weights w.</p>
 <p>The distance function between two vector <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">v</span></code> is the following:</p>
-<aside class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">\sum_{i}\frac{f(u_i, v_i)}{ | \{ i | u_i \neq 0 \lor v_i \neq 0 \} | }</span>)</p>
-<p>latex exited with error
-[stdout]
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
- restricted \write18 enabled.
-entering extended mode
-(./math.tex
-LaTeX2e &lt;2022-11-01&gt; patch level 1
-L3 programming layer &lt;2023-02-22&gt;
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
-For additional information on amsmath, use the `?' option.
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
-
-! LaTeX Error: File `anyfontsize.sty' not found.
-
-Type X to quit or &lt;RETURN&gt; to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-&lt;read *&gt; 
-         
-l.8 \usepackage
-               {bm}^^M
-No pages of output.
-Transcript written on math.log.
-</p>
-</aside>
-<p>where the function <code class="docutils literal notranslate"><span class="pre">f</span></code> is defined like this:</p>
-<aside class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">f(x, y) = \begin{cases} 0 &amp; \text{if } x = 0 \lor y = 0 \\ 1 - \frac{|x - y|}{|x| + |y|} &amp; \text{otherwise.} \end{cases}</span>)</p>
-<p>latex exited with error
-[stdout]
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
- restricted \write18 enabled.
-entering extended mode
-(./math.tex
-LaTeX2e &lt;2022-11-01&gt; patch level 1
-L3 programming layer &lt;2023-02-22&gt;
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
-For additional information on amsmath, use the `?' option.
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
-
-! LaTeX Error: File `anyfontsize.sty' not found.
-
-Type X to quit or &lt;RETURN&gt; to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-&lt;read *&gt; 
-         
-l.8 \usepackage
-               {bm}^^M
-No pages of output.
-Transcript written on math.log.
-</p>
-</aside>
-<p>If the optional weights are specified the formula becomes:</p>
-<aside class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">\sum_{i}\frac{w_i * f(u_i, v_i)}{ | \{ i | u_i \neq 0 \lor v_i \neq 0 \} | }</span>)</p>
-<p>latex exited with error
-[stdout]
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
- restricted \write18 enabled.
-entering extended mode
-(./math.tex
-LaTeX2e &lt;2022-11-01&gt; patch level 1
-L3 programming layer &lt;2023-02-22&gt;
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
-(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
-For additional information on amsmath, use the `?' option.
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
-(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
-(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
-
-! LaTeX Error: File `anyfontsize.sty' not found.
-
-Type X to quit or &lt;RETURN&gt; to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-&lt;read *&gt; 
-         
-l.8 \usepackage
-               {bm}^^M
-No pages of output.
-Transcript written on math.log.
-</p>
-</aside>
-<dl class="field-list simple">
+<div class="math">
+<p><img src="../../../../_images/math/ad8df2855417b574e4b73972bb294347cfa820db.png" alt="\sum_{i}\frac{f(u_i, v_i)}{ | \{ i | u_i \neq 0 \lor v_i \neq 0 \} | }"/></p>
+</div><p>where the function <code class="docutils literal notranslate"><span class="pre">f</span></code> is defined like this:</p>
+<div class="math">
+<p><img src="../../../../_images/math/e0a7a1ec283582e4d20e9bdcd4502051bbf06d8b.png" alt="f(x, y) = \begin{cases} 0 &amp; \text{if } x = 0 \lor y = 0 \\ 1 - \frac{|x - y|}{|x| + |y|} &amp; \text{otherwise.} \end{cases}"/></p>
+</div><p>If the optional weights are specified the formula becomes:</p>
+<div class="math">
+<p><img src="../../../../_images/math/8def00103ba790bdb45201a393f7f87bd8a7ab2c.png" alt="\sum_{i}\frac{w_i * f(u_i, v_i)}{ | \{ i | u_i \neq 0 \lor v_i \neq 0 \} | }"/></p>
+</div><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X</strong> – array-like of shape (n_samples_X, n_features)
