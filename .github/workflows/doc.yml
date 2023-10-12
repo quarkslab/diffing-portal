@@ -9,7 +9,7 @@ jobs:
   build_doc:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # to fetch code (actions/checkout)
+      contents: write # to install dependencies
 
     steps:
       - name: Install dependencies
