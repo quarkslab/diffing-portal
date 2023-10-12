@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_doc:
-    runs-on: ubuntu-latest
+    runs-on: pandoc/latex
     permissions:
       contents: read # to fetch code (actions/checkout)
 
@@ -16,7 +16,7 @@ jobs:
         run: |
           sudo apt-get update
           DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC sudo apt-get install -y \
-            make libmagic1 pandoc texlive-full
+            make libmagic1
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -74,7 +74,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: doc-pages
-          path: ./doc/_build/html
+          path: ./_build/html
 
   # deploy:
   #   runs-on: ubuntu-latest
