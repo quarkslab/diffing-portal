@@ -16,8 +16,8 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC sudo apt-get install -y \
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
             make libmagic1
 
       - name: Checkout
