@@ -13,4 +13,4 @@ quokka-project
 python-binexport
 python-bindiff
 idascript
-# qbindiff
+qbindiff
