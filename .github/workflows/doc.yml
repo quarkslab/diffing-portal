@@ -15,6 +15,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout Awesome-Binary-Similarity
+        uses: actions/checkout@v4
+        with:
+          repository: SystemSecurityStorm/Awesome-Binary-Similarity
+          path: Awesome-Binary-Similarity
+
       - name: Checkout QBinDiff
         uses: actions/checkout@v4
         with:
