@@ -150,34 +150,12 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>.
 </pre></div>
 </div>
-</section>
-<section id="optional-backend-dependencies">
-<h2>Optional Backend Dependencies<a class="headerlink" href="#optional-backend-dependencies" title="Link to this heading">¶</a></h2>
-<p>The various program representation backend that can be used are to
-be installed separately (in the same virtualenv than QBinDiff).</p>
-<p>Available backends are:</p>
+<p>This will install also all the following backend loaders:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/quarkslab/quokka">Quokka</a>, provided by Quarkslab</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>qbindiff<span class="o">[</span>quokka<span class="o">]</span>
-</pre></div>
-</div>
-<ul class="simple">
 <li><p><a class="reference external" href="https://github.com/google/binexport">BinExport</a> , developed by Google. Through the python bindings provided by Quarkslab with <a class="reference external" href="https://github.com/quarkslab/python-binexport">python-binexport</a></p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>qbindiff<span class="o">[</span>binexport<span class="o">]</span>
-</pre></div>
-</div>
-<ul class="simple">
 <li><p>IDA Pro (to be used directly within IDA) through <a class="reference external" href="https://github.com/quarkslab/idascript">idascript</a>.</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>qbindiff<span class="o">[</span>ida<span class="o">]</span>
-</pre></div>
-</div>
-<p>You can install multiple backend loaders by using a comma to separate them. Ex:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>qbindiff<span class="o">[</span>quokka,binexport,ida<span class="o">]</span>
-</pre></div>
-</div>
 </section>
 </section>
 
@@ -202,7 +180,6 @@ be installed separately (in the same virtualenv than QBinDiff).</p>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Install</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#pip-package">Pip package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#optional-backend-dependencies">Optional Backend Dependencies</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="how.html">How it works</a></li>
