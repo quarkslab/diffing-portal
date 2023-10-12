@@ -77,7 +77,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: doc-pages
-          path: ./_build/html
+          path: ./build/html
 
   # deploy:
   #   runs-on: ubuntu-latest
