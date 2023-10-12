@@ -23,11 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout Awesome-Binary-Similarity
+      - name: Checkout quokka
         uses: actions/checkout@v4
         with:
-          repository: SystemSecurityStorm/Awesome-Binary-Similarity
-          path: Awesome-Binary-Similarity
+          repository: quarkslab/quokka
+          path: quokka
 
       - name: Checkout QBinDiff
         uses: actions/checkout@v4
@@ -53,11 +53,11 @@ jobs:
           repository: quarkslab/python-bindiff
           path: python-bindiff
 
-      - name: Checkout quokka
+      - name: Checkout Awesome-Binary-Similarity
         uses: actions/checkout@v4
         with:
-          repository: quarkslab/quokka
-          path: quokka
+          repository: SystemSecurityStorm/Awesome-Binary-Similarity
+          path: Awesome-Binary-Similarity
 
       - name: "Set up Python"
         uses: actions/setup-python@v4
