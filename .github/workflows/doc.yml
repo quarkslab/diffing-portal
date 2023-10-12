@@ -9,7 +9,7 @@ jobs:
   build_doc:
     runs-on: ubuntu-latest
     container:
-      image: pandoc/latex:latest
+      image: pandoc/latex:latest-ubuntu
     permissions:
       contents: read # to fetch code (actions/checkout)
 
