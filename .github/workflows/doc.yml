@@ -16,8 +16,7 @@ jobs:
         run: |
           sudo apt-get update
           DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC sudo apt-get install -y \
-            python3 python-is-python3 python3-venv make git libmagic1 \
-            pandoc texlive-full
+            make libmagic1 pandoc texlive-full
 
       - name: Checkout
         uses: actions/checkout@v4
