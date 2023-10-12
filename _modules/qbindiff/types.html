@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
@@ -95,25 +95,29 @@
           <div class="body" role="main">
             
 <h1>Source code for qbindiff.types</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Copyright 2023 Quarkslab</span>
+<span></span><span class="c1"># Copyright 2023 Quarkslab</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
 
-<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class="sd">you may not use this file except in compliance with the License.</span>
-<span class="sd">You may obtain a copy of the License at</span>
+<span class="sd">&quot;&quot;&quot;Contains all the type alias/definitions used by the module</span>
 
-<span class="sd">    http://www.apache.org/licenses/LICENSE-2.0</span>
-
-<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
-<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="sd">See the License for the specific language governing permissions and</span>
-<span class="sd">limitations under the License.</span>
+<span class="sd">This module contains all definitions of the type aliases and the generic enums</span>
+<span class="sd">used by qbindiff.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -124,106 +128,128 @@
 
 <span class="kn">from</span> <span class="nn">qbindiff.abstract</span> <span class="kn">import</span> <span class="n">GenericGraph</span>
 
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">qbindiff</span> <span class="kn">import</span> <span class="n">Program</span>
+
+<span class="n">FeatureValue</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Type of a feature value.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">FeatureValue</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
 
+<span class="n">Positive</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Float greater than zero</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Positive</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span>
 
+<span class="n">Ratio</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Float bewteen 0 and 1</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Ratio</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span>
 
+<span class="n">Idx</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">An integer representing an index in a matrix.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Idx</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span>
 
+<span class="n">Addr</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">An integer representing an address within a program</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Addr</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span>
 
+<span class="n">Item</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Any</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Item, entity being matched. The only constraint is to be hashable</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Item</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Any</span>
 
+<span class="n">Anchors</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Item</span><span class="p">]]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Pair of lists of user defined index correspondences. Default None.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Anchors</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Item</span><span class="p">]]</span>
 
+<span class="n">RawMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">]]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Pair of lists of indexes that are mapped together.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">RawMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">]]</span>
 
+<span class="n">Match</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Match&quot;</span><span class="p">,</span> <span class="s2">&quot;primary secondary similarity confidence squares&quot;</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Match represent the matching between two functions and can hold the similarity between the two</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Match</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Match&quot;</span><span class="p">,</span> <span class="s2">&quot;primary secondary similarity confidence squares&quot;</span><span class="p">)</span>
 
 
+<span class="n">ExtendedMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Item</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">An extended version of RawMapping with two more lists recording pairing similarity and induced number of squares.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">ExtendedMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Item</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
 
+<span class="n">Dtype</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Numpy data type</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Dtype</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span>
 
+<span class="n">Vector</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Arbitrary d-Dimensional array. Used to represent a vector.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Vector</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span>
 
+<span class="n">Matrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Arbitrary nxd-Dimensional array. Used to represent a matrix.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Matrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span>
 
+<span class="n">FeatureVectors</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Float nxd-Dimensional array. Each n rows is represented as a dimensionnal feature vector.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">FeatureVectors</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span>
 
+<span class="n">AdjacencyMatrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Boolean nxn-Dimensional array. It&#39;s the adjacency matrix representation of the graph.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">AdjacencyMatrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span>
 
+<span class="n">SimMatrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Float nxm-Dimensional array. Records the pairwise similarity scores between nodes of both graphs to diff.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">SimMatrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span>
 
+<span class="n">SparseMatrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">csr_matrix</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Float nxm-Dimensional array. A sparse version of the above SimMatrix</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">SparseMatrix</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">csr_matrix</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Float n-Dimensional sparse array.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="n">SparseVector</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">csr_array</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Path</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="n">PathLike</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span>
-
+<span class="n">Graph</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">GenericGraph</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A generic Graph, iterable over the nodes</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">Graph</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">GenericGraph</span>
+
+<span class="n">SparseVector</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">csr_array</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Float n-Dimensional sparse array.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">PathLike</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Path</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="GenericPass">
+<a class="viewcode-back" href="../../qbindiff/doc/source/api/types.html#qbindiff.GenericPass">[docs]</a>
+<span class="k">class</span> <span class="nc">GenericPass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function type for Passes&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
+        <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the pass that operates on the similarity matrix inplace&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
 
 
 <div class="viewcode-block" id="Distance">

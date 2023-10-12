@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Symbol Porting &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../_static/insipid.js"></script>
+    <script defer src="../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="First steps with Qbindiff" href="basic-diffing.html" />
+    <link rel="prev" title="Quokka: String Deciphering" href="ex1_string_decipher.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="tutorials.html" accesskey="U">Exporters</a>
+            <a class="top" href="#">Symbol Porting</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="ex1_string_decipher.html" class="nav-icon previous" title="previous:&#13;Quokka: String Deciphering" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="basic-diffing.html" class="nav-icon next" title="next:&#13;First steps with Qbindiff" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="ex1_string_decipher.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Quokka: String Deciphering
+          </span>
+        </div>
+      </a>
+      <a class="next" href="basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            First steps with Qbindiff
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="Symbol-Porting">
+<h1>Symbol Porting<a class="headerlink" href="#Symbol-Porting" title="Link to this heading">¶</a></h1>
+<section id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<p>Porting symbols from one binary to another is a standard using case in diffing. Indeed, it is handy in reverse-engineering to apply function symbols to a stripped binary if we are able to put our hands on a similar binary with symbols.</p>
+<p>For the purpose of this practical we are going to use to versions of <code class="docutils literal notranslate"><span class="pre">libsensorservice.so</span></code> for which the second version has been stripped.</p>
+<div style="text-align: center;"><a href="../_static/tutorials/libsensorservice.tar.gz"><i class="fa fa-download fa-lg"></i><br/>binary</a></div><br/><div class="admonition info">
+   <p class="admonition-title"><b><i class="fa fa-question-circle"> </i> Question</b></p>
+   <p> Script the diff with python-bindiff and port the symbols to the second one with <a href="https://lief.quarkslab.com">LIEF</a>.
+   </p>
+</div></section>
+<section id="I.-Performing-the-diff">
+<h2>I. Performing the diff<a class="headerlink" href="#I.-Performing-the-diff" title="Link to this heading">¶</a></h2>
+<p>To perform the diff with <code class="docutils literal notranslate"><span class="pre">python-bindiff</span></code> we first need to export the two binaries.</p>
+<p>If we don’t have BinExport files we can perform the diff from the binaries with:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span>
+
+<span class="n">diff</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">from_binary_files</span><span class="p">(</span><span class="s2">&quot;libsensorservice-1.so&quot;</span><span class="p">,</span> <span class="s2">&quot;libsensorservice-2.so&quot;</span><span class="p">,</span> <span class="s2">&quot;result.BinDiff&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>If we already have the BinExport files, we can perform the diff with:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span>
+
+<span class="n">diff</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">from_binexport_files</span><span class="p">(</span><span class="s2">&quot;libsensorservice-1.so.BinExport&quot;</span><span class="p">,</span> <span class="s2">&quot;libsensorservice-2.so.BinExport&quot;</span><span class="p">,</span> <span class="s2">&quot;result.BinDiff&quot;</span><span class="p">)</span>
+<span class="n">diff</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;bindiff.bindiff.BinDiff at 0x7f07ff1766b0&gt;
+</pre></div></div>
+</div>
+<p><strong>Exercise</strong>: Print the matches using the <code class="docutils literal notranslate"><span class="pre">function_matches</span></code> attributes</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">diff</span><span class="o">.</span><span class="n">function_matches</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">address1</span><span class="si">:</span><span class="s2">#08x</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name1</span><span class="si">}</span><span class="s2"> --&gt; </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">address2</span><span class="si">:</span><span class="s2">#08x</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0x016560:__on_dlclose --&gt; 0x016580:start
+0x016570:__emutls_unregister_key --&gt; 0x016590:sub_00016590
+0x016580:__on_dlclose_late --&gt; 0x0165a0:j_nullsub_1
+0x016590:android::BatteryService::BatteryService(void) --&gt; 0x0165b0:sub_000165B0
+0x0165d0:android::BatteryService::enableSensorImpl(uint,int) --&gt; 0x0165f0:sub_000165F0
+0x0166c0:android::BatteryService::checkService(void) --&gt; 0x0166e0:sub_000166E0
+0x0167f0:android::BatteryService::disableSensorImpl(uint,int) --&gt; 0x016810:sub_00016810
+0x0168d0:android::BatteryService::cleanupImpl(uint) --&gt; 0x0168f0:sub_000168F0
+0x0169a0:android::Mutex::~Mutex() --&gt; 0x0169c0:j__pthread_mutex_destroy
+0x0169b0:android::SortedVector&lt;android::BatteryService::Info&gt;::~SortedVector() --&gt; 0x0169d0:sub_000169D0
+</pre></div></div>
+</div>
+<p><strong>Note</strong>: Names are demangled here! To add symbols we will need to add mangled names.</p>
+</section>
+<section id="II.-Loading-symbols">
+<h2>II. Loading symbols<a class="headerlink" href="#II.-Loading-symbols" title="Link to this heading">¶</a></h2>
+<p>We now need to load symbols from the two ELF binaries to be able to port from one to the other using diff information. Let’s do this using <a class="reference external" href="https://lief.quarkslab.com">LIEF</a> that enables parsing and modifying ELF binaries. We are going to add static symbols for our purpose here.</p>
+<p><strong>Exercise</strong>: Load the two programs using LIEF, and compute a dictionary of address -&gt; mangled name for the first binary.</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lief</span>
+
+<span class="n">binary1</span> <span class="o">=</span> <span class="n">lief</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;libsensorservice-1.so&quot;</span><span class="p">)</span>
+<span class="n">binary2</span> <span class="o">=</span> <span class="n">lief</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;libsensorservice-2.so&quot;</span><span class="p">)</span>
+
+<span class="n">symbols</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">binary1</span><span class="o">.</span><span class="n">static_symbols</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sym</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">symbols</span><span class="o">.</span><span class="n">items</span><span class="p">())[:</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">addr</span><span class="si">:</span><span class="s2">#08x</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">sym</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0x000000: strdup
+0x041850: __dso_handle
+0x016560: __on_dlclose
+0x016580: __on_dlclose_late
+0x000270: abitag
+0x016570: __emutls_unregister_key
+0x016d30: _GLOBAL__sub_I_BatteryService.cpp
+0x0169d0: _ZN7android12SortedVectorINS_14BatteryService4InfoEED0Ev
+0x0169b0: _ZN7android12SortedVectorINS_14BatteryService4InfoEED2Ev
+0x0168d0: _ZN7android14BatteryService11cleanupImplEj
+</pre></div></div>
+</div>
+</section>
+<section id="III.-Porting-symbols">
+<h2>III. Porting symbols<a class="headerlink" href="#III.-Porting-symbols" title="Link to this heading">¶</a></h2>
+<p>We can now assemble everything together to port symbols to <code class="docutils literal notranslate"><span class="pre">binary2</span></code> by using:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://lief-project.github.io/doc/latest/api/python/elf.html#lief.ELF.Binary.add_static_symbol">add_static_symbol(sym)</a> to add a symbol to an ELF</p></li>
+<li><p><a class="reference external" href="https://lief-project.github.io/doc/latest/api/python/elf.html#lief.ELF.Binary.write">write(s)</a> to export a new ELF file</p></li>
+</ul>
+<p><strong>Exercise</strong>: Use diffing result to add symbols to the second binary</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sym</span> <span class="o">=</span> <span class="n">lief</span><span class="o">.</span><span class="n">Symbol</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">diff</span><span class="o">.</span><span class="n">function_matches</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">match</span><span class="o">.</span><span class="n">address1</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">:</span>
+        <span class="c1"># Create the symbol</span>
+        <span class="n">sym</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">address1</span><span class="p">]</span>
+        <span class="n">sym</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">address2</span>
+        <span class="n">binary2</span><span class="o">.</span><span class="n">add_static_symbol</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span>
+
+<span class="c1"># Save the patched binary</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;libsensorservice-2-with-symbols.so&quot;</span>
+<span class="n">binary2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;new library created: </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+new library created: libsensorservice-2-with-symbols.so
+</pre></div></div>
+</div>
+<p>By loading at the generated shared library the result is the following:</p>
+<figure class="align-center">
+    <img alt="symbols after porting", src="../_static/tutorials/symbols_after_porting.png"/>
+</figure><script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+
+  var tmp = coll[i].nextElementSibling;
+  tmp.style.display = "none";
+  tmp.nextElementSibling.style.display = "none";
+
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    var content2 = content.nextElementSibling;
+    if (content.style.display === "none") {
+      content.style.display = "";
+      content2.style.display = "";
+      this.innerHTML = "Hide Solution";
+    } else {
+      content.style.display = "none";
+      content2.style.display = "none";
+      this.innerHTML = "Show Solution";
+    }
+  });
+}
+</script></section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Exporters</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html#python-bindiff">Python-bindiff</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Symbols Porting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic-diffing.html">Automating a Diff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch-diffing.html">Batch Diffing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="ex1_string_decipher.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Quokka: String Deciphering
+          </span>
+        </div>
+      </a>
+      <a class="next" href="basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            First steps with Qbindiff
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../_sources/tutorials/03a_diffing_porting_symbols.ipynb.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

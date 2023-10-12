@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
@@ -95,30 +95,36 @@
           <div class="body" role="main">
             
 <h1>Source code for qbindiff.differ</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Copyright 2023 Quarkslab</span>
+<span></span><span class="c1"># Copyright 2023 Quarkslab</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
 
-<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class="sd">you may not use this file except in compliance with the License.</span>
-<span class="sd">You may obtain a copy of the License at</span>
+<span class="sd">&quot;&quot;&quot;Binary and generic differs</span>
 
-<span class="sd">    http://www.apache.org/licenses/LICENSE-2.0</span>
-
-<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
-<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="sd">See the License for the specific language governing permissions and</span>
-<span class="sd">limitations under the License.</span>
+<span class="sd">This module contains the implementations of a generic differ (class Differ)</span>
+<span class="sd">that can be subclassed for specific use cases.</span>
+<span class="sd">It also contains the standard implementation for binary diffing (class QBinDiff)</span>
+<span class="sd">and for directed graphs diffing (class DiGraphDiffing)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">tqdm</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span>
 <span class="kn">from</span> <span class="nn">datasketch</span> <span class="kn">import</span> <span class="n">MinHash</span>
-<span class="kn">from</span> <span class="nn">networkx</span> <span class="kn">import</span> <span class="n">DiGraph</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Callable</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="c1"># third-party imports</span>
 <span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BindiffFile</span>
@@ -144,6 +150,9 @@
     <span class="n">Distance</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">qbindiff.mapping.bindiff</span> <span class="kn">import</span> <span class="n">export_to_bindiff</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">GenericPass</span>
 
 
 <div class="viewcode-block" id="Differ">
@@ -317,7 +326,7 @@
 
 <div class="viewcode-block" id="Differ.register_prepass">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.register_prepass">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_prepass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">register_prepass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">GenericPass</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a new pre-pass that will operate on the similarity matrix.</span>
 <span class="sd">        The passes will be called in the same order as they are registered and each one</span>
@@ -327,7 +336,6 @@
 
 <span class="sd">        :param pass_func: Pass method to apply on the similarity matrix. Example : a Pass that first matches import</span>
 <span class="sd">            functions.</span>
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_pre_passes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">))</span></div>
@@ -335,14 +343,13 @@
 
 <div class="viewcode-block" id="Differ.register_postpass">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.register_postpass">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_postpass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">register_postpass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">GenericPass</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a new post-pass that will operate on the similarity matrix.</span>
 <span class="sd">        The passes will be called in the same order as they are registered and each one</span>
 <span class="sd">        of them will operate on the output of the previous one.</span>
 
 <span class="sd">        :param pass_func: Pass method to apply on the similarity matrix. Example : a Pass that extracts graph features.</span>
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_post_passes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">))</span></div>
@@ -449,6 +456,70 @@
 
 
 
+<span class="k">class</span> <span class="nc">GraphDiffer</span><span class="p">(</span><span class="n">Differ</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Differ implementation for two generic networkx.Graph instances (undirected graphs)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">GraphWrapper</span><span class="p">(</span><span class="n">GenericGraph</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A wrapper for networkx.Graph. It has no distinction between node labels and nodes</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">graph</span>
+
+        <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Return a iterator over the items. Each item is {node_label: node}</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">node</span><span class="p">,</span> <span class="n">node</span>
+
+        <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_label</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns the node identified by the `node_label`</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">node_label</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span> <span class="nf">node_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Return an iterator over the node labels</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">nodes</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Return an iterator over the nodes</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">nodes</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Return an iterator over the edges.</span>
+<span class="sd">            An edge is a pair (node_label_a, node_label_b)</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">secondary</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphDiffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">GraphWrapper</span><span class="p">(</span><span class="n">primary</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">GraphWrapper</span><span class="p">(</span><span class="n">secondary</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_prepass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gen_sim_matrix</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gen_sim_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the similarity matrix</span>
+
+<span class="sd">        :param sim_matrix: The similarity matrix of type py:class:`qbindiff.types.SimMatrix`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sim_matrix</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">1</span>
+
+
 <div class="viewcode-block" id="DiGraphDiffer">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.DiGraphDiffer">[docs]</a>
 <span class="k">class</span> <span class="nc">DiGraphDiffer</span><span class="p">(</span><span class="n">Differ</span><span class="p">):</span>
@@ -457,7 +528,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">DiGraphWrapper</span><span class="p">(</span><span class="n">GenericGraph</span><span class="p">):</span>
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">DiGraph</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            A wrapper for DiGraph. It has no distinction between node labels and nodes</span>
 
@@ -483,7 +554,7 @@
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Return an iterator over the node labels</span>
 <span class="sd">            &quot;&quot;&quot;</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">nodes</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">nodes</span>
 
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
@@ -498,9 +569,9 @@
 <span class="sd">            Return an iterator over the edges.</span>
 <span class="sd">            An edge is a pair (node_label_a, node_label_b)</span>
 <span class="sd">            &quot;&quot;&quot;</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary</span><span class="p">:</span> <span class="n">DiGraph</span><span class="p">,</span> <span class="n">secondary</span><span class="p">:</span> <span class="n">DiGraph</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">secondary</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DiGraphDiffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">DiGraphWrapper</span><span class="p">(</span><span class="n">primary</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">DiGraphWrapper</span><span class="p">(</span><span class="n">secondary</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
