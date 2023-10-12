@@ -82,6 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    needs: build_doc
 
     steps:
       - uses: actions/download-artifact@v3
