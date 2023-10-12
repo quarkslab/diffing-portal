@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Diffing Portal &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="_static/documentation_options.js?v=3b889da3"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="_static/insipid.js"></script>
+    <script defer src="_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Binexport" href="exporter/binexport.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <span class="parent">Diffing Portal</span>
+            <a class="top" href="#">Diffing Portal</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="exporter/binexport.html" class="nav-icon next" title="next:&#13;Binexport" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="next" href="exporter/binexport.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Binexport
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="diffing-portal">
+<h1>Diffing Portal<a class="headerlink" href="#diffing-portal" title="Link to this heading">¶</a></h1>
+<p>This documentation aims to provide various resources on binary diffing which is handy for reverse-engineering.
+Tools and associated publications related to diffing are slightly scattered online thus the goal is to
+reference them here by centralizing information.</p>
+<section id="diffing">
+<h2>Diffing<a class="headerlink" href="#diffing" title="Link to this heading">¶</a></h2>
+<p>Binary diffing is usually performed between two binaries, usually referred as primary and secondary.
+Diffing requires comparing the two programs using common artifacts. At binary-level, disassemblers usually
+lift the program into functions that encode the different functionalities provided by the program.
+This lifting requires identifying accurately functions content, their bounds etc. It is usually the
+last refinement steps of the disassembly before decompilation. As such, diffing is usually performed
+at function level. Diffing aims at computing an assignment between functions from primary to secondary.
+The assignment is usually 1-to-1 but by means of optimization or obfuscation, functions can be inlined
+or split. As such some utilities tries computing an M-to-N mapping between functions.</p>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Most differs rely on existing disassemblers like IDA Pro or Ghidra for disassembly as they work on a
+disassembled representation of the program. However they usually rely on an intermediate format
+allowing to perform the diff outside of the disassembler context. The software generating this file
+is usually implemented as a disassembler plugin and is called exporter. The Figure below shows the
+relationships between some disassemblers, exporters and differs.</p>
+<figure class="align-center"><?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="653px" height="582px" viewBox="-0.5 -0.5 653 582"><defs/><g><rect x="0" y="1" width="650" height="190" rx="28.5" ry="28.5" fill="#d8f0f2" stroke="#0e8088" stroke-width="2" stroke-dasharray="6 6" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-end; justify-content: unsafe flex-start; width: 648px; height: 1px; padding-top: 185px; margin-left: 2px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: left;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">      Differs</div></div></div></foreignObject><text x="2" y="185" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">      Differs</text></switch></g><rect x="0" y="211" width="650" height="190" rx="28.5" ry="28.5" fill="#e8e6fc" stroke="#56517e" stroke-width="2" stroke-dasharray="6 6" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-end; justify-content: unsafe flex-start; width: 648px; height: 1px; padding-top: 395px; margin-left: 2px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: left;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">      Exporters</div></div></div></foreignObject><text x="2" y="395" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">      Exporters</text></switch></g><rect x="0" y="431" width="650" height="120" rx="18" ry="18" fill="#faeee1" stroke="#b46504" stroke-width="2" stroke-dasharray="6 6" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-end; justify-content: unsafe flex-start; width: 648px; height: 1px; padding-top: 545px; margin-left: 2px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: left;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">      Disassemblers</div></div></div></foreignObject><text x="2" y="545" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">      Disassemblers</text></switch></g><a xlink:href="https://github.com/quarkslab/qbindiff/blob/main/src/qbindiff/loader/backend/binexport.py" target="_blank"><path d="M 427.5 165 L 337.14 216.9" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 331.94 219.89 L 336.88 212.43 L 337.14 216.9 L 340.87 219.37 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/quarkslab/qbindiff/blob/main/src/qbindiff/loader/backend/quokka.py" target="_blank"><path d="M 502.5 165 L 556.79 293.41" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 559.13 298.94 L 552.33 293.13 L 556.79 293.41 L 559.7 290.01 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/quarkslab/qbindiff" target="_blank"><rect x="390" y="105" width="150" height="60" rx="9" ry="9" fill="#b0e3e6" stroke="#0e8088" stroke-width="3" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 135px; margin-left: 391px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 18px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; overflow-wrap: normal;"><font color="#0c6c73">QBinDiff</font></div></div></div></foreignObject><text x="465" y="140" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="18px" text-anchor="middle" font-weight="bold">QBinDiff</text></switch></g></a><path d="M 180 165 L 151.77 292.96" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 150.48 298.82 L 148.3 290.14 L 151.77 292.96 L 156.11 291.87 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/><a xlink:href="https://github.com/google/bindiff" target="_blank"><rect x="110" y="105" width="140" height="60" rx="9" ry="9" fill="#b0e3e6" stroke="#0e8088" stroke-width="3" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 135px; margin-left: 111px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 18px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; overflow-wrap: normal;"><font color="#0c6c73">BinDiff</font></div></div></div></foreignObject><text x="180" y="140" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="18px" text-anchor="middle" font-weight="bold">BinDiff</text></switch></g></a><a xlink:href="https://github.com/google/binexport/tree/main/ida" target="_blank"><path d="M 150 361 L 452.16 458.47" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 457.87 460.31 L 449.03 461.66 L 452.16 458.47 L 451.49 454.05 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/google/binexport/tree/main/java" target="_blank"><path d="M 150 361 L 317.85 456.91" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 323.06 459.89 L 314.13 459.39 L 317.85 456.91 L 318.1 452.45 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/google/binexport/tree/main/binaryninja" target="_blank"><path d="M 150 361 L 160.59 452.82" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 161.28 458.78 L 156.39 451.29 L 160.59 452.82 L 164.34 450.37 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/google/binexport" target="_blank"><rect x="30" y="301" width="240" height="60" rx="9" ry="9" fill="#d0cee2" stroke="#56517e" stroke-width="3" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 238px; height: 1px; padding-top: 331px; margin-left: 31px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 18px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; overflow-wrap: normal;"><font color="#49456b">BinExport</font></div></div></div></foreignObject><text x="150" y="336" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="18px" text-anchor="middle" font-weight="bold">BinExport</text></switch></g></a><a xlink:href="https://github.com/quarkslab/quokka/tree/main/src" target="_blank"><path d="M 500 361 L 490.82 452.8" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 490.22 458.78 L 487.04 450.42 L 490.82 452.8 L 495 451.21 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/quarkslab/quokka/tree/ghidra/java" target="_blank"><path d="M 500 361 L 361.78 456.32" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="6 6" pointer-events="stroke"/><path d="M 356.84 459.73 L 361.16 451.9 L 361.78 456.32 L 365.7 458.48 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 381px; margin-left: 431px;"><div data-drawio-colors="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; background-color: rgb(255, 255, 255); white-space: nowrap;">(in progress)</div></div></div></foreignObject><text x="431" y="385" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="11px" text-anchor="middle">(in progress)</text></switch></g><a xlink:href="https://github.com/quarkslab/quokka" target="_blank"><rect x="380" y="301" width="240" height="60" rx="9" ry="9" fill="#d0cee2" stroke="#56517e" stroke-width="3" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 238px; height: 1px; padding-top: 331px; margin-left: 381px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 18px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; overflow-wrap: normal;"><font color="#49456b">Quokka</font></div></div></div></foreignObject><text x="500" y="336" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="18px" text-anchor="middle" font-weight="bold">Quokka</text></switch></g></a><a xlink:href="https://hex-rays.com" target="_blank"><rect x="430" y="461" width="120" height="60" fill="#fad7ac" stroke="#b46504" stroke-width="2" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 491px; margin-left: 431px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 18px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><font color="#a15a04">IDA</font></div></div></div></foreignObject><text x="490" y="496" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="18px" text-anchor="middle">IDA</text></switch></g></a><a xlink:href="https://ghidra-sre.org" target="_blank"><rect x="265" y="461" width="120" height="60" fill="#fad7ac" stroke="#b46504" stroke-width="2" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 491px; margin-left: 266px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 18px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><font color="#a15a04">Ghidra</font></div></div></div></foreignObject><text x="325" y="496" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="18px" text-anchor="middle">Ghidra</text></switch></g></a><a xlink:href="https://binary.ninja" target="_blank"><rect x="105" y="461" width="120" height="60" fill="#fad7ac" stroke="#b46504" stroke-width="2" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 491px; margin-left: 106px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 18px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><font color="#a15a04">Binary Ninja</font></div></div></div></foreignObject><text x="165" y="496" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="18px" text-anchor="middle">Binary Ninja</text></switch></g></a><a xlink:href="https://github.com/quarkslab/python-binexport/blob/main/binexport/program.py" target="_blank"><path d="M 260 261 L 216.43 295.86" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 211.75 299.6 L 215.49 291.48 L 216.43 295.86 L 220.49 297.73 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/quarkslab/python-binexport" target="_blank"><rect x="225" y="221" width="140" height="40" rx="6" ry="6" fill="#de7373" stroke="#8a4747" stroke-width="2" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 241px; margin-left: 226px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><b><font color="#8a4747">python-binexport</font></b></div></div></div></foreignObject><text x="295" y="245" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">python-binexport</text></switch></g></a><a xlink:href="https://github.com/quarkslab/python-bindiff/blob/main/bindiff/bindiff.py" target="_blank"><path d="M 210 51 L 184 97.8" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 181.09 103.05 L 181.47 94.11 L 184 97.8 L 188.47 97.99 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/></a><a xlink:href="https://github.com/quarkslab/python-bindiff/" target="_blank"><rect x="140" y="11" width="140" height="40" rx="6" ry="6" fill="#de7373" stroke="#8a4747" stroke-width="2" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 31px; margin-left: 141px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><b><font color="#8a4747">python-bindiff</font></b></div></div></div></foreignObject><text x="210" y="35" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">python-bindiff</text></switch></g></a><rect x="10" y="551" width="270" height="30" fill="none" stroke="none" pointer-events="all"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe flex-start; width: 268px; height: 1px; padding-top: 566px; margin-left: 12px;"><div data-drawio-colors="color: #FF6666; " style="box-sizing: border-box; font-size: 0px; text-align: left;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 102, 102); line-height: 1.2; pointer-events: all; font-style: italic; white-space: normal; overflow-wrap: normal;">* All nodes and edges are clickables!</div></div></div></foreignObject><text x="12" y="570" fill="#FF6666" font-family="Helvetica" font-size="12px" font-style="italic">* All nodes and edges are clickables!</text></switch></g></g><switch><g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/><a transform="translate(0,-5)" xlink:href="https://www.drawio.com/doc/faq/svg-export-text-problems" target="_blank"><text text-anchor="middle" font-size="10px" x="50%" y="100%">Text is not SVG - cannot display</text></a></switch></svg>
+</figure><p>As shown on the figure, the base layer is made of disassemblers from which differs try to be independent from.
+The second layer consists of exporters which provide an interface to disassembler by serializing the disassembly
+in a format specific file which is later read by the differ to perform the diff. The figure shows various
+tools and modules discussed on this portal, especially python-bindiff, python-binexport, qbindiff, and quokka.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="how-to-contribute">
+<h2>How to Contribute ?<a class="headerlink" href="#how-to-contribute" title="Link to this heading">¶</a></h2>
+<p>This page aims at aggregating various ressources related to diffing.
+Thus, pull requests to contribute are warmly welcomed to add new utility
+link or other resources.</p>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="#">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="next" href="exporter/binexport.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Binexport
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="_sources/index.rst.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Similarity computation &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../../../_static/insipid.js"></script>
+    <script defer src="../../../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Parameters" href="params.html" />
+    <link rel="prev" title="Binary diffing" href="binary_diffing.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="how.html" accesskey="U">How it works</a>
+            <a class="top" href="#">Similarity computation</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../../../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="binary_diffing.html" class="nav-icon previous" title="previous:&#13;Binary diffing" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="params.html" class="nav-icon next" title="next:&#13;Parameters" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="binary_diffing.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Binary diffing
+          </span>
+        </div>
+      </a>
+      <a class="next" href="params.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Parameters
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="similarity-computation">
+<span id="features"></span><h1>Similarity computation<a class="headerlink" href="#similarity-computation" title="Link to this heading">¶</a></h1>
+<p>Let’s consider two binaries (or attributed graphs), a <em>primary</em> with <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">n_{1}</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+ functions
+(or nodes) and a <em>secondary</em> with <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">n_{2}</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+ functions (or nodes).</p>
+<p>As we described previously, the similarity between the nodes of the two input graphs is one of the
+two required information for QBinDiff. We can think of it as a function that takes in input two
+nodes, one belonging to the <em>primary</em> and the other belonging to the <em>secondary</em>, and returns
+a normalized value between <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">[0, 1]</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+ that represents how similar the two nodes are, <strong>only</strong>
+considering the node attributes.</p>
+<aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">f \colon G_1 \times G_2 \longrightarrow [0, 1]
+
+</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+<p>In practice, the function is implemented as a matrix <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">S</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+ of shape <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">(n_{1}, n_{2})</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+ where
+the value <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">f(i_1, i_2) = s</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+ is stored at position <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">[i_1, i_2]</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+ in the matrix <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">S</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>From now on, without loss of generality, we are going to refer only to the similarity matrix, without ever mentioning the function <aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">f</span>)</p>
+<p>latex exited with error
+[stdout]
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./math.tex
+LaTeX2e &lt;2022-11-01&gt; patch level 1
+L3 programming layer &lt;2023-02-22&gt;
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/size12.clo))
+(/opt/texlive/texdir/texmf-dist/tex/latex/base/inputenc.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amstext.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/opt/texlive/texdir/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+
+! LaTeX Error: File `anyfontsize.sty' not found.
+
+Type X to quit or &lt;RETURN&gt; to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+&lt;read *&gt; 
+         
+l.8 \usepackage
+               {bm}^^M
+No pages of output.
+Transcript written on math.log.
+</p>
+</aside>
+.</p>
+</div>
+<figure class="align-default">
+<img alt="../../../_images/node_similarity.png" src="../../../_images/node_similarity.png" />
+</figure>
+<p>In order to keep the most versatility, in QBinDiff, the similarity matrix can be partially or totally
+user supplied through the <strong>pass refinement system</strong>. This is a system of callbacks that the user
+can register with the aim of refining the values in the similarity matrix by using any kind of user
+defined property. This becomes particularly useful when dealing with a problem instance that is not
+related to binary diffing but that still handles attributed graphs.</p>
+<p>For the problem of binary diffing, instead, there is already a set of heuristics that can be used
+to populate the similarity matrix. These heuristics are called <strong>features</strong> as they characterize
+the functions by extracting some information or <em>features</em>.</p>
+</section>
+<section id="id1">
+<h1>Features<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p><em>Features</em> are heuristics that operate at specific level inside the function (operand, instruction, basic block, function) to compute a <em>feature vector</em>. You can also think of <em>feature vectors</em> as a way of compressing the information that was extracted in a mathematical object. This information should help to characterize the function. It is an embedding of the function.</p>
+<p>An example of a feature heuristic can be counting how many basic blocks are there in the function Control Flow Graph (CFG), we can arguably say that similar functions should have more or less the same number of blocks and by using that heuristic (or feature) we can give a score on how similar two functions are.</p>
+<p>QBinDiff provides a lot of features an user can choose to compute the similarity. Indeed, relevant features for diffing is task-dependent and a feature may be very useful for specific diffing and useless in others. For example, the “basic blocks number” feature is useful only when we assume similar functions have the same number of blocks. If our assumption is false, namely, that two functions have been compiled with different optimization techniques or that have been obfuscated, then the heuristic will produce irrelevant results.</p>
+<p>In order to provide the user even better control over the entire process, it’s possible to specify
+weights for the features in order to make some of them more important in the final evaluation of
+the similarity.</p>
+<p>Some of these features comes from or are inspired by other differs, such as <a class="reference external" href="https://www.zynamics.com/bindiff.html">BinDiff</a> or <a class="reference external" href="https://github.com/joxeankoret/diaphora">Diaphora</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always keep in mind what the underlying assumptions of the features you are using are. If they don’t hold in your specific context, you might end up with bad results.</p>
+</div>
+<p>All the QBinDiff features are listed here, from the larger granularity to the smallest one.</p>
+<section id="outside-function-level-features">
+<h2>Outside function-level features<a class="headerlink" href="#outside-function-level-features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ChildNb</span></code>: Number of function child of the current function inside the Function Call Graph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ParentNb</span></code>: Number of function parents of the current function inside the Function Call Graph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RelativeNb</span></code>: Sum of the features ChildNb and ParentNb</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LibName</span></code>: Dictionary with the addresses of children function as key and the number of time these children are called if they are library functions</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImpName</span></code>: Dictionary with the addresses of children function as key and the number of time these children are called if they are imported functions</p></li>
+</ul>
+</section>
+<section id="inside-function-level-features">
+<h2>Inside function-level features<a class="headerlink" href="#inside-function-level-features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BBlockNb</span></code>: Number of basic blocks inside the function. Two functions that come from the same source code but that are compiled differently may have a different number of basic blocks.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">StronglyConnectedComponents</span></code>: Number of strongly connected components inside the Function Call Graph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesHash</span></code>: Hash of the function, using the instructions sorted by addresses. Two functions that come from the same source code but that are compiled differently will probably have a different hash.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclomaticComplexity</span></code>: Uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">cyclomatic complexity</a> metric.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MDIndex</span></code>: This feature is based on previous work of <a class="reference external" href="https://www.sto.nato.int/publications/STO%20Meeting%20Proceedings/RTO-MP-IST-091/MP-IST-091-26.pdf">Dullien et al.</a>. It is slightly modified : indeed, the topological sort is only available for Directed Acyclic Graphs (DAG).</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SmallPrimeNumbers</span></code>: Small-Prime-Number hash, based on mnemonics, based on previous work of <a class="reference external" href="https://www.sto.nato.int/publications/STO%20Meeting%20Proceedings/RTO-MP-IST-091/MP-IST-091-26.pdf">Dullien et al.</a>. It is slightly modified from the theoretical implementation. The modulo is made at each round for computational reasons, not only at the end. [TODO:check the validity of the formula with Z3 (again)]</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxParentNb</span></code>: Maximum number of predecessors per basic block in the flowgraph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxChildNb</span></code>: Minimum number of predecessors per basic block in the flowgraph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxInsNB</span></code>: Maximum number of basic blocks instructions in the function.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MeanInsNB</span></code>: Mean number of basic blocks instructions in the function.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">InstNB</span></code>: Number of instructions in the whole function.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphMeanDegree</span></code>: Mean degree of the function flowgraph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphDensity</span></code>: Density of the function flowgraph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphNbComponents</span></code>: Number of components of the (undirected) function flowgraph. This feature should be almost all the time set to 1. Otherwise, this mean two.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphDiameter</span></code>: Diameter of the function flowgraph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphTransitivity</span></code>: Transitivity of the function flowgraph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphCommunities</span></code>: Number of graph communities of the (undirected) function flowgraph.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Address</span></code>: Address of the function. This feature will not be robust against different compilation options.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">FuncName</span></code>: Name of the function. This feature will not be robust against several obfuscation techniques.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">WeisfeilerLehman</span></code>: This feature applies a Weisfeiler Lehman kernel combined with a Local Sensitive Hashing as labeling function. This feature derives from a <a class="reference external" href="https://blog.quarkslab.com/weisfeiler-lehman-graph-kernel-for-binary-function-analysis.html">Quarkslab blogpost</a>.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The WeisfeilerLehman feature suffers from several drawbacks, both theoretically and in term of implementation.
+It may cause some numerical instability errors depending on your binaries. This feature may be refactor in a
+near future.</p>
+</div>
+</section>
+<section id="basic-block-level-features">
+<h2>Basic-block level features<a class="headerlink" href="#basic-block-level-features" title="Link to this heading">¶</a></h2>
+<p>/</p>
+</section>
+<section id="instruction-level-features">
+<h2>Instruction level features<a class="headerlink" href="#instruction-level-features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MnemonicSimple</span></code>: TODO write description</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MnemonicTyped</span></code>: TODO write description</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupsCategory</span></code>: TODO write description</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DatName</span></code>: TODO write description</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">StrRef</span></code>: TODO write description</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">JumpNb</span></code>: Number of jump in the whole function.</p></li>
+</ul>
+</section>
+<section id="operand-level-features">
+<h2>Operand level features<a class="headerlink" href="#operand-level-features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Constant</span></code>: TODO write description</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadWriteAccess</span></code>: Number of Read and Write Access to the memory. This feature should be resistant to some obfuscation techniques and compilation options.</p></li>
+</ul>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="how.html">How it works</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="binary_diffing.html">Binary diffing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Similarity computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#outside-function-level-features">Outside function-level features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inside-function-level-features">Inside function-level features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-block-level-features">Basic-block level features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instruction-level-features">Instruction level features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operand-level-features">Operand level features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="params.html">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="belief_propagation.html">Belief Propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="export.html">Match Results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../../../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../../../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="binary_diffing.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Binary diffing
+          </span>
+        </div>
+      </a>
+      <a class="next" href="params.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Parameters
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../../../_sources/qbindiff/doc/source/features.rst.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Binary diffing &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../../../_static/insipid.js"></script>
+    <script defer src="../../../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Similarity computation" href="features.html" />
+    <link rel="prev" title="How it works" href="how.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="how.html" accesskey="U">How it works</a>
+            <a class="top" href="#">Binary diffing</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../../../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="how.html" class="nav-icon previous" title="previous:&#13;How it works" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="features.html" class="nav-icon next" title="next:&#13;Similarity computation" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="how.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            How it works
+          </span>
+        </div>
+      </a>
+      <a class="next" href="features.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Similarity computation
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="binary-diffing">
+<h1>Binary diffing<a class="headerlink" href="#binary-diffing" title="Link to this heading">¶</a></h1>
+<p>Before dwelling on QBinDiff inner algorithm, let’s recall the two common
+program representations used.</p>
+<p><strong>Control-Flow Graph</strong></p>
+<p>A function usually consists of several basic blocks, with transitions between these blocks occurring as a result of actions such as jumps, conditional jumps, loops, etc.
+A basic block is made of instructions that are consecutively executed.
+A Control-Flow Graph (CFG) represents the intra-procedural “control” relationships between basic blocks inside
+a function.</p>
+<p><strong>Call Graph</strong>
+A Function Call Graph follows the same principle but displays the inter-procedural relationships between
+functions of a program by means of performing a call to one another.</p>
+<figure class="align-default" id="id1">
+<img alt="../../../_images/diff_CG.png" src="../../../_images/diff_CG.png" />
+<figcaption>
+<p><span class="caption-text">Disassembly steps</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>As depicted on the figure, the disassembly separates data and code. It then disassembles code portion to recover
+disassembled functions with the theirs CFG. The Call Graph (CG), is then another refinement representing relationships
+between functions.</p>
+<section id="supported-architectures">
+<h2>Supported Architectures<a class="headerlink" href="#supported-architectures" title="Link to this heading">¶</a></h2>
+<p>QBinDiff may theoretically support any architecture or executable formats that can be exported to BinExport or Quokka.
+As such, the bottleneck for a new architecture will likely originate from the backend which itself depends on a
+disassembler. Supported and tested architecures are x86, x86_64, ARMv7 and Aarch64.</p>
+</section>
+<section id="qbindiff-algorithm-overview">
+<h2>QBinDiff Algorithm Overview<a class="headerlink" href="#qbindiff-algorithm-overview" title="Link to this heading">¶</a></h2>
+<p>QBinDiff computes a 1-to-1 mapping between matched components. While the diff can be performed at various levels,
+e.g between basic blocks or between functions, QBinDiff does it on function by default. Notwithstanding, the API
+also enables performing the diff at basic block level.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>QBinDiff operates both on binaries and generic graphs: in the first case it is called <em>binary diffing</em> while on the other it is called <em>graph matching</em>. In this context, binaries and graphs can be considered interchangeably.</p>
+</div>
+<p>While it is not required to understand the different algorithms used internally, it might be helpful
+to be able to fine-tune the parameters in order to obtain better results.</p>
+<p>From a high-level perspective, QBinDiff operates in the following steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Attributed graph loading</strong>. Loading the primary and secondary attributed graphs. In case of binary instance this is called <strong>Backend loader</strong>.</p></li>
+<li><p><strong>Differ instanciation</strong> with several parameters. See the <a class="reference internal" href="params.html#parameters-chap"><span class="std std-ref">parameter chapter</span></a> to know more.</p></li>
+<li><p><strong>Similarity computation</strong></p>
+<ol class="arabic simple">
+<li><p>Anchoring step (between functions sure to be a match, as imported ones)</p></li>
+<li><p>Feature extraction: Extracts various artifacts from functions</p></li>
+<li><p>Similarity matrix computation: Computes a similarity score between all functions using a distance function. Refer to the <a class="reference internal" href="features.html#features"><span class="std std-ref">feature</span></a> chapter to know more.</p></li>
+<li><p>Optionally performs user-defined similarity matrix refinements</p></li>
+</ol>
+</li>
+<li><p><strong>Belief propagation</strong> (leveraging the <em>graph topology</em>)</p>
+<ol class="arabic simple">
+<li><p>Combining the similarity matrix and the topology of the CG with a state-of-the-art machine learning algorithm, called <a class="reference internal" href="belief_propagation.html#beliefpropagation"><span class="std std-ref">Belief Propagation</span></a>, to produce the functions mapping</p></li>
+</ol>
+</li>
+<li><p><strong>Export the result</strong> (in various formats)</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A key step is the anchoring phase, only available for binaries. Indeed, binaries often contain imported
+functions. These functions can be common to primary and secondary. Using them as anchors greatly helps
+the differ to obtain good matches.</p>
+</div>
+<p>The following pages will describe each step in details.</p>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="how.html">How it works</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Binary diffing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supported-architectures">Supported Architectures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qbindiff-algorithm-overview">QBinDiff Algorithm Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="features.html">Similarity computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features.html#id1">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="params.html">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="belief_propagation.html">Belief Propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="export.html">Match Results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../../../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../../../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="how.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            How it works
+          </span>
+        </div>
+      </a>
+      <a class="next" href="features.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Similarity computation
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../../../_sources/qbindiff/doc/source/binary_diffing.rst.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

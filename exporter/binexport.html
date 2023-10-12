@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Binexport &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../_static/insipid.js"></script>
+    <script defer src="../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quokka" href="quokka.html" />
+    <link rel="prev" title="Diffing Portal" href="../index.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="../index.html" accesskey="U">Diffing Portal</a>
+            <a class="top" href="#">Binexport</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="../index.html" class="nav-icon previous" title="previous:&#13;Diffing Portal" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="quokka.html" class="nav-icon next" title="next:&#13;Quokka" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="../index.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Diffing Portal
+          </span>
+        </div>
+      </a>
+      <a class="next" href="quokka.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Quokka
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="binexport">
+<h1>Binexport<a class="headerlink" href="#binexport" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://github.com/google/binexport">BinExport</a> is an utility hosted on Google’s github to export the disassembly
+obtained from IDA Pro, Binary Ninja and Ghidra into external file. The file is defined in <a class="reference external" href="https://protobuf.dev">Protobuf</a> format. It is
+particularly used by <a class="reference external" href="https://github.com/google/bindiff">BinDiff</a> as input for its diffing.</p>
+<p>For more details: <a class="reference external" href="https://github.com/google/binexport">Project homepage</a></p>
+<p><strong>Limitations</strong>:
+Besides, working like a charm, BinExport is essentially lacking the two following features:</p>
+<ul class="simple">
+<li><p>Regardless of the disassembler (IDA, Ghidra ..), binexport has to be launched manually through GUI or via a shell
+command if the disassembler supports headless mode. There are no programmatic bindings to trigger an export.</p></li>
+<li><p>Exported data are very useful, but binexport was defined as an internal format, there are no API to manipulate
+exported data.</p></li>
+</ul>
+<p>As such, <a class="reference external" href="https://github.com/quarkslab/python-binexport">python-binexport</a> has been developed to fulfill
+these two weaknesses.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="python-binexport">
+<h2>Python-Binexport<a class="headerlink" href="#python-binexport" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">python-binexport</span></code> is a python module aiming to give a friendly interface to load
+and manipulate binexport files.</p>
+<section id="what-is-binexport">
+<h3>What is binexport ?<a class="headerlink" href="#what-is-binexport" title="Link to this heading">¶</a></h3>
+<p>Binexport is a <code class="docutils literal notranslate"><span class="pre">protobuf</span></code> format used by Bindiff to extract IDA database and
+to process them outside. It gives a very optimizated (in size) representation
+of the program.</p>
+</section>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h3>
+<p>As <code class="docutils literal notranslate"><span class="pre">python-binexport</span></code> entirely relies on <code class="docutils literal notranslate"><span class="pre">Binexport</span></code>, it <strong>has to be installed first</strong>.
+The project is available at: https://github.com/google/binexport</p>
+<p>Note that python-binexport <strong>requires IDA &gt;=7.2</strong> (as it calls the <code class="docutils literal notranslate"><span class="pre">BinExportBinary</span></code> IDC function).</p>
+<p><strong>Warning</strong>: Make sure the IDA Pro binexport plugin is properly installed (and working manually) before trying
+to use it from the python library (it can hang if not installed).</p>
+</section>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install python-binexport
+</pre></div>
+</div>
+</section>
+<section id="python-module-usage">
+<h3>Python module usage<a class="headerlink" href="#python-module-usage" title="Link to this heading">¶</a></h3>
+<p>The main intended usage of <code class="docutils literal notranslate"><span class="pre">python-binexport</span></code> is as a python module.
+The main entry point is the class <code class="docutils literal notranslate"><span class="pre">ProgramBinExport</span></code> which triggers the
+loading of the whole file. Here is a snippet to iterate on every expression
+of every instruction in the program:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="s2">&quot;myprogram.BinExport&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">fun_addr</span><span class="p">,</span> <span class="n">fun</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">bb_addr</span><span class="p">,</span> <span class="n">bb</span> <span class="ow">in</span> <span class="n">fun</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">inst_addr</span><span class="p">,</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">bb</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">operand</span> <span class="ow">in</span> <span class="n">inst</span><span class="o">.</span><span class="n">operands</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">operand</span><span class="o">.</span><span class="n">expressions</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c1"># Do whatever at such deep level</span>
+</pre></div>
+</div>
+<p>Obviously <code class="docutils literal notranslate"><span class="pre">ProgramBinExport</span></code>, <code class="docutils literal notranslate"><span class="pre">FunctionBinExport</span></code>, <code class="docutils literal notranslate"><span class="pre">InstructionBinExport</span></code> and <code class="docutils literal notranslate"><span class="pre">OperandBinExport</span></code>
+all provides various attributes and method to get their type, and multiple other infos.</p>
+<blockquote>
+<div><p>If the module <code class="docutils literal notranslate"><span class="pre">idascript</span></code> is installed you can directly generate a BinExport
+file using the <code class="docutils literal notranslate"><span class="pre">Program.from_binary_file</span></code> static method.</p>
+</div></blockquote>
+</section>
+<section id="command-line-usage">
+<h3>Command line usage<a class="headerlink" href="#command-line-usage" title="Link to this heading">¶</a></h3>
+<p>The executable script <code class="docutils literal notranslate"><span class="pre">binexporter</span></code> provides a very basic utility
+to export a BinExport file straight from the command line <em>(without
+having to launch IDA etc..)</em>. This is basically a wrapper for <code class="docutils literal notranslate"><span class="pre">Program.from_binary_file</span></code>.</p>
+</section>
+</section>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h2>
+<section id="program">
+<h3>Program<a class="headerlink" href="#program" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.program.</span></span><span class="sig-name descname"><span class="pre">ProgramBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/program.html#ProgramBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.program.ProgramBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>Program class that wraps the binexport with high-level functions
+and an easy to use API. It inherits from a dict which is used to
+reference all functions based on their address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> – BinExport file path</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport.architecture">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">architecture</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#binexport.program.ProgramBinExport.architecture" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the architecture suffixed with address size ex: x86_64, x86_32</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport.callgraph">
+<span class="sig-name descname"><span class="pre">callgraph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.1)"><span class="pre">DiGraph</span></a></em><a class="headerlink" href="#binexport.program.ProgramBinExport.callgraph" title="Link to this definition">¶</a></dt>
+<dd><p>program callgraph (as Digraph)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport.data_refs">
+<span class="sig-name descname"><span class="pre">data_refs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.12)"><span class="pre">Set</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.program.ProgramBinExport.data_refs" title="Link to this definition">¶</a></dt>
+<dd><p>dictionary of instruction index to set of refs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport.from_binary_file">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_binary_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exec_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">open_export</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/binexport/program.html#ProgramBinExport.from_binary_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.program.ProgramBinExport.from_binary_file" title="Link to this definition">¶</a></dt>
+<dd><p>Generate the .BinExport file for the given program and return an instance
+of ProgramBinExport.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>That function requires the module <code class="docutils literal notranslate"><span class="pre">idascript</span></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exec_file</strong> – executable file path</p></li>
+<li><p><strong>output_file</strong> – BinExport output file</p></li>
+<li><p><strong>open_export</strong> – whether or not to open the binexport after export</p></li>
+<li><p><strong>override</strong> – Override the .BinExport if already existing. (default false)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an instance of ProgramBinExport</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport.fun_names">
+<span class="sig-name descname"><span class="pre">fun_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.program.ProgramBinExport.fun_names" title="Link to this definition">¶</a></dt>
+<dd><p>dictionary function name -&gt; name</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#binexport.program.ProgramBinExport.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the name of the program (as exported by binexport)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.program.ProgramBinExport.proto">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">proto</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BinExport2</span></em><a class="headerlink" href="#binexport.program.ProgramBinExport.proto" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the protobuf object associated to the program</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="function">
+<h3>Function<a class="headerlink" href="#function" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.function.</span></span><span class="sig-name descname"><span class="pre">FunctionBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pb_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinExport2.FlowGraph</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_import</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/function.html#FunctionBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.function.FunctionBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Function object.
+Also references its parents and children (function it calls).</p>
+<p>Constructor. Iterates the FlowGraph structure and initialize all the
+basic blocks and instruction accordingly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – weak reference to program (used to navigate pb fields contained inside)</p></li>
+<li><p><strong>pb_fun</strong> – FlowGraph protobuf structure</p></li>
+<li><p><strong>is_import</strong> – whether or not it’s an import function (if so does not initialize bb etc..)</p></li>
+<li><p><strong>addr</strong> – address of the function (info avalaible in the call graph)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.addr">
+<span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#binexport.function.FunctionBinExport.addr" title="Link to this definition">¶</a></dt>
+<dd><p>address, None if imported function</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.blocks">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blocks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.function.FunctionBinExport.blocks" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dict which is used to reference all basic blocks by their address.
+The dict is by default cached, to erase the cache delete the attribute.
+Calling this function will also load the CFG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary of addresses to basic blocks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.children">
+<span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.12)"><span class="pre">Set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.function.FunctionBinExport.children" title="Link to this definition">¶</a></dt>
+<dd><p>set of functions called by this one</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.graph">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">graph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.1)"><span class="pre">DiGraph</span></a></em><a class="headerlink" href="#binexport.function.FunctionBinExport.graph" title="Link to this definition">¶</a></dt>
+<dd><p>The networkx CFG associated to the function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.is_import">
+<span class="sig-name descname"><span class="pre">is_import</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/binexport/function.html#FunctionBinExport.is_import"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.function.FunctionBinExport.is_import" title="Link to this definition">¶</a></dt>
+<dd><p>Returns whether or not the function is an import</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.ItemsView" title="(in Python v3.12)"><span class="pre">ItemsView</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#binexport.function.BasicBlockBinExport" title="binexport.function.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/binexport/function.html#FunctionBinExport.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.function.FunctionBinExport.items" title="Link to this definition">¶</a></dt>
+<dd><p>Each function is associated to a dictionary with key-value
+Addr-&gt;BasicBlockBinExport. This returns items of the dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.KeysView" title="(in Python v3.12)"><span class="pre">KeysView</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/binexport/function.html#FunctionBinExport.keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.function.FunctionBinExport.keys" title="Link to this definition">¶</a></dt>
+<dd><p>Each function is associated to a dictionary with key-value : Addr, BasicBlockBinExport. This returns items
+of the dictionary</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#binexport.function.FunctionBinExport.name" title="Link to this definition">¶</a></dt>
+<dd><p>Name of the function if it exists otherwise like IDA with sub_XXX</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.parents">
+<span class="sig-name descname"><span class="pre">parents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.12)"><span class="pre">Set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.function.FunctionBinExport.parents" title="Link to this definition">¶</a></dt>
+<dd><p>set of function call this one</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.program">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">program</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a></em><a class="headerlink" href="#binexport.function.FunctionBinExport.program" title="Link to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgramBinExport</span></code> in which this function belongs to.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.types.FunctionType" title="binexport.types.FunctionType"><span class="pre">FunctionType</span></a></em><a class="headerlink" href="#binexport.function.FunctionBinExport.type" title="Link to this definition">¶</a></dt>
+<dd><p>Type of the function as a FunctionType</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>type enum of the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="binexport.function.FunctionBinExport.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.ValuesView" title="(in Python v3.12)"><span class="pre">ValuesView</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.function.BasicBlockBinExport" title="binexport.function.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/binexport/function.html#FunctionBinExport.values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.function.FunctionBinExport.values" title="Link to this definition">¶</a></dt>
+<dd><p>Each function is associated to a dictionary with key-value : Addr, BasicBlockBinExport. This returns items
+of the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="basic-block">
+<h3>Basic Block<a class="headerlink" href="#basic-block" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="binexport.function.BasicBlockBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.function.</span></span><span class="sig-name descname"><span class="pre">BasicBlockBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pb_bb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinExport2.BasicBlock</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/basic_block.html#BasicBlockBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.function.BasicBlockBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a></p>
+<p>Basic block.
+It inherits OrderdDict, so one can use any dictionary
+methods to access instructions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – Weak reference to the program</p></li>
+<li><p><strong>function</strong> – Weak reference to the function</p></li>
+<li><p><strong>pb_bb</strong> – protobuf definition of the basic block</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.function.BasicBlockBinExport.addr">
+<span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#binexport.function.BasicBlockBinExport.addr" title="Link to this definition">¶</a></dt>
+<dd><p>basic bloc address</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.function.BasicBlockBinExport.bytes">
+<span class="sig-name descname"><span class="pre">bytes</span></span><a class="headerlink" href="#binexport.function.BasicBlockBinExport.bytes" title="Link to this definition">¶</a></dt>
+<dd><p>bytes of the basic block</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.function.BasicBlockBinExport.program">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">program</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a></em><a class="headerlink" href="#binexport.function.BasicBlockBinExport.program" title="Link to this definition">¶</a></dt>
+<dd><p>Wrapper on weak reference on ProgramBinExport</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object <code class="xref py py-class docutils literal notranslate"><span class="pre">ProgramBinExport</span></code>, program associated to the basic block</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="instruction">
+<h3>Instruction<a class="headerlink" href="#instruction" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.instruction.</span></span><span class="sig-name descname"><span class="pre">InstructionBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/instruction.html#InstructionBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.instruction.InstructionBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Instruction class. It represents an instruction with its operands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – Weak reference to the program</p></li>
+<li><p><strong>function</strong> – Weak reference to the function</p></li>
+<li><p><strong>addr</strong> – address of the instruction (computed outside)</p></li>
+<li><p><strong>i_idx</strong> – instruction index in the protobuf data structure</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport.addr">
+<span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#binexport.instruction.InstructionBinExport.addr" title="Link to this definition">¶</a></dt>
+<dd><p>instruction address</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport.bytes">
+<span class="sig-name descname"><span class="pre">bytes</span></span><a class="headerlink" href="#binexport.instruction.InstructionBinExport.bytes" title="Link to this definition">¶</a></dt>
+<dd><p>bytes of the instruction (opcodes)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport.data_refs">
+<span class="sig-name descname"><span class="pre">data_refs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.12)"><span class="pre">Set</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.instruction.InstructionBinExport.data_refs" title="Link to this definition">¶</a></dt>
+<dd><p>Data references address</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport.mnemonic">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mnemonic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#binexport.instruction.InstructionBinExport.mnemonic" title="Link to this definition">¶</a></dt>
+<dd><p>Mnemonic string as gathered by binexport (with prefix).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport.operands">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.operand.OperandBinExport" title="binexport.operand.OperandBinExport"><span class="pre">OperandBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.instruction.InstructionBinExport.operands" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of the operands instanciated dynamically on-demand.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport.pb_instr">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pb_instr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BinExport2.Instruction</span></em><a class="headerlink" href="#binexport.instruction.InstructionBinExport.pb_instr" title="Link to this definition">¶</a></dt>
+<dd><p>Protobuf instruction object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.instruction.InstructionBinExport.program">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">program</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a></em><a class="headerlink" href="#binexport.instruction.InstructionBinExport.program" title="Link to this definition">¶</a></dt>
+<dd><p>Program associated with this instruction.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="operand">
+<h3>Operand<a class="headerlink" href="#operand" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="binexport.operand.OperandBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.operand.</span></span><span class="sig-name descname"><span class="pre">OperandBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><span class="pre">InstructionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/operand.html#OperandBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.operand.OperandBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Operand object.
+Provide access to the underlying expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – Weak reference to the program</p></li>
+<li><p><strong>function</strong> – Weak reference to the function</p></li>
+<li><p><strong>instruction</strong> – Weak reference to the instruction</p></li>
+<li><p><strong>op_idx</strong> – operand index in protobuf structure</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.operand.OperandBinExport.expressions">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">expressions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#binexport.expression.ExpressionBinExport" title="binexport.expression.ExpressionBinExport"><span class="pre">ExpressionBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.operand.OperandBinExport.expressions" title="Link to this definition">¶</a></dt>
+<dd><p>Iterates over all the operand expression in a pre-order manner
+(binary operator first).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.operand.OperandBinExport.function">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">function</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></em><a class="headerlink" href="#binexport.operand.OperandBinExport.function" title="Link to this definition">¶</a></dt>
+<dd><p>Function object associated to this operand.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.operand.OperandBinExport.instruction">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instruction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><span class="pre">InstructionBinExport</span></a></em><a class="headerlink" href="#binexport.operand.OperandBinExport.instruction" title="Link to this definition">¶</a></dt>
+<dd><p>Instruction object associated to this operand.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.operand.OperandBinExport.pb_operand">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pb_operand</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BinExport2.Operand</span></em><a class="headerlink" href="#binexport.operand.OperandBinExport.pb_operand" title="Link to this definition">¶</a></dt>
+<dd><p>Protobuf operand object in the protobuf structure.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.operand.OperandBinExport.program">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">program</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a></em><a class="headerlink" href="#binexport.operand.OperandBinExport.program" title="Link to this definition">¶</a></dt>
+<dd><p>Program object associated to this operand.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="expression">
+<h3>Expression<a class="headerlink" href="#expression" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.expression.</span></span><span class="sig-name descname"><span class="pre">ExpressionBinExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><span class="pre">InstructionBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.expression.ExpressionBinExport" title="binexport.expression.ExpressionBinExport"><span class="pre">ExpressionBinExport</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/expression.html#ExpressionBinExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.expression.ExpressionBinExport" title="Link to this definition">¶</a></dt>
+<dd><p>Class that represent an expression node in the expression tree for a specific
+operand. The tree is inverted (each node has an edge to its parent)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>program</strong> – reference to program</p></li>
+<li><p><strong>function</strong> – reference to function</p></li>
+<li><p><strong>instruction</strong> – reference to instruction</p></li>
+<li><p><strong>exp_idx</strong> – expression index in the protobuf table</p></li>
+<li><p><strong>parent</strong> – reference to the parent expression in the tree.
+None if it is the root.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport.depth">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">depth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#binexport.expression.ExpressionBinExport.depth" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the depth of the node in the tree (root is depth 0).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport.is_addr">
+<span class="sig-name descname"><span class="pre">is_addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#binexport.expression.ExpressionBinExport.is_addr" title="Link to this definition">¶</a></dt>
+<dd><p>whether the value is referring to an address</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport.is_data">
+<span class="sig-name descname"><span class="pre">is_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#binexport.expression.ExpressionBinExport.is_data" title="Link to this definition">¶</a></dt>
+<dd><p>whether the value is a reference to data</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.expression.ExpressionBinExport" title="binexport.expression.ExpressionBinExport"><span class="pre">ExpressionBinExport</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#binexport.expression.ExpressionBinExport.parent" title="Link to this definition">¶</a></dt>
+<dd><p>parent expression if nested</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport.pb_expr">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pb_expr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Expression</span></em><a class="headerlink" href="#binexport.expression.ExpressionBinExport.pb_expr" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the operand object in the protobuf structure</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#binexport.types.ExpressionType" title="binexport.types.ExpressionType"><span class="pre">ExpressionType</span></a></em><a class="headerlink" href="#binexport.expression.ExpressionBinExport.type" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the type as defined in <cite>ExpressionType</cite> of the expression, after the protobuf parsing</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.expression.ExpressionBinExport.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#binexport.expression.ExpressionBinExport.value" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the value of the expression, after the protobuf parsing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>value of the expression</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-binexport.types">
+<span id="types"></span><h3>Types<a class="headerlink" href="#module-binexport.types" title="Link to this heading">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.Addr">
+<span class="sig-prename descclassname"><span class="pre">binexport.types.</span></span><span class="sig-name descname"><span class="pre">Addr</span></span><a class="headerlink" href="#binexport.types.Addr" title="Link to this definition">¶</a></dt>
+<dd><p>An integer representing an address within a program</p>
+</dd></dl>
+
+<dl class="py class enum">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType">
+<em class="property"><span class="pre">enum</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.types.</span></span><span class="sig-name descname"><span class="pre">ExpressionType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/types.html#ExpressionType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.types.ExpressionType" title="Link to this definition">¶</a></dt>
+<dd><p>Expression type derived from protobuf expression types.</p>
+<p>Valid values are as follows:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType.FUNC_NAME">
+<span class="sig-name descname"><span class="pre">FUNC_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExpressionType.FUNC_NAME:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#binexport.types.ExpressionType.FUNC_NAME" title="Link to this definition">¶</a></dt>
+<dd><p>function name</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType.VAR_NAME">
+<span class="sig-name descname"><span class="pre">VAR_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExpressionType.VAR_NAME:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#binexport.types.ExpressionType.VAR_NAME" title="Link to this definition">¶</a></dt>
+<dd><p>variable name</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType.IMMEDIATE_INT">
+<span class="sig-name descname"><span class="pre">IMMEDIATE_INT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExpressionType.IMMEDIATE_INT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#binexport.types.ExpressionType.IMMEDIATE_INT" title="Link to this definition">¶</a></dt>
+<dd><p>immediate value</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType.IMMEDIATE_FLOAT">
+<span class="sig-name descname"><span class="pre">IMMEDIATE_FLOAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExpressionType.IMMEDIATE_FLOAT:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#binexport.types.ExpressionType.IMMEDIATE_FLOAT" title="Link to this definition">¶</a></dt>
+<dd><p>float expression</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType.SYMBOL">
+<span class="sig-name descname"><span class="pre">SYMBOL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExpressionType.SYMBOL:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#binexport.types.ExpressionType.SYMBOL" title="Link to this definition">¶</a></dt>
+<dd><p>symbol expression</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType.REGISTER">
+<span class="sig-name descname"><span class="pre">REGISTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExpressionType.REGISTER:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#binexport.types.ExpressionType.REGISTER" title="Link to this definition">¶</a></dt>
+<dd><p>register expression</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.ExpressionType.SIZE">
+<span class="sig-name descname"><span class="pre">SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExpressionType.SIZE:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#binexport.types.ExpressionType.SIZE" title="Link to this definition">¶</a></dt>
+<dd><p>size expression (byte, dword ..)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class enum">
+<dt class="sig sig-object py" id="binexport.types.FunctionType">
+<em class="property"><span class="pre">enum</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.types.</span></span><span class="sig-name descname"><span class="pre">FunctionType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/types.html#FunctionType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.types.FunctionType" title="Link to this definition">¶</a></dt>
+<dd><p>Function types as defined by IDA</p>
+<p>Valid values are as follows:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.FunctionType.NORMAL">
+<span class="sig-name descname"><span class="pre">NORMAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;FunctionType.NORMAL:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#binexport.types.FunctionType.NORMAL" title="Link to this definition">¶</a></dt>
+<dd><p>Normal function</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.FunctionType.LIBRARY">
+<span class="sig-name descname"><span class="pre">LIBRARY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;FunctionType.LIBRARY:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#binexport.types.FunctionType.LIBRARY" title="Link to this definition">¶</a></dt>
+<dd><p>library function</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.FunctionType.IMPORTED">
+<span class="sig-name descname"><span class="pre">IMPORTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;FunctionType.IMPORTED:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#binexport.types.FunctionType.IMPORTED" title="Link to this definition">¶</a></dt>
+<dd><p>imported function (don’t have content)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.FunctionType.THUNK">
+<span class="sig-name descname"><span class="pre">THUNK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;FunctionType.THUNK:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#binexport.types.FunctionType.THUNK" title="Link to this definition">¶</a></dt>
+<dd><p>thunk function (trampoline to another function)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.FunctionType.INVALID">
+<span class="sig-name descname"><span class="pre">INVALID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;FunctionType.INVALID:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#binexport.types.FunctionType.INVALID" title="Link to this definition">¶</a></dt>
+<dd><p>invalid function (as computed by IDA)</p>
+</dd></dl>
+
+<p>The <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a> and its members also have the following methods:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="binexport.types.FunctionType.from_proto">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinExport2.CallGraph.Vertex.Type</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#binexport.types.FunctionType" title="binexport.types.FunctionType"><span class="pre">FunctionType</span></a></span></span><a class="reference internal" href="../_modules/binexport/types.html#FunctionType.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.types.FunctionType.from_proto" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Binexport</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-binexport">Python-Binexport</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="../index.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Diffing Portal
+          </span>
+        </div>
+      </a>
+      <a class="next" href="quokka.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Quokka
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../_sources/exporter/binexport.rst.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

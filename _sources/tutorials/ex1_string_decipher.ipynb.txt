@@ -1,0 +1,604 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "7b369fe8-e06c-44ae-bdaa-fd57136d861b",
+   "metadata": {},
+   "source": [
+    "# Quokka: String Deciphering\n",
+    "\n",
+    "## Introduction\n",
+    "\n",
+    "The sample to work on is a ``Mirai`` malware sample. It can be retrieve below. "
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "169554bc-5f65-402d-924b-87f5ed9a9bd2",
+   "metadata": {},
+   "source": [
+    "<div style=\"text-align: center;\"><a href=\"../_static/tutorials/practical1_string_decipher.tar.gz\"><i class=\"fa fa-download fa-lg\"></i><br/>binary</a></div><br/>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "45ddb8be-776b-46b9-87d6-2ef56782e856",
+   "metadata": {},
+   "source": [
+    "Its an ELF executable, for which all strings used internally are ciphered with a custom algorithm.\n",
+    "The deciphering function is at ``0x804f7e0`` and uses a custom calling convention where the two firsts parameters are provided through ``edx`` and ``eax``. The function takes as parameters two unrelated strings and decipher them with the\n",
+    "key ``0x37``. Strings are deciphered in-place.\n",
+    "\n",
+    "This function is called many times to decipher all strings used. The figure below summarizes the problem."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "c682f5a0-6131-44c7-9e50-09b77bd57a76",
+   "metadata": {},
+   "source": [
+    "<figure class=\"align-center\">\n",
+    "    <img alt=\"summary Mirai deciphering process\", src=\"../_static/tutorials/mirai_deciphering_process.png\"/>\n",
+    "</figure>"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "a453f922-0196-4f83-8820-9c68dae343ba",
+   "metadata": {},
+   "source": [
+    "<div class=\"admonition info\">\n",
+    "   <p class=\"admonition-title\"><b><i class=\"fa fa-question-circle\"> </i> Question</b></p>\n",
+    "   <p>The goal is to write a script to decipher automatically all strings using Quokka API.\n",
+    "   </p>\n",
+    "</div>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5d098306-1184-4ef0-af63-83f4086ce665",
+   "metadata": {},
+   "source": [
+    "## I. Loading the program\n",
+    "\n",
+    "If the program has not been exported with Quokka. It can be exported with:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "0d42843a-5198-49e8-8b58-b04833854fda",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from quokka import Program\n",
+    "\n",
+    "program = Program.from_binary(\"33f46cac84fe0368f33a1e56712add18\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ee2cd934-6a07-40cf-a455-b48ba0aea5ff",
+   "metadata": {},
+   "source": [
+    "Otherwise it can be directly loaded with:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "a71f431c-ab23-4d22-8fb3-ca2402c96aaf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from quokka import Program\n",
+    "\n",
+    "program = Program(\"33f46cac84fe0368f33a1e56712add18.quokka\", \"33f46cac84fe0368f33a1e56712add18\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f44102fe-ef44-46ce-9289-0ccf7af5f0d6",
+   "metadata": {},
+   "source": [
+    "## II. String Deciphering\n",
+    "\n",
+    "Given the structure of the code, in order to solve, we need to be able to do the following:\n",
+    "\n",
+    "1. Retrieving a string from `.rodata` section\n",
+    "2. Get all the cross-references to `0x804f7e0` to find all locations where the deciphering function is called\n",
+    "3. At each of the calls location, we need to backtract to retrieve both `edx` and `eax` values (which are pointers to .rodata)\n",
+    "4. Assemble everything to decipher strings"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c494fa4e-dba4-4e10-bd2b-eb97848d3638",
+   "metadata": {},
+   "source": [
+    "### Reading a string\n",
+    "\n",
+    "Reading a string in program memory can be done with [Program.read_bytes](https://quarkslab.github.io/quokka/reference/python/program/#quokka.program.Program.read_bytes). As the string length is not known in advance it should be read byte per byte.\n",
+    "\n",
+    "**Exercise**: Write the snippet to read an arbitrary string at a given address"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "52fe4e34-421c-4ba8-b014-9eaa3c394fa4",
+   "metadata": {},
+   "source": [
+    "<button type=\"button\" class=\"collapsible\">Show Solution</button>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "25997dec-b8ce-4bfe-96dd-62b05dced063",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "b'^GTVZhEC\\x02\\x04\\x02\\x07'"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "def read_ciphered_str(program: Program, address: int) -> bytes:\n",
+    "    offset = 0\n",
+    "    data = b\"\"\n",
+    "    while (next_byte := program.read_bytes(address + offset, 1)) != b\"\\x00\":\n",
+    "        data += next_byte\n",
+    "        offset += 1\n",
+    "    return data\n",
+    "\n",
+    "read_ciphered_str(program, 0x8054a70)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7632ecdd-4215-4ded-ab75-1bc84f342c5c",
+   "metadata": {},
+   "source": [
+    "### Cross-refs to a function\n",
+    "\n",
+    "We now need to retrieve addresses of all calls to the deciphering function.\n",
+    "This can be achieved by looking at all cross-references to ``0x804f7e0``. As cross-references\n",
+    "are attached to instructions we should retrieve the first instruction of the function and to iterate\n",
+    "the [call_references](https://quarkslab.github.io/quokka/reference/python/instruction/#quokka.instruction.Instruction.call_references) attribute of the instruction.\n",
+    "\n",
+    "Note `call_references` returns a list of tuples composed of (Function, Block, instruction index in block).\n",
+    "\n",
+    "**Exercise**: Iterate and print all call sites of the function"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "1ff661ce-9cba-44cb-a84a-34c32655c687",
+   "metadata": {},
+   "source": [
+    "<button type=\"button\" class=\"collapsible\">Show Solution</button>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "78759371-8297-4bac-8e1d-9620a313d496",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "call at: 0x804fac7\n",
+      "call at: 0x804fadb\n",
+      "call at: 0x804faec\n",
+      "call at: 0x804fb00\n",
+      "call at: 0x804fb14\n",
+      "call at: 0x804fb28\n",
+      "call at: 0x804fb39\n",
+      "call at: 0x804fb4d\n",
+      "call at: 0x804fb61\n",
+      "call at: 0x804fb75\n",
+      "call at: 0x804fb89\n",
+      "call at: 0x804fb9d\n",
+      "call at: 0x804fbb1\n",
+      "call at: 0x804fbc5\n",
+      "call at: 0x804fbd9\n",
+      "call at: 0x804fbea\n",
+      "call at: 0x804fbfb\n",
+      "call at: 0x804fc0f\n",
+      "call at: 0x804fc23\n",
+      "call at: 0x804fc37\n",
+      "call at: 0x804fc4b\n",
+      "call at: 0x804fc5c\n",
+      "call at: 0x804fc70\n",
+      "call at: 0x804fc84\n",
+      "call at: 0x804fc98\n",
+      "call at: 0x804fcac\n",
+      "call at: 0x804fcc0\n",
+      "call at: 0x804fcd4\n",
+      "call at: 0x804fce8\n",
+      "call at: 0x804fcfc\n",
+      "call at: 0x804fd10\n",
+      "call at: 0x804fd24\n",
+      "call at: 0x804fd38\n",
+      "call at: 0x804fd4c\n",
+      "call at: 0x804fd60\n",
+      "call at: 0x804fd74\n",
+      "call at: 0x804fd88\n",
+      "call at: 0x804fd9c\n",
+      "call at: 0x804fdad\n",
+      "call at: 0x804fdc1\n",
+      "call at: 0x804fdd5\n",
+      "call at: 0x804fde9\n",
+      "call at: 0x804fdfd\n",
+      "call at: 0x804fe11\n",
+      "call at: 0x804fe25\n",
+      "call at: 0x804fe39\n",
+      "call at: 0x804fe4d\n",
+      "call at: 0x804fe61\n",
+      "call at: 0x804fe75\n",
+      "call at: 0x804fe89\n",
+      "call at: 0x804fe9d\n",
+      "call at: 0x804feb1\n",
+      "call at: 0x804fec5\n",
+      "call at: 0x804fed9\n",
+      "call at: 0x804feed\n",
+      "call at: 0x804ff01\n",
+      "call at: 0x804ff15\n",
+      "call at: 0x804ff29\n",
+      "call at: 0x804ff3d\n",
+      "call at: 0x804ff51\n",
+      "call at: 0x804ff65\n",
+      "call at: 0x804ff79\n",
+      "call at: 0x804ff8d\n",
+      "call at: 0x804ffa1\n"
+     ]
+    }
+   ],
+   "source": [
+    "inst = program.get_instruction(0x804f7e0)\n",
+    "for fun, block, idx in inst.call_references:\n",
+    "    call_inst = list(block.instructions)[idx]\n",
+    "    print(f\"call at: {call_inst.address:#08x}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "055f124c-ec4e-4283-9dea-18231a73aad3",
+   "metadata": {},
+   "source": [
+    "### Retrieving call parameters\n",
+    "\n",
+    "To retrieve parameter values, we need to backtrack from the call instruction and to find\n",
+    "specific register assignments. Under the hood, Quokka uses capstone objects. Thus we can\n",
+    "use capstone constants to retrieve a specific register."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "68d75923-7adf-467a-add5-b9f31cc96865",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from capstone import x86_const\n",
+    "\n",
+    "EDX_ID = x86_const.X86_REG_EDX\n",
+    "EAX_ID = x86_const.X86_REG_EAX"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d6df4901-f39e-4ed5-a0e7-a643076a0003",
+   "metadata": {},
+   "source": [
+    "Then quokka provides the [find_register_access](https://quarkslab.github.io/quokka/reference/python/utils/#quokka.utils.find_register_access) to retrieve a specific register read or write given a list of instructions.\n",
+    "\n",
+    "On the register assignment, we then have to retrieve the [data_references](https://quarkslab.github.io/quokka/reference/python/instruction/#quokka.instruction.Instruction.data_references) to the string in .rodata.\n",
+    "\n",
+    "**Exercise**: Write a function to retrieve the data reference address for a specific register."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "d0ab7102-c8df-4e5d-b44f-cc69a3a126b6",
+   "metadata": {},
+   "source": [
+    "<button type=\"button\" class=\"collapsible\">Show Solution</button>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "156c1663-2a75-4d4e-ab5b-d744a08388a5",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "@0x8054b2e: b'OVS\\x14\\x06\\x05'\n"
+     ]
+    }
+   ],
+   "source": [
+    "from quokka import Block\n",
+    "from quokka.utils import find_register_access\n",
+    "from quokka.types import RegAccessMode\n",
+    "\n",
+    "def read_reg_data_ref(reg_id: int, block: Block, call_idx: int) -> int | None:\n",
+    "    \n",
+    "    # Reverse the list of instructions\n",
+    "    instructions = list(block.instructions)[:call_idx][::-1]\n",
+    "\n",
+    "    while True:\n",
+    "        instr = find_register_access(reg_id, RegAccessMode.WRITE, instructions)\n",
+    "\n",
+    "        if instr is None:  # No instruction found\n",
+    "            return None\n",
+    "\n",
+    "        if instr.data_references:  # If there are data references, return that value\n",
+    "            return instr.data_references[0].address\n",
+    "        else:  # No data references\n",
+    "            # Recursively read the source registry\n",
+    "            regs_read, regs_write = instr.cs_inst.regs_access()\n",
+    "            reg_id = regs_read[0]\n",
+    "            instructions[instructions.index(instr) + 1 :]\n",
+    "\n",
+    "    return None\n",
+    "\n",
+    "data_addr = read_reg_data_ref(EDX_ID, block, idx)\n",
+    "data = read_ciphered_str(program, data_addr)\n",
+    "print(f\"@{data_addr:#08x}: {repr(data)}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "06f28768-0655-40e2-96db-7a808d5184a2",
+   "metadata": {},
+   "source": [
+    "### Assembling everything together\n",
+    "\n",
+    "We can now assemble everything together to script the deciphering of all strings.\n",
+    "\n",
+    "**Exercise**: Decipher all strings!"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "cfb88bbf-f5ad-4f2e-bcbf-733a22e406e0",
+   "metadata": {},
+   "source": [
+    "<button type=\"button\" class=\"collapsible\">Show Solution</button>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "id": "113f35b3-ffc5-4a3e-ae61-6423bc2db4a7",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "b'VSZ^Y' -> admin\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'EXXC' -> root\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'BUYC' -> ubnt\n",
+      "b'BUYC' -> ubnt\n",
+      "b'SRQVB[C' -> default\n",
+      "b'[}@GUX\\x01' -> lJwpbo6\n",
+      "b'SRQVB[C' -> default\n",
+      "b'd\\x05QpFyqD' -> S2fGqNFs\n",
+      "b'SRQVB[C' -> default\n",
+      "b'xO_[@dp\\x0f' -> OxhlwSG8\n",
+      "b'SRQVB[C' -> default\n",
+      "b'SRQVB[C' -> default\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'GVDD@XES' -> password\n",
+      "b'EXXC' -> root\n",
+      "b'\\x02BG' -> 5up\n",
+      "b'EXXC' -> root\n",
+      "b'M[OO\\x19' -> zlxx.\n",
+      "b'EXXC' -> root\n",
+      "b'A^MOA' -> vizxv\n",
+      "b'EXXC' -> root\n",
+      "b'mCR\\x02\\x05\\x06' -> Zte521\n",
+      "b'EXXC' -> root\n",
+      "b'VY\\\\X' -> anko\n",
+      "b'ADCVETVZ\\x05\\x07\\x06\\x02' -> vstarcam2015\n",
+      "b'\\x05\\x07\\x06\\x02\\x07\\x01\\x07\\x05' -> 20150602\n",
+      "b'EXXC' -> root\n",
+      "b'DAPXS^R' -> svgodie\n",
+      "b'BDRE' -> user\n",
+      "b'BDRE' -> user\n",
+      "b'PBRDC' -> guest\n",
+      "b'PBRDC' -> guest\n",
+      "b'PBRDC' -> guest\n",
+      "b'\\x06\\x05\\x04\\x03\\x02' -> 12345\n",
+      "b'EXXC' -> root\n",
+      "b'\\x06\\x05\\x04\\x03\\x02\\x01' -> 123456\n",
+      "b'EXXC' -> root\n",
+      "b'GVDD@XES' -> password\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'\\x06\\x05\\x04\\x03' -> 1234\n",
+      "b'SVRZXY' -> daemon\n",
+      "b'SVRZXY' -> daemon\n",
+      "b'VSZ' -> adm\n",
+      "b'' -> \n",
+      "b'U^Y' -> bin\n",
+      "b'' -> \n",
+      "b'SVRZXY' -> daemon\n",
+      "b'' -> \n",
+      "b'EXXC' -> root\n",
+      "b'' -> \n",
+      "b'VSZ^Y' -> admin\n",
+      "b'' -> \n",
+      "b'SRQVB[C' -> default\n",
+      "b'' -> \n",
+      "b'VSZ^Y' -> admin\n",
+      "b'SAE\\x05\\x02\\x0f\\x07\\x05\\x05\\x05' -> dvr2580222\n",
+      "b'EXXC' -> root\n",
+      "b'^GTVZhEC\\x02\\x04\\x02\\x07' -> ipcam_rt5350\n",
+      "b'EXXC' -> root\n",
+      "b'OZ_S^GT' -> xmhdipc\n",
+      "b'EXXC' -> root\n",
+      "b'SRQVB[C' -> default\n",
+      "b'EXXC' -> root\n",
+      "b']BVYCRT_' -> juantech\n",
+      "b'EXXC' -> root\n",
+      "b'\\x02\\x03\\x04\\x05\\x06' -> 54321\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'VSZ^Y\\x06\\x05\\x04\\x03' -> admin1234\n",
+      "b'SRQVB[C' -> default\n",
+      "b'VYCD[F' -> antslq\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'T_VYPRZR' -> changeme\n",
+      "b'EXXC' -> root\n",
+      "b'T_VYPRZR' -> changeme\n",
+      "b'BDRE' -> user\n",
+      "b'BDRE' -> user\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'\\x06\\x05\\x04\\x03\\x02\\x01' -> 123456\n",
+      "b'PBRDC' -> guest\n",
+      "b'\\x06\\x05\\x04\\x03\\x02\\x01' -> 123456\n",
+      "b'EXXC' -> root\n",
+      "b'SRQVB[C' -> default\n",
+      "b'EXXC' -> root\n",
+      "b'\\x0f\\x0f\\x0f\\x0f\\x0f\\x0f' -> 888888\n",
+      "b'EXXC' -> root\n",
+      "b'\\x06\\x05\\x04\\x03\\x02\\x01' -> 123456\n",
+      "b'EXXC' -> root\n",
+      "b'' -> \n",
+      "b'EXXC' -> root\n",
+      "b'pz\\x0f\\x06\\x0f\\x05' -> GM8182\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'\\x06\\x05\\x04\\x03\\x02\\x01' -> 123456\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'vsz~y' -> ADMIN\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'VSZ^Y^DCEVCXE' -> administrator\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'EVS^BD' -> radius\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'VSZ^Y\\x06\\x05\\x04' -> admin123\n",
+      "b'EXXC' -> root\n",
+      "b'EXXC\\x06\\x05\\x04' -> root123\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'' -> \n",
+      "b'ADCVETVZ\\x05\\x07\\x06' -> vstarcam201\n",
+      "b'\\x05\\x07\\x06' -> 201\n",
+      "b'EXXC' -> root\n",
+      "b'\\x06\\x05\\x04\\x03\\x02' -> 12345\n",
+      "b'EXXC' -> root\n",
+      "b'VYY^R\\x05\\x07\\x06\\x02' -> annie2015\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'ARECRO\\x05\\x02R\\\\C\\\\D\\x06\\x05\\x04' -> vertex25ektks123\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'\\x06\\x0e\\x0f\\x0f' -> 1988\n",
+      "b'EXXC' -> root\n",
+      "b'\\x06\\x07\\x07\\x06T_^Y' -> 1001chin\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'\\x02\\x03\\x04\\x05\\x06' -> 54321\n",
+      "b'D_R[[' -> shell\n",
+      "b'D_' -> sh\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'TXZTXZTXZ' -> comcomcom\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'bF\\x1a\\x03p~C\\x04z' -> Uq-4GIt3M\n",
+      "b'VSZ^Y' -> admin\n",
+      "b'OVS\\x14\\x06\\x05' -> xad#12\n"
+     ]
+    }
+   ],
+   "source": [
+    "def decrypt(data: bytes):\n",
+    "    return bytes(map(lambda b: b ^ 0x37, data)) if data else b\"\"\n",
+    "\n",
+    "mirai_decrypt_func = program[0x804F7E0] # decryption function\n",
+    "\n",
+    "first_instr = mirai_decrypt_func.get_instruction(mirai_decrypt_func.start)  # get first instruction \n",
+    "\n",
+    "for _, block, instr_idx in first_instr.call_references:    \n",
+    "    # Extract the arguments\n",
+    "    #  arg1  -->  eax | arg2  -->  edx\n",
+    "    arg1_addr = read_reg_data_ref(EAX_ID, block, instr_idx)\n",
+    "    arg2_addr = read_reg_data_ref(EDX_ID, block, instr_idx)\n",
+    "\n",
+    "    # Read ciphered strings\n",
+    "    arg1_ciph = read_ciphered_str(program, arg1_addr)\n",
+    "    arg2_ciph = read_ciphered_str(program, arg2_addr)\n",
+    "    \n",
+    "    # Decrypt the string\n",
+    "    arg1_plain = decrypt(arg1_ciph)\n",
+    "    arg2_plain = decrypt(arg2_ciph)\n",
+    "\n",
+    "    print(f\"{repr(arg1_ciph)} -> {arg1_plain.decode()}\")\n",
+    "    print(f\"{repr(arg2_ciph)} -> {arg2_plain.decode()}\")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "e47953f0-f185-4a0c-9730-119fdc4044cb",
+   "metadata": {},
+   "source": [
+    "<script>\n",
+    "var coll = document.getElementsByClassName(\"collapsible\");\n",
+    "var i;\n",
+    "\n",
+    "for (i = 0; i < coll.length; i++) {\n",
+    "\n",
+    "  var tmp = coll[i].nextElementSibling;\n",
+    "  tmp.style.display = \"none\";\n",
+    "  tmp.nextElementSibling.style.display = \"none\";\n",
+    "\n",
+    "  coll[i].addEventListener(\"click\", function() {\n",
+    "    this.classList.toggle(\"active\");\n",
+    "    var content = this.nextElementSibling;\n",
+    "    var content2 = content.nextElementSibling;\n",
+    "    if (content.style.display === \"none\") {\n",
+    "      content.style.display = \"\";\n",
+    "      content2.style.display = \"\";\n",
+    "      this.innerHTML = \"Hide Solution\";\n",
+    "    } else {\n",
+    "      content.style.display = \"none\";\n",
+    "      content2.style.display = \"none\";\n",
+    "      this.innerHTML = \"Show Solution\";\n",
+    "    }\n",
+    "  });\n",
+    "}\n",
+    "</script>"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "diffing",
+   "language": "python",
+   "name": "diffing"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

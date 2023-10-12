@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quokka: String Deciphering &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../_static/insipid.js"></script>
+    <script defer src="../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="First steps with Qbindiff" href="basic-diffing.html" />
+    <link rel="prev" title="Exporters" href="tutorials.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="tutorials.html" accesskey="U">Exporters</a>
+            <a class="top" href="#">Quokka: String Deciphering</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="tutorials.html" class="nav-icon previous" title="previous:&#13;Exporters" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="basic-diffing.html" class="nav-icon next" title="next:&#13;First steps with Qbindiff" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="tutorials.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Exporters
+          </span>
+        </div>
+      </a>
+      <a class="next" href="basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            First steps with Qbindiff
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="Quokka:-String-Deciphering">
+<h1>Quokka: String Deciphering<a class="headerlink" href="#Quokka:-String-Deciphering" title="Link to this heading">¶</a></h1>
+<section id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<p>The sample to work on is a <code class="docutils literal notranslate"><span class="pre">Mirai</span></code> malware sample. It can be retrieve below.</p>
+<div style="text-align: center;"><a href="../_static/tutorials/practical1_string_decipher.tar.gz"><i class="fa fa-download fa-lg"></i><br/>binary</a></div><br/><p>Its an ELF executable, for which all strings used internally are ciphered with a custom algorithm. The deciphering function is at <code class="docutils literal notranslate"><span class="pre">0x804f7e0</span></code> and uses a custom calling convention where the two firsts parameters are provided through <code class="docutils literal notranslate"><span class="pre">edx</span></code> and <code class="docutils literal notranslate"><span class="pre">eax</span></code>. The function takes as parameters two unrelated strings and decipher them with the key <code class="docutils literal notranslate"><span class="pre">0x37</span></code>. Strings are deciphered in-place.</p>
+<p>This function is called many times to decipher all strings used. The figure below summarizes the problem.</p>
+<figure class="align-center">
+    <img alt="summary Mirai deciphering process", src="../_static/tutorials/mirai_deciphering_process.png"/>
+</figure><div class="admonition info">
+   <p class="admonition-title"><b><i class="fa fa-question-circle"> </i> Question</b></p>
+   <p>The goal is to write a script to decipher automatically all strings using Quokka API.
+   </p>
+</div></section>
+<section id="I.-Loading-the-program">
+<h2>I. Loading the program<a class="headerlink" href="#I.-Loading-the-program" title="Link to this heading">¶</a></h2>
+<p>If the program has not been exported with Quokka. It can be exported with:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">quokka</span> <span class="kn">import</span> <span class="n">Program</span>
+
+<span class="n">program</span> <span class="o">=</span> <span class="n">Program</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="s2">&quot;33f46cac84fe0368f33a1e56712add18&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Otherwise it can be directly loaded with:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">quokka</span> <span class="kn">import</span> <span class="n">Program</span>
+
+<span class="n">program</span> <span class="o">=</span> <span class="n">Program</span><span class="p">(</span><span class="s2">&quot;33f46cac84fe0368f33a1e56712add18.quokka&quot;</span><span class="p">,</span> <span class="s2">&quot;33f46cac84fe0368f33a1e56712add18&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="II.-String-Deciphering">
+<h2>II. String Deciphering<a class="headerlink" href="#II.-String-Deciphering" title="Link to this heading">¶</a></h2>
+<p>Given the structure of the code, in order to solve, we need to be able to do the following:</p>
+<ol class="arabic simple">
+<li><p>Retrieving a string from <code class="docutils literal notranslate"><span class="pre">.rodata</span></code> section</p></li>
+<li><p>Get all the cross-references to <code class="docutils literal notranslate"><span class="pre">0x804f7e0</span></code> to find all locations where the deciphering function is called</p></li>
+<li><p>At each of the calls location, we need to backtract to retrieve both <code class="docutils literal notranslate"><span class="pre">edx</span></code> and <code class="docutils literal notranslate"><span class="pre">eax</span></code> values (which are pointers to .rodata)</p></li>
+<li><p>Assemble everything to decipher strings</p></li>
+</ol>
+<section id="Reading-a-string">
+<h3>Reading a string<a class="headerlink" href="#Reading-a-string" title="Link to this heading">¶</a></h3>
+<p>Reading a string in program memory can be done with <a class="reference external" href="https://quarkslab.github.io/quokka/reference/python/program/#quokka.program.Program.read_bytes">Program.read_bytes</a>. As the string length is not known in advance it should be read byte per byte.</p>
+<p><strong>Exercise</strong>: Write the snippet to read an arbitrary string at a given address</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_ciphered_str</span><span class="p">(</span><span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">next_byte</span> <span class="o">:=</span> <span class="n">program</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="n">address</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="n">next_byte</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="n">read_ciphered_str</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="mh">0x8054a70</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+b&#39;^GTVZhEC\x02\x04\x02\x07&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="Cross-refs-to-a-function">
+<h3>Cross-refs to a function<a class="headerlink" href="#Cross-refs-to-a-function" title="Link to this heading">¶</a></h3>
+<p>We now need to retrieve addresses of all calls to the deciphering function. This can be achieved by looking at all cross-references to <code class="docutils literal notranslate"><span class="pre">0x804f7e0</span></code>. As cross-references are attached to instructions we should retrieve the first instruction of the function and to iterate the <a class="reference external" href="https://quarkslab.github.io/quokka/reference/python/instruction/#quokka.instruction.Instruction.call_references">call_references</a> attribute of the instruction.</p>
+<p>Note <code class="docutils literal notranslate"><span class="pre">call_references</span></code> returns a list of tuples composed of (Function, Block, instruction index in block).</p>
+<p><strong>Exercise</strong>: Iterate and print all call sites of the function</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inst</span> <span class="o">=</span> <span class="n">program</span><span class="o">.</span><span class="n">get_instruction</span><span class="p">(</span><span class="mh">0x804f7e0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">fun</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">inst</span><span class="o">.</span><span class="n">call_references</span><span class="p">:</span>
+    <span class="n">call_inst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">instructions</span><span class="p">)[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;call at: </span><span class="si">{</span><span class="n">call_inst</span><span class="o">.</span><span class="n">address</span><span class="si">:</span><span class="s2">#08x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+call at: 0x804fac7
+call at: 0x804fadb
+call at: 0x804faec
+call at: 0x804fb00
+call at: 0x804fb14
+call at: 0x804fb28
+call at: 0x804fb39
+call at: 0x804fb4d
+call at: 0x804fb61
+call at: 0x804fb75
+call at: 0x804fb89
+call at: 0x804fb9d
+call at: 0x804fbb1
+call at: 0x804fbc5
+call at: 0x804fbd9
+call at: 0x804fbea
+call at: 0x804fbfb
+call at: 0x804fc0f
+call at: 0x804fc23
+call at: 0x804fc37
+call at: 0x804fc4b
+call at: 0x804fc5c
+call at: 0x804fc70
+call at: 0x804fc84
+call at: 0x804fc98
+call at: 0x804fcac
+call at: 0x804fcc0
+call at: 0x804fcd4
+call at: 0x804fce8
+call at: 0x804fcfc
+call at: 0x804fd10
+call at: 0x804fd24
+call at: 0x804fd38
+call at: 0x804fd4c
+call at: 0x804fd60
+call at: 0x804fd74
+call at: 0x804fd88
+call at: 0x804fd9c
+call at: 0x804fdad
+call at: 0x804fdc1
+call at: 0x804fdd5
+call at: 0x804fde9
+call at: 0x804fdfd
+call at: 0x804fe11
+call at: 0x804fe25
+call at: 0x804fe39
+call at: 0x804fe4d
+call at: 0x804fe61
+call at: 0x804fe75
+call at: 0x804fe89
+call at: 0x804fe9d
+call at: 0x804feb1
+call at: 0x804fec5
+call at: 0x804fed9
+call at: 0x804feed
+call at: 0x804ff01
+call at: 0x804ff15
+call at: 0x804ff29
+call at: 0x804ff3d
+call at: 0x804ff51
+call at: 0x804ff65
+call at: 0x804ff79
+call at: 0x804ff8d
+call at: 0x804ffa1
+</pre></div></div>
+</div>
+</section>
+<section id="Retrieving-call-parameters">
+<h3>Retrieving call parameters<a class="headerlink" href="#Retrieving-call-parameters" title="Link to this heading">¶</a></h3>
+<p>To retrieve parameter values, we need to backtrack from the call instruction and to find specific register assignments. Under the hood, Quokka uses capstone objects. Thus we can use capstone constants to retrieve a specific register.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">capstone</span> <span class="kn">import</span> <span class="n">x86_const</span>
+
+<span class="n">EDX_ID</span> <span class="o">=</span> <span class="n">x86_const</span><span class="o">.</span><span class="n">X86_REG_EDX</span>
+<span class="n">EAX_ID</span> <span class="o">=</span> <span class="n">x86_const</span><span class="o">.</span><span class="n">X86_REG_EAX</span>
+</pre></div>
+</div>
+</div>
+<p>Then quokka provides the <a class="reference external" href="https://quarkslab.github.io/quokka/reference/python/utils/#quokka.utils.find_register_access">find_register_access</a> to retrieve a specific register read or write given a list of instructions.</p>
+<p>On the register assignment, we then have to retrieve the <a class="reference external" href="https://quarkslab.github.io/quokka/reference/python/instruction/#quokka.instruction.Instruction.data_references">data_references</a> to the string in .rodata.</p>
+<p><strong>Exercise</strong>: Write a function to retrieve the data reference address for a specific register.</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">quokka</span> <span class="kn">import</span> <span class="n">Block</span>
+<span class="kn">from</span> <span class="nn">quokka.utils</span> <span class="kn">import</span> <span class="n">find_register_access</span>
+<span class="kn">from</span> <span class="nn">quokka.types</span> <span class="kn">import</span> <span class="n">RegAccessMode</span>
+
+<span class="k">def</span> <span class="nf">read_reg_data_ref</span><span class="p">(</span><span class="n">reg_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">call_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="c1"># Reverse the list of instructions</span>
+    <span class="n">instructions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">instructions</span><span class="p">)[:</span><span class="n">call_idx</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">instr</span> <span class="o">=</span> <span class="n">find_register_access</span><span class="p">(</span><span class="n">reg_id</span><span class="p">,</span> <span class="n">RegAccessMode</span><span class="o">.</span><span class="n">WRITE</span><span class="p">,</span> <span class="n">instructions</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">instr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># No instruction found</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">instr</span><span class="o">.</span><span class="n">data_references</span><span class="p">:</span>  <span class="c1"># If there are data references, return that value</span>
+            <span class="k">return</span> <span class="n">instr</span><span class="o">.</span><span class="n">data_references</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># No data references</span>
+            <span class="c1"># Recursively read the source registry</span>
+            <span class="n">regs_read</span><span class="p">,</span> <span class="n">regs_write</span> <span class="o">=</span> <span class="n">instr</span><span class="o">.</span><span class="n">cs_inst</span><span class="o">.</span><span class="n">regs_access</span><span class="p">()</span>
+            <span class="n">reg_id</span> <span class="o">=</span> <span class="n">regs_read</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">instructions</span><span class="p">[</span><span class="n">instructions</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">instr</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="n">data_addr</span> <span class="o">=</span> <span class="n">read_reg_data_ref</span><span class="p">(</span><span class="n">EDX_ID</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">read_ciphered_str</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_addr</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">data_addr</span><span class="si">:</span><span class="s2">#08x</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+@0x8054b2e: b&#39;OVS\x14\x06\x05&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="Assembling-everything-together">
+<h3>Assembling everything together<a class="headerlink" href="#Assembling-everything-together" title="Link to this heading">¶</a></h3>
+<p>We can now assemble everything together to script the deciphering of all strings.</p>
+<p><strong>Exercise</strong>: Decipher all strings!</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="n">b</span> <span class="o">^</span> <span class="mh">0x37</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span> <span class="k">if</span> <span class="n">data</span> <span class="k">else</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+
+<span class="n">mirai_decrypt_func</span> <span class="o">=</span> <span class="n">program</span><span class="p">[</span><span class="mh">0x804F7E0</span><span class="p">]</span> <span class="c1"># decryption function</span>
+
+<span class="n">first_instr</span> <span class="o">=</span> <span class="n">mirai_decrypt_func</span><span class="o">.</span><span class="n">get_instruction</span><span class="p">(</span><span class="n">mirai_decrypt_func</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>  <span class="c1"># get first instruction</span>
+
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">instr_idx</span> <span class="ow">in</span> <span class="n">first_instr</span><span class="o">.</span><span class="n">call_references</span><span class="p">:</span>
+    <span class="c1"># Extract the arguments</span>
+    <span class="c1">#  arg1  --&gt;  eax | arg2  --&gt;  edx</span>
+    <span class="n">arg1_addr</span> <span class="o">=</span> <span class="n">read_reg_data_ref</span><span class="p">(</span><span class="n">EAX_ID</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">instr_idx</span><span class="p">)</span>
+    <span class="n">arg2_addr</span> <span class="o">=</span> <span class="n">read_reg_data_ref</span><span class="p">(</span><span class="n">EDX_ID</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">instr_idx</span><span class="p">)</span>
+
+    <span class="c1"># Read ciphered strings</span>
+    <span class="n">arg1_ciph</span> <span class="o">=</span> <span class="n">read_ciphered_str</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">arg1_addr</span><span class="p">)</span>
+    <span class="n">arg2_ciph</span> <span class="o">=</span> <span class="n">read_ciphered_str</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">arg2_addr</span><span class="p">)</span>
+
+    <span class="c1"># Decrypt the string</span>
+    <span class="n">arg1_plain</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">arg1_ciph</span><span class="p">)</span>
+    <span class="n">arg2_plain</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">arg2_ciph</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">arg1_ciph</span><span class="p">)</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">arg1_plain</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">arg2_ciph</span><span class="p">)</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">arg2_plain</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;EXXC&#39; -&gt; root
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;BUYC&#39; -&gt; ubnt
+b&#39;BUYC&#39; -&gt; ubnt
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;[}@GUX\x01&#39; -&gt; lJwpbo6
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;d\x05QpFyqD&#39; -&gt; S2fGqNFs
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;xO_[@dp\x0f&#39; -&gt; OxhlwSG8
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;GVDD@XES&#39; -&gt; password
+b&#39;EXXC&#39; -&gt; root
+b&#39;\x02BG&#39; -&gt; 5up
+b&#39;EXXC&#39; -&gt; root
+b&#39;M[OO\x19&#39; -&gt; zlxx.
+b&#39;EXXC&#39; -&gt; root
+b&#39;A^MOA&#39; -&gt; vizxv
+b&#39;EXXC&#39; -&gt; root
+b&#39;mCR\x02\x05\x06&#39; -&gt; Zte521
+b&#39;EXXC&#39; -&gt; root
+b&#39;VY\\X&#39; -&gt; anko
+b&#39;ADCVETVZ\x05\x07\x06\x02&#39; -&gt; vstarcam2015
+b&#39;\x05\x07\x06\x02\x07\x01\x07\x05&#39; -&gt; 20150602
+b&#39;EXXC&#39; -&gt; root
+b&#39;DAPXS^R&#39; -&gt; svgodie
+b&#39;BDRE&#39; -&gt; user
+b&#39;BDRE&#39; -&gt; user
+b&#39;PBRDC&#39; -&gt; guest
+b&#39;PBRDC&#39; -&gt; guest
+b&#39;PBRDC&#39; -&gt; guest
+b&#39;\x06\x05\x04\x03\x02&#39; -&gt; 12345
+b&#39;EXXC&#39; -&gt; root
+b&#39;\x06\x05\x04\x03\x02\x01&#39; -&gt; 123456
+b&#39;EXXC&#39; -&gt; root
+b&#39;GVDD@XES&#39; -&gt; password
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;\x06\x05\x04\x03&#39; -&gt; 1234
+b&#39;SVRZXY&#39; -&gt; daemon
+b&#39;SVRZXY&#39; -&gt; daemon
+b&#39;VSZ&#39; -&gt; adm
+b&#39;&#39; -&gt;
+b&#39;U^Y&#39; -&gt; bin
+b&#39;&#39; -&gt;
+b&#39;SVRZXY&#39; -&gt; daemon
+b&#39;&#39; -&gt;
+b&#39;EXXC&#39; -&gt; root
+b&#39;&#39; -&gt;
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;&#39; -&gt;
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;&#39; -&gt;
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;SAE\x05\x02\x0f\x07\x05\x05\x05&#39; -&gt; dvr2580222
+b&#39;EXXC&#39; -&gt; root
+b&#39;^GTVZhEC\x02\x04\x02\x07&#39; -&gt; ipcam_rt5350
+b&#39;EXXC&#39; -&gt; root
+b&#39;OZ_S^GT&#39; -&gt; xmhdipc
+b&#39;EXXC&#39; -&gt; root
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;EXXC&#39; -&gt; root
+b&#39;]BVYCRT_&#39; -&gt; juantech
+b&#39;EXXC&#39; -&gt; root
+b&#39;\x02\x03\x04\x05\x06&#39; -&gt; 54321
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;VSZ^Y\x06\x05\x04\x03&#39; -&gt; admin1234
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;VYCD[F&#39; -&gt; antslq
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;T_VYPRZR&#39; -&gt; changeme
+b&#39;EXXC&#39; -&gt; root
+b&#39;T_VYPRZR&#39; -&gt; changeme
+b&#39;BDRE&#39; -&gt; user
+b&#39;BDRE&#39; -&gt; user
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;\x06\x05\x04\x03\x02\x01&#39; -&gt; 123456
+b&#39;PBRDC&#39; -&gt; guest
+b&#39;\x06\x05\x04\x03\x02\x01&#39; -&gt; 123456
+b&#39;EXXC&#39; -&gt; root
+b&#39;SRQVB[C&#39; -&gt; default
+b&#39;EXXC&#39; -&gt; root
+b&#39;\x0f\x0f\x0f\x0f\x0f\x0f&#39; -&gt; 888888
+b&#39;EXXC&#39; -&gt; root
+b&#39;\x06\x05\x04\x03\x02\x01&#39; -&gt; 123456
+b&#39;EXXC&#39; -&gt; root
+b&#39;&#39; -&gt;
+b&#39;EXXC&#39; -&gt; root
+b&#39;pz\x0f\x06\x0f\x05&#39; -&gt; GM8182
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;\x06\x05\x04\x03\x02\x01&#39; -&gt; 123456
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;vsz~y&#39; -&gt; ADMIN
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;VSZ^Y^DCEVCXE&#39; -&gt; administrator
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;EVS^BD&#39; -&gt; radius
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;VSZ^Y\x06\x05\x04&#39; -&gt; admin123
+b&#39;EXXC&#39; -&gt; root
+b&#39;EXXC\x06\x05\x04&#39; -&gt; root123
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;&#39; -&gt;
+b&#39;ADCVETVZ\x05\x07\x06&#39; -&gt; vstarcam201
+b&#39;\x05\x07\x06&#39; -&gt; 201
+b&#39;EXXC&#39; -&gt; root
+b&#39;\x06\x05\x04\x03\x02&#39; -&gt; 12345
+b&#39;EXXC&#39; -&gt; root
+b&#39;VYY^R\x05\x07\x06\x02&#39; -&gt; annie2015
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;ARECRO\x05\x02R\\C\\D\x06\x05\x04&#39; -&gt; vertex25ektks123
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;\x06\x0e\x0f\x0f&#39; -&gt; 1988
+b&#39;EXXC&#39; -&gt; root
+b&#39;\x06\x07\x07\x06T_^Y&#39; -&gt; 1001chin
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;\x02\x03\x04\x05\x06&#39; -&gt; 54321
+b&#39;D_R[[&#39; -&gt; shell
+b&#39;D_&#39; -&gt; sh
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;TXZTXZTXZ&#39; -&gt; comcomcom
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;bF\x1a\x03p~C\x04z&#39; -&gt; Uq-4GIt3M
+b&#39;VSZ^Y&#39; -&gt; admin
+b&#39;OVS\x14\x06\x05&#39; -&gt; xad#12
+</pre></div></div>
+</div>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+
+  var tmp = coll[i].nextElementSibling;
+  tmp.style.display = "none";
+  tmp.nextElementSibling.style.display = "none";
+
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    var content2 = content.nextElementSibling;
+    if (content.style.display === "none") {
+      content.style.display = "";
+      content2.style.display = "";
+      this.innerHTML = "Hide Solution";
+    } else {
+      content.style.display = "none";
+      content2.style.display = "none";
+      this.innerHTML = "Show Solution";
+    }
+  });
+}
+</script></section>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Exporters</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Quokka: String Deciphering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="tutorials.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Exporters
+          </span>
+        </div>
+      </a>
+      <a class="next" href="basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            First steps with Qbindiff
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../_sources/tutorials/ex1_string_decipher.ipynb.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

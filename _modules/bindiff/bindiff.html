@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bindiff.bindiff &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../../_static/insipid.js"></script>
+    <script defer src="../../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="../index.html" accesskey="U">Module code</a>
+            <a class="top" href="#">bindiff.bindiff</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+    </nav>
+
+    <nav class="relbar">
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<h1>Source code for bindiff.bindiff</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+
+<span class="kn">from</span> <span class="nn">bindiff.types</span> <span class="kn">import</span> <span class="n">ProgramBinDiff</span><span class="p">,</span> <span class="n">FunctionBinDiff</span><span class="p">,</span> <span class="n">BasicBlockBinDiff</span><span class="p">,</span> <span class="n">InstructionBinDiff</span><span class="p">,</span> <span class="n">BindiffNotFound</span>
+<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BindiffFile</span>
+
+
+<span class="n">BINDIFF_BINARY</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">BINDIFF_PATH_ENV</span> <span class="o">=</span> <span class="s2">&quot;BINDIFF_PATH&quot;</span>
+<span class="n">BIN_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bindiff&#39;</span><span class="p">,</span> <span class="s1">&#39;bindiff.exe&#39;</span><span class="p">,</span> <span class="s1">&#39;differ&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_check_bin_names</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if one of the BinDiff binary exists</span>
+
+<span class="sd">    :param path: Path to the binary</span>
+<span class="sd">    :return: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">BINDIFF_BINARY</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">BIN_NAMES</span><span class="p">:</span>
+        <span class="n">bin_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">bin_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">BINDIFF_BINARY</span> <span class="o">=</span> <span class="n">bin_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">_check_environ</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if BinDiff is already installed</span>
+
+<span class="sd">    :return: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">BINDIFF_PATH_ENV</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_check_bin_names</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">BINDIFF_PATH_ENV</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">_check_default_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if BinDiff is installed at its default location</span>
+<span class="sd">    </span>
+<span class="sd">    :return: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_check_bin_names</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/opt/zynamics/BinDiff/bin&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_check_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the environment variable PATH contains BinDiff binaries</span>
+
+<span class="sd">    :return: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;PATH&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">_check_bin_names</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">p</span><span class="p">)):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="BinDiff">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff">[docs]</a>
+<span class="k">class</span> <span class="nc">BinDiff</span><span class="p">(</span><span class="n">BindiffFile</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    BinDiff class. Parse the diffing result of Bindiff and apply it to the two</span>
+<span class="sd">    ProgramBinExport given. All the diff result is embedded in the two programs</span>
+<span class="sd">    object so after loading the class can be dropped if needed.</span>
+
+<span class="sd">    .. warning:: the two programs given are mutated into :py:class:`ProgramBinDiff` object</span>
+<span class="sd">                 which inherit :py:class:`SimilarityMixin` and :py:class:`DictMatchMixin` which provides</span>
+<span class="sd">                 additional attributes and method to the class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">secondary</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">diff_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param primary: first program diffed</span>
+<span class="sd">        :param secondary: second program diffed</span>
+<span class="sd">        :param diff_file: diffing file as generated by bindiff (differ more specifically)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BinDiff</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">diff_file</span><span class="p">)</span>
+
+        <span class="c1">#: Primary BinExport object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">primary</span>
+        <span class="c1">#: Secondary BinExport object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">secondary</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">secondary</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">secondary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_convert_program_classes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_convert_program_classes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_map_diff_on_programs</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_convert_program_classes</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">ProgramBinExport</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal method to mutate a ProgramBinExport into ProgramBinDiff.</span>
+
+<span class="sd">        :param p: program to mutate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">ProgramBinDiff</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">FunctionBinDiff</span>
+            <span class="k">for</span> <span class="n">bb</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">bb</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">BasicBlockBinDiff</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bb</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="n">i</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">InstructionBinDiff</span>
+
+    <span class="k">def</span> <span class="nf">_map_diff_on_programs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From a diffing result, maps functions, basic blocks and instructions of primary and secondary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Map similarity and confidence on both programs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="o">.</span><span class="n">similarity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="o">.</span><span class="n">similarity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span>
+
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_matches</span><span class="p">:</span>
+            <span class="n">f1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">address1</span><span class="p">]</span>
+            <span class="n">f2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">address2</span><span class="p">]</span>
+            <span class="n">f1</span><span class="o">.</span><span class="n">similarity</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">similarity</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">similarity</span>
+            <span class="n">f1</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">confidence</span>
+            <span class="n">f1</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">algorithm</span>
+            <span class="n">f1</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="n">f2</span><span class="o">.</span><span class="n">match</span> <span class="o">=</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f1</span>
+
+            <span class="c1"># print(&quot;Function:&quot;, f1)</span>
+            <span class="k">for</span> <span class="n">bb_f1</span> <span class="ow">in</span> <span class="n">f1</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+
+                <span class="c1"># The basicblock is matched by a function</span>
+                <span class="k">if</span> <span class="n">bb_f1</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="p">:</span>
+                    <span class="c1"># The basicblock is matched within our function</span>
+                    <span class="k">if</span> <span class="n">f1</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="p">[</span><span class="n">bb_f1</span><span class="o">.</span><span class="n">addr</span><span class="p">]:</span>
+                        <span class="c1"># retrieve the match of the basic block</span>
+                        <span class="n">bb_match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="p">[</span><span class="n">bb_f1</span><span class="o">.</span><span class="n">addr</span><span class="p">][</span><span class="n">f1</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span>
+                        <span class="k">assert</span> <span class="n">match</span> <span class="o">==</span> <span class="n">bb_match</span><span class="o">.</span><span class="n">function_match</span>
+
+                        <span class="c1"># retrieve basic block in secondary</span>
+                        <span class="n">bb_f2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">[</span><span class="n">bb_match</span><span class="o">.</span><span class="n">address2</span><span class="p">]</span>
+
+                        <span class="c1"># Map info</span>
+                        <span class="n">bb_f1</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="n">bb_f2</span><span class="o">.</span><span class="n">match</span> <span class="o">=</span> <span class="n">bb_f2</span><span class="p">,</span> <span class="n">bb_f1</span>
+                        <span class="n">bb_f1</span><span class="o">.</span><span class="n">algorithhm</span> <span class="o">=</span> <span class="n">bb_f2</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">bb_match</span><span class="o">.</span><span class="n">algorithm</span>
+
+                        <span class="c1"># Iterate instructions to map them</span>
+                        <span class="k">for</span> <span class="n">ins_f1</span> <span class="ow">in</span> <span class="n">bb_f1</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                            <span class="c1"># Instruction is matched</span>
+                            <span class="k">if</span> <span class="n">ins_f1</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_instruction_match</span><span class="p">:</span>
+                                <span class="c1"># Within the context of the current function</span>
+                                <span class="k">if</span> <span class="n">f1</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_instruction_match</span><span class="p">[</span><span class="n">ins_f1</span><span class="o">.</span><span class="n">addr</span><span class="p">]:</span>
+                                    <span class="n">ins_f2_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_instruction_match</span><span class="p">[</span><span class="n">ins_f1</span><span class="o">.</span><span class="n">addr</span><span class="p">][</span><span class="n">f1</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span>
+                                    <span class="n">ins_f2</span> <span class="o">=</span> <span class="n">bb_f2</span><span class="p">[</span><span class="n">ins_f2_addr</span><span class="p">]</span>  <span class="c1"># retrieve instruction in secondary basic block</span>
+                                    <span class="n">ins_f1</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="n">ins_f2</span><span class="o">.</span><span class="n">match</span> <span class="o">=</span> <span class="n">ins_f2</span><span class="p">,</span> <span class="n">ins_f1</span>
+
+<div class="viewcode-block" id="BinDiff.raw_diffing">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.raw_diffing">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">raw_diffing</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">p2_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">out_diff</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Static method to diff two binexport files against each other and storing</span>
+<span class="sd">        the diffing result in the given file</span>
+
+<span class="sd">        :param p1_path: primary file path</span>
+<span class="sd">        :param p2_path: secondary file path</span>
+<span class="sd">        :param out_diff: diffing output file</span>
+<span class="sd">        :return: True if successful, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Make sure the bindiff binary is okay before doing any diffing</span>
+        <span class="n">BinDiff</span><span class="o">.</span><span class="n">assert_installation_ok</span><span class="p">()</span>
+
+        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">p1_path</span><span class="p">)</span>
+        <span class="n">f2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">p2_path</span><span class="p">)</span>
+
+        <span class="n">cmd_line</span> <span class="o">=</span> <span class="p">[</span><span class="n">BINDIFF_BINARY</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span>
+                    <span class="sa">f</span><span class="s2">&quot;--primary=</span><span class="si">{</span><span class="n">p1_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;--secondary=</span><span class="si">{</span><span class="n">p2_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;--output_dir=</span><span class="si">{</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;run diffing: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">retcode</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">retcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;differ terminated with error code: </span><span class="si">{</span><span class="n">retcode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Now look for the generated file</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">tmp_dir</span> <span class="o">/</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_vs_</span><span class="si">{}</span><span class="s2">.BinDiff&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span> <span class="n">f2</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">out_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">out_diff</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># try iterating the directory to find the .BinExport file</span>
+            <span class="n">candidates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;the output directory not meant to contain multiple files&quot;</span><span class="p">)</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.BinExport&quot;</span><span class="p">:</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">out_diff</span><span class="p">)</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;diff file .BinExport not found&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="BinDiff.from_binary_files">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.from_binary_files">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_binary_files</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">p2_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;BinDiff&#39;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Diff two executable files. Thus it export .BinExport files from IDA</span>
+<span class="sd">        and then diff the two resulting files in BinDiff.</span>
+
+<span class="sd">        :param p1_path: primary binary file to diff</span>
+<span class="sd">        :param p2_path: secondary binary file to diff</span>
+<span class="sd">        :param diff_out: output file for the diff</span>
+<span class="sd">        :return: BinDiff object representing the diff</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="o">.</span><span class="n">from_binary_file</span><span class="p">(</span><span class="n">p1_path</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="o">.</span><span class="n">from_binary_file</span><span class="p">(</span><span class="n">p2_path</span><span class="p">)</span>
+        <span class="n">p1_binexport</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p1_path</span><span class="si">}</span><span class="s2">.BinExport&quot;</span><span class="p">)</span>
+        <span class="n">p2_binexport</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p2_path</span><span class="si">}</span><span class="s2">.BinExport&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p1</span> <span class="ow">and</span> <span class="n">p2</span><span class="p">:</span>
+            <span class="n">retcode</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">raw_diffing</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">BinDiff</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span> <span class="k">if</span> <span class="n">retcode</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;p1 or p2 could not have been &#39;binexported&#39;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="BinDiff.from_binexport_files">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.from_binexport_files">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_binexport_files</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;BinDiff&#39;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Diff two binexport files. Diff the two binexport files with bindiff</span>
+<span class="sd">        and then load a BinDiff instance.</span>
+
+<span class="sd">        :param p1_binexport: primary binexport file to diff</span>
+<span class="sd">        :param p2_binexport: secondary binexport file to diff</span>
+<span class="sd">        :param diff_out: output file for the diff</span>
+<span class="sd">        :return: BinDiff object representing the diff</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">retcode</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">raw_diffing</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">BinDiff</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span> <span class="k">if</span> <span class="n">retcode</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_configure_bindiff_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check BinDiff access paths</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_environ</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_default_path</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_path</span><span class="p">():</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can&#39;t find a valid bindiff executable. (should be available in PATH or&quot;</span>
+                                    <span class="sa">f</span><span class="s2">&quot;as $</span><span class="si">{</span><span class="n">BINDIFF_PATH_ENV</span><span class="si">}</span><span class="s2"> env variable&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BinDiff.assert_installation_ok">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.assert_installation_ok">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">assert_installation_ok</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assert BinDiff is installed</span>
+
+<span class="sd">        :raise BindiffNotFound: if the bindiff binary cannot be found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">BinDiff</span><span class="o">.</span><span class="n">_configure_bindiff_path</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">BINDIFF_BINARY</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BindiffNotFound</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BinDiff.is_installation_ok">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.is_installation_ok">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_installation_ok</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check that bindiff is properly installed and can be found</span>
+<span class="sd">        on the system.</span>
+
+<span class="sd">        :return: true if the bindiff binary can be found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">BinDiff</span><span class="o">.</span><span class="n">assert_installation_ok</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">BindiffNotFound</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+</div>
+
+</pre></div>
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+    </footer>
+  </body>
+</html>

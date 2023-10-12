@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+div.sphinxsidebar p.caption {
+    background: linear-gradient(90deg, rgba(232, 232, 237, 0) 0%, rgb(232, 232, 237) 17.6px, rgb(232, 232, 237) 100%);
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.relbar,
+.relbar>a:hover .direction {
+    color: #7B7B7B;
+}
+
+.nav-icon:visited {
+    color: #E5E5E5;
+}
+
+#topbar button:hover,
+#titlebar .buttons> :hover,
+#titlebar a:hover,
+.relbar a:hover,
+.relbar a:hover .icon {
+    color: #2D2D2D;
+}
+
+div.body {
+    max-width: 53rem;
+}

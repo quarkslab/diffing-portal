@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="_static/documentation_options.js?v=3b889da3"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="_static/insipid.js"></script>
+    <script defer src="_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="index.html" accesskey="U">Diffing Portal</a>
+            <a class="top" href="#">Index</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+    </nav>
+
+    <nav class="relbar">
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.add_basic_block_match">add_basic_block_match() (bindiff.file.BindiffFile method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.add_function_match">add_function_match() (bindiff.file.BindiffFile method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.add_instruction_match">add_instruction_match() (bindiff.file.BindiffFile method)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.addr">addr (binexport.function.BasicBlockBinExport attribute)</a>
+
+      <ul>
+        <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.addr">(binexport.function.FunctionBinExport attribute)</a>
+</li>
+        <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.addr">(binexport.instruction.InstructionBinExport attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="exporter/binexport.html#binexport.types.Addr">Addr (in module binexport.types)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch.address1">address1 (bindiff.file.BasicBlockMatch attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.address1">(bindiff.file.FunctionMatch attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch.address2">address2 (bindiff.file.BasicBlockMatch attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.address2">(bindiff.file.FunctionMatch attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.address_sequence">address_sequence (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch.algorithm">algorithm (bindiff.file.BasicBlockMatch attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.algorithm">(bindiff.file.FunctionMatch attribute)</a>
+</li>
+        <li><a href="differs/bindiff.html#bindiff.types.AlgorithmMixin.algorithm">(bindiff.types.AlgorithmMixin property)</a>
+</li>
+      </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.types.AlgorithmMixin">AlgorithmMixin (class in bindiff.types)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.architecture">architecture (binexport.program.ProgramBinExport property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.assert_installation_ok">assert_installation_ok() (bindiff.BinDiff static method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.basicblock_matches">basicblock_matches (bindiff.file.BindiffFile property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockBinDiff">BasicBlockBinDiff (class in bindiff.types)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport">BasicBlockBinExport (class in binexport.function)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch">BasicBlockMatch (class in bindiff.file)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.File.basicblocks">basicblocks (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.bin_file">bin_file (idascript.ida.IDA attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff">BinDiff (class in bindiff)</a>
+</li>
+      <li>
+    bindiff.types
+
+      <ul>
+        <li><a href="differs/bindiff.html#module-bindiff.types">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile">BindiffFile (class in bindiff.file)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BindiffNotFound">BindiffNotFound</a>
+</li>
+      <li>
+    binexport.types
+
+      <ul>
+        <li><a href="exporter/binexport.html#module-binexport.types">module</a>
+</li>
+      </ul></li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.blocks">blocks (binexport.function.FunctionBinExport property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.bytes">bytes (binexport.function.BasicBlockBinExport attribute)</a>
+
+      <ul>
+        <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.bytes">(binexport.instruction.InstructionBinExport attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.call_reference_matching">call_reference_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.call_reference_matching">(bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.call_sequence_matching_exact">call_sequence_matching_exact (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.call_sequence_matching_sequence">call_sequence_matching_sequence (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.call_sequence_matching_topology">call_sequence_matching_topology (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.callgraph">callgraph (binexport.program.ProgramBinExport attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.File.calls">calls (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.children">children (binexport.function.FunctionBinExport attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.confidence">confidence (bindiff.file.BindiffFile attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.confidence">(bindiff.file.FunctionMatch attribute)</a>
+</li>
+        <li><a href="differs/bindiff.html#bindiff.types.SimilarityMixin.confidence">(bindiff.types.SimilarityMixin property)</a>
+</li>
+      </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.create">create() (bindiff.file.BindiffFile static method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.created">created (bindiff.file.BindiffFile attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.data_refs">data_refs (binexport.instruction.InstructionBinExport attribute)</a>
+
+      <ul>
+        <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.data_refs">(binexport.program.ProgramBinExport attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.depth">depth (binexport.expression.ExpressionBinExport property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.DictMatchMixin">DictMatchMixin (class in bindiff.types)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.File.edges">edges (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.edges_callgraph_md_index">edges_callgraph_md_index (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.edges_flowgraph_md_index">edges_flowgraph_md_index (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.edges_lengauer_tarjan_dominated">edges_lengauer_tarjan_dominated (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.edges_md_index_bottom_up">edges_md_index_bottom_up (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.edges_md_index_top_down">edges_md_index_top_down (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.edges_prime_product">edges_prime_product (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.entry_point_matching">entry_point_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.File.exefilename">exefilename (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.exit_point_matching">exit_point_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport">ExpressionBinExport (class in binexport.expression)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.expressions">expressions (binexport.operand.OperandBinExport property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.File">File (class in bindiff.file)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.File.filename">filename (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.from_binary_file">from_binary_file() (binexport.program.ProgramBinExport static method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.from_binary_files">from_binary_files() (bindiff.BinDiff static method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.from_binexport_files">from_binexport_files() (bindiff.BinDiff static method)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.FunctionType.from_proto">from_proto() (binexport.types.FunctionType static method)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.fun_names">fun_names (binexport.program.ProgramBinExport attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.types.ExpressionType.FUNC_NAME">FUNC_NAME (binexport.types.ExpressionType attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.function">function (binexport.operand.OperandBinExport property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch.function_match">function_match (bindiff.file.BasicBlockMatch attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.function_matches">function_matches (bindiff.file.BindiffFile property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionBinDiff">FunctionBinDiff (class in bindiff.types)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport">FunctionBinExport (class in binexport.function)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch">FunctionMatch (class in bindiff.file)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.File.functions">functions (bindiff.file.File attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.graph">graph (binexport.function.FunctionBinExport property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.File.hash">hash (bindiff.file.File attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.hash_matching">hash_matching (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.hash_matching_four_inst_min">hash_matching_four_inst_min (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch.id">id (bindiff.file.BasicBlockMatch attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.file.File.id">(bindiff.file.File attribute)</a>
+</li>
+        <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.id">(bindiff.file.FunctionMatch attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="tools/idascript.html#idascript.ida.IDA">IDA (class in idascript.ida)</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.IDAException">IDAException</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.IDAModeNotSet">IDAModeNotSet</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.IDANotStared">IDANotStared</a>
+</li>
+      <li>
+    idascript.ida
+
+      <ul>
+        <li><a href="tools/idascript.html#module-idascript.ida">module</a>
+</li>
+      </ul></li>
+      <li><a href="exporter/binexport.html#binexport.types.ExpressionType.IMMEDIATE_FLOAT">IMMEDIATE_FLOAT (binexport.types.ExpressionType attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.ExpressionType.IMMEDIATE_INT">IMMEDIATE_INT (binexport.types.ExpressionType attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.FunctionType.IMPORTED">IMPORTED (binexport.types.FunctionType attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.init_database">init_database() (bindiff.file.BindiffFile static method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.instruction">instruction (binexport.operand.OperandBinExport property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.instruction_count">instruction_count (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.instruction_count_matching">instruction_count_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.InstructionBinDiff">InstructionBinDiff (class in bindiff.types)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport">InstructionBinExport (class in binexport.instruction)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.File.instructions">instructions (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.FunctionType.INVALID">INVALID (binexport.types.FunctionType attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.is_addr">is_addr (binexport.expression.ExpressionBinExport attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.is_data">is_data (binexport.expression.ExpressionBinExport attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.is_import">is_import() (binexport.function.FunctionBinExport method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.is_installation_ok">is_installation_ok() (bindiff.BinDiff static method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.MatchMixin.is_matched">is_matched() (bindiff.types.MatchMixin method)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.items">items() (binexport.function.FunctionBinExport method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.jump_sequence_matching">jump_sequence_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.keys">keys() (binexport.function.FunctionBinExport method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.kill">kill() (idascript.ida.IDA method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.File.libbasicblocks">libbasicblocks (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.File.libedges">libedges (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.File.libfunctions">libfunctions (bindiff.file.File attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.File.libinstructions">libinstructions (bindiff.file.File attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.FunctionType.LIBRARY">LIBRARY (binexport.types.FunctionType attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.loop_count_matching">loop_count_matching (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.loop_entry_matching">loop_entry_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.manual">manual (bindiff.types.BasicBlockAlgorithm attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.manual">(bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="tools/idascript.html#idascript.ida.MultiIDA.map">map() (idascript.ida.MultiIDA static method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.MatchMixin.match">match (bindiff.types.MatchMixin property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.MatchMixin">MatchMixin (class in bindiff.types)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.md_index_matching_bottom_up">md_index_matching_bottom_up (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.md_index_matching_callGraph_bottom_up">md_index_matching_callGraph_bottom_up (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.md_index_matching_callGraph_top_down">md_index_matching_callGraph_top_down (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.md_index_matching_flowgraph_bottom_up">md_index_matching_flowgraph_bottom_up (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.md_index_matching_flowgraph_top_down">md_index_matching_flowgraph_top_down (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.md_index_matching_top_down">md_index_matching_top_down (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.mnemonic">mnemonic (binexport.instruction.InstructionBinExport property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.modified">modified (bindiff.file.BindiffFile attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="differs/bindiff.html#module-bindiff.types">bindiff.types</a>
+</li>
+        <li><a href="exporter/binexport.html#module-binexport.types">binexport.types</a>
+</li>
+        <li><a href="tools/idascript.html#module-idascript.ida">idascript.ida</a>
+</li>
+      </ul></li>
+      <li><a href="tools/idascript.html#idascript.ida.MultiIDA">MultiIDA (class in idascript.ida)</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.MultiIDAAlreadyRunning">MultiIDAAlreadyRunning</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.name">name (binexport.function.FunctionBinExport property)</a>
+
+      <ul>
+        <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.name">(binexport.program.ProgramBinExport property)</a>
+</li>
+      </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.name1">name1 (bindiff.file.FunctionMatch attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.name2">name2 (bindiff.file.FunctionMatch attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.name_hash_matching">name_hash_matching (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.DictMatchMixin.nb_match">nb_match (bindiff.types.DictMatchMixin property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.DictMatchMixin.nb_unmatch">nb_unmatch (bindiff.types.DictMatchMixin property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.FunctionType.NORMAL">NORMAL (binexport.types.FunctionType attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport">OperandBinExport (class in binexport.operand)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.operands">operands (binexport.instruction.InstructionBinExport property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.params">params (idascript.ida.IDA attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.parent">parent (binexport.expression.ExpressionBinExport attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.parents">parents (binexport.function.FunctionBinExport attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.pb_expr">pb_expr (binexport.expression.ExpressionBinExport property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.pb_instr">pb_instr (binexport.instruction.InstructionBinExport property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.pb_operand">pb_operand (binexport.operand.OperandBinExport property)</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.pid">pid (idascript.ida.IDA property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.primary">primary (bindiff.BinDiff attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.primary_basicblock_match">primary_basicblock_match (bindiff.file.BindiffFile attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.primary_file">primary_file (bindiff.file.BindiffFile attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.primary_functions_match">primary_functions_match (bindiff.file.BindiffFile attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.prime_matching_four_inst_min">prime_matching_four_inst_min (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.prime_matching_no_inst_min">prime_matching_no_inst_min (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.prime_signature_matching">prime_signature_matching (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.program">program (binexport.function.BasicBlockBinExport property)</a>
+
+      <ul>
+        <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.program">(binexport.function.FunctionBinExport property)</a>
+</li>
+        <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.program">(binexport.instruction.InstructionBinExport property)</a>
+</li>
+        <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.program">(binexport.operand.OperandBinExport property)</a>
+</li>
+      </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.types.ProgramBinDiff">ProgramBinDiff (class in bindiff.types)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport">ProgramBinExport (class in binexport.program)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.propagation_size_one">propagation_size_one (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.proto">proto (binexport.program.ProgramBinExport property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.raw_diffing">raw_diffing() (bindiff.BinDiff static method)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.ExpressionType.REGISTER">REGISTER (binexport.types.ExpressionType attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.relaxed_md_index_matching">relaxed_md_index_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.relaxed_md_index_matching">(bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.returncode">returncode (idascript.ida.IDA property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.script_file">script_file (idascript.ida.IDA attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.secondary">secondary (bindiff.BinDiff attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.secondary_basicblock_match">secondary_basicblock_match (bindiff.file.BindiffFile attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.secondary_file">secondary_file (bindiff.file.BindiffFile attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.secondary_functions_match">secondary_functions_match (bindiff.file.BindiffFile attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.self_loop_matching">self_loop_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.similarity">similarity (bindiff.file.BindiffFile attribute)</a>
+
+      <ul>
+        <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.similarity">(bindiff.file.FunctionMatch attribute)</a>
+</li>
+        <li><a href="differs/bindiff.html#bindiff.types.SimilarityMixin.similarity">(bindiff.types.SimilarityMixin property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.types.SimilarityMixin">SimilarityMixin (class in bindiff.types)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.ExpressionType.SIZE">SIZE (binexport.types.ExpressionType attribute)</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.start">start() (idascript.ida.IDA method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.string_references">string_references (bindiff.types.FunctionAlgorithm attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.string_references_matching">string_references_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.ExpressionType.SYMBOL">SYMBOL (binexport.types.ExpressionType attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.terminate">terminate() (idascript.ida.IDA method)</a>
+</li>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.terminated">terminated (idascript.ida.IDA property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.types.FunctionType.THUNK">THUNK (binexport.types.FunctionType attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.timeout">timeout (idascript.ida.IDA attribute)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.type">type (binexport.expression.ExpressionBinExport property)</a>
+
+      <ul>
+        <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.type">(binexport.function.FunctionBinExport property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.unmatched_primary_count">unmatched_primary_count (bindiff.file.BindiffFile property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.unmatched_secondary_count">unmatched_secondary_count (bindiff.file.BindiffFile property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.update_file_infos">update_file_infos() (bindiff.file.BindiffFile method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.value">value (binexport.expression.ExpressionBinExport property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.values">values() (binexport.function.FunctionBinExport method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.types.ExpressionType.VAR_NAME">VAR_NAME (binexport.types.ExpressionType attribute)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.version">version (bindiff.file.BindiffFile attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tools/idascript.html#idascript.ida.IDA.wait">wait() (idascript.ida.IDA method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="#" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+    </footer>
+  </body>
+</html>
