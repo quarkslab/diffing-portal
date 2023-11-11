@@ -96,24 +96,31 @@
             
 <h1>Source code for binexport.basic_block</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">weakref</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">from</span> <span class="nn">binexport.utils</span> <span class="kn">import</span> <span class="n">instruction_index_range</span><span class="p">,</span> <span class="n">get_instruction_address</span>
 <span class="kn">from</span> <span class="nn">binexport.instruction</span> <span class="kn">import</span> <span class="n">InstructionBinExport</span>
 <span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">Addr</span>
 
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.program</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+    <span class="kn">from</span> <span class="nn">.function</span> <span class="kn">import</span> <span class="n">FunctionBinExport</span>
+    <span class="kn">from</span> <span class="nn">.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
 
 <div class="viewcode-block" id="BasicBlockBinExport">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.function.BasicBlockBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">BasicBlockBinExport</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">BasicBlockBinExport</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Basic block.</span>
-<span class="sd">    It inherits OrderdDict, so one can use any dictionary</span>
-<span class="sd">    methods to access instructions.</span>
+<span class="sd">    Basic block class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">,</span> <span class="n">pb_bb</span><span class="p">:</span> <span class="s2">&quot;BinExport2.BasicBlock&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">],</span>
+        <span class="n">function</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">],</span>
+        <span class="n">pb_bb</span><span class="p">:</span> <span class="s2">&quot;BinExport2.BasicBlock&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param program: Weak reference to the program</span>
 <span class="sd">        :param function: Weak reference to the function</span>
@@ -123,26 +130,23 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_program</span> <span class="o">=</span> <span class="n">program</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">:</span> <span class="n">Addr</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: basic bloc address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_function</span> <span class="o">=</span> <span class="n">function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb_bb</span> <span class="o">=</span> <span class="n">pb_bb</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">:</span> <span class="n">Addr</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: basic bloc address</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>  <span class="c1">#: bytes of the basic block</span>
 
         <span class="c1"># Ranges are in fact the true basic blocks but BinExport</span>
-        <span class="c1"># don&#39;t have the same basic block semantic and merge multiple basic blocks into one.</span>
+        <span class="c1"># doesn&#39;t have the same basic block semantic and merge multiple basic blocks into one.</span>
         <span class="c1"># For example: BB_1 -- unconditional_jmp --&gt; BB_2</span>
-        <span class="c1"># might be merged into a single basic block so lose the edge</span>
+        <span class="c1"># might be merged into a single basic block so the edge gets lost.</span>
         <span class="k">for</span> <span class="n">rng</span> <span class="ow">in</span> <span class="n">pb_bb</span><span class="o">.</span><span class="n">instruction_index</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">instruction_index_range</span><span class="p">(</span><span class="n">rng</span><span class="p">):</span>
-                <span class="n">pb_inst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">instruction</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-                <span class="n">inst_addr</span> <span class="o">=</span> <span class="n">get_instruction_address</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bytes</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">instruction</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">raw_bytes</span>
 
                 <span class="c1"># The first instruction determines the basic block address</span>
-                <span class="c1"># Save the first instruction to guess the instruction set</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">addr</span> <span class="o">=</span> <span class="n">inst_addr</span>
-
-                <span class="bp">self</span><span class="o">.</span><span class="n">bytes</span> <span class="o">+=</span> <span class="n">pb_inst</span><span class="o">.</span><span class="n">raw_bytes</span>
-                <span class="bp">self</span><span class="p">[</span><span class="n">inst_addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">InstructionBinExport</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">inst_addr</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">addr</span> <span class="o">=</span> <span class="n">get_instruction_address</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -165,7 +169,56 @@
 
 <span class="sd">        :return: object :py:class:`ProgramBinExport`, program associated to the basic block</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wrapper on weak reference on FunctionBinExport</span>
+
+<span class="sd">        :return: object :py:class:`FunctionBinExport`, function associated to the basic block</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_function</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uncached_instructions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">InstructionBinExport</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dict which is used to reference all the instructions in this basic</span>
+<span class="sd">        block by their address.</span>
+<span class="sd">        The object returned is not cached, calling this function multiple times will</span>
+<span class="sd">        create the same object multiple times. If you want to cache the object you</span>
+<span class="sd">        should use `BasicBlockBinExport.instructions`.</span>
+
+<span class="sd">        :return: dictionary of addresses to instructions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">instructions</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Ranges are in fact the true basic blocks but BinExport</span>
+        <span class="c1"># doesn&#39;t have the same basic block semantic and merge multiple basic blocks into one.</span>
+        <span class="c1"># For example: BB_1 -- unconditional_jmp --&gt; BB_2</span>
+        <span class="c1"># might be merged into a single basic block so the edge gets lost.</span>
+        <span class="k">for</span> <span class="n">rng</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_bb</span><span class="o">.</span><span class="n">instruction_index</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">instruction_index_range</span><span class="p">(</span><span class="n">rng</span><span class="p">):</span>
+                <span class="n">inst_addr</span> <span class="o">=</span> <span class="n">get_instruction_address</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+                <span class="n">instructions</span><span class="p">[</span><span class="n">inst_addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">InstructionBinExport</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_function</span><span class="p">,</span> <span class="n">inst_addr</span><span class="p">,</span> <span class="n">idx</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">instructions</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">instructions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">InstructionBinExport</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dict which is used to reference all the instructions in this basic</span>
+<span class="sd">        block by their address.</span>
+<span class="sd">        The object returned is by default cached, to erase the cache delete the attribute.</span>
+
+<span class="sd">        :return: dictionary of addresses to instructions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached_instructions</span></div>
 
 </pre></div>
             <div class="clearer"></div>

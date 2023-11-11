@@ -125,14 +125,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_pb</span> <span class="o">=</span> <span class="n">BinExport2</span><span class="p">()</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pb</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="mh">0xFFFFFFFF</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">architecture</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;32&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="mh">0xFFFFFFFFFFFFFFFF</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fun_names</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;FunctionBinExport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: dictionary function name -&gt; name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">architecture</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;32&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="mh">0xFFFFFFFFFFFFFFFF</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fun_names</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: dictionary function name -&gt; name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callgraph</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>  <span class="c1">#: program callgraph (as Digraph)</span>
 
         <span class="c1"># Make the data refs map {instruction index -&gt; address referred}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_refs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="n">Addr</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>  <span class="c1">#: dictionary of instruction index to set of refs</span>
+        <span class="c1"># dictionary of instruction index to set of refs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_refs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="n">Addr</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">data_reference</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data_refs</span><span class="p">[</span><span class="n">entry</span><span class="o">.</span><span class="n">instruction_index</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
 
@@ -174,9 +173,7 @@
                 <span class="p">)</span>
                 <span class="n">count_imp</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">address</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Missing function address: 0x</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">)&quot;</span>
-                <span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing function address: 0x</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
                 <span class="k">continue</span>
 
             <span class="bp">self</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">]</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">FunctionType</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
@@ -188,16 +185,19 @@
         <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">cg</span><span class="o">.</span><span class="n">edge</span><span class="p">:</span>
             <span class="n">src</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">vertex</span><span class="p">[</span><span class="n">edge</span><span class="o">.</span><span class="n">source_vertex_index</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>
             <span class="n">dst</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">vertex</span><span class="p">[</span><span class="n">edge</span><span class="o">.</span><span class="n">target_vertex_index</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">callgraph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
-            <span class="bp">self</span><span class="p">[</span><span class="n">src</span><span class="p">]</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">dst</span><span class="p">])</span>
-            <span class="bp">self</span><span class="p">[</span><span class="n">dst</span><span class="p">]</span><span class="o">.</span><span class="n">parents</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">src</span><span class="p">])</span>
+            <span class="c1"># Unsure that both src and dst exists (Sometimes SRE like Ghidra export function that doesn&#39;t exists)</span>
+            <span class="k">if</span> <span class="n">src</span> <span class="ow">in</span> <span class="bp">self</span> <span class="ow">and</span> <span class="n">dst</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">callgraph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">src</span><span class="p">]</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">dst</span><span class="p">])</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">dst</span><span class="p">]</span><span class="o">.</span><span class="n">parents</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">src</span><span class="p">])</span>
 
         <span class="c1"># Create a map of function names for quick lookup later on</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fun_names</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;total all:</span><span class="si">{</span><span class="n">count_f</span><span class="si">}</span><span class="s2">, imported:</span><span class="si">{</span><span class="n">count_imp</span><span class="si">}</span><span class="s2"> collision:</span><span class="si">{</span><span class="n">coll</span><span class="si">}</span><span class="s2"> (total:</span><span class="si">{</span><span class="n">count_f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">count_imp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">coll</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;total all:</span><span class="si">{</span><span class="n">count_f</span><span class="si">}</span><span class="s2">, imported:</span><span class="si">{</span><span class="n">count_imp</span><span class="si">}</span><span class="s2"> collision:</span><span class="si">{</span><span class="n">coll</span><span class="si">}</span><span class="s2"> (total:</span><span class="si">{</span><span class="n">count_f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">count_imp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">coll</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
@@ -209,8 +209,8 @@
         <span class="n">exec_file</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
         <span class="n">open_export</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">override</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ProgramBinExport | None&quot;</span><span class="p">:</span>
+        <span class="n">override</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ProgramBinExport | bool&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the .BinExport file for the given program and return an instance</span>
 <span class="sd">        of ProgramBinExport.</span>
@@ -221,20 +221,25 @@
 <span class="sd">        :param output_file: BinExport output file</span>
 <span class="sd">        :param open_export: whether or not to open the binexport after export</span>
 <span class="sd">        :param override: Override the .BinExport if already existing. (default false)</span>
-<span class="sd">        :return: an instance of ProgramBinExport</span>
+<span class="sd">        :return: an instance of ProgramBinExport if open_export is true, else boolean</span>
+<span class="sd">                 on whether it succeeded</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="kn">from</span> <span class="nn">idascript</span> <span class="kn">import</span> <span class="n">IDA</span>
 
         <span class="n">exec_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">exec_file</span><span class="p">)</span>
-        <span class="n">binexport_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span> <span class="k">if</span> <span class="n">output_file</span> <span class="k">else</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">exec_file</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.BinExport&quot;</span><span class="p">)</span>
+        <span class="n">binexport_file</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">output_file</span>
+            <span class="k">else</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">exec_file</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.BinExport&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
 
         <span class="c1"># If the binexport file already exists, do not want to override just return</span>
         <span class="k">if</span> <span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">override</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">open_export</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">binexport_file</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">return</span> <span class="kc">True</span>
 
         <span class="n">ida</span> <span class="o">=</span> <span class="n">IDA</span><span class="p">(</span>
             <span class="n">exec_file</span><span class="p">,</span>
@@ -249,14 +254,16 @@
 
         <span class="k">if</span> <span class="n">retcode</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="c1"># Still continue if retcode != 0, because idat64 something crashes but still manage to export file</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">exec_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> failed to export [ret:</span><span class="si">{</span><span class="n">retcode</span><span class="si">}</span><span class="s2">, binexport:</span><span class="si">{</span><span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">exec_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> failed to export [ret:</span><span class="si">{</span><span class="n">retcode</span><span class="si">}</span><span class="s2">, binexport:</span><span class="si">{</span><span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span><span class="si">}</span><span class="s2">]&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="k">return</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">binexport_file</span><span class="p">)</span> <span class="k">if</span> <span class="n">open_export</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">binexport_file</span><span class="p">)</span> <span class="k">if</span> <span class="n">open_export</span> <span class="k">else</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">exec_file</span><span class="si">}</span><span class="s2"> can&#39;t find binexport generated&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span></div>
+            <span class="k">return</span> <span class="kc">False</span></div>
 
 
     <span class="nd">@property</span>

@@ -99,12 +99,16 @@
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">import</span> <span class="nn">networkx</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span>
 
 <span class="kn">from</span> <span class="nn">binexport.utils</span> <span class="kn">import</span> <span class="n">get_basic_block_addr</span>
 <span class="kn">from</span> <span class="nn">binexport.basic_block</span> <span class="kn">import</span> <span class="n">BasicBlockBinExport</span>
 <span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">FunctionType</span><span class="p">,</span> <span class="n">Addr</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">abc</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.program</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+    <span class="kn">from</span> <span class="nn">.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
 
 
 <div class="viewcode-block" id="FunctionBinExport">
@@ -115,12 +119,14 @@
 <span class="sd">    Also references its parents and children (function it calls).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">],</span>
-                 <span class="o">*</span><span class="p">,</span>
-                 <span class="n">pb_fun</span><span class="p">:</span> <span class="s2">&quot;BinExport2.FlowGraph | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">is_import</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                 <span class="n">addr</span><span class="p">:</span> <span class="n">Addr</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">pb_fun</span><span class="p">:</span> <span class="s2">&quot;BinExport2.FlowGraph | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_import</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">addr</span><span class="p">:</span> <span class="n">Addr</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor. Iterates the FlowGraph structure and initialize all the</span>
 <span class="sd">        basic blocks and instruction accordingly.</span>
@@ -133,8 +139,8 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">FunctionBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">:</span> <span class="n">Addr</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">addr</span>  <span class="c1">#: address, None if imported function</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;FunctionBinExport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1">#: set of function call this one</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;FunctionBinExport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1">#: set of functions called by this one</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1">#: set of function call this one</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1">#: set of functions called by this one</span>
 
         <span class="c1"># Private attributes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># CFG. Loaded inside self.blocks</span>
@@ -218,19 +224,26 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">()</span>
 
-    <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">]:</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uncached_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dict which is used to reference all basic blocks by their address.</span>
-<span class="sd">        The dict is by default cached, to erase the cache delete the attribute.</span>
 <span class="sd">        Calling this function will also load the CFG.</span>
+<span class="sd">        The object returned is not cached, calling this function multiple times will</span>
+<span class="sd">        create the same object multiple times. If you want to cache the object you</span>
+<span class="sd">        should use `FunctionBinExport.blocks`.</span>
 
 <span class="sd">        :return: dictionary of addresses to basic blocks</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># Fast return if it is a imported function</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_import</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="c1"># Add a sanity check to prevent error, for some reason _pb_fun may be undefined</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pb_fun</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{}</span>
 
         <span class="n">bblocks</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {addr : BasicBlockBinExport}</span>
@@ -242,10 +255,14 @@
         <span class="c1"># Load the basic blocks</span>
         <span class="n">bb_i2a</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Map {basic block index -&gt; basic block address}</span>
         <span class="k">for</span> <span class="n">bb_idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pb_fun</span><span class="o">.</span><span class="n">basic_block_index</span><span class="p">:</span>
-            <span class="n">basic_block</span> <span class="o">=</span> <span class="n">BasicBlockBinExport</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">,</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">basic_block</span><span class="p">[</span><span class="n">bb_idx</span><span class="p">])</span>
+            <span class="n">basic_block</span> <span class="o">=</span> <span class="n">BasicBlockBinExport</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">,</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">basic_block</span><span class="p">[</span><span class="n">bb_idx</span><span class="p">]</span>
+            <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">basic_block</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="n">bblocks</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2"> basic block address (0x</span><span class="si">{</span><span class="n">basic_block</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">) already in(idx:</span><span class="si">{</span><span class="n">bb_idx</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2"> basic block address (0x</span><span class="si">{</span><span class="n">basic_block</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">) already in(idx:</span><span class="si">{</span><span class="n">bb_idx</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="p">)</span>
 
             <span class="n">bblocks</span><span class="p">[</span><span class="n">basic_block</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">basic_block</span>
             <span class="n">bb_i2a</span><span class="p">[</span><span class="n">bb_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">basic_block</span><span class="o">.</span><span class="n">addr</span>
@@ -267,6 +284,18 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">bb_src</span><span class="p">,</span> <span class="n">bb_dst</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">bblocks</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dict which is used to reference all basic blocks by their address.</span>
+<span class="sd">        Calling this function will also load the CFG.</span>
+<span class="sd">        The dict is by default cached, to erase the cache delete the attribute.</span>
+
+<span class="sd">        :return: dictionary of addresses to basic blocks</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached_blocks</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>

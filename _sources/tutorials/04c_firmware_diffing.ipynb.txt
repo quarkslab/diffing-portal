@@ -1,0 +1,519 @@
+{
+ "cells": [
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "4ff3e55b-7932-4294-955f-7d6ee9df8b13",
+   "metadata": {},
+   "source": [
+    "# Firmware Diffing\n",
+    "\n",
+    "## Introduction: Netgear RAX30"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "cb56c7bc-4340-4c43-af79-939592589492",
+   "metadata": {},
+   "source": [
+    "<figure class=\"align-center\">\n",
+    "    <img alt=\"symbols after porting\", width=\"400\", src=\"../_static/tutorials/RAX30.jpeg\"/>\n",
+    "</figure>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a8039e09-da0f-486e-983f-d4b7360d2e8b",
+   "metadata": {},
+   "source": [
+    "For this tutorial we are going to work on the Netgear RAX30 Wireless router, that was part of the targets for [Pwn2Own Toronto 2022](https://www.zerodayinitiative.com/blog/2022/8/29/announcing-pwn2own-toronto-2022-and-introducing-the-soho-smashup). A day before the submission deadline, Netgear\n",
+    "released a firmware update that was also patching some vulnerabilities (which led multiple Pwn2Own competitors to withdraw theirs submission). The two versions are:\n"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "2c0d6a18-0fee-43a4-8a89-0509b960bdaf",
+   "metadata": {},
+   "source": [
+    "<div style=\"text-align:center;\">\n",
+    "    <div style=\"text-align: center; display: inline-block; padding: 1rem 1rem; vertical-align: middle;\">\n",
+    "        <a href=\"https://drive.google.com/file/d/1Qxcd8K7QSpj36XF-tk_TCULk5TMPsfV9/view?usp=sharing\">\n",
+    "            <i class=\"fa fa-download fa-lg\"></i><br/>1.0.7.78\n",
+    "        </a>\n",
+    "    </div>\n",
+    "    <div style=\"text-align: center; display: inline-block; padding: 1rem 1rem; vertical-align: middle;\">\n",
+    "        <a href=\"https://drive.google.com/file/d/1MRzCK80G_SBHQuGy8dfuE7YoGvxs1J6c/view?usp=sharing\">\n",
+    "            <i class=\"fa fa-download fa-lg\"></i><br/>1.0.9.92\n",
+    "        </a>\n",
+    "    </div>\n",
+    "</div>\n",
+    "<br/>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ae171c81-5f4b-4d99-a078-7a3dd2e85f6c",
+   "metadata": {},
+   "source": [
+    "The goal of this tutorial is to show how performing a full-filesystem diff and to navigate the results programatically."
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "69aa55d0-e03b-4466-b3b3-3322c0384e2c",
+   "metadata": {},
+   "source": [
+    "## I. Unpacking firmwares\n",
+    "\n",
+    "To extract the firmwares one can use [Unblob](https://unblob.org) which is now undeniably\n",
+    "the best firmware extraction tool to date. We can extract the firmware with:\n",
+    "\n",
+    "```bash\n",
+    "docker run \\\n",
+    "  --rm \\\n",
+    "  --pull always \\\n",
+    "  -v $PWD/extract/RAX30-V1.0.7.78_1.img_extract:/data/output \\\n",
+    "  -v $PWD:/data/input \\\n",
+    "  ghcr.io/onekey-sec/unblob:latest /data/input/RAX30-V1.0.7.78_1.img\n",
+    "```\n",
+    "\n",
+    "*(Considering the firmware is in your current directory)*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "73243da5-ae38-40d1-99bc-d03567f01d1d",
+   "metadata": {},
+   "source": [
+    "**Exercise**: Unpack both firmwares"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "5ef720c2-5c99-458d-a0c0-b1b32d8c6ebf",
+   "metadata": {},
+   "source": [
+    "## II. Exporting files\n",
+    "\n",
+    "Before diffing executables between the two firmwares, we have to call BinExport on all of them.\n",
+    "For that we can use the program ``binexporter`` that can iterate a whole tree of files and to\n",
+    "export all files encountered.\n",
+    "\n",
+    "```bash\n",
+    "    binexporter -t 10 extract/RAX30-V1.0.7.78_1.img_extract\n",
+    "```\n",
+    "\n",
+    "The option ``-t`` launch the export with 10 processes. As exporting implies disassembling all binaries it can take a while to perform (~1h for this firmware)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "16727be6-59cf-4642-8cdc-90046a45310a",
+   "metadata": {},
+   "source": [
+    "To continue the tutorial here are the binexports files for both firmwares."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "e1c3bf1a-2848-417b-bd38-8b1b08bf8e82",
+   "metadata": {},
+   "source": [
+    "<div style=\"text-align: center;\">\n",
+    "    <a href=\"https://drive.google.com/file/d/1DxQccJ83I6wZGA1yIrpAHpO9v7HwrNs4/view?usp=sharing\">\n",
+    "        <i class=\"fa fa-download fa-lg\"></i><br/>Binexport files\n",
+    "    </a>\n",
+    "</div>\n",
+    "<br/>"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "d41498dc-c51f-4be8-a960-5d8ba14aff70",
+   "metadata": {},
+   "source": [
+    "## III. Performing the diff\n",
+    "\n",
+    "Now that all executable files are exported in a single directory for each firmwares\n",
+    "we can perfom the diff of each BinExport files based on theirs name. *(For simplicity\n",
+    "we assume there are now duplicates. Also symlinks also led to duplicating binexport files)*.\n",
+    "\n",
+    "**Exercise**: Write a script to diff all binexports files."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "e2614e46-224e-4d88-b770-5d11d5eeb1d9",
+   "metadata": {},
+   "source": [
+    "<button type=\"button\" class=\"onebutton\">Show Solution</button>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f178386d-82f4-4770-b70a-9467d80c8b27",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from pathlib import Path\n",
+    "from bindiff import BinDiff, BindiffFile\n",
+    "\n",
+    "binexports1 = Path(\"binexports/RAX30-V1.0.7.78_1.img_extract\")\n",
+    "binexports2 = Path(\"binexports/RAX30-V1.0.9.90_3.img_extract\")\n",
+    "\n",
+    "diff_dir = Path(\"diffs\")  # create output dir\n",
+    "diff_dir.mkdir()\n",
+    "\n",
+    "for file1 in binexports1.iterdir():\n",
+    "    file2 = binexports2 / file1.name\n",
+    "    if file2.exists():\n",
+    "        diff_file = diff_dir / f\"{file1.with_suffix('').name}_vs_{file2.with_suffix('').name}.BinDiff\"\n",
+    "        if not diff_file.exists():\n",
+    "            print(f\"diff {file1} | {file2}: \", end=\"\")\n",
+    "            print(BinDiff.raw_diffing(file1, file2, diff_file))  # Perform the diff"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "bfee8305-38e3-4367-a805-2316284b2d42",
+   "metadata": {},
+   "source": [
+    "## IV. Analyzing diffs\n",
+    "\n",
+    "Now that all diff files are created we can open them to analyze changes.\n",
+    "\n",
+    "**Exercise**: Write a script that take the 15 most different binaries (similarity the lowest), and which shows the 10 most different functions (dissimilar ones)."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "98a38e1f-f747-4b1a-a0b1-2308e7dd3987",
+   "metadata": {},
+   "source": [
+    "<button type=\"button\" class=\"collapsible\">Show Solution</button>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "4bb33a8b-e255-470b-8888-9670e803b6e1",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "1656800305ae4025bc1f20a562b9149c",
+       "version_major": 2,
+       "version_minor": 0
+      },
+      "text/plain": [
+       "IntProgress(value=0, description='Load diffs', max=965)"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "xCloud_Debug_log.zip: 49% [matched:140][unmatched:28-28]:\n",
+      "  - sub_000115D8 (10%)\n",
+      "  - sub_00013DBC (59%)\n",
+      "  - _ITM_registerTMCloneTable (100%)\n",
+      "  - __imp___gmon_start__ (100%)\n",
+      "  - _ITM_deregisterTMCloneTable (100%)\n",
+      "  - __imp_fwrite (100%)\n",
+      "  - __imp_json_object_object_add (100%)\n",
+      "  - __imp_strstr (100%)\n",
+      "  - __imp_snprintf (100%)\n",
+      "  - __imp_cmsLog_cleanup (100%)\n",
+      "debug.cgi: 49% [matched:140][unmatched:28-28]:\n",
+      "  - sub_000115D8 (10%)\n",
+      "  - sub_00013DBC (59%)\n",
+      "  - _ITM_registerTMCloneTable (100%)\n",
+      "  - __imp___gmon_start__ (100%)\n",
+      "  - _ITM_deregisterTMCloneTable (100%)\n",
+      "  - __imp_fwrite (100%)\n",
+      "  - __imp_json_object_object_add (100%)\n",
+      "  - __imp_strstr (100%)\n",
+      "  - __imp_snprintf (100%)\n",
+      "  - __imp_cmsLog_cleanup (100%)\n",
+      "libmdm_db.so: 51% [matched:258][unmatched:418-418]:\n",
+      "  - oalMdm_isParam64 (63%)\n",
+      "  - strstr (66%)\n",
+      "  - mdm_deleteObjectInstance (92%)\n",
+      "  - j_mdm_getObject (99%)\n",
+      "  - mdm_getNextObjPathDesc (99%)\n",
+      "  - sub_00005F68 (99%)\n",
+      "  - sub_0000B864 (99%)\n",
+      "  - mdm_moveInstanceUsingNewOrderValue (99%)\n",
+      "  - j_mdm_getOrderValue (99%)\n",
+      "  - mdm_setOrderValue (99%)\n",
+      "wbd_master: 54% [matched:582][unmatched:13-13]:\n",
+      "  - sub_00024890 (1%)\n",
+      "  - sub_0002E244 (1%)\n",
+      "  - sub_0001F640 (1%)\n",
+      "  - sub_0002FA78 (2%)\n",
+      "  - sub_0002F974 (3%)\n",
+      "  - sub_0002F188 (3%)\n",
+      "  - sub_0002ABA4 (3%)\n",
+      "  - sub_000206D4 (5%)\n",
+      "  - sub_00029A30 (6%)\n",
+      "  - sub_0002A318 (6%)\n",
+      "wbd_slave: 55% [matched:867][unmatched:12-12]:\n",
+      "  - sub_00040044 (0%)\n",
+      "  - sub_00040520 (1%)\n",
+      "  - sub_00040F88 (1%)\n",
+      "  - sub_00041DC8 (1%)\n",
+      "  - sub_00031930 (1%)\n",
+      "  - sub_000277E4 (1%)\n",
+      "  - sub_0001EEF4 (1%)\n",
+      "  - sub_0001B518 (1%)\n",
+      "  - sub_000277A0 (1%)\n",
+      "  - sub_00040934 (1%)\n",
+      "xt_comment.ko: 63% [matched:3][unmatched:0-0]:\n",
+      "  - comment_mt_exit (100%)\n",
+      "  - init_module (100%)\n",
+      "  - comment_mt (100%)\n",
+      "ssd: 63% [matched:88][unmatched:1-1]:\n",
+      "  - sub_000117C4 (54%)\n",
+      "  - sub_00010B94 (61%)\n",
+      "  - sprintf (66%)\n",
+      "  - nvram_set (66%)\n",
+      "  - strcmp (66%)\n",
+      "  - setsockopt (66%)\n",
+      "  - strcspn (66%)\n",
+      "  - strspn (66%)\n",
+      "  - nvifname_to_osifname (66%)\n",
+      "  - malloc (66%)\n",
+      "xt_SKIPLOG.ko: 64% [matched:4][unmatched:0-0]:\n",
+      "  - blog_skip (100%)\n",
+      "  - skiplog_tg_exit (100%)\n",
+      "  - skiplog_tg_init (100%)\n",
+      "  - skiplog_tg (100%)\n",
+      "wb_cli: 73% [matched:70][unmatched:0-0]:\n",
+      "  - sub_00010AB8 (74%)\n",
+      "  - sub_00011354 (77%)\n",
+      "  - _ITM_registerTMCloneTable (100%)\n",
+      "  - _ITM_deregisterTMCloneTable (100%)\n",
+      "  - __imp___gmon_start__ (100%)\n",
+      "  - __imp_wbd_get_cli_command_id (100%)\n",
+      "  - __imp_printf (100%)\n",
+      "  - __imp_fputs (100%)\n",
+      "  - __imp_wbd_json_create_cli_cmd (100%)\n",
+      "  - __imp_stub_send_hld_hlpr (100%)\n",
+      "tm_block.cgi: 75% [matched:170][unmatched:1-1]:\n",
+      "  - sub_00012E78 (63%)\n",
+      "  - sub_000126E4 (98%)\n",
+      "  - sub_00012DB8 (99%)\n",
+      "  - _ITM_registerTMCloneTable (100%)\n",
+      "  - __imp___gmon_start__ (100%)\n",
+      "  - _ITM_deregisterTMCloneTable (100%)\n",
+      "  - __imp_sprintf (100%)\n",
+      "  - __imp_cmsMsg_send (100%)\n",
+      "  - __imp_strcpy (100%)\n",
+      "  - __imp_cmsMem_free (100%)\n",
+      "libcurl.so.4: 75% [matched:1644][unmatched:29-29]:\n",
+      "  - Curl_select (0%)\n",
+      "  - strerror (1%)\n",
+      "  - sub_0002952C (1%)\n",
+      "  - sub_00041510 (1%)\n",
+      "  - Curl_sendf (2%)\n",
+      "  - sub_000415A4 (2%)\n",
+      "  - j_Curl_md5it (3%)\n",
+      "  - sub_00029238 (4%)\n",
+      "  - sub_0001C1C0 (5%)\n",
+      "  - sub_00041C10 (5%)\n",
+      "libcurl.so: 75% [matched:1644][unmatched:29-29]:\n",
+      "  - Curl_select (0%)\n",
+      "  - strerror (1%)\n",
+      "  - sub_0002952C (1%)\n",
+      "  - sub_00041510 (1%)\n",
+      "  - Curl_sendf (2%)\n",
+      "  - sub_000415A4 (2%)\n",
+      "  - j_Curl_md5it (3%)\n",
+      "  - sub_00029238 (4%)\n",
+      "  - sub_0001C1C0 (5%)\n",
+      "  - sub_00041C10 (5%)\n",
+      "wps_pbcd: 77% [matched:236][unmatched:3-3]:\n",
+      "  - sub_00017AB0 (7%)\n",
+      "  - sub_00014FD8 (10%)\n",
+      "  - sub_00014500 (42%)\n",
+      "  - sub_00015D00 (52%)\n",
+      "  - sub_00014078 (79%)\n",
+      "  - sub_000143BC (79%)\n",
+      "  - sub_00013604 (85%)\n",
+      "  - sub_00011B88 (91%)\n",
+      "  - sub_00015864 (92%)\n",
+      "  - sub_00014EA0 (94%)\n",
+      "reset_pwd.cgi: 77% [matched:213][unmatched:1-1]:\n",
+      "  - sub_00013308 (63%)\n",
+      "  - sub_00012B74 (96%)\n",
+      "  - sub_000130C0 (98%)\n",
+      "  - sub_000151FC (98%)\n",
+      "  - sub_00013248 (99%)\n",
+      "  - _ITM_registerTMCloneTable (100%)\n",
+      "  - __imp___gmon_start__ (100%)\n",
+      "  - _ITM_deregisterTMCloneTable (100%)\n",
+      "  - __imp_sprintf (100%)\n",
+      "  - __imp_cmsMsg_send (100%)\n",
+      "libwbdshared.so: 78% [matched:789][unmatched:0-0]:\n",
+      "  - wbd_tlv_decode_weak_client_response (15%)\n",
+      "  - wbd_parse_cli_args (20%)\n",
+      "  - wbd_tlv_encode_fbt_config_response (22%)\n",
+      "  - wbd_ds_is_interface_dedicated_backhaul (23%)\n",
+      "  - wbd_get_command_id (24%)\n",
+      "  - j_wbd_get_command_id (30%)\n",
+      "  - wbd_tlv_encode_weak_client_response (34%)\n",
+      "  - wbd_ds_get_i5_device (34%)\n",
+      "  - wbd_ds_interface_init (35%)\n",
+      "  - wbd_tlv_encode_fbt_config_request (35%)\n"
+     ]
+    }
+   ],
+   "source": [
+    "from ipywidgets import IntProgress\n",
+    "from IPython.display import display\n",
+    "from collections import Counter\n",
+    "from bindiff import BinDiff, BindiffFile\n",
+    "\n",
+    "diff_dir = Path(\"diffs/\")\n",
+    "\n",
+    "progress = IntProgress(min=0, max=len(list(diff_dir.iterdir())), description=\"Load diffs\")\n",
+    "display(progress)\n",
+    "\n",
+    "diffs = Counter()\n",
+    "for diff_file in diff_dir.iterdir():\n",
+    "    progress.value += 1\n",
+    "    diff = BindiffFile(diff_file)\n",
+    "    diffs[diff_file] = diff.similarity\n",
+    "    del diff  # useful to free the memory\n",
+    "\n",
+    "# Reopen the most dissimilar binaries\n",
+    "for diff_file, similarity in diffs.most_common()[::-1][:15]:\n",
+    "    diff = BindiffFile(diff_file)\n",
+    "    binary_file = str(diff_file.name).split(\"_vs_\")[0]\n",
+    "    print(f\"{binary_file}: {similarity:.0%} [matched:{len(diff.function_matches)}][unmatched:{diff.unmatched_primary_count}-{diff.unmatched_secondary_count}]:\")\n",
+    "    fun_sims = Counter({x.name1: x.similarity for x in diff.function_matches})\n",
+    "    for fun, sim in fun_sims.most_common()[::-1][:10]:\n",
+    "        print(f\"  - {fun} ({sim:.0%})\")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "ed443260-5d27-44f0-b058-20d929ee786d",
+   "metadata": {},
+   "source": [
+    "<div class=\"admonition info\">\n",
+    "   <p class=\"admonition-title\"><b><i class=\"fa fa-question-circle\"> </i> Open Question</b></p>\n",
+    "   <p> Try to identify interesting components security-wise. Then try to identify ones that\n",
+    "       have changed and into them what functions have changed.\n",
+    "   </p>\n",
+    "</div>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "01f4f44e-5c2b-4219-85fc-151d44296b3b",
+   "metadata": {},
+   "source": [
+    "## Bonus\n",
+    "\n",
+    "The latest version released is [1.0.11.96](https://www.netgear.fr/support/product/rax30#download) which apparently provide a **\"hot fix\"**. Can you identify what has been patched and how ?"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "d6abb2a0-e210-462a-80af-f90573d02665",
+   "metadata": {},
+   "source": [
+    "<script>\n",
+    "var coll = document.getElementsByClassName(\"collapsible\");\n",
+    "var i;\n",
+    "\n",
+    "for (i = 0; i < coll.length; i++) {\n",
+    "\n",
+    "  var tmp = coll[i].nextElementSibling;\n",
+    "  tmp.style.display = \"none\";\n",
+    "  tmp.nextElementSibling.style.display = \"none\";\n",
+    "  tmp.nextElementSibling.nextElementSibling.style.display = \"none\";\n",
+    "\n",
+    "  coll[i].addEventListener(\"click\", function() {\n",
+    "    this.classList.toggle(\"active\");\n",
+    "    var content = this.nextElementSibling;\n",
+    "    var content2 = content.nextElementSibling;\n",
+    "    var content3 = content2.nextElementSibling;\n",
+    "    if (content.style.display === \"none\") {\n",
+    "      content.style.display = \"\";\n",
+    "      content2.style.display = \"\";\n",
+    "      content3.style.display = \"\";\n",
+    "      this.innerHTML = \"Hide Solution\";\n",
+    "    } else {\n",
+    "      content.style.display = \"none\";\n",
+    "      content2.style.display = \"none\";\n",
+    "      content3.style.display = \"\";\n",
+    "      this.innerHTML = \"Show Solution\";\n",
+    "    }\n",
+    "  });\n",
+    "}\n",
+    "</script>"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "686cc7b6-fe51-40d0-8f22-1687df08ab45",
+   "metadata": {},
+   "source": [
+    "<script>\n",
+    "var coll = document.getElementsByClassName(\"onebutton\");\n",
+    "var i;\n",
+    "\n",
+    "for (i = 0; i < coll.length; i++) {\n",
+    "\n",
+    "  var tmp = coll[i].nextElementSibling;\n",
+    "  tmp.style.display = \"none\";\n",
+    "\n",
+    "  coll[i].addEventListener(\"click\", function() {\n",
+    "    this.classList.toggle(\"active\");\n",
+    "    var content = this.nextElementSibling;\n",
+    "    if (content.style.display === \"none\") {\n",
+    "      content.style.display = \"\";\n",
+    "      this.innerHTML = \"Hide Solution\";\n",
+    "    } else {\n",
+    "      content.style.display = \"none\";\n",
+    "      this.innerHTML = \"Show Solution\";\n",
+    "    }\n",
+    "  });\n",
+    "}\n",
+    "</script>"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "diffing",
+   "language": "python",
+   "name": "diffing"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

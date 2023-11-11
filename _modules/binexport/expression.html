@@ -98,10 +98,15 @@
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">binexport.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
 <span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">ExpressionType</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.program</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+    <span class="kn">from</span> <span class="nn">.function</span> <span class="kn">import</span> <span class="n">FunctionBinExport</span>
+    <span class="kn">from</span> <span class="nn">.instruction</span> <span class="kn">import</span> <span class="n">InstructionBinExport</span>
 
 
 <span class="k">def</span> <span class="nf">to_signed</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -146,12 +151,14 @@
         <span class="mi">64</span><span class="p">:</span> <span class="s2">&quot;zmmword&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">program</span><span class="p">:</span> <span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">,</span>
-                 <span class="n">function</span><span class="p">:</span> <span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">,</span>
-                 <span class="n">instruction</span><span class="p">:</span> <span class="s2">&quot;InstructionBinExport&quot;</span><span class="p">,</span>
-                 <span class="n">exp_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                 <span class="n">parent</span><span class="p">:</span> <span class="n">ExpressionBinExport</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">,</span>
+        <span class="n">function</span><span class="p">:</span> <span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">,</span>
+        <span class="n">instruction</span><span class="p">:</span> <span class="s2">&quot;InstructionBinExport&quot;</span><span class="p">,</span>
+        <span class="n">exp_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">parent</span><span class="p">:</span> <span class="n">ExpressionBinExport</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param program: reference to program</span>
 <span class="sd">        :param function: reference to function</span>
@@ -166,17 +173,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">is_addr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1">#: whether the value is referring to an address</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1">#: whether the value is a reference to data</span>
 
+        <span class="c1"># Expression object in the protobuf structure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span> <span class="o">=</span> <span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">]</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_parse_protobuf</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">instruction</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pb_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the operand object in the protobuf structure</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExpressionType</span><span class="p">:</span>
@@ -204,56 +207,57 @@
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">_parse_protobuf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                        <span class="n">program</span><span class="p">:</span> <span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">,</span>
-                        <span class="n">function</span><span class="p">:</span> <span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">,</span>
-                        <span class="n">instruction</span><span class="p">:</span> <span class="s2">&quot;InstructionBinExport&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_parse_protobuf</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">,</span>
+        <span class="n">function</span><span class="p">:</span> <span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">,</span>
+        <span class="n">instruction</span><span class="p">:</span> <span class="s2">&quot;InstructionBinExport&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Low-level expression parser. It populates self._type and self._value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">pb_expr</span> <span class="o">=</span> <span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">SYMBOL</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">SYMBOL</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
 
-            <span class="k">if</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span> <span class="ow">in</span> <span class="n">program</span><span class="o">.</span><span class="n">fun_names</span><span class="p">:</span>  <span class="c1"># It is a function name</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span> <span class="ow">in</span> <span class="n">program</span><span class="o">.</span><span class="n">fun_names</span><span class="p">:</span>  <span class="c1"># It is a function name</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">FUNC_NAME</span>
             <span class="k">else</span><span class="p">:</span>  <span class="c1"># It is a local symbol (ex: var_, arg_)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">VAR_NAME</span>
 
-        <span class="k">elif</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">IMMEDIATE_INT</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">IMMEDIATE_INT</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">IMMEDIATE_INT</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">to_signed</span><span class="p">(</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span><span class="p">,</span> <span class="n">program</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">to_signed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span><span class="p">,</span> <span class="n">program</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span> <span class="ow">in</span> <span class="n">instruction</span><span class="o">.</span><span class="n">data_refs</span><span class="p">:</span>  <span class="c1"># Data</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span> <span class="ow">in</span> <span class="n">instruction</span><span class="o">.</span><span class="n">data_refs</span><span class="p">:</span>  <span class="c1"># Data</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">is_addr</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">is_data</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">elif</span> <span class="p">(</span>
-                <span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span> <span class="ow">in</span> <span class="n">program</span> <span class="ow">or</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span> <span class="ow">in</span> <span class="n">function</span>
-            <span class="p">):</span>  <span class="c1"># Address</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span> <span class="ow">in</span> <span class="n">program</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span> <span class="ow">in</span> <span class="n">function</span><span class="p">:</span>  <span class="c1"># Address</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">is_addr</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="k">elif</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">IMMEDIATE_FLOAT</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">IMMEDIATE_FLOAT</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">IMMEDIATE_FLOAT</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span>  <span class="c1"># Cast it to float</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">immediate</span>  <span class="c1"># Cast it to float</span>
 
-        <span class="k">elif</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">SYMBOL</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
 
-        <span class="k">elif</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">REGISTER</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">REGISTER</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">REGISTER</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
 
-        <span class="k">elif</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">SIZE_PREFIX</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">SIZE_PREFIX</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">SIZE</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sz_lookup</span><span class="p">[</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sz_lookup</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span><span class="p">]</span>
 
-        <span class="k">elif</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">DEREFERENCE</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Expression</span><span class="o">.</span><span class="n">DEREFERENCE</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">ExpressionType</span><span class="o">.</span><span class="n">SYMBOL</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">symbol</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Malformed protobuf message. Invalid expression type </span><span class="si">{</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Malformed protobuf message. Invalid expression type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pb_expr</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
 
 </pre></div>
             <div class="clearer"></div>

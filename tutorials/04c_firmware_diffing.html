@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Firmware Diffing &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../_static/insipid.js"></script>
+    <script defer src="../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Diffing Two Programs" href="qbindiff-basic-diffing.html" />
+    <link rel="prev" title="Symbol Porting" href="03a_diffing_porting_symbols.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="tutorials.html" accesskey="U">Exporters</a>
+            <a class="top" href="#">Firmware Diffing</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="03a_diffing_porting_symbols.html" class="nav-icon previous" title="previous:&#13;Symbol Porting" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="qbindiff-basic-diffing.html" class="nav-icon next" title="next:&#13;Diffing Two Programs" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="03a_diffing_porting_symbols.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Symbol Porting
+          </span>
+        </div>
+      </a>
+      <a class="next" href="qbindiff-basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Diffing Two Programs
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="Firmware-Diffing">
+<h1>Firmware Diffing<a class="headerlink" href="#Firmware-Diffing" title="Link to this heading">¶</a></h1>
+<section id="Introduction:-Netgear-RAX30">
+<h2>Introduction: Netgear RAX30<a class="headerlink" href="#Introduction:-Netgear-RAX30" title="Link to this heading">¶</a></h2>
+<figure class="align-center">
+    <img alt="symbols after porting", width="400", src="../_static/tutorials/RAX30.jpeg"/>
+</figure><p>For this tutorial we are going to work on the Netgear RAX30 Wireless router, that was part of the targets for <a class="reference external" href="https://www.zerodayinitiative.com/blog/2022/8/29/announcing-pwn2own-toronto-2022-and-introducing-the-soho-smashup">Pwn2Own Toronto 2022</a>. A day before the submission deadline, Netgear released a firmware update that was also patching some vulnerabilities (which led multiple Pwn2Own competitors to withdraw theirs submission). The two versions are:</p>
+<div style="text-align:center;">
+    <div style="text-align: center; display: inline-block; padding: 1rem 1rem; vertical-align: middle;">
+        <a href="https://drive.google.com/file/d/1Qxcd8K7QSpj36XF-tk_TCULk5TMPsfV9/view?usp=sharing">
+            <i class="fa fa-download fa-lg"></i><br/>1.0.7.78
+        </a>
+    </div>
+    <div style="text-align: center; display: inline-block; padding: 1rem 1rem; vertical-align: middle;">
+        <a href="https://drive.google.com/file/d/1MRzCK80G_SBHQuGy8dfuE7YoGvxs1J6c/view?usp=sharing">
+            <i class="fa fa-download fa-lg"></i><br/>1.0.9.92
+        </a>
+    </div>
+</div>
+<br/><p>The goal of this tutorial is to show how performing a full-filesystem diff and to navigate the results programatically.</p>
+</section>
+<section id="I.-Unpacking-firmwares">
+<h2>I. Unpacking firmwares<a class="headerlink" href="#I.-Unpacking-firmwares" title="Link to this heading">¶</a></h2>
+<p>To extract the firmwares one can use <a class="reference external" href="https://unblob.org">Unblob</a> which is now undeniably the best firmware extraction tool to date. We can extract the firmware with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--pull<span class="w"> </span>always<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="nv">$PWD</span>/extract/RAX30-V1.0.7.78_1.img_extract:/data/output<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/data/input<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ghcr.io/onekey-sec/unblob:latest<span class="w"> </span>/data/input/RAX30-V1.0.7.78_1.img
+</pre></div>
+</div>
+<p><em>(Considering the firmware is in your current directory)</em></p>
+<p><strong>Exercise</strong>: Unpack both firmwares</p>
+</section>
+<section id="II.-Exporting-files">
+<h2>II. Exporting files<a class="headerlink" href="#II.-Exporting-files" title="Link to this heading">¶</a></h2>
+<p>Before diffing executables between the two firmwares, we have to call BinExport on all of them. For that we can use the program <code class="docutils literal notranslate"><span class="pre">binexporter</span></code> that can iterate a whole tree of files and to export all files encountered.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>binexporter<span class="w"> </span>-t<span class="w"> </span><span class="m">10</span><span class="w"> </span>extract/RAX30-V1.0.7.78_1.img_extract
+</pre></div>
+</div>
+<p>The option <code class="docutils literal notranslate"><span class="pre">-t</span></code> launch the export with 10 processes. As exporting implies disassembling all binaries it can take a while to perform (~1h for this firmware).</p>
+<p>To continue the tutorial here are the binexports files for both firmwares.</p>
+<div style="text-align: center;">
+    <a href="https://drive.google.com/file/d/1DxQccJ83I6wZGA1yIrpAHpO9v7HwrNs4/view?usp=sharing">
+        <i class="fa fa-download fa-lg"></i><br/>Binexport files
+    </a>
+</div>
+<br/></section>
+<section id="III.-Performing-the-diff">
+<h2>III. Performing the diff<a class="headerlink" href="#III.-Performing-the-diff" title="Link to this heading">¶</a></h2>
+<p>Now that all executable files are exported in a single directory for each firmwares we can perfom the diff of each BinExport files based on theirs name. <em>(For simplicity we assume there are now duplicates. Also symlinks also led to duplicating binexport files)</em>.</p>
+<p><strong>Exercise</strong>: Write a script to diff all binexports files.</p>
+<button type="button" class="onebutton">Show Solution</button><div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span><span class="p">,</span> <span class="n">BindiffFile</span>
+
+<span class="n">binexports1</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;binexports/RAX30-V1.0.7.78_1.img_extract&quot;</span><span class="p">)</span>
+<span class="n">binexports2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;binexports/RAX30-V1.0.9.90_3.img_extract&quot;</span><span class="p">)</span>
+
+<span class="n">diff_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;diffs&quot;</span><span class="p">)</span>  <span class="c1"># create output dir</span>
+<span class="n">diff_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">file1</span> <span class="ow">in</span> <span class="n">binexports1</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+    <span class="n">file2</span> <span class="o">=</span> <span class="n">binexports2</span> <span class="o">/</span> <span class="n">file1</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">if</span> <span class="n">file2</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">diff_file</span> <span class="o">=</span> <span class="n">diff_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file1</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_vs_</span><span class="si">{</span><span class="n">file2</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.BinDiff&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">diff_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;diff </span><span class="si">{</span><span class="n">file1</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">file2</span><span class="si">}</span><span class="s2">: &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">BinDiff</span><span class="o">.</span><span class="n">raw_diffing</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">,</span> <span class="n">diff_file</span><span class="p">))</span>  <span class="c1"># Perform the diff</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="IV.-Analyzing-diffs">
+<h2>IV. Analyzing diffs<a class="headerlink" href="#IV.-Analyzing-diffs" title="Link to this heading">¶</a></h2>
+<p>Now that all diff files are created we can open them to analyze changes.</p>
+<p><strong>Exercise</strong>: Write a script that take the 15 most different binaries (similarity the lowest), and which shows the 10 most different functions (dissimilar ones).</p>
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">IntProgress</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span><span class="p">,</span> <span class="n">BindiffFile</span>
+
+<span class="n">diff_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;diffs/&quot;</span><span class="p">)</span>
+
+<span class="n">progress</span> <span class="o">=</span> <span class="n">IntProgress</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">diff_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Load diffs&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">progress</span><span class="p">)</span>
+
+<span class="n">diffs</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">diff_file</span> <span class="ow">in</span> <span class="n">diff_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+    <span class="n">progress</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">BindiffFile</span><span class="p">(</span><span class="n">diff_file</span><span class="p">)</span>
+    <span class="n">diffs</span><span class="p">[</span><span class="n">diff_file</span><span class="p">]</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">similarity</span>
+    <span class="k">del</span> <span class="n">diff</span>  <span class="c1"># useful to free the memory</span>
+
+<span class="c1"># Reopen the most dissimilar binaries</span>
+<span class="k">for</span> <span class="n">diff_file</span><span class="p">,</span> <span class="n">similarity</span> <span class="ow">in</span> <span class="n">diffs</span><span class="o">.</span><span class="n">most_common</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">15</span><span class="p">]:</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">BindiffFile</span><span class="p">(</span><span class="n">diff_file</span><span class="p">)</span>
+    <span class="n">binary_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">diff_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_vs_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">binary_file</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> [matched:</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">function_matches</span><span class="p">)</span><span class="si">}</span><span class="s2">][unmatched:</span><span class="si">{</span><span class="n">diff</span><span class="o">.</span><span class="n">unmatched_primary_count</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">diff</span><span class="o">.</span><span class="n">unmatched_secondary_count</span><span class="si">}</span><span class="s2">]:&quot;</span><span class="p">)</span>
+    <span class="n">fun_sims</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">({</span><span class="n">x</span><span class="o">.</span><span class="n">name1</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">similarity</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">diff</span><span class="o">.</span><span class="n">function_matches</span><span class="p">})</span>
+    <span class="k">for</span> <span class="n">fun</span><span class="p">,</span> <span class="n">sim</span> <span class="ow">in</span> <span class="n">fun_sims</span><span class="o">.</span><span class="n">most_common</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">10</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">fun</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">sim</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1656800305ae4025bc1f20a562b9149c", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+xCloud_Debug_log.zip: 49% [matched:140][unmatched:28-28]:
+  - sub_000115D8 (10%)
+  - sub_00013DBC (59%)
+  - _ITM_registerTMCloneTable (100%)
+  - __imp___gmon_start__ (100%)
+  - _ITM_deregisterTMCloneTable (100%)
+  - __imp_fwrite (100%)
+  - __imp_json_object_object_add (100%)
+  - __imp_strstr (100%)
+  - __imp_snprintf (100%)
+  - __imp_cmsLog_cleanup (100%)
+debug.cgi: 49% [matched:140][unmatched:28-28]:
+  - sub_000115D8 (10%)
+  - sub_00013DBC (59%)
+  - _ITM_registerTMCloneTable (100%)
+  - __imp___gmon_start__ (100%)
+  - _ITM_deregisterTMCloneTable (100%)
+  - __imp_fwrite (100%)
+  - __imp_json_object_object_add (100%)
+  - __imp_strstr (100%)
+  - __imp_snprintf (100%)
+  - __imp_cmsLog_cleanup (100%)
+libmdm_db.so: 51% [matched:258][unmatched:418-418]:
+  - oalMdm_isParam64 (63%)
+  - strstr (66%)
+  - mdm_deleteObjectInstance (92%)
+  - j_mdm_getObject (99%)
+  - mdm_getNextObjPathDesc (99%)
+  - sub_00005F68 (99%)
+  - sub_0000B864 (99%)
+  - mdm_moveInstanceUsingNewOrderValue (99%)
+  - j_mdm_getOrderValue (99%)
+  - mdm_setOrderValue (99%)
+wbd_master: 54% [matched:582][unmatched:13-13]:
+  - sub_00024890 (1%)
+  - sub_0002E244 (1%)
+  - sub_0001F640 (1%)
+  - sub_0002FA78 (2%)
+  - sub_0002F974 (3%)
+  - sub_0002F188 (3%)
+  - sub_0002ABA4 (3%)
+  - sub_000206D4 (5%)
+  - sub_00029A30 (6%)
+  - sub_0002A318 (6%)
+wbd_slave: 55% [matched:867][unmatched:12-12]:
+  - sub_00040044 (0%)
+  - sub_00040520 (1%)
+  - sub_00040F88 (1%)
+  - sub_00041DC8 (1%)
+  - sub_00031930 (1%)
+  - sub_000277E4 (1%)
+  - sub_0001EEF4 (1%)
+  - sub_0001B518 (1%)
+  - sub_000277A0 (1%)
+  - sub_00040934 (1%)
+xt_comment.ko: 63% [matched:3][unmatched:0-0]:
+  - comment_mt_exit (100%)
+  - init_module (100%)
+  - comment_mt (100%)
+ssd: 63% [matched:88][unmatched:1-1]:
+  - sub_000117C4 (54%)
+  - sub_00010B94 (61%)
+  - sprintf (66%)
+  - nvram_set (66%)
+  - strcmp (66%)
+  - setsockopt (66%)
+  - strcspn (66%)
+  - strspn (66%)
+  - nvifname_to_osifname (66%)
+  - malloc (66%)
+xt_SKIPLOG.ko: 64% [matched:4][unmatched:0-0]:
+  - blog_skip (100%)
+  - skiplog_tg_exit (100%)
+  - skiplog_tg_init (100%)
+  - skiplog_tg (100%)
+wb_cli: 73% [matched:70][unmatched:0-0]:
+  - sub_00010AB8 (74%)
+  - sub_00011354 (77%)
+  - _ITM_registerTMCloneTable (100%)
+  - _ITM_deregisterTMCloneTable (100%)
+  - __imp___gmon_start__ (100%)
+  - __imp_wbd_get_cli_command_id (100%)
+  - __imp_printf (100%)
+  - __imp_fputs (100%)
+  - __imp_wbd_json_create_cli_cmd (100%)
+  - __imp_stub_send_hld_hlpr (100%)
+tm_block.cgi: 75% [matched:170][unmatched:1-1]:
+  - sub_00012E78 (63%)
+  - sub_000126E4 (98%)
+  - sub_00012DB8 (99%)
+  - _ITM_registerTMCloneTable (100%)
+  - __imp___gmon_start__ (100%)
+  - _ITM_deregisterTMCloneTable (100%)
+  - __imp_sprintf (100%)
+  - __imp_cmsMsg_send (100%)
+  - __imp_strcpy (100%)
+  - __imp_cmsMem_free (100%)
+libcurl.so.4: 75% [matched:1644][unmatched:29-29]:
+  - Curl_select (0%)
+  - strerror (1%)
+  - sub_0002952C (1%)
+  - sub_00041510 (1%)
+  - Curl_sendf (2%)
+  - sub_000415A4 (2%)
+  - j_Curl_md5it (3%)
+  - sub_00029238 (4%)
+  - sub_0001C1C0 (5%)
+  - sub_00041C10 (5%)
+libcurl.so: 75% [matched:1644][unmatched:29-29]:
+  - Curl_select (0%)
+  - strerror (1%)
+  - sub_0002952C (1%)
+  - sub_00041510 (1%)
+  - Curl_sendf (2%)
+  - sub_000415A4 (2%)
+  - j_Curl_md5it (3%)
+  - sub_00029238 (4%)
+  - sub_0001C1C0 (5%)
+  - sub_00041C10 (5%)
+wps_pbcd: 77% [matched:236][unmatched:3-3]:
+  - sub_00017AB0 (7%)
+  - sub_00014FD8 (10%)
+  - sub_00014500 (42%)
+  - sub_00015D00 (52%)
+  - sub_00014078 (79%)
+  - sub_000143BC (79%)
+  - sub_00013604 (85%)
+  - sub_00011B88 (91%)
+  - sub_00015864 (92%)
+  - sub_00014EA0 (94%)
+reset_pwd.cgi: 77% [matched:213][unmatched:1-1]:
+  - sub_00013308 (63%)
+  - sub_00012B74 (96%)
+  - sub_000130C0 (98%)
+  - sub_000151FC (98%)
+  - sub_00013248 (99%)
+  - _ITM_registerTMCloneTable (100%)
+  - __imp___gmon_start__ (100%)
+  - _ITM_deregisterTMCloneTable (100%)
+  - __imp_sprintf (100%)
+  - __imp_cmsMsg_send (100%)
+libwbdshared.so: 78% [matched:789][unmatched:0-0]:
+  - wbd_tlv_decode_weak_client_response (15%)
+  - wbd_parse_cli_args (20%)
+  - wbd_tlv_encode_fbt_config_response (22%)
+  - wbd_ds_is_interface_dedicated_backhaul (23%)
+  - wbd_get_command_id (24%)
+  - j_wbd_get_command_id (30%)
+  - wbd_tlv_encode_weak_client_response (34%)
+  - wbd_ds_get_i5_device (34%)
+  - wbd_ds_interface_init (35%)
+  - wbd_tlv_encode_fbt_config_request (35%)
+</pre></div></div>
+</div>
+<div class="admonition info">
+   <p class="admonition-title"><b><i class="fa fa-question-circle"> </i> Open Question</b></p>
+   <p> Try to identify interesting components security-wise. Then try to identify ones that
+       have changed and into them what functions have changed.
+   </p>
+</div></section>
+<section id="Bonus">
+<h2>Bonus<a class="headerlink" href="#Bonus" title="Link to this heading">¶</a></h2>
+<p>The latest version released is <a class="reference external" href="https://www.netgear.fr/support/product/rax30#download">1.0.11.96</a> which apparently provide a <strong>“hot fix”</strong>. Can you identify what has been patched and how ?</p>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+
+  var tmp = coll[i].nextElementSibling;
+  tmp.style.display = "none";
+  tmp.nextElementSibling.style.display = "none";
+  tmp.nextElementSibling.nextElementSibling.style.display = "none";
+
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    var content2 = content.nextElementSibling;
+    var content3 = content2.nextElementSibling;
+    if (content.style.display === "none") {
+      content.style.display = "";
+      content2.style.display = "";
+      content3.style.display = "";
+      this.innerHTML = "Hide Solution";
+    } else {
+      content.style.display = "none";
+      content2.style.display = "none";
+      content3.style.display = "";
+      this.innerHTML = "Show Solution";
+    }
+  });
+}
+</script><script>
+var coll = document.getElementsByClassName("onebutton");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+
+  var tmp = coll[i].nextElementSibling;
+  tmp.style.display = "none";
+
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "none") {
+      content.style.display = "";
+      this.innerHTML = "Hide Solution";
+    } else {
+      content.style.display = "none";
+      this.innerHTML = "Show Solution";
+    }
+  });
+}
+</script></section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Exporters</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html#python-bindiff">Python-bindiff</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="03a_diffing_porting_symbols.html">Symbols Porting</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Full Firmware Diffing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="03a_diffing_porting_symbols.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Symbol Porting
+          </span>
+        </div>
+      </a>
+      <a class="next" href="qbindiff-basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Diffing Two Programs
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../_sources/tutorials/04c_firmware_diffing.ipynb.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

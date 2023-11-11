@@ -97,10 +97,16 @@
 <h1>Source code for binexport.operand</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">binexport.expression</span> <span class="kn">import</span> <span class="n">ExpressionBinExport</span>
 <span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">ExpressionType</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.program</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+    <span class="kn">from</span> <span class="nn">.function</span> <span class="kn">import</span> <span class="n">FunctionBinExport</span>
+    <span class="kn">from</span> <span class="nn">.instruction</span> <span class="kn">import</span> <span class="n">InstructionBinExport</span>
+    <span class="kn">from</span> <span class="nn">.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
 
 
 <div class="viewcode-block" id="OperandBinExport">
@@ -111,11 +117,13 @@
 <span class="sd">    Provide access to the underlying expression.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">],</span>
-                 <span class="n">function</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">],</span>
-                 <span class="n">instruction</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;InstructionBinExport&quot;</span><span class="p">],</span>
-                 <span class="n">op_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;ProgramBinExport&quot;</span><span class="p">],</span>
+        <span class="n">function</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;FunctionBinExport&quot;</span><span class="p">],</span>
+        <span class="n">instruction</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;InstructionBinExport&quot;</span><span class="p">],</span>
+        <span class="n">op_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param program: Weak reference to the program</span>
 <span class="sd">        :param function: Weak reference to the function</span>
@@ -205,11 +213,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">operand</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">]</span>
 
-    <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ExpressionBinExport</span><span class="p">]:</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uncached_expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ExpressionBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterates over all the operand expression in a pre-order manner</span>
 <span class="sd">        (binary operator first).</span>
+<span class="sd">        The object returned is not cached, calling this function multiple times will</span>
+<span class="sd">        create the same object multiple times. If you want to cache the object you</span>
+<span class="sd">        should use `OperandBinExport.expressions`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">expr_dict</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {expression protobuf idx : ExpressionBinExport}</span>
@@ -220,7 +231,17 @@
             <span class="n">expr_dict</span><span class="p">[</span><span class="n">exp_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">ExpressionBinExport</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instruction</span><span class="p">,</span> <span class="n">exp_idx</span><span class="p">,</span> <span class="n">parent</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">expr_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">expr_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ExpressionBinExport</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterates over all the operand expression in a pre-order manner</span>
+<span class="sd">        (binary operator first).</span>
+<span class="sd">        The list is cached by default, to erase the cache delete the attribute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span></div>
 
 </pre></div>
             <div class="clearer"></div>

@@ -484,11 +484,7 @@
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.Instruction.data_references">data_references (qbindiff.loader.Instruction property)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.data_refs">data_refs (binexport.instruction.InstructionBinExport attribute)</a>
-
-      <ul>
-        <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.data_refs">(binexport.program.ProgramBinExport attribute)</a>
 </li>
-      </ul></li>
       <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.DatName">DatName (class in qbindiff.features)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.depth">depth (binexport.expression.ExpressionBinExport property)</a>
@@ -653,10 +649,10 @@
 </li>
       <li><a href="differs/bindiff.html#bindiff.BinDiff.from_binexport_files">from_binexport_files() (bindiff.BinDiff static method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.from_ida">from_ida() (qbindiff.Program static method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="exporter/binexport.html#binexport.types.FunctionType.from_proto">from_proto() (binexport.types.FunctionType static method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.from_quokka">from_quokka() (qbindiff.Program static method)</a>
@@ -679,8 +675,12 @@
 </li>
       <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.FuncName">FuncName (class in qbindiff.features)</a>
 </li>
-      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.function">function (binexport.operand.OperandBinExport property)</a>
+      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.function">function (binexport.function.BasicBlockBinExport property)</a>
+
+      <ul>
+        <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.function">(binexport.operand.OperandBinExport property)</a>
 </li>
+      </ul></li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Function">Function (class in qbindiff)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch.function_match">function_match (bindiff.file.BasicBlockMatch attribute)</a>
@@ -877,6 +877,8 @@
       <li><a href="differs/bindiff.html#bindiff.file.File.instructions">instructions (bindiff.file.File attribute)</a>
 
       <ul>
+        <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.instructions">(binexport.function.BasicBlockBinExport property)</a>
+</li>
         <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractBasicBlockBackend.instructions">(qbindiff.loader.backend.AbstractBasicBlockBackend property)</a>
 </li>
         <li><a href="qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.instructions">(qbindiff.loader.backend.binexport.BasicBlockBackendBinExport property)</a>
@@ -1339,8 +1341,6 @@
       </ul></li>
       <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.PathLike">PathLike (in module qbindiff.types)</a>
 </li>
-      <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.pb_expr">pb_expr (binexport.expression.ExpressionBinExport property)</a>
-</li>
       <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.pb_instr">pb_instr (binexport.instruction.InstructionBinExport property)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.pb_operand">pb_operand (binexport.operand.OperandBinExport property)</a>
@@ -1666,6 +1666,14 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.uncached_blocks">uncached_blocks (binexport.function.FunctionBinExport property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.uncached_expressions">uncached_expressions (binexport.operand.OperandBinExport property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.uncached_instructions">uncached_instructions (binexport.function.BasicBlockBinExport property)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.uncached_operands">uncached_operands (binexport.instruction.InstructionBinExport property)</a>
+</li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.StructureType.UNION">UNION (qbindiff.loader.types.StructureType attribute)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.DataType.UNKNOWN">UNKNOWN (qbindiff.loader.types.DataType attribute)</a>
@@ -1676,14 +1684,14 @@
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.unknown">(qbindiff.loader.types.OperandType attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.ReferenceType.UNKNOWN">UNKNOWN (qbindiff.loader.types.ReferenceType attribute)</a>
 
       <ul>
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.StructureType.UNKNOWN">(qbindiff.loader.types.StructureType attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend.unload_blocks">unload_blocks() (qbindiff.loader.backend.AbstractFunctionBackend method)</a>
 
       <ul>

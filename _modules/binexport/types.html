@@ -106,6 +106,7 @@
 <span class="n">Addr</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span>
 <span class="sd">&quot;&quot;&quot;An integer representing an address within a program&quot;&quot;&quot;</span>
 
+
 <div class="viewcode-block" id="FunctionType">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.types.FunctionType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
@@ -114,11 +115,13 @@
 <span class="sd">    Function types as defined by IDA</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># fmt: off</span>
     <span class="n">NORMAL</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>    <span class="c1"># doc: Normal function</span>
     <span class="n">LIBRARY</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>   <span class="c1"># doc: library function</span>
     <span class="n">IMPORTED</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>  <span class="c1"># doc: imported function (don&#39;t have content)</span>
     <span class="n">THUNK</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>     <span class="c1"># doc: thunk function (trampoline to another function)</span>
     <span class="n">INVALID</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>   <span class="c1"># doc: invalid function (as computed by IDA)</span>
+    <span class="c1"># fmt: on</span>
 
 <div class="viewcode-block" id="FunctionType.from_proto">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.types.FunctionType.from_proto">[docs]</a>
@@ -136,6 +139,7 @@
 </div>
 
 
+
 <div class="viewcode-block" id="ExpressionType">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.types.ExpressionType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
@@ -144,6 +148,7 @@
 <span class="sd">    Expression type derived from protobuf expression types.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># fmt: off</span>
     <span class="n">FUNC_NAME</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>        <span class="c1"># doc: function name</span>
     <span class="n">VAR_NAME</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>         <span class="c1"># doc: variable name</span>
     <span class="n">IMMEDIATE_INT</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>    <span class="c1"># doc: immediate value</span>
@@ -152,6 +157,7 @@
     <span class="n">REGISTER</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>         <span class="c1"># doc: register expression</span>
     <span class="n">SIZE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>             <span class="c1"># doc: size expression (byte, dword ..)</span></div>
 
+    <span class="c1"># fmt: on</span>
 </pre></div>
             <div class="clearer"></div>
           </div>
