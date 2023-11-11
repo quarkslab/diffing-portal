@@ -14,8 +14,8 @@ Python-bindiff
     :maxdepth: 1
 
     Symbols Porting <03a_diffing_porting_symbols.ipynb>
-    Automating a Diff <basic-diffing>
-    Batch Diffing <batch-diffing>
+    Full Firmware Diffing <04c_firmware_diffing.ipynb>
+
 
 QBinDiff
 --------
