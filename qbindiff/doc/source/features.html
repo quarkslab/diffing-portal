@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -231,6 +231,24 @@ near future.</p>
 <li><p><a class="reference internal" href="api/features.html#qbindiff.features.ReadWriteAccess" title="qbindiff.features.ReadWriteAccess"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadWriteAccess</span></code></a>: Number of Read and Write Access to the memory. This feature should be resistant to some obfuscation techniques and compilation options.</p></li>
 </ul>
 </section>
+<section id="how-to-choose-features">
+<h2>How to choose features ?<a class="headerlink" href="#how-to-choose-features" title="Link to this heading">¶</a></h2>
+<p>Choosing features can be tedious depending on the binary under hand.</p>
+<p>In general, enabling all the features will give satisfiable results. However, in some cases, feature fine-tuning can be necessary. These cases are numerous and we do not cover all of them.</p>
+<p>We provide a list of features that should be used when either the primary or the secondary (or both) are suspected to be obfuscated. Depending on the suspected obfuscation, specific features should be chosen.</p>
+<p>Here are the different obfuscation techniques considered in the table below:</p>
+<ul class="simple">
+<li><p><strong>Split</strong> refers to the inter-procedural <a class="reference external" href="https://tigress.wtf/split.html">Split obfuscation</a>, that breaks a function into different chunks.</p></li>
+<li><p><a class="reference external" href="https://tigress.wtf/merge.html">Merge</a> obfuscation is also an inter-procedural obfuscation that consists of merging different functions together.</p></li>
+<li><p><a class="reference external" href="https://tigress.wtf/copy.html">Copy</a> obfuscation (inter-procedural) creates a clone of a given function.</p></li>
+<li><p><strong>Data</strong> obfuscations refer to any obfuscation that modifies the data-flow (such as <cite>Mixed Boolean Arithmetic</cite> or <cite>MBA</cite>).</p></li>
+<li><p><strong>Intra</strong> obfuscations refer to any obfuscation that modifies the function controlflow (such as <cite>Controlflow-Graph Flattening</cite> or <cite>CFF</cite>).</p></li>
+</ul>
+<p>For example, if an intra-procedural obfuscation, such as the Controlflow Graph Flattening, is suspected to be applied on a binary (Controlflow Graph Flattening exhibits a very specific pattern), then the Cyclomatic Complexity will not be a feature that will lead to better diffing results, whereas the MnemonicSimple probably will.</p>
+<figure class="align-default">
+<img alt="../../../_images/feature_obfu.png" src="../../../_images/feature_obfu.png" />
+</figure>
+</section>
 </section>
 
             <div class="clearer"></div>
@@ -261,6 +279,7 @@ near future.</p>
 <li class="toctree-l3"><a class="reference internal" href="#basic-block-level-features">Basic-block level features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#instruction-level-features">Instruction level features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#operand-level-features">Operand level features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-choose-features">How to choose features ?</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="params.html">Parameters</a></li>
@@ -329,7 +348,7 @@ near future.</p>
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../../../_sources/qbindiff/doc/source/features.rst.txt" rel="nofollow">Show Source</a>.
     </footer>

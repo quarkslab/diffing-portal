@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -119,15 +119,14 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">tqdm</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">networkx</span>
-<span class="kn">from</span> <span class="nn">datasketch</span> <span class="kn">import</span> <span class="n">MinHash</span>
+<span class="kn">from</span> <span class="nn">datasketch</span> <span class="kn">import</span> <span class="n">MinHash</span>  <span class="c1"># type: ignore[import-untyped]</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Iterator</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">cast</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="c1"># third-party imports</span>
-<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BindiffFile</span>
+<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BindiffFile</span>  <span class="c1"># type: ignore[import-untyped]</span>
 
 <span class="c1"># local imports</span>
 <span class="c1"># from qbindiff import __version__</span>
@@ -137,22 +136,23 @@
 <span class="kn">from</span> <span class="nn">qbindiff.mapping</span> <span class="kn">import</span> <span class="n">Mapping</span>
 <span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span>
 <span class="kn">from</span> <span class="nn">qbindiff.passes</span> <span class="kn">import</span> <span class="n">FeaturePass</span><span class="p">,</span> <span class="n">ZeroPass</span>
-<span class="kn">from</span> <span class="nn">qbindiff.utils</span> <span class="kn">import</span> <span class="n">is_debug</span>
-<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">RawMapping</span><span class="p">,</span>
-    <span class="n">Positive</span><span class="p">,</span>
-    <span class="n">Ratio</span><span class="p">,</span>
-    <span class="n">Graph</span><span class="p">,</span>
-    <span class="n">AdjacencyMatrix</span><span class="p">,</span>
-    <span class="n">SimMatrix</span><span class="p">,</span>
-    <span class="n">Addr</span><span class="p">,</span>
-    <span class="n">Idx</span><span class="p">,</span>
-    <span class="n">Distance</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">qbindiff.utils</span> <span class="kn">import</span> <span class="n">is_debug</span><span class="p">,</span> <span class="n">wrapper_iter</span>
+<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">RawMapping</span><span class="p">,</span> <span class="n">Positive</span><span class="p">,</span> <span class="n">Ratio</span><span class="p">,</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">AdjacencyMatrix</span><span class="p">,</span> <span class="n">Distance</span>
 <span class="kn">from</span> <span class="nn">qbindiff.mapping.bindiff</span> <span class="kn">import</span> <span class="n">export_to_bindiff</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">GenericPass</span>
+    <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">GenericPrePass</span><span class="p">,</span>
+        <span class="n">GenericPostPass</span><span class="p">,</span>
+        <span class="n">NodeLabel</span><span class="p">,</span>
+        <span class="n">SimMatrix</span><span class="p">,</span>
+        <span class="n">FeatureValue</span><span class="p">,</span>
+        <span class="n">Addr</span><span class="p">,</span>
+        <span class="n">Idx</span><span class="p">,</span>
+        <span class="n">ArrayLike1D</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">FeatureCollector</span>
 
 
 <div class="viewcode-block" id="Differ">
@@ -165,11 +165,10 @@
         <span class="n">primary</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span>
         <span class="n">secondary</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">sparsity_ratio</span><span class="p">:</span> <span class="n">Ratio</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span>
-        <span class="n">tradeoff</span><span class="p">:</span> <span class="n">Ratio</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span>
-        <span class="n">epsilon</span><span class="p">:</span> <span class="n">Positive</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">sparsity_ratio</span><span class="p">:</span> <span class="n">Ratio</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span>
+        <span class="n">tradeoff</span><span class="p">:</span> <span class="n">Ratio</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">epsilon</span><span class="p">:</span> <span class="n">Positive</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
         <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">sparse_row</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -188,6 +187,12 @@
 <span class="sd">            entirety or processing it row per row</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="c1"># Checks for empty graph</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Primary graph does not contains any nodes&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">secondary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Secondary graph does not contains any nodes&quot;</span><span class="p">)</span>
+
         <span class="c1"># NAP parameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sparsity_ratio</span> <span class="o">=</span> <span class="n">sparsity_ratio</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tradeoff</span> <span class="o">=</span> <span class="n">tradeoff</span>
@@ -200,12 +205,7 @@
         <span class="c1">#: Secondary graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span> <span class="o">=</span> <span class="n">secondary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pre_passes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_post_passes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_already_processed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Flag to perform the processing only once</span>
-
-        <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">primary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">secondary</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_adj_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_i2n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_n2i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_adjacency_matrix</span><span class="p">(</span>
             <span class="n">primary</span>
@@ -225,14 +225,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_dim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_dim</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Differ</span><span class="o">.</span><span class="n">DTYPE</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">p_features</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">s_features</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Differ.get_similarities">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.get_similarities">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_similarities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">],</span> <span class="n">secondary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">get_similarities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">],</span> <span class="n">secondary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ArrayLike1D</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the similarity scores between the nodes specified as parameter.</span>
 <span class="sd">        By default, it uses the similarity matrix.</span>
@@ -241,7 +238,7 @@
 
 <span class="sd">        :param primary_idx: the List of integers that represent nodes inside the primary graph</span>
 <span class="sd">        :param secondary_idx: the List of integers that represent nodes inside the primary graph</span>
-<span class="sd">        :return sim_matrix: the similarity matrix between the specified nodes</span>
+<span class="sd">        :returns: A sequence with the corresponding similarities of the given nodes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">[</span><span class="n">primary_idx</span><span class="p">,</span> <span class="n">secondary_idx</span><span class="p">]</span></div>
 
@@ -301,7 +298,7 @@
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.extract_adjacency_matrix">[docs]</a>
     <span class="k">def</span> <span class="nf">extract_adjacency_matrix</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">AdjacencyMatrix</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Idx</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">AdjacencyMatrix</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Idx</span><span class="p">,</span> <span class="n">NodeLabel</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="n">NodeLabel</span><span class="p">,</span> <span class="n">Idx</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the adjacency matrix for the graph and the mappings</span>
 
@@ -326,7 +323,7 @@
 
 <div class="viewcode-block" id="Differ.register_prepass">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.register_prepass">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_prepass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">GenericPass</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">register_prepass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">GenericPrePass</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a new pre-pass that will operate on the similarity matrix.</span>
 <span class="sd">        The passes will be called in the same order as they are registered and each one</span>
@@ -341,62 +338,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_pre_passes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="Differ.register_postpass">
-<a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.register_postpass">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_postpass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">GenericPass</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Register a new post-pass that will operate on the similarity matrix.</span>
-<span class="sd">        The passes will be called in the same order as they are registered and each one</span>
-<span class="sd">        of them will operate on the output of the previous one.</span>
-
-<span class="sd">        :param pass_func: Pass method to apply on the similarity matrix. Example : a Pass that extracts graph features.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_post_passes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">))</span></div>
-
-
-<div class="viewcode-block" id="Differ.normalize">
-<a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.normalize">[docs]</a>
-    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Graph</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Custom function that normalizes the input graph.</span>
-<span class="sd">        This method is meant to be overriden by a sub-class.</span>
-
-<span class="sd">        :param graph: graph to normalize</span>
-<span class="sd">        :return graph: normalized graph</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="n">graph</span></div>
-
-
-<div class="viewcode-block" id="Differ.run_passes">
-<a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.run_passes">[docs]</a>
-    <span class="k">def</span> <span class="nf">run_passes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_run_passes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run all the passes that have been previously registered.</span>
+<span class="sd">        It returns an iterator that can be used for tracking the progress.</span>
+
+<span class="sd">        :returns: An iterator of values in the range [0, 1000] used for tracking progress.</span>
+<span class="sd">                  It might contain more than 1000 elements.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">for</span> <span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pre_passes</span><span class="p">:</span>
-            <span class="n">pass_func</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">primary_n2i</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">secondary_n2i</span><span class="p">,</span>
-                <span class="o">**</span><span class="n">extra_args</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">for</span> <span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_post_passes</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pass_func</span><span class="p">,</span> <span class="n">FeaturePass</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">p_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s_features</span> <span class="o">=</span> <span class="n">pass_func</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">primary_n2i</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">secondary_n2i</span><span class="p">,</span>
-                    <span class="o">**</span><span class="n">extra_args</span><span class="p">,</span>
-                <span class="p">)</span>
+        <span class="c1"># If no passess have been registered, returns immediately 1000</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pre_passes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="mi">1000</span>
 
-            <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pre_passes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">wrapper_iter</span><span class="p">(</span>
                 <span class="n">pass_func</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">,</span>
@@ -404,7 +360,29 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">primary_n2i</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">secondary_n2i</span><span class="p">,</span>
                     <span class="o">**</span><span class="n">extra_args</span><span class="p">,</span>
-                <span class="p">)</span></div>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="c1"># The single steps are within [0, 1000]. Normalize them.</span>
+                <span class="c1"># Due to rounding errors, clip it to 1000</span>
+                <span class="k">yield</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pre_passes</span><span class="p">)))</span>
+
+<div class="viewcode-block" id="Differ.process_iterator">
+<a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.process_iterator">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize all the variables for the NAP algorithm in an iterative way.</span>
+<span class="sd">        It returns an iterator that can be used for tracking the progress.</span>
+
+<span class="sd">        :returns: An iterator of values in the range [0, 1000] used for tracking progress.</span>
+<span class="sd">                  It might contain more than 1000 elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Perform the initialization only once</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_already_processed</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_already_processed</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_passes</span><span class="p">()</span>  <span class="c1"># User registered passes</span></div>
 
 
 <div class="viewcode-block" id="Differ.process">
@@ -414,17 +392,13 @@
 <span class="sd">        Initialize all the variables for the NAP algorithm.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Perform the initialization only once</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_already_processed</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_already_processed</span> <span class="o">=</span> <span class="kc">True</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">run_passes</span><span class="p">()</span>  <span class="c1"># User registered passes</span></div>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_iterator</span><span class="p">():</span>
+            <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="Differ.compute_matching">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.compute_matching">[docs]</a>
-    <span class="k">def</span> <span class="nf">compute_matching</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">compute_matching</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the belief propagation algorithm. This method hangs until the computation is done.</span>
 <span class="sd">        The resulting matching is returned as a Mapping object.</span>
@@ -432,17 +406,19 @@
 <span class="sd">        :return: Mapping between items of the primary and items of the secondary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_matching_iterator</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">is_debug</span><span class="p">()):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">matching_iterator</span><span class="p">():</span>
             <span class="k">pass</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_matching_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<div class="viewcode-block" id="Differ.matching_iterator">
+<a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.Differ.matching_iterator">[docs]</a>
+    <span class="k">def</span> <span class="nf">matching_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the belief propagation algorithm.</span>
 
-<span class="sd">        :return:  A generator the yields the iteration number until the algorithm either converges or reaches</span>
-<span class="sd">        `self.maxiter`</span>
+<span class="sd">        :returns: A generator the yields the iteration number until the algorithm</span>
+<span class="sd">                  either converges or reaches ``self.maxiter``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
@@ -453,6 +429,7 @@
         <span class="k">yield from</span> <span class="n">matcher</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tradeoff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_mapping</span><span class="p">(</span><span class="n">matcher</span><span class="o">.</span><span class="n">mapping</span><span class="p">,</span> <span class="n">matcher</span><span class="o">.</span><span class="n">confidence_score</span><span class="p">)</span></div>
+</div>
 
 
 
@@ -467,6 +444,9 @@
 <span class="sd">            A wrapper for networkx.Graph. It has no distinction between node labels and nodes</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">graph</span>
+
+        <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
@@ -536,6 +516,9 @@
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">graph</span>
 
+        <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="p">)</span>
+
         <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Return an iterator over the items. Each item is {node_label: node}</span>
@@ -599,7 +582,12 @@
     <span class="n">DTYPE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="n">Distance</span> <span class="o">=</span> <span class="n">Distance</span><span class="o">.</span><span class="n">canberra</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">distance</span><span class="p">:</span> <span class="n">Distance</span> <span class="o">=</span> <span class="n">Distance</span><span class="o">.</span><span class="n">haussmann</span><span class="p">,</span>
+        <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        QBinDiff class that provides a high-level interface to trigger a diff between two binaries.</span>
@@ -607,10 +595,20 @@
 <span class="sd">        :param primary: The primary binary of type py:class:`qbindiff.loader.Program`</span>
 <span class="sd">        :param secondary: The secondary binary of type py:class:`qbindiff.loader.Program`</span>
 <span class="sd">        :param distance: the distance function used when comparing the feature vector</span>
-<span class="sd">            extracted from the graphs. Default is a py:class:`qbindiff.types.Distance` initialized to &#39;canberra&#39;.</span>
+<span class="sd">            extracted from the graphs.</span>
+<span class="sd">        :param normalize: Normalize the two programs Call Graphs with a series of heuristics. Look at</span>
+<span class="sd">            :py:method:`normalize` for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">QBinDiff</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>  <span class="c1"># Optional normalization step</span>
+            <span class="n">primary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span>
+            <span class="n">secondary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">secondary</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Type casting. Does nothing at runtime.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Program</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">)</span>  <span class="c1"># type: Program</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Program</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">)</span>  <span class="c1"># type: Program</span>
 
         <span class="c1"># Aliases</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_f2i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_n2i</span>
@@ -618,11 +616,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_f2i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_n2i</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_i2f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_i2n</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_post_passes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="c1"># Register the import function mapping and feature extraction pass</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_feature_pass</span> <span class="o">=</span> <span class="n">FeaturePass</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_postpass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feature_pass</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_postpass</span><span class="p">(</span><span class="n">ZeroPass</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_prepass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">match_import_functions</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QBinDiff.register_postpass">
+<a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.register_postpass">[docs]</a>
+    <span class="k">def</span> <span class="nf">register_postpass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pass_func</span><span class="p">:</span> <span class="n">GenericPostPass</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a new post-pass that will operate on the similarity matrix.</span>
+<span class="sd">        The passes will be called in the same order as they are registered and each one</span>
+<span class="sd">        of them will operate on the output of the previous one.</span>
+
+<span class="sd">        :param pass_func: Pass method to apply on the similarity matrix. Example: a Pass that enforces</span>
+<span class="sd">                          the matches considering certain features extracted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_post_passes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">))</span></div>
+
 
 <div class="viewcode-block" id="QBinDiff.register_feature_extractor">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.register_feature_extractor">[docs]</a>
@@ -647,6 +661,42 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_feature_pass</span><span class="o">.</span><span class="n">register_extractor</span><span class="p">(</span><span class="n">extractor</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">)</span></div>
 
 
+    <span class="k">def</span> <span class="nf">_run_passes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run all the pre passes and post passes that have been previously registered.</span>
+<span class="sd">        It returns an iterator that can be used for tracking the progress.</span>
+
+<span class="sd">        :returns: An iterator of values in the range [0, 1000] used for tracking progress.</span>
+<span class="sd">                  It might contain more than 1000 elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Dirty hack to force the progress bar to display only the feature pass iterator</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_run_passes</span><span class="p">():</span>
+            <span class="k">pass</span>
+
+        <span class="c1"># Call feature pass</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feature_pass</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_n2i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_n2i</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">pass_func</span><span class="p">,</span> <span class="n">extra_args</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_post_passes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">wrapper_iter</span><span class="p">(</span>
+                <span class="n">pass_func</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sim_matrix</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">primary_n2i</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">secondary_n2i</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_feature_pass</span><span class="o">.</span><span class="n">primary_features</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_feature_pass</span><span class="o">.</span><span class="n">secondary_features</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">extra_args</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># Dirty hack to still provide a last step</span>
+        <span class="k">yield</span> <span class="mi">1000</span>
+
 <div class="viewcode-block" id="QBinDiff.match_import_functions">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.match_import_functions">[docs]</a>
     <span class="k">def</span> <span class="nf">match_import_functions</span><span class="p">(</span>
@@ -654,8 +704,8 @@
         <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
         <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
         <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
-        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
+        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Anchoring phase. This phase considers import functions as anchors to the matching and set these functions</span>
@@ -667,7 +717,6 @@
 <span class="sd">        :param secondary: The secondary binary of type py:class:`qbindiff.loader.Program`</span>
 <span class="sd">        :param primary_mapping: Mapping between the primary function addresses and their corresponding index</span>
 <span class="sd">        :param secondary_mapping: Mapping between the secondary function addresses and their corresponding index</span>
-<span class="sd">        :returns: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">primary_import</span> <span class="o">=</span> <span class="p">{}</span>
@@ -691,8 +740,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Normalize the input Program. In some cases, this can create an exception, caused by a thunk function.</span>
 
-<span class="sd">        :param program : the program of type py:class:`qbindiff.loader.Program` to normalize.</span>
-<span class="sd">        :return program : the normalized program</span>
+<span class="sd">        :param program: the program of type py:class:`qbindiff.loader.Program` to normalize.</span>
+<span class="sd">        :returns: the normalized program</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">program</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
@@ -711,14 +760,14 @@
 
 <div class="viewcode-block" id="QBinDiff.get_similarities">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.get_similarities">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_similarities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">secondary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">get_similarities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">secondary_idx</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ArrayLike1D</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the similarity scores between the nodes specified as parameter.</span>
 <span class="sd">        Uses MinHash fuzzy hash at basic block level to give a similarity score.</span>
 
 <span class="sd">        :param primary_idx: List of node indexes inside the primary</span>
 <span class="sd">        :param secondary_idx: List of node indexes inside the secondary</span>
-<span class="sd">        :return: The list of corresponding similarities between the given nodes</span>
+<span class="sd">        :return: A sequence with the corresponding similarities of the given nodes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Utils functions</span>
@@ -747,8 +796,10 @@
 <span class="sd">        Exports diffing results inside the BinDiff format</span>
 
 <span class="sd">        :param filename: Name of the output diffing file</span>
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No mapping yet. Compute the mapping first.&quot;</span><span class="p">)</span>
         <span class="n">export_to_bindiff</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="p">)</span></div>
 </div>
 
@@ -812,7 +863,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

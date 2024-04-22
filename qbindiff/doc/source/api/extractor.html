@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -170,8 +170,13 @@ this function to register a value with its own name.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.FeatureCollector.feature_vector">
-<span class="sig-name descname"><span class="pre">feature_vector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/features/extractor.html#FeatureCollector.feature_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.features.extractor.FeatureCollector.feature_vector" title="Link to this definition">¶</a></dt>
-<dd><p>Show the feature vector associated to the node</p>
+<span class="sig-name descname"><span class="pre">feature_vector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/features/extractor.html#FeatureCollector.feature_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.features.extractor.FeatureCollector.feature_vector" title="Link to this definition">¶</a></dt>
+<dd><p>Show the feature vector in a dictionary fashion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The feature vector in a dictionary fashion {key : FeatureValue}</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -188,8 +193,23 @@ If a Feature directly maps to a float value, the set will be empty.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.FeatureCollector.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/features/extractor.html#FeatureCollector.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.features.extractor.FeatureCollector.get" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the FeatureValue associated to a feature key, None if the feature
+key doesn’t exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> – Name of the feature to retrieve</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The associated FeatureValue or None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.FeatureCollector.to_sparse_vector">
-<span class="sig-name descname"><span class="pre">to_sparse_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_key_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_array.html#scipy.sparse.csr_array" title="(in SciPy v1.11.3)"><span class="pre">csr_array</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/features/extractor.html#FeatureCollector.to_sparse_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.features.extractor.FeatureCollector.to_sparse_vector" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">to_sparse_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_key_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_array.html#scipy.sparse.csr_array" title="(in SciPy v1.13.0)"><span class="pre">csr_array</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/features/extractor.html#FeatureCollector.to_sparse_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.features.extractor.FeatureCollector.to_sparse_vector" title="Link to this definition">¶</a></dt>
 <dd><p>Transform the collection to a sparse feature vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -200,7 +220,7 @@ keys are considered when building the vector.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p>The sparse feature vector for this collection of features</p>
 </dd>
 </dl>
 </dd></dl>
@@ -221,6 +241,12 @@ define a unique key and a function call that is to be called by the visitor.</p>
 <dd class="field-odd"><p><strong>weight</strong> – weight to apply to this feature</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.FeatureExtractor.help_msg">
+<span class="sig-name descname"><span class="pre">help_msg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.FeatureExtractor.help_msg" title="Link to this definition">¶</a></dt>
+<dd><p>CLI help message</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.FeatureExtractor.key">
 <span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.FeatureExtractor.key" title="Link to this definition">¶</a></dt>
@@ -249,6 +275,12 @@ to be implemented by all its inheriting classes.</p>
 <dd class="field-odd"><p><strong>weight</strong> – weight to apply to this feature</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.FunctionFeatureExtractor.help_msg">
+<span class="sig-name descname"><span class="pre">help_msg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Function</span> <span class="pre">extractor</span> <span class="pre">feature.</span> <span class="pre">It</span> <span class="pre">inherits</span> <span class="pre">FeatureExtractor\n</span>&#160;&#160;&#160; <span class="pre">and</span> <span class="pre">defines</span> <span class="pre">the</span> <span class="pre">method</span> <span class="pre">:py:meth:`visit_function`</span> <span class="pre">that</span> <span class="pre">has\n</span>&#160;&#160;&#160; <span class="pre">to</span> <span class="pre">be</span> <span class="pre">implemented</span> <span class="pre">by</span> <span class="pre">all</span> <span class="pre">its</span> <span class="pre">inheriting</span> <span class="pre">classes.'</span></em><a class="headerlink" href="#qbindiff.features.extractor.FunctionFeatureExtractor.help_msg" title="Link to this definition">¶</a></dt>
+<dd><p>CLI help message</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.FunctionFeatureExtractor.key">
 <span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.FunctionFeatureExtractor.key" title="Link to this definition">¶</a></dt>
@@ -295,6 +327,12 @@ to be implemented by all its inheriting classes.</p>
 </dd>
 </dl>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.BasicBlockFeatureExtractor.help_msg">
+<span class="sig-name descname"><span class="pre">help_msg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Basic</span> <span class="pre">Block</span> <span class="pre">extractor</span> <span class="pre">feature.</span> <span class="pre">It</span> <span class="pre">inherits</span> <span class="pre">from</span> <span class="pre">FeatureExtractor\n</span>&#160;&#160;&#160; <span class="pre">and</span> <span class="pre">defines</span> <span class="pre">the</span> <span class="pre">method</span> <span class="pre">:py:meth:`visit_basic_block`</span> <span class="pre">that</span> <span class="pre">has\n</span>&#160;&#160;&#160; <span class="pre">to</span> <span class="pre">be</span> <span class="pre">implemented</span> <span class="pre">by</span> <span class="pre">all</span> <span class="pre">its</span> <span class="pre">inheriting</span> <span class="pre">classes.'</span></em><a class="headerlink" href="#qbindiff.features.extractor.BasicBlockFeatureExtractor.help_msg" title="Link to this definition">¶</a></dt>
+<dd><p>CLI help message</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.BasicBlockFeatureExtractor.key">
 <span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.BasicBlockFeatureExtractor.key" title="Link to this definition">¶</a></dt>
 <dd><p>feature name (short)</p>
@@ -340,6 +378,12 @@ be implemented by all its inheriting classes.</p>
 </dd>
 </dl>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.InstructionFeatureExtractor.help_msg">
+<span class="sig-name descname"><span class="pre">help_msg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Instruction</span> <span class="pre">extractor</span> <span class="pre">feature.</span> <span class="pre">It</span> <span class="pre">inherits</span> <span class="pre">from</span> <span class="pre">FeatureExtractor\n</span>&#160;&#160;&#160; <span class="pre">and</span> <span class="pre">defines</span> <span class="pre">the</span> <span class="pre">method</span> <span class="pre">:py:meth:`visit_instruction`</span> <span class="pre">that</span> <span class="pre">has</span> <span class="pre">to\n</span>&#160;&#160;&#160; <span class="pre">be</span> <span class="pre">implemented</span> <span class="pre">by</span> <span class="pre">all</span> <span class="pre">its</span> <span class="pre">inheriting</span> <span class="pre">classes.'</span></em><a class="headerlink" href="#qbindiff.features.extractor.InstructionFeatureExtractor.help_msg" title="Link to this definition">¶</a></dt>
+<dd><p>CLI help message</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.InstructionFeatureExtractor.key">
 <span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.InstructionFeatureExtractor.key" title="Link to this definition">¶</a></dt>
 <dd><p>feature name (short)</p>
@@ -384,6 +428,12 @@ implemented by all its inheriting classes.</p>
 <dd class="field-odd"><p><strong>weight</strong> – weight to apply to this feature</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.OperandFeatureExtractor.help_msg">
+<span class="sig-name descname"><span class="pre">help_msg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Operand</span> <span class="pre">extractor</span> <span class="pre">feature.</span> <span class="pre">It</span> <span class="pre">inherits</span> <span class="pre">from</span> <span class="pre">FeatureExtractor\n</span>&#160;&#160;&#160; <span class="pre">and</span> <span class="pre">defines</span> <span class="pre">the</span> <span class="pre">method</span> <span class="pre">:py:meth:`visit_operand`</span> <span class="pre">that</span> <span class="pre">has</span> <span class="pre">to</span> <span class="pre">be\n</span>&#160;&#160;&#160; <span class="pre">implemented</span> <span class="pre">by</span> <span class="pre">all</span> <span class="pre">its</span> <span class="pre">inheriting</span> <span class="pre">classes.'</span></em><a class="headerlink" href="#qbindiff.features.extractor.OperandFeatureExtractor.help_msg" title="Link to this definition">¶</a></dt>
+<dd><p>CLI help message</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.OperandFeatureExtractor.key">
 <span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.OperandFeatureExtractor.key" title="Link to this definition">¶</a></dt>
@@ -517,7 +567,7 @@ Classes inheriting have to implement this method.</p>
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../../../../_sources/qbindiff/doc/source/api/extractor.rst.txt" rel="nofollow">Show Source</a>.
     </footer>

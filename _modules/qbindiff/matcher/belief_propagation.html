@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -131,7 +131,7 @@
 <span class="sd">    Computes the optimal solution to the **Maxmimum Weight Matching problem**.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SparseMatrix</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">:</span> <span class="n">Positive</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SparseMatrix</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">:</span> <span class="n">Positive</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param sim_matrix: similarity matrix (sparse numpy matrix)</span>
 <span class="sd">        :param epsilon: perturbation for algorithm convergence</span>
@@ -144,7 +144,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1">#: Scores list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_avg_score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1">#: Current maximum average score</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">best_mapping</span><span class="p">:</span> <span class="n">RawMapping</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: Current best mapping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_mapping</span><span class="p">:</span> <span class="n">RawMapping</span> <span class="o">=</span> <span class="p">([],</span> <span class="p">[])</span>  <span class="c1">#: Current best mapping</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_marginals</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: Current associated marginals as a SparseMatrix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dtype</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)</span>  <span class="c1">#: Current epsilon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_epsilonref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -389,8 +389,8 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SparseMatrix</span><span class="p">,</span>
         <span class="n">squares</span><span class="p">:</span> <span class="n">SparseMatrix</span><span class="p">,</span>
-        <span class="n">tradeoff</span><span class="p">:</span> <span class="n">Ratio</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">epsilon</span><span class="p">:</span> <span class="n">Positive</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">tradeoff</span><span class="p">:</span> <span class="n">Ratio</span><span class="p">,</span>
+        <span class="n">epsilon</span><span class="p">:</span> <span class="n">Positive</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param sim_matrix: similarity matrix (sparse numpy matrix)</span>
@@ -578,7 +578,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

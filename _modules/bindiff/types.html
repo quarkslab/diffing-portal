@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -96,9 +96,6 @@
             
 <h1>Source code for bindiff.types</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
-
-<span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span><span class="p">,</span> <span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="n">InstructionBinExport</span>
 
 
 <div class="viewcode-block" id="BindiffNotFound">
@@ -108,6 +105,7 @@
 <span class="sd">    Exception raised if Bindiff binary cannot be found</span>
 <span class="sd">    when trying to diff two binaries.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
 
 
@@ -171,141 +169,6 @@
     <span class="n">call_reference_matching</span> <span class="o">=</span> <span class="mi">18</span>
     <span class="n">manual</span> <span class="o">=</span> <span class="mi">19</span></div>
 
-
-
-<div class="viewcode-block" id="AlgorithmMixin">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.AlgorithmMixin">[docs]</a>
-<span class="k">class</span> <span class="nc">AlgorithmMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Mixin class representing the matching algorithm as given by bindiff</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">_algorithm</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">BasicBlockAlgorithm</span><span class="p">,</span> <span class="n">FunctionAlgorithm</span><span class="p">]]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_algorithm</span>
-
-    <span class="nd">@algorithm</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BasicBlockAlgorithm</span><span class="p">,</span> <span class="n">FunctionAlgorithm</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_algorithm</span> <span class="o">=</span> <span class="n">value</span></div>
-
-
-
-<div class="viewcode-block" id="SimilarityMixin">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.SimilarityMixin">[docs]</a>
-<span class="k">class</span> <span class="nc">SimilarityMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Mixing class to represent a similarity between to entities, with confidence level.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">_similarity</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_confidence</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_similarity</span>
-
-    <span class="nd">@similarity</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_similarity</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_confidence</span>
-
-    <span class="nd">@confidence</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_confidence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
-
-
-
-<div class="viewcode-block" id="MatchMixin">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.MatchMixin">[docs]</a>
-<span class="k">class</span> <span class="nc">MatchMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Mixin class to represent a match between two object.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">_match</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">object</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_match</span>
-
-    <span class="nd">@match</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_match</span> <span class="o">=</span> <span class="n">value</span>
-
-<div class="viewcode-block" id="MatchMixin.is_matched">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.MatchMixin.is_matched">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
-</div>
-
-
-
-<div class="viewcode-block" id="DictMatchMixin">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.DictMatchMixin">[docs]</a>
-<span class="k">class</span> <span class="nc">DictMatchMixin</span><span class="p">(</span><span class="n">MatchMixin</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extension of MatchMixin applied on dict object to compute</span>
-<span class="sd">    the number of matched / unmatched object within the dict.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">nb_match</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_matched</span><span class="p">())</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">nb_unmatch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">is_matched</span><span class="p">())</span></div>
-
-
-
-<div class="viewcode-block" id="ProgramBinDiff">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.ProgramBinDiff">[docs]</a>
-<span class="k">class</span> <span class="nc">ProgramBinDiff</span><span class="p">(</span><span class="n">DictMatchMixin</span><span class="p">,</span> <span class="n">SimilarityMixin</span><span class="p">,</span> <span class="n">ProgramBinExport</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Program class to represent a diffed binary. Basically enrich</span>
-<span class="sd">    a ProgramBinExport class with match, similarity, confidence</span>
-<span class="sd">    attributes and the associated methods.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
-
-
-
-<div class="viewcode-block" id="FunctionBinDiff">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.FunctionBinDiff">[docs]</a>
-<span class="k">class</span> <span class="nc">FunctionBinDiff</span><span class="p">(</span><span class="n">DictMatchMixin</span><span class="p">,</span> <span class="n">AlgorithmMixin</span><span class="p">,</span> <span class="n">SimilarityMixin</span><span class="p">,</span> <span class="n">FunctionBinExport</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function class to represent a diffed function. Enrich FunctionBinExport</span>
-<span class="sd">    with math, similarity, confidence and algorithm attributes.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
-
-
-
-<div class="viewcode-block" id="BasicBlockBinDiff">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.BasicBlockBinDiff">[docs]</a>
-<span class="k">class</span> <span class="nc">BasicBlockBinDiff</span><span class="p">(</span><span class="n">DictMatchMixin</span><span class="p">,</span> <span class="n">AlgorithmMixin</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Diffed basic block. Enrich BasicBlockBinExport with the match and</span>
-<span class="sd">    algorithm attributes (and theirs associated methods).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
-
-
-
-<div class="viewcode-block" id="InstructionBinDiff">
-<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.InstructionBinDiff">[docs]</a>
-<span class="k">class</span> <span class="nc">InstructionBinDiff</span><span class="p">(</span><span class="n">MatchMixin</span><span class="p">,</span> <span class="n">InstructionBinExport</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Diff instruction. Simply add the match attribute to the</span>
-<span class="sd">    InstructionBinExport class.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
-
 </pre></div>
             <div class="clearer"></div>
           </div>
@@ -366,7 +229,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

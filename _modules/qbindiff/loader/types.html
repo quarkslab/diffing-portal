@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -130,11 +130,10 @@
 <span class="sd">    Enum of different loaders (supported or not)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">unknown</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># doc: unknown loader</span>
-    <span class="n">binexport</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># doc: binexport loader</span>
-    <span class="n">diaphora</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># doc: diaphora loader (not supported)</span>
-    <span class="n">ida</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: IDA loader</span>
-    <span class="n">quokka</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># doc: Quokka loader</span></div>
+    <span class="n">binexport</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># doc: binexport loader</span>
+    <span class="n">diaphora</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># doc: diaphora loader (not supported)</span>
+    <span class="n">ida</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># doc: IDA loader</span>
+    <span class="n">quokka</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: Quokka loader</span></div>
 
 
 
@@ -149,13 +148,15 @@
     <span class="n">unknown</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># doc: type is unknown</span>
     <span class="n">register</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># doc: register (GPR)</span>
     <span class="n">memory</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># doc: Direct memory reference</span>
-    <span class="n">phrase</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: Memory access with base+reg  or  base + offset * factor</span>
-    <span class="n">displacement</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># doc: Memory access with base+offset</span>
-    <span class="n">immediate</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># doc: Immediate value</span>
-    <span class="n">far</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># doc: Asbolute address</span>
-    <span class="n">near</span> <span class="o">=</span> <span class="mi">7</span>  <span class="c1"># doc: Relative address</span></div>
+    <span class="n">immediate</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: Immediate value</span>
+    <span class="n">float_point</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># doc: Floating point operand</span>
+    <span class="n">coprocessor</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># doc: Coprocessor operand</span>
 
-    <span class="c1"># TODO: To improve with architectures type specific (reglist,</span>
+    <span class="c1"># Below are arch specific</span>
+    <span class="n">arm_setend</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># doc: operand for SETEND instruction (&#39;BE&#39;/&#39;LE&#39;)</span>
+    <span class="n">arm_sme</span> <span class="o">=</span> <span class="mi">7</span>  <span class="c1"># doc: operand for SME instruction (matrix operation)</span>
+    <span class="n">arm_memory_management</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># doc: Memory management operand like prefetch, SYS and barrier</span></div>
+
 
 
 <div class="viewcode-block" id="FunctionType">
@@ -287,7 +288,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

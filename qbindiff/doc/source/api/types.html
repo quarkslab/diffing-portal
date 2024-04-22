@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -142,10 +142,11 @@ used by qbindiff.</p>
 <dd><p>Boolean nxn-Dimensional array. It’s the adjacency matrix representation of the graph.</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qbindiff.types.Anchors">
-<span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">Anchors</span></span><a class="headerlink" href="#qbindiff.types.Anchors" title="Link to this definition">¶</a></dt>
-<dd><p>Pair of lists of user defined index correspondences. Default None.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="qbindiff.types.ArrayLike1D">
+<span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">ArrayLike1D</span></span><a class="headerlink" href="#qbindiff.types.ArrayLike1D" title="Link to this definition">¶</a></dt>
+<dd><p>1 Dimensional arrays, either as sequences in python or as ndarrays in numpy.</p>
+<p>alias of <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code></a>] | <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Literal</span></code></a>[‘N’], <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code></a>]]</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -173,27 +174,27 @@ used by qbindiff.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="qbindiff.types.GenericPass">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">GenericPass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/types.html#GenericPass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.types.GenericPass" title="Link to this definition">¶</a></dt>
-<dd><p>Callback function type for Passes</p>
+<dt class="sig sig-object py" id="qbindiff.types.GenericPostPass">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">GenericPostPass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/types.html#GenericPostPass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.types.GenericPostPass" title="Link to this definition">¶</a></dt>
+<dd><p>Callback function type for Post Passes</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qbindiff.types.GenericPrePass">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">GenericPrePass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/types.html#GenericPrePass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.types.GenericPrePass" title="Link to this definition">¶</a></dt>
+<dd><p>Callback function type for Pre Passes</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.types.Graph">
 <span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">Graph</span></span><a class="headerlink" href="#qbindiff.types.Graph" title="Link to this definition">¶</a></dt>
-<dd><p>A generic Graph, iterable over the nodes</p>
+<dd><p>generic Graph, iterable over the nodes</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.types.Idx">
 <span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">Idx</span></span><a class="headerlink" href="#qbindiff.types.Idx" title="Link to this definition">¶</a></dt>
 <dd><p>An integer representing an index in a matrix.</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="qbindiff.types.Item">
-<span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">Item</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeAlias" title="(in Python v3.12)"><span class="pre">TypeAlias</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">typing.Any</span></em><a class="headerlink" href="#qbindiff.types.Item" title="Link to this definition">¶</a></dt>
-<dd><p>Item, entity being matched. The only constraint is to be hashable</p>
 </dd></dl>
 
 <dl class="py class">
@@ -236,6 +237,18 @@ used by qbindiff.</p>
 <dt class="sig sig-object py" id="qbindiff.types.Matrix">
 <span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><a class="headerlink" href="#qbindiff.types.Matrix" title="Link to this definition">¶</a></dt>
 <dd><p>Arbitrary nxd-Dimensional array. Used to represent a matrix.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.types.Node">
+<span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><a class="headerlink" href="#qbindiff.types.Node" title="Link to this definition">¶</a></dt>
+<dd><p>Generic node. This is the entity that will be matched</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qbindiff.types.NodeLabel">
+<span class="sig-prename descclassname"><span class="pre">qbindiff.types.</span></span><span class="sig-name descname"><span class="pre">NodeLabel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeAlias" title="(in Python v3.12)"><span class="pre">TypeAlias</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">typing.Any</span></em><a class="headerlink" href="#qbindiff.types.NodeLabel" title="Link to this definition">¶</a></dt>
+<dd><p>The node label of a generic graph</p>
 </dd></dl>
 
 <dl class="py data">
@@ -315,9 +328,9 @@ used by qbindiff.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="qbindiff.types.Distance.jaccard_strong">
-<span class="sig-name descname"><span class="pre">jaccard_strong</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Distance.jaccard_strong:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#qbindiff.types.Distance.jaccard_strong" title="Link to this definition">¶</a></dt>
-<dd><p>custom distance</p>
+<dt class="sig sig-object py" id="qbindiff.types.Distance.haussmann">
+<span class="sig-name descname"><span class="pre">haussmann</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Distance.haussmann:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#qbindiff.types.Distance.haussmann" title="Link to this definition">¶</a></dt>
+<dd><p>haussmann distance</p>
 </dd></dl>
 
 </dd></dl>
@@ -359,17 +372,19 @@ used by qbindiff.</p>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Types</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Addr"><code class="docutils literal notranslate"><span class="pre">Addr</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.AdjacencyMatrix"><code class="docutils literal notranslate"><span class="pre">AdjacencyMatrix</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Anchors"><code class="docutils literal notranslate"><span class="pre">Anchors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.ArrayLike1D"><code class="docutils literal notranslate"><span class="pre">ArrayLike1D</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Dtype"><code class="docutils literal notranslate"><span class="pre">Dtype</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.ExtendedMapping"><code class="docutils literal notranslate"><span class="pre">ExtendedMapping</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.FeatureValue"><code class="docutils literal notranslate"><span class="pre">FeatureValue</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.FeatureVectors"><code class="docutils literal notranslate"><span class="pre">FeatureVectors</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.GenericPass"><code class="docutils literal notranslate"><span class="pre">GenericPass</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.GenericPostPass"><code class="docutils literal notranslate"><span class="pre">GenericPostPass</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.GenericPrePass"><code class="docutils literal notranslate"><span class="pre">GenericPrePass</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Graph"><code class="docutils literal notranslate"><span class="pre">Graph</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Idx"><code class="docutils literal notranslate"><span class="pre">Idx</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Item"><code class="docutils literal notranslate"><span class="pre">Item</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Match"><code class="docutils literal notranslate"><span class="pre">Match</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Matrix"><code class="docutils literal notranslate"><span class="pre">Matrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.NodeLabel"><code class="docutils literal notranslate"><span class="pre">NodeLabel</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.PathLike"><code class="docutils literal notranslate"><span class="pre">PathLike</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Positive"><code class="docutils literal notranslate"><span class="pre">Positive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#qbindiff.types.Ratio"><code class="docutils literal notranslate"><span class="pre">Ratio</span></code></a></li>
@@ -443,7 +458,7 @@ used by qbindiff.</p>
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../../../../_sources/qbindiff/doc/source/api/types.rst.txt" rel="nofollow">Show Source</a>.
     </footer>

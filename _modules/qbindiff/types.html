@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -117,19 +117,21 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span><span class="p">,</span> <span class="n">csr_array</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span><span class="p">,</span> <span class="n">csr_array</span>  <span class="c1"># type: ignore[import-untyped]</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">enum_tools.documentation</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.abstract</span> <span class="kn">import</span> <span class="n">GenericGraph</span>
+<span class="kn">from</span> <span class="nn">qbindiff.abstract</span> <span class="kn">import</span> <span class="n">GenericGraph</span><span class="p">,</span> <span class="n">GenericNode</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span>
     <span class="kn">from</span> <span class="nn">qbindiff</span> <span class="kn">import</span> <span class="n">Program</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">FeatureCollector</span>
 
 <span class="n">FeatureValue</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -156,15 +158,7 @@
 <span class="sd">An integer representing an address within a program</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">Item</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Any</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Item, entity being matched. The only constraint is to be hashable</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="n">Anchors</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Item</span><span class="p">]]</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Pair of lists of user defined index correspondences. Default None.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">NodeLabel</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1">#: The node label of a generic graph</span>
 
 <span class="n">RawMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Idx</span><span class="p">]]</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -176,15 +170,15 @@
 <span class="sd">Match represent the matching between two functions and can hold the similarity between the two</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-
-<span class="n">ExtendedMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Item</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">An extended version of RawMapping with two more lists recording pairing similarity and induced number of squares.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
 <span class="n">Dtype</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Numpy data type</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Numpy typing system is still very incomplete</span>
+<span class="n">ArrayLike1D</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">1 Dimensional arrays, either as sequences in python or as ndarrays in numpy.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="n">Vector</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
@@ -217,9 +211,13 @@
 <span class="sd">Float nxm-Dimensional array. A sparse version of the above SimMatrix</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">Graph</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">GenericGraph</span>
+<span class="n">Graph</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">GenericGraph</span>  <span class="c1">#: generic Graph, iterable over the nodes</span>
+
+<span class="n">Node</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">GenericNode</span>  <span class="c1">#: Generic node. This is the entity that will be matched</span>
+
+<span class="n">ExtendedMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">A generic Graph, iterable over the nodes</span>
+<span class="sd">An extended version of RawMapping with two more lists recording pairing similarity and induced number of squares.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="n">SparseVector</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">csr_array</span>
@@ -227,27 +225,69 @@
 <span class="sd">Float n-Dimensional sparse array.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">PathLike</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Path</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">PathLike</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span>  <span class="c1">#: Path</span>
 
 
-<div class="viewcode-block" id="GenericPass">
-<a class="viewcode-back" href="../../qbindiff/doc/source/api/types.html#qbindiff.GenericPass">[docs]</a>
-<span class="k">class</span> <span class="nc">GenericPass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function type for Passes&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="GenericPrePass">
+<a class="viewcode-back" href="../../qbindiff/doc/source/api/types.html#qbindiff.GenericPrePass">[docs]</a>
+<span class="k">class</span> <span class="nc">GenericPrePass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function type for Pre Passes&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
         <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
         <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
-        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
+        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the pass that operates on the similarity matrix inplace&quot;&quot;&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute the pass that operates on the similarity matrix inplace</span>
+
+<span class="sd">        :param sim_matrix: The similarity matrix of between the primary and secondary, of</span>
+<span class="sd">                            type py:class:`qbindiff.types:SimMatrix`</span>
+<span class="sd">        :param primary: The primary binary of type py:class:`qbindiff.loader.Program`</span>
+<span class="sd">        :param secondary: The secondary binary of type py:class:`qbindiff.loader.Program`</span>
+<span class="sd">        :param primary_mapping: Mapping between the primary function addresses and their corresponding index</span>
+<span class="sd">        :param secondary_mapping: Mapping between the secondary function addresses and their corresponding index</span>
+<span class="sd">        :returns: Either an iterator in the range [0, 1000] (used for tracking progress) or None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="GenericPostPass">
+<a class="viewcode-back" href="../../qbindiff/doc/source/api/types.html#qbindiff.GenericPostPass">[docs]</a>
+<span class="k">class</span> <span class="nc">GenericPostPass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function type for Post Passes&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
+        <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
+        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
+        <span class="n">primary_features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">],</span>
+        <span class="n">secondary_features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">],</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute the pass that operates on the similarity matrix inplace</span>
+
+<span class="sd">        :param sim_matrix: The similarity matrix of between the primary and secondary, of</span>
+<span class="sd">                            type py:class:`qbindiff.types:SimMatrix`</span>
+<span class="sd">        :param primary: The primary binary of type py:class:`qbindiff.loader.Program`</span>
+<span class="sd">        :param secondary: The secondary binary of type py:class:`qbindiff.loader.Program`</span>
+<span class="sd">        :param primary_mapping: Mapping between the primary function addresses and their corresponding index</span>
+<span class="sd">        :param secondary_mapping: Mapping between the secondary function addresses and their corresponding index</span>
+<span class="sd">        :param primary_features: Mapping between function addresses and the associated FeatureCollector</span>
+<span class="sd">                                    object for the primary program</span>
+<span class="sd">        :param secondary_features: Mapping between function addresses and the associated FeatureCollector</span>
+<span class="sd">                                    object for the secondary program</span>
+<span class="sd">        :returns: Either an iterator in the range [0, 1000] (used for tracking progress) or None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
 
@@ -263,7 +303,7 @@
     <span class="n">canberra</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># doc: canberra distance</span>
     <span class="n">euclidean</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># doc: euclidean distance</span>
     <span class="n">cosine</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># doc: cosine distance</span>
-    <span class="n">jaccard_strong</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: custom distance</span></div>
+    <span class="n">haussmann</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: haussmann distance</span></div>
 
 </pre></div>
             <div class="clearer"></div>
@@ -325,7 +365,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

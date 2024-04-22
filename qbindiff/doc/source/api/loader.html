@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -132,14 +132,14 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="qbindiff.Program">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.</span></span><span class="sig-name descname"><span class="pre">Program</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.loader.types.LoaderType" title="qbindiff.loader.types.LoaderType"><span class="pre">LoaderType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <a class="reference internal" href="differ.html#qbindiff.GenericGraph" title="qbindiff.abstract.GenericGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGraph</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableMapping" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableMapping</span></code></a>, <a class="reference internal" href="differ.html#qbindiff.GenericGraph" title="qbindiff.abstract.GenericGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGraph</span></code></a></p>
 <p>Program class that shadows the underlying program backend used.</p>
-<p>It inherits from dict which keys are function addresses and
-values are Function object.</p>
-<p>The node label is the function address, the node itself is the Function object</p>
+<p>It is a <code class="xref py py-class docutils literal notranslate"><span class="pre">MutableMapping</span></code>, where keys are function addresses and
+values are <a class="reference internal" href="#qbindiff.Function" title="qbindiff.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> objects.</p>
+<p>The node label is the function address, the node itself is the <a class="reference internal" href="#qbindiff.Function" title="qbindiff.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> object</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Program.callgraph">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callgraph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.2.1)"><span class="pre">DiGraph</span></a></em><a class="headerlink" href="#qbindiff.Program.callgraph" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callgraph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.3)"><span class="pre">networkx.DiGraph</span></a></em><a class="headerlink" href="#qbindiff.Program.callgraph" title="Link to this definition">¶</a></dt>
 <dd><p>The function callgraph with a Networkx DiGraph</p>
 </dd></dl>
 
@@ -148,16 +148,15 @@ values are Function object.</p>
 <span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Remove</span> <span class="pre">all</span> <span class="pre">items</span> <span class="pre">from</span> <span class="pre">D.</span></span></span><a class="headerlink" href="#qbindiff.Program.clear" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="qbindiff.Program.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">shallow</span> <span class="pre">copy</span> <span class="pre">of</span> <span class="pre">D</span></span></span><a class="headerlink" href="#qbindiff.Program.copy" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Program.edges">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.edges" title="Link to this definition">¶</a></dt>
-<dd><p>Iterator over the edges.
-An edge is a pair (addr_a, addr_b)</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">OutEdgeView</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Addr</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.edges" title="Link to this definition">¶</a></dt>
+<dd><p>Iterate over the edges. An edge is a pair (addr_a, addr_b)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">OutEdgeView</span></code> over the edges.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -168,7 +167,7 @@ An edge is a pair (addr_a, addr_b)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.follow_through">
-<span class="sig-name descname"><span class="pre">follow_through</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_remove</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.follow_through"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.follow_through" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">follow_through</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_remove</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Addr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.follow_through"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.follow_through" title="Link to this definition">¶</a></dt>
 <dd><p>Replace node <cite>to_remove</cite> with a follow-through edge from every parent of the
 node with the node <cite>target</cite>.</p>
 <p>Example : <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">parents</span> <span class="pre">}</span> <span class="pre">-&gt;</span> <span class="pre">(to_remove)</span> <span class="pre">-&gt;</span> <span class="pre">(target)</span></code></p>
@@ -188,20 +187,22 @@ node with the node <cite>target</cite>.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.from_backend">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_backend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="backends/abstract.html#qbindiff.loader.backend.AbstractProgramBackend" title="qbindiff.loader.backend.abstract.AbstractProgramBackend"><span class="pre">AbstractProgramBackend</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.from_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.from_backend" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_backend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="backends/abstract.html#qbindiff.loader.backend.AbstractProgramBackend" title="qbindiff.loader.backend.AbstractProgramBackend"><span class="pre">AbstractProgramBackend</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Program" title="qbindiff.Program"><span class="pre">Program</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.from_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.from_backend" title="Link to this definition">¶</a></dt>
 <dd><p>Load the Program from an instanciated program backend object</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.from_binexport">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_binexport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_cortexm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.from_binexport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.from_binexport" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_binexport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.from_binexport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.from_binexport" title="Link to this definition">¶</a></dt>
 <dd><p>Load the Program using the binexport backend</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file_path</strong> – File path to the binexport file</p></li>
-<li><p><strong>enable_cortexm</strong> – Whether to check for cortexm instructions while
-disassembling with capstone</p></li>
+<li><p><strong>arch</strong> – Architecture to pass to the capstone disassembler. This is
+useful when the binexport’ed architecture is not enough to
+correctly disassemble the binary (for example with arm
+thumb2 or some mips modes).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -239,16 +240,9 @@ disassembling with capstone</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qbindiff.Program.fromkeys">
-<span class="sig-name descname"><span class="pre">fromkeys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qbindiff.Program.fromkeys" title="Link to this definition">¶</a></dt>
-<dd><p>Create a new dictionary with keys from iterable and values set to value.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qbindiff.Program.get" title="Link to this definition">¶</a></dt>
-<dd><p>Return the value for key if key is in the dictionary, else default.</p>
-</dd></dl>
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">D[k]</span> <span class="pre">if</span> <span class="pre">k</span> <span class="pre">in</span> <span class="pre">D,</span> <span class="pre">else</span> <span class="pre">d.</span>&#160; <span class="pre">d</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">None.</span></span></span><a class="headerlink" href="#qbindiff.Program.get" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.get_function">
@@ -266,11 +260,11 @@ disassembling with capstone</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.get_node">
-<span class="sig-name descname"><span class="pre">get_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Function" title="qbindiff.loader.function.Function"><span class="pre">Function</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.get_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.get_node" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the node identified by the <cite>node_label</cite></p>
+<span class="sig-name descname"><span class="pre">get_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Addr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Function" title="qbindiff.Function"><span class="pre">Function</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.get_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.get_node" title="Link to this definition">¶</a></dt>
+<dd><p>Get the function identified by the address <code class="docutils literal notranslate"><span class="pre">node_label</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>node_label</strong> – the node_label or the address from which we want to recover the object</p>
+<dd class="field-odd"><p><strong>node_label</strong> – the address of the function that will be returned</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the function identified by its address</p>
@@ -280,11 +274,12 @@ disassembling with capstone</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.items">
-<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#qbindiff.Function" title="qbindiff.loader.function.Function"><span class="pre">Function</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.items" title="Link to this definition">¶</a></dt>
-<dd><p>Return an iterator over the items. Each item is {node_label: node}</p>
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#qbindiff.Function" title="qbindiff.Function"><span class="pre">Function</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.items" title="Link to this definition">¶</a></dt>
+<dd><p>Iterate over the items. Each item is {address: <a class="reference internal" href="#qbindiff.Function" title="qbindiff.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a>}</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>an iterator over the program elements. Each element is a tuple of shape (function_addr, function_obj)</p>
+<dd class="field-odd"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code> over the functions. Each element
+is a tuple (function_addr, function_obj)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -302,34 +297,41 @@ disassembling with capstone</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Program.node_labels">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">node_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.node_labels" title="Link to this definition">¶</a></dt>
-<dd><p>Iterator over the node labels</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">node_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.node_labels" title="Link to this definition">¶</a></dt>
+<dd><p>Iterate over the functions’ address</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code> over the functions’ address</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Program.nodes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nodes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.Function" title="qbindiff.loader.function.Function"><span class="pre">Function</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.nodes" title="Link to this definition">¶</a></dt>
-<dd><p>Iterator over the nodes</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nodes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.Function" title="qbindiff.Function"><span class="pre">Function</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.nodes" title="Link to this definition">¶</a></dt>
+<dd><p>Iterate over the functions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code> over the functions</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.pop">
 <span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#qbindiff.Program.pop" title="Link to this definition">¶</a></dt>
-<dd><p>If the key is not found, return the default if given; otherwise,
-raise a KeyError.</p>
+<dd><p>If key is not found, d is returned if given, otherwise KeyError is raised.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.popitem">
-<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qbindiff.Program.popitem" title="Link to this definition">¶</a></dt>
-<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
-<p>Pairs are returned in LIFO (last-in, first-out) order.
-Raises KeyError if the dict is empty.</p>
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">(k,</span> <span class="pre">v),</span> <span class="pre">remove</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">some</span> <span class="pre">(key,</span> <span class="pre">value)</span> <span class="pre">pair</span></span></span><a class="headerlink" href="#qbindiff.Program.popitem" title="Link to this definition">¶</a></dt>
+<dd><p>as a 2-tuple; but raise KeyError if D is empty.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.remove_function">
-<span class="sig-name descname"><span class="pre">remove_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_remove</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.remove_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.remove_function" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_remove</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Addr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.remove_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.remove_function" title="Link to this definition">¶</a></dt>
 <dd><p>Remove the node <code class="docutils literal notranslate"><span class="pre">to_remove</span></code> from the Call Graph of the program.</p>
 <p><strong>WARNING</strong>: The follow-through edges from the parents to the children are not
 added. Example :</p>
@@ -347,7 +349,7 @@ added. Example :</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.set_function_filter">
-<span class="sig-name descname"><span class="pre">set_function_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.set_function_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.set_function_filter" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_function_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/program.html#Program.set_function_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Program.set_function_filter" title="Link to this definition">¶</a></dt>
 <dd><p>Filter out some functions, to ignore them in later processing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -359,23 +361,21 @@ whether or not to keep it.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.setdefault">
-<span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qbindiff.Program.setdefault" title="Link to this definition">¶</a></dt>
-<dd><p>Insert key with a value of default if key is not in the dictionary.</p>
-<p>Return the value for key if key is in the dictionary, else default.</p>
-</dd></dl>
+<span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">D.get(k,d),</span> <span class="pre">also</span> <span class="pre">set</span> <span class="pre">D[k]=d</span> <span class="pre">if</span> <span class="pre">k</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">D</span></span></span><a class="headerlink" href="#qbindiff.Program.setdefault" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Program.structures">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">structures</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.Structure" title="qbindiff.loader.structure.Structure"><span class="pre">Structure</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.structures" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">structures</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.Structure" title="qbindiff.loader.Structure"><span class="pre">Structure</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Program.structures" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the list of structures defined in program</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Program.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">**F</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">dict/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span></span></span><a class="headerlink" href="#qbindiff.Program.update" title="Link to this definition">¶</a></dt>
-<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
-If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
-In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">**F</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">mapping/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span></span></span><a class="headerlink" href="#qbindiff.Program.update" title="Link to this definition">¶</a></dt>
+<dd><p>If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
+If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
+In either case, this is followed by: for k, v in F.items(): D[k] = v</p>
 </dd></dl>
 
 <dl class="py method">
@@ -390,10 +390,10 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <h2>Function<a class="headerlink" href="#function" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="qbindiff.Function">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.</span></span><span class="sig-name descname"><span class="pre">Function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend" title="qbindiff.loader.backend.abstract.AbstractFunctionBackend"><span class="pre">AbstractFunctionBackend</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/loader/function.html#Function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Function" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference internal" href="#qbindiff.loader.BasicBlock" title="qbindiff.loader.basic_block.BasicBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicBlock</span></code></a>]</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.</span></span><span class="sig-name descname"><span class="pre">Function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend" title="qbindiff.loader.backend.AbstractFunctionBackend"><span class="pre">AbstractFunctionBackend</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/loader/function.html#Function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Function" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>, <a class="reference internal" href="differ.html#qbindiff.GenericNode" title="qbindiff.abstract.GenericNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericNode</span></code></a></p>
 <p>Representation of a binary function.</p>
-<p>This class is a dict of basic block addreses to the basic block.</p>
+<p>This class is a non-mutable mapping between basic block’s address and the basic block itself.</p>
 <p>It lazily loads all the basic blocks when iterating through them or even accessing
 one of them and it unloads all of them after the iteration has ended.</p>
 <p>To keep a reference to the basic blocks the <strong>with</strong> statement can be used, for example:</p>
@@ -409,32 +409,32 @@ one of them and it unloads all of them after the iteration has ended.</p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Function.addr">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#qbindiff.Function.addr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Addr</span></em><a class="headerlink" href="#qbindiff.Function.addr" title="Link to this definition">¶</a></dt>
 <dd><p>Address of the function</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Function.children">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Function.children" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Function.children" title="Link to this definition">¶</a></dt>
 <dd><p>Set of functions called by this function in the call graph.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Function.edges">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Function.edges" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Addr</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Function.edges" title="Link to this definition">¶</a></dt>
 <dd><p>Edges of the function flowgraph as a list of tuples with basic block addresses</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Function.flowgraph">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">flowgraph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.2.1)"><span class="pre">DiGraph</span></a></em><a class="headerlink" href="#qbindiff.Function.flowgraph" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">flowgraph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.3)"><span class="pre">networkx.DiGraph</span></a></em><a class="headerlink" href="#qbindiff.Function.flowgraph" title="Link to this definition">¶</a></dt>
 <dd><p>The networkx DiGraph of the function. This is used to perform networkx
 based algorithm.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Function.from_backend">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_backend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend" title="qbindiff.loader.backend.abstract.AbstractFunctionBackend"><span class="pre">AbstractFunctionBackend</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Function" title="qbindiff.loader.function.Function"><span class="pre">Function</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/function.html#Function.from_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Function.from_backend" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_backend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend" title="qbindiff.loader.backend.AbstractFunctionBackend"><span class="pre">AbstractFunctionBackend</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qbindiff.Function" title="qbindiff.Function"><span class="pre">Function</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/function.html#Function.from_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Function.from_backend" title="Link to this definition">¶</a></dt>
 <dd><p>Load the Function from an instanciated function backend object</p>
 </dd></dl>
 
@@ -442,6 +442,17 @@ based algorithm.</p>
 <dt class="sig sig-object py" id="qbindiff.Function.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">D[k]</span> <span class="pre">if</span> <span class="pre">k</span> <span class="pre">in</span> <span class="pre">D,</span> <span class="pre">else</span> <span class="pre">d.</span>&#160; <span class="pre">d</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">None.</span></span></span><a class="headerlink" href="#qbindiff.Function.get" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qbindiff.Function.get_label">
+<span class="sig-name descname"><span class="pre">get_label</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Addr</span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/function.html#Function.get_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Function.get_label" title="Link to this definition">¶</a></dt>
+<dd><p>Get the address associated to this function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The address associated with the function</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Function.is_alone">
@@ -492,7 +503,7 @@ of an external library. It is not an imported function.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.Function.items">
-<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.12)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#qbindiff.loader.BasicBlock" title="qbindiff.loader.basic_block.BasicBlock"><span class="pre">BasicBlock</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/function.html#Function.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Function.items" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#qbindiff.loader.BasicBlock" title="qbindiff.loader.BasicBlock"><span class="pre">BasicBlock</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/function.html#Function.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.Function.items" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a generator of tuples with addresses of basic blocks and the corresponding basic blocks objects</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -514,7 +525,7 @@ of an external library. It is not an imported function.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.Function.parents">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Function.parents" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.Function.parents" title="Link to this definition">¶</a></dt>
 <dd><p>Set of function parents in the call graph.
 Thus functions that calls this function</p>
 </dd></dl>
@@ -671,7 +682,7 @@ This class is an Iterable of Instruction.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.Operand.type">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#qbindiff.loader.Operand.type" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#qbindiff.loader.types.OperandType" title="qbindiff.loader.types.OperandType"><span class="pre">OperandType</span></a></em><a class="headerlink" href="#qbindiff.loader.Operand.type" title="Link to this definition">¶</a></dt>
 <dd><p>The operand type as int as defined in the IDA API.
 Example : 1 corresponds to a register (ex: rax)</p>
 </dd></dl>
@@ -705,7 +716,7 @@ If not returns None.</p>
 <p>Class that represents a struct reference</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.loader.Structure.add_member">
-<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.loader.types.DataType" title="qbindiff.loader.types.DataType"><span class="pre">DataType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/structure.html#Structure.add_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.Structure.add_member" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.loader.types.DataType" title="qbindiff.loader.types.DataType"><span class="pre">DataType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/loader/structure.html#Structure.add_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.Structure.add_member" title="Link to this definition">¶</a></dt>
 <dd><p>Add a new member of the struct at offset <cite>offset</cite></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -744,7 +755,7 @@ If not returns None.</p>
 <h2>StructureMember<a class="headerlink" href="#structuremember" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="qbindiff.loader.StructureMember">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.loader.</span></span><span class="sig-name descname"><span class="pre">StructureMember</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.loader.types.DataType" title="qbindiff.loader.types.DataType"><span class="pre">DataType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.loader.Structure" title="qbindiff.loader.structure.Structure"><span class="pre">Structure</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/loader/structure.html#StructureMember"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.StructureMember" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qbindiff.loader.</span></span><span class="sig-name descname"><span class="pre">StructureMember</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.loader.types.DataType" title="qbindiff.loader.types.DataType"><span class="pre">DataType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.loader.Structure" title="qbindiff.loader.Structure"><span class="pre">Structure</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/qbindiff/loader/structure.html#StructureMember"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.loader.StructureMember" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class that represents a struct member reference</p>
 </dd></dl>
@@ -802,32 +813,26 @@ If not returns None.</p>
 </dl>
 <p>Valid values are as follows:</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="qbindiff.loader.types.LoaderType.unknown">
-<span class="sig-name descname"><span class="pre">unknown</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.unknown:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.unknown" title="Link to this definition">¶</a></dt>
-<dd><p>unknown loader</p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.loader.types.LoaderType.binexport">
-<span class="sig-name descname"><span class="pre">binexport</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.binexport:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.binexport" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">binexport</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.binexport:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.binexport" title="Link to this definition">¶</a></dt>
 <dd><p>binexport loader</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.loader.types.LoaderType.diaphora">
-<span class="sig-name descname"><span class="pre">diaphora</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.diaphora:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.diaphora" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">diaphora</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.diaphora:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.diaphora" title="Link to this definition">¶</a></dt>
 <dd><p>diaphora loader (not supported)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.loader.types.LoaderType.ida">
-<span class="sig-name descname"><span class="pre">ida</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.ida:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.ida" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ida</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.ida:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.ida" title="Link to this definition">¶</a></dt>
 <dd><p>IDA loader</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.loader.types.LoaderType.quokka">
-<span class="sig-name descname"><span class="pre">quokka</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.quokka:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.quokka" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">quokka</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LoaderType.quokka:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.LoaderType.quokka" title="Link to this definition">¶</a></dt>
 <dd><p>Quokka loader</p>
 </dd></dl>
 
@@ -865,33 +870,39 @@ If not returns None.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.phrase">
-<span class="sig-name descname"><span class="pre">phrase</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.phrase:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.phrase" title="Link to this definition">¶</a></dt>
-<dd><p>Memory access with base+reg  or  base + offset * factor</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.displacement">
-<span class="sig-name descname"><span class="pre">displacement</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.displacement:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.displacement" title="Link to this definition">¶</a></dt>
-<dd><p>Memory access with base+offset</p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.immediate">
-<span class="sig-name descname"><span class="pre">immediate</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.immediate:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.immediate" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">immediate</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.immediate:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.immediate" title="Link to this definition">¶</a></dt>
 <dd><p>Immediate value</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.far">
-<span class="sig-name descname"><span class="pre">far</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.far:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.far" title="Link to this definition">¶</a></dt>
-<dd><p>Asbolute address</p>
+<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.float_point">
+<span class="sig-name descname"><span class="pre">float_point</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.float_point:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.float_point" title="Link to this definition">¶</a></dt>
+<dd><p>Floating point operand</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.near">
-<span class="sig-name descname"><span class="pre">near</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.near:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.near" title="Link to this definition">¶</a></dt>
-<dd><p>Relative address</p>
+<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.coprocessor">
+<span class="sig-name descname"><span class="pre">coprocessor</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.coprocessor:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.coprocessor" title="Link to this definition">¶</a></dt>
+<dd><p>Coprocessor operand</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.arm_setend">
+<span class="sig-name descname"><span class="pre">arm_setend</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.arm_setend:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.arm_setend" title="Link to this definition">¶</a></dt>
+<dd><p>operand for SETEND instruction (‘BE’/’LE’)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.arm_sme">
+<span class="sig-name descname"><span class="pre">arm_sme</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.arm_sme:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.arm_sme" title="Link to this definition">¶</a></dt>
+<dd><p>operand for SME instruction (matrix operation)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.loader.types.OperandType.arm_memory_management">
+<span class="sig-name descname"><span class="pre">arm_memory_management</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;OperandType.arm_memory_management:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#qbindiff.loader.types.OperandType.arm_memory_management" title="Link to this definition">¶</a></dt>
+<dd><p>Memory management operand like prefetch, SYS and barrier</p>
 </dd></dl>
 
 </dd></dl>
@@ -1179,7 +1190,7 @@ If not returns None.</p>
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../../../../_sources/qbindiff/doc/source/api/loader.rst.txt" rel="nofollow">Show Source</a>.
     </footer>

@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -112,7 +112,18 @@
 <span class="sd">&quot;&quot;&quot;Simple mapping interface</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Match</span><span class="p">,</span> <span class="n">ExtendedMapping</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span> <span class="nn">csv</span><span class="o">,</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Match</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">ExtendedMapping</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">PathLike</span>
+
+    <span class="n">ExtraAttrsType</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Node</span><span class="p">],</span> <span class="n">Any</span><span class="p">]]</span>
 
 
 <div class="viewcode-block" id="Mapping">
@@ -120,11 +131,11 @@
 <span class="k">class</span> <span class="nc">Mapping</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class represents an interface to access the result of the matching analysis.</span>
-<span class="sd">    Its interface is independent of the underlying objects / items manipulated.</span>
+<span class="sd">    Its interface is independent of the underlying :py:obj:`Node` type manipulated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">ExtendedMapping</span><span class="p">,</span> <span class="n">unmatched_primary</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Item</span><span class="p">],</span> <span class="n">unmatched_secondary</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Item</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">ExtendedMapping</span><span class="p">,</span> <span class="n">unmatched_primary</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Node</span><span class="p">],</span> <span class="n">unmatched_secondary</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Node</span><span class="p">]</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">Match</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_primary_unmatched</span> <span class="o">=</span> <span class="n">unmatched_primary</span>
@@ -145,7 +156,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Normalized similarity of the diff (from 0 to 1)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nb_item_primary</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_item_secondary</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nb_nodes_primary</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_nodes_secondary</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">squares</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -158,23 +169,22 @@
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.add_match">[docs]</a>
     <span class="k">def</span> <span class="nf">add_match</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">item1</span><span class="p">:</span> <span class="n">Item</span><span class="p">,</span>
-        <span class="n">item2</span><span class="p">:</span> <span class="n">Item</span><span class="p">,</span>
-        <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">squares</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">node1</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span>
+        <span class="n">node2</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span>
+        <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">squares</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add the given match between the two items.</span>
+<span class="sd">        Add the given match between the two nodes.</span>
 
-<span class="sd">        :param item1: function address in primary</span>
-<span class="sd">        :param item2: function address in secondary</span>
+<span class="sd">        :param node1: node in primary</span>
+<span class="sd">        :param node2: node in secondary</span>
 <span class="sd">        :param similarity: similarity metric as float</span>
 <span class="sd">        :param confidence: confidence in the result (0..1)</span>
 <span class="sd">        :param squares: Number of squares being made</span>
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Match</span><span class="p">(</span><span class="n">item1</span><span class="p">,</span> <span class="n">item2</span><span class="p">,</span> <span class="n">similarity</span><span class="p">,</span> <span class="n">confidence</span><span class="p">,</span> <span class="n">squares</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Match</span><span class="p">(</span><span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">similarity</span><span class="p">,</span> <span class="n">confidence</span><span class="p">,</span> <span class="n">squares</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Mapping.remove_match">
@@ -190,30 +200,30 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">primary_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Item</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">primary_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set of items matched in primary</span>
+<span class="sd">        Set of nodes matched in primary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">primary</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="p">}</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">primary_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Item</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">primary_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set of items unmatched in primary.</span>
+<span class="sd">        Set of nodes unmatched in primary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_primary_unmatched</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">secondary_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Item</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">secondary_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set of items matched in the secondary object.</span>
+<span class="sd">        Set of nodes matched in the secondary object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">secondary</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="p">}</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">secondary_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Item</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">secondary_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set of items unmatched in the secondary object.</span>
+<span class="sd">        Set of nodes unmatched in the secondary object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_secondary_unmatched</span>
 
@@ -227,83 +237,153 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nb_unmatched_primary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Number of unmatched items in primary.</span>
+<span class="sd">        Number of unmatched nodes in primary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_primary_unmatched</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nb_unmatched_secondary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Number of unmatched items in secondary.</span>
+<span class="sd">        Number of unmatched nodes in secondary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_secondary_unmatched</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">nb_item_primary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">nb_nodes_primary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Total number of items in primary</span>
+<span class="sd">        Total number of nodes in primary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_match</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_unmatched_primary</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">nb_item_secondary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">nb_nodes_secondary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Total number of items in secondary.</span>
+<span class="sd">        Total number of nodes in secondary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_match</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_unmatched_secondary</span>
 
 <div class="viewcode-block" id="Mapping.match_primary">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.match_primary">[docs]</a>
-    <span class="k">def</span> <span class="nf">match_primary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Match</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">match_primary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Match</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the match associated with the given primary item (if any).</span>
+<span class="sd">        Returns the match associated with the given primary node (if any).</span>
 
-<span class="sd">        :param item: item to match in primary</span>
+<span class="sd">        :param node: node to match in primary</span>
 <span class="sd">        :return: optional match</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">primary</span> <span class="o">==</span> <span class="n">item</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">primary</span> <span class="o">==</span> <span class="n">node</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">m</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Mapping.match_secondary">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.match_secondary">[docs]</a>
-    <span class="k">def</span> <span class="nf">match_secondary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Match</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">match_secondary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Match</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the match associated with the given secondary item (if any).</span>
+<span class="sd">        Returns the match associated with the given secondary node (if any).</span>
 
-<span class="sd">        :param item: item to match in secondary</span>
+<span class="sd">        :param node: node to match in secondary</span>
 <span class="sd">        :return: optional match</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">secondary</span> <span class="o">==</span> <span class="n">item</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">secondary</span> <span class="o">==</span> <span class="n">node</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">m</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Mapping.is_match_primary">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.is_match_primary">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_match_primary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">is_match_primary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns true if the items in primary did match with an item in secondary.</span>
+<span class="sd">        Returns true if the node in primary has been matched with a node in secondary.</span>
 
-<span class="sd">        :param item: item to match in primary</span>
-<span class="sd">        :return: whether the item is matched in primary</span>
+<span class="sd">        :param node: ndoe to match in primary</span>
+<span class="sd">        :returns: whether the node has been matched</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_primary</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_primary</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Mapping.is_match_secondary">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.is_match_secondary">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_match_secondary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">is_match_secondary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns true if the item in secondary did match with an item in primary.</span>
+<span class="sd">        Returns true if the node in secondary has been matched with a node in primary.</span>
 
-<span class="sd">        :param item: item to match in secondary</span>
-<span class="sd">        :return: whether the item is matched in secondary</span>
+<span class="sd">        :param node: ndoe to match in secondary</span>
+<span class="sd">        :returns: whether the node has been matched</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_secondary</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_secondary</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Mapping.to_csv">
+<a class="viewcode-back" href="../../../qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.to_csv">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="o">*</span><span class="n">extra_attrs</span><span class="p">:</span> <span class="n">ExtraAttrsType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore[valid-type]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write the mapping into a csv file.</span>
+<span class="sd">        Additional attributes of the nodes to put in the csv can be optionally specified.</span>
+
+<span class="sd">        For example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            :linenos:</span>
+
+<span class="sd">            # Adding the attribute &quot;primary_addr&quot; and &quot;secondary_addr&quot;. The value will be obtained</span>
+<span class="sd">            # by accessing `function.addr`</span>
+<span class="sd">            mapping.to_csv(&quot;result.csv&quot;, &quot;addr&quot;)</span>
+
+<span class="sd">            # Adding the attributes name and type. This will add the fields &quot;primary_name&quot;,</span>
+<span class="sd">            # &quot;secondary_name&quot;, &quot;primary_type&quot;, &quot;secondary_type&quot;</span>
+<span class="sd">            mapping.to_csv(&quot;result.csv&quot;, (&quot;name&quot;, lambda f: f.name.upper()), &quot;type&quot;)</span>
+
+<span class="sd">        :param path: The file path of the csv file to write</span>
+<span class="sd">        :param extra_attrs: Additional attributes to put in the csv. Each attribute is either a</span>
+<span class="sd">                            tuple (attribute_name, attribute_function) or a string *attribute_name*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check the path</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;path `</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">` already exists and is not a file.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overwriting file </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Extract the optional extra attributes</span>
+        <span class="n">attrs_name</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">attrs_func</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">extra_attr</span> <span class="ow">in</span> <span class="n">extra_attrs</span><span class="p">:</span>
+            <span class="k">match</span> <span class="n">extra_attr</span><span class="p">:</span>
+                <span class="k">case</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+                    <span class="n">attrs_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;primary_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">attrs_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;secondary_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">attrs_func</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                <span class="k">case</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+                    <span class="n">attrs_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;primary_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">attrs_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;secondary_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">attrs_func</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span>
+                <span class="p">(</span><span class="s2">&quot;primary_node&quot;</span><span class="p">,</span> <span class="s2">&quot;secondary_node&quot;</span><span class="p">,</span> <span class="s2">&quot;similarity&quot;</span><span class="p">,</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">attrs_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="p">:</span>
+                <span class="c1"># Get the extra attributes values</span>
+                <span class="n">extra_values</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">attrs_func</span><span class="p">:</span>
+                    <span class="n">extra_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">primary</span><span class="p">))</span>
+                    <span class="n">extra_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">secondary</span><span class="p">))</span>
+
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span>
+                    <span class="p">(</span>
+                        <span class="k">match</span><span class="o">.</span><span class="n">primary</span><span class="o">.</span><span class="n">get_label</span><span class="p">(),</span>
+                        <span class="k">match</span><span class="o">.</span><span class="n">secondary</span><span class="o">.</span><span class="n">get_label</span><span class="p">(),</span>
+                        <span class="k">match</span><span class="o">.</span><span class="n">similarity</span><span class="p">,</span>
+                        <span class="k">match</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span>
+                        <span class="o">*</span><span class="n">extra_values</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span></div>
 </div>
 
 </pre></div>
@@ -366,7 +446,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

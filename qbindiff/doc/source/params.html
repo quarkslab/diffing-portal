@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -146,13 +146,17 @@ Note that some features are performing better with a specific distance metric, f
 <li><p>seuclidean</p></li>
 <li><p>sqeuclidean</p></li>
 </ul>
-<p>However, some distance are unique in QBinDiff, such as the jaccard-strong distance.
-This is a experminetal new metric that combines the jaccard index and the canberra distance.</p>
-<section id="jaccard-strong">
-<h3>Jaccard-strong<a class="headerlink" href="#jaccard-strong" title="Link to this heading">¶</a></h3>
+<p>However, some distance are unique in QBinDiff, such as the haussmann distance.
+This is a experimental new metric that combines the jaccard index and the canberra distance.</p>
+<section id="haussmann">
+<h3>Haussmann<a class="headerlink" href="#haussmann" title="Link to this heading">¶</a></h3>
 <p>Formally it is defined as:</p>
 <div class="math">
-<p><img src="../../../_images/math/43e1957d7772a97572e7239f2c491db07133067e.png" alt="d(u, v) = \sum_{i=0}^n\frac{f(u_i, v_i)}{ | \{ i  |  u_i \neq 0 \lor v_i \neq 0 \} | }"/></p>
+<p><img src="../../../_images/math/4672b7780fc25669b1d213a95f119904b52db095.png" alt="d(u, v) =
+\begin{cases}
+ 0 &amp; \text{if } \forall i \; u_i = 0 \land v_i = 0 \\
+ 1 - \sum_{i=0}^n\frac{f(u_i, v_i)}{ \lvert \{ j | u_j \neq 0 \lor v_j \neq 0 \} \rvert } &amp; \text{otherwise}
+\end{cases}"/></p>
 </div><div class="math">
 <p><img src="../../../_images/math/5199be9e7590b9cc74dccdcea78230fc558269e6.png" alt="with\ u, v \in \mathbb{R}^n"/></p>
 </div><p>where the function <cite>f</cite> is defined like this:</p>
@@ -307,7 +311,7 @@ be less accurate.</p></li>
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../../../_sources/qbindiff/doc/source/params.rst.txt" rel="nofollow">Show Source</a>.
     </footer>

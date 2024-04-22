@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -116,14 +116,14 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 
 <span class="c1"># third-party imports</span>
-<span class="kn">import</span> <span class="nn">capstone</span>
-<span class="kn">import</span> <span class="nn">binexport</span>
-<span class="kn">import</span> <span class="nn">binexport.types</span>
+<span class="kn">import</span> <span class="nn">capstone</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">import</span> <span class="nn">binexport</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">import</span> <span class="nn">binexport.types</span>  <span class="c1"># type: ignore[import-untyped]</span>
 <span class="kn">import</span> <span class="nn">networkx</span>
 
 <span class="c1"># local imports</span>
@@ -134,9 +134,13 @@
     <span class="n">AbstractInstructionBackend</span><span class="p">,</span>
     <span class="n">AbstractOperandBackend</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">qbindiff.loader.backend.utils</span> <span class="kn">import</span> <span class="n">convert_operand_type</span>
 <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Structure</span>
+<span class="kn">from</span> <span class="nn">qbindiff.utils</span> <span class="kn">import</span> <span class="n">log_once</span>
 <span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">FunctionType</span><span class="p">,</span> <span class="n">ReferenceType</span><span class="p">,</span> <span class="n">ReferenceTarget</span><span class="p">,</span> <span class="n">OperandType</span>
-<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
 
 <span class="c1"># Type aliases</span>
 <span class="n">beFunction</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">binexport</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">FunctionBinExport</span>
@@ -162,7 +166,7 @@
     <span class="k">elif</span> <span class="n">binexport_arch</span> <span class="o">==</span> <span class="s2">&quot;MIPS-32&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">capstone_context</span><span class="p">(</span><span class="n">capstone</span><span class="o">.</span><span class="n">CS_ARCH_MIPS</span><span class="p">,</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_32</span> <span class="o">|</span> <span class="n">mode</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">binexport_arch</span> <span class="o">==</span> <span class="s2">&quot;MIPS-64&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">capstone_context</span><span class="p">(</span><span class="n">capstone</span><span class="o">.</span><span class="n">CS_ARCH_MIPS</span><span class="p">,</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_32</span> <span class="o">|</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">capstone_context</span><span class="p">(</span><span class="n">capstone</span><span class="o">.</span><span class="n">CS_ARCH_MIPS</span><span class="p">,</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_64</span> <span class="o">|</span> <span class="n">mode</span><span class="p">)</span>
 
     <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Architecture </span><span class="si">{</span><span class="n">binexport_arch</span><span class="si">}</span><span class="s2"> has not be implemented&quot;</span><span class="p">)</span>
 
@@ -189,6 +193,40 @@
     <span class="k">return</span> <span class="kc">False</span>
 
 
+<span class="k">def</span> <span class="nf">parse_architecture_flag</span><span class="p">(</span><span class="n">arch_mode_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the capstone architecture corresponding to the string passed as parameter.</span>
+<span class="sd">    The format should be something like &#39;CS_ARCH_any:[CS_MODE_any, ...]&quot;&quot;&quot;</span>
+
+    <span class="n">separator</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span>
+    <span class="c1"># Replace trailing spaces</span>
+    <span class="n">split</span> <span class="o">=</span> <span class="n">arch_mode_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+    <span class="c1"># Check for only one separator</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Unpack arch and mode</span>
+    <span class="n">arch_str</span><span class="p">,</span> <span class="n">mode_str</span> <span class="o">=</span> <span class="n">split</span>
+    <span class="n">arch</span> <span class="o">=</span> <span class="n">capstone</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">arch_str</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arch</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">mode</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Look for one or more modes</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mode_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+        <span class="n">mode_attr</span> <span class="o">=</span> <span class="n">capstone</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode_attr</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="c1"># Capstone mode is a bitwise enum</span>
+        <span class="n">mode</span> <span class="o">|=</span> <span class="n">mode_attr</span>
+
+    <span class="c1"># Arch and Mode are valid capstone attributes, instantiate Cs object</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cs</span><span class="p">:</span>
+        <span class="c1"># Enable details for operand</span>
+        <span class="n">cs</span><span class="o">.</span><span class="n">detail</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">cs</span>
+
+
 <span class="c1"># =======================================</span>
 
 
@@ -196,10 +234,15 @@
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.OperandBackendBinExport">[docs]</a>
 <span class="k">class</span> <span class="nc">OperandBackendBinExport</span><span class="p">(</span><span class="n">AbstractOperandBackend</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">cs_instruction</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">,</span> <span class="n">cs_operand</span><span class="p">:</span> <span class="n">capstoneOperand</span><span class="p">,</span> <span class="n">cs_operand_position</span><span class="p">:</span> <span class="nb">int</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">cs</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span><span class="p">,</span>
+        <span class="n">cs_instruction</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">,</span>
+        <span class="n">cs_operand</span><span class="p">:</span> <span class="n">capstoneOperand</span><span class="p">,</span>
+        <span class="n">cs_operand_position</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">OperandBackendBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="n">cs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="o">=</span> <span class="n">cs_instruction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span> <span class="o">=</span> <span class="n">cs_operand</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand_position</span> <span class="o">=</span> <span class="n">cs_operand_position</span>
@@ -220,28 +263,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperandType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the capstone operand type&quot;&quot;&quot;</span>
-        <span class="n">op</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span>
-        <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">unknown</span>
-        <span class="n">cs_op_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span><span class="o">.</span><span class="n">type</span>
-
-        <span class="k">if</span> <span class="n">cs_op_type</span> <span class="o">==</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_OP_REG</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">register</span>
-        <span class="k">elif</span> <span class="n">cs_op_type</span> <span class="o">==</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_OP_IMM</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">immediate</span>
-        <span class="k">elif</span> <span class="n">cs_op_type</span> <span class="o">==</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_OP_MEM</span><span class="p">:</span>
-            <span class="c1"># A displacement is represented as [reg+hex] (example : [rdi+0x1234])</span>
-            <span class="c1"># Then, base (reg) and disp (hex) should be different of 0</span>
-            <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">base</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">disp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">displacement</span>
-            <span class="c1"># A phrase is represented as [reg1 + reg2] (example : [rdi + eax])</span>
-            <span class="c1"># Then, base (reg1) and index (reg2) should be different of 0</span>
-            <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">base</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">phrase</span>
-            <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">disp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">displacement</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized capstone type </span><span class="si">{</span><span class="n">cs_op_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">typ</span>
+        <span class="k">return</span> <span class="n">convert_operand_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">arch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OperandBackendBinExport.is_immediate">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.OperandBackendBinExport.is_immediate">[docs]</a>
@@ -256,9 +278,10 @@
 <div class="viewcode-block" id="InstructionBackendBinExport">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.InstructionBackendBinExport">[docs]</a>
 <span class="k">class</span> <span class="nc">InstructionBackendBinExport</span><span class="p">(</span><span class="n">AbstractInstructionBackend</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs_instruction</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span><span class="p">,</span> <span class="n">cs_instruction</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">InstructionBackendBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="n">cs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="o">=</span> <span class="n">cs_instruction</span>
 
     <span class="nd">@property</span>
@@ -283,12 +306,12 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">iter</span><span class="p">([])</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="n">OperandBackendBinExport</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">OperandBackendBinExport</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">operands</span><span class="p">)</span>
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">groups</span>
 
     <span class="nd">@property</span>
@@ -322,6 +345,56 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">be_block</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_guess_thumb_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instr_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">mnemonic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Guess wether the instruction is thumb or not&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instr_bytes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Must be an error</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instruction malformed of size </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">instr_bytes</span><span class="p">)</span><span class="si">}</span><span class="s2"> bytes.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instr_bytes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Must be thumb</span>
+            <span class="k">return</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_THUMB</span>
+
+        <span class="c1"># Might be either thumb or normal arm.</span>
+        <span class="c1"># There is no easy way of knowing whether a 4/8 bytes instruction is thumb or not</span>
+        <span class="c1"># and IDA sometimes likes to merge two instructions together (so two 4bytes thumb</span>
+        <span class="c1"># instructions might become a single 8bytes thumb instruction from IDA perspective).</span>
+        <span class="c1"># The only way of checking if the context is correct is by comparing the mnemonic</span>
+        <span class="c1"># of the capstone instruction with the one in BinExport.</span>
+        <span class="c1"># Of course we have to rely on heuristics to know whether the two mnemonics are the</span>
+        <span class="c1"># same or not.</span>
+        <span class="n">log_once</span><span class="p">(</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;Relying on heuristics to guess the context mode of the binary (thumb or not)&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Save the original mode</span>
+        <span class="n">arch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">architecture_name</span>
+
+        <span class="c1"># Bruteforce-guessing the context</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Try with regular arm</span>
+                <span class="n">capstone_mode</span> <span class="o">=</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_ARM</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Try with thumb</span>
+                <span class="n">capstone_mode</span> <span class="o">=</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_THUMB</span>
+
+            <span class="c1"># Disassemble the instruction and check the mnemonic</span>
+            <span class="n">disassembler</span> <span class="o">=</span> <span class="n">_get_capstone_disassembler</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">capstone_mode</span><span class="p">)</span>
+            <span class="n">disasm</span> <span class="o">=</span> <span class="n">disassembler</span><span class="o">.</span><span class="n">disasm</span><span class="p">(</span><span class="n">instr_bytes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">instr</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">disasm</span><span class="p">)</span>
+                <span class="c1"># Check if the mnemonic is the same</span>
+                <span class="k">if</span> <span class="n">is_same_mnemonic</span><span class="p">(</span><span class="n">instr</span><span class="o">.</span><span class="n">mnemonic</span><span class="p">,</span> <span class="n">mnemonic</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">capstone_mode</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># We have not being lucky</span>
+        <span class="n">log_once</span><span class="p">(</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;Cannot guess ISA of the program </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span> <span class="s2">&quot; Consider setting it manually&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot guess ISA of the instruction at address </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">#x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_disassemble</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">bb_asm</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">correct_mnemonic</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">correct_size</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">]:</span>
@@ -335,54 +408,38 @@
 <span class="sd">        :param correct_size: The right size of the first instruction of the basic block</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">instructions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">mnemonic</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Check if we already have a capstone context, if so use it</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">cs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">disasm</span><span class="p">(</span><span class="n">bb_asm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">))</span>
+
+        <span class="c1"># Continue with the old method</span>
         <span class="n">arch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">architecture_name</span>
         <span class="n">capstone_mode</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">arm_mode</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># No need to guess the context for these arch</span>
-        <span class="k">if</span> <span class="n">arch</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;x86&quot;</span><span class="p">,</span> <span class="s2">&quot;x86-64&quot;</span><span class="p">):</span>
-            <span class="n">md</span> <span class="o">=</span> <span class="n">_get_capstone_disassembler</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">md</span><span class="o">.</span><span class="n">disasm</span><span class="p">(</span><span class="n">bb_asm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">arch</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;x86&quot;</span><span class="p">,</span> <span class="s2">&quot;x86-64&quot;</span><span class="p">,</span> <span class="s2">&quot;MIPS-32&quot;</span><span class="p">,</span> <span class="s2">&quot;MIPS-64&quot;</span><span class="p">,</span> <span class="s2">&quot;ARM-64&quot;</span><span class="p">):</span>
+            <span class="k">pass</span>
 
-        <span class="c1"># Bruteforce-guessing the context</span>
-        <span class="k">while</span> <span class="n">size</span> <span class="o">!=</span> <span class="n">correct_size</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_same_mnemonic</span><span class="p">(</span><span class="n">mnemonic</span><span class="p">,</span> <span class="n">correct_mnemonic</span><span class="p">):</span>
-            <span class="c1"># change mode</span>
-            <span class="k">if</span> <span class="n">arch</span> <span class="o">==</span> <span class="s2">&quot;ARM-32&quot;</span><span class="p">:</span>
-                <span class="n">capstone_mode</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">if</span> <span class="n">arm_mode</span> <span class="o">&amp;</span> <span class="mb">0b1</span><span class="p">:</span>
-                    <span class="n">capstone_mode</span> <span class="o">|=</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_ARM</span>
-                <span class="k">if</span> <span class="n">arm_mode</span> <span class="o">&amp;</span> <span class="mb">0b10</span><span class="p">:</span>
-                    <span class="n">capstone_mode</span> <span class="o">|=</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_THUMB</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">_enable_cortexm</span><span class="p">:</span>
-                    <span class="n">capstone_mode</span> <span class="o">|=</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_MCLASS</span>
-                <span class="k">if</span> <span class="n">arm_mode</span> <span class="o">&gt;</span> <span class="mb">0b11</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                        <span class="s2">&quot;Cannot guess the instruction set of the instruction &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;at address 0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">&quot;</span>
-                    <span class="p">)</span>
-                <span class="n">arm_mode</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># For arm thumb use appropriate context guessing heuristics</span>
+        <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s2">&quot;ARM-32&quot;</span><span class="p">:</span>
+            <span class="n">capstone_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_guess_thumb_context</span><span class="p">(</span><span class="n">bb_asm</span><span class="p">[:</span><span class="n">correct_size</span><span class="p">],</span> <span class="n">correct_mnemonic</span><span class="p">)</span>
 
-            <span class="n">md</span> <span class="o">=</span> <span class="n">_get_capstone_disassembler</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">capstone_mode</span><span class="p">)</span>
-            <span class="n">disasm</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">disasm</span><span class="p">(</span><span class="n">bb_asm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">instr</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">disasm</span><span class="p">)</span>
-                <span class="n">mnemonic</span> <span class="o">=</span> <span class="n">instr</span><span class="o">.</span><span class="n">mnemonic</span>
-                <span class="n">size</span> <span class="o">=</span> <span class="n">instr</span><span class="o">.</span><span class="n">size</span>
-            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-                <span class="n">mnemonic</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="n">size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Everything else not yet supported</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The architecture </span><span class="si">{</span><span class="n">arch</span><span class="si">}</span><span class="s2"> is not yet supported in QBinDiff&quot;</span><span class="p">)</span>
 
-        <span class="n">instructions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instr</span><span class="p">)</span>
-        <span class="n">instructions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">disasm</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">instructions</span>
+        <span class="c1"># Set the program wide disassembler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="n">_get_capstone_disassembler</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">capstone_mode</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">disasm</span><span class="p">(</span><span class="n">bb_asm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramBackendBinExport</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapper on weak reference on ProgramBackendBinExport&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">program</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">())</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Trying to access an already expired weak reference on ProgramBackendBinExport&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">program</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
@@ -393,13 +450,15 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an iterator over backend instruction objects&quot;&quot;&quot;</span>
 
         <span class="c1"># Generates the first instruction and use it to guess the context for capstone</span>
-        <span class="n">first_instr</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">be_block</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">first_instr</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">be_block</span><span class="o">.</span><span class="n">instructions</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="n">capstone_instructions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disassemble</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">be_block</span><span class="o">.</span><span class="n">bytes</span><span class="p">,</span> <span class="n">first_instr</span><span class="o">.</span><span class="n">mnemonic</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_instr</span><span class="o">.</span><span class="n">bytes</span><span class="p">)</span>
         <span class="p">)</span>
 
         <span class="c1"># Then iterate over the instructions</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">InstructionBackendBinExport</span><span class="p">(</span><span class="n">instr</span><span class="p">)</span> <span class="k">for</span> <span class="n">instr</span> <span class="ow">in</span> <span class="n">capstone_instructions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">InstructionBackendBinExport</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">cs</span><span class="p">,</span> <span class="n">instr</span><span class="p">)</span> <span class="k">for</span> <span class="n">instr</span> <span class="ow">in</span> <span class="n">capstone_instructions</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
@@ -471,14 +530,6 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;True if the function is imported&quot;&quot;&quot;</span>
         <span class="c1"># Should we consider also FunctionType.thunk?</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">FunctionType</span><span class="o">.</span><span class="n">imported</span><span class="p">,</span> <span class="n">FunctionType</span><span class="o">.</span><span class="n">extern</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="FunctionBackendBinExport.unload_blocks">
-<a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.FunctionBackendBinExport.unload_blocks">[docs]</a>
-    <span class="k">def</span> <span class="nf">unload_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unload basic blocks from memory&quot;&quot;&quot;</span>
-        <span class="c1"># del self.be_func.blocks</span>
-        <span class="k">pass</span>  <span class="c1"># can&#39;t delete it as it is decorated with @cache_property</span></div>
 </div>
 
 
@@ -486,14 +537,27 @@
 <div class="viewcode-block" id="ProgramBackendBinExport">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.ProgramBackendBinExport">[docs]</a>
 <span class="k">class</span> <span class="nc">ProgramBackendBinExport</span><span class="p">(</span><span class="n">AbstractProgramBackend</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enable_cortexm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ProgramBackendBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_cortexm</span> <span class="o">=</span> <span class="n">enable_cortexm</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">arch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">be_prog</span> <span class="o">=</span> <span class="n">binexport</span><span class="o">.</span><span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">architecture_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_prog</span><span class="o">.</span><span class="n">architecture</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fun_names</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {fun_name : fun_address}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fun_names</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {fun_name : fun_address}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Check if the architecture is set by the user</span>
+        <span class="k">if</span> <span class="n">arch</span><span class="p">:</span>
+            <span class="c1"># Parse the architecture</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="n">parse_architecture_flag</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to instantiate capstone context from given arch: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">arch</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;No architecture set but BinExport backend is used. If invalid instructions&quot;</span>
+                <span class="s2">&quot; are found consider setting manually the architecture&quot;</span>
+            <span class="p">)</span>
+            <span class="c1"># self.cs will be set at basic block level</span>
+            <span class="c1"># self.cs = _get_capstone_disassembler(self.be_prog.architecture)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
@@ -509,10 +573,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_fun_names</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">addr</span>
 
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">functions</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cortexm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_cortexm</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -605,7 +665,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -113,20 +113,23 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    File diffed in database.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>             <span class="c1">#: Unique ID of the file in database</span>
-    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span>       <span class="c1">#: file path</span>
-    <span class="n">exefilename</span><span class="p">:</span> <span class="nb">str</span>    <span class="c1">#: file name</span>
-    <span class="nb">hash</span><span class="p">:</span> <span class="nb">str</span>           <span class="c1">#: SHA256 hash of the file</span>
-    <span class="n">functions</span><span class="p">:</span> <span class="nb">int</span>      <span class="c1">#: total number of functions</span>
-    <span class="n">libfunctions</span><span class="p">:</span> <span class="nb">int</span>   <span class="c1">#: total number of functions identified as library</span>
-    <span class="n">calls</span><span class="p">:</span> <span class="nb">int</span>          <span class="c1">#: number of calls</span>
-    <span class="n">basicblocks</span><span class="p">:</span> <span class="nb">int</span>    <span class="c1">#: number of basic blocks</span>
-    <span class="n">libbasicblocks</span><span class="p">:</span> <span class="nb">int</span> <span class="c1">#: number of basic blocks belonging to library functions</span>
-    <span class="n">edges</span><span class="p">:</span> <span class="nb">int</span>          <span class="c1">#: number of edges in callgraph</span>
-    <span class="n">libedges</span><span class="p">:</span> <span class="nb">int</span>       <span class="c1">#: number of edges in callgraph addressing a library</span>
-    <span class="n">instructions</span><span class="p">:</span> <span class="nb">int</span>   <span class="c1">#: number of instructions</span>
+
+    <span class="c1"># fmt: off</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>               <span class="c1">#: Unique ID of the file in database</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span>         <span class="c1">#: file path</span>
+    <span class="n">exefilename</span><span class="p">:</span> <span class="nb">str</span>      <span class="c1">#: file name</span>
+    <span class="nb">hash</span><span class="p">:</span> <span class="nb">str</span>             <span class="c1">#: SHA256 hash of the file</span>
+    <span class="n">functions</span><span class="p">:</span> <span class="nb">int</span>        <span class="c1">#: total number of functions</span>
+    <span class="n">libfunctions</span><span class="p">:</span> <span class="nb">int</span>     <span class="c1">#: total number of functions identified as library</span>
+    <span class="n">calls</span><span class="p">:</span> <span class="nb">int</span>            <span class="c1">#: number of calls</span>
+    <span class="n">basicblocks</span><span class="p">:</span> <span class="nb">int</span>      <span class="c1">#: number of basic blocks</span>
+    <span class="n">libbasicblocks</span><span class="p">:</span> <span class="nb">int</span>   <span class="c1">#: number of basic blocks belonging to library functions</span>
+    <span class="n">edges</span><span class="p">:</span> <span class="nb">int</span>            <span class="c1">#: number of edges in callgraph</span>
+    <span class="n">libedges</span><span class="p">:</span> <span class="nb">int</span>         <span class="c1">#: number of edges in callgraph addressing a library</span>
+    <span class="n">instructions</span><span class="p">:</span> <span class="nb">int</span>     <span class="c1">#: number of instructions</span>
     <span class="n">libinstructions</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1">#: number of instructions in library functions</span></div>
 
+    <span class="c1"># fmt: on</span>
 
 
 <div class="viewcode-block" id="FunctionMatch">
@@ -136,15 +139,18 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A match between two functions in database.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>            <span class="c1">#: unique ID of function match in database</span>
-    <span class="n">address1</span><span class="p">:</span> <span class="nb">int</span>      <span class="c1">#: function address in primary</span>
-    <span class="n">name1</span><span class="p">:</span> <span class="nb">str</span>         <span class="c1">#: function name in primary</span>
-    <span class="n">address2</span><span class="p">:</span> <span class="nb">int</span>      <span class="c1">#: function address in secondary</span>
-    <span class="n">name2</span><span class="p">:</span> <span class="nb">str</span>         <span class="c1">#: function name in secondary</span>
-    <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1">#: similarity score (0..1)</span>
-    <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1">#: confidence of the match (0..1)</span>
+
+    <span class="c1"># fmt: off</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>                       <span class="c1">#: unique ID of function match in database</span>
+    <span class="n">address1</span><span class="p">:</span> <span class="nb">int</span>                 <span class="c1">#: function address in primary</span>
+    <span class="n">name1</span><span class="p">:</span> <span class="nb">str</span>                    <span class="c1">#: function name in primary</span>
+    <span class="n">address2</span><span class="p">:</span> <span class="nb">int</span>                 <span class="c1">#: function address in secondary</span>
+    <span class="n">name2</span><span class="p">:</span> <span class="nb">str</span>                    <span class="c1">#: function name in secondary</span>
+    <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span>             <span class="c1">#: similarity score (0..1)</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span>             <span class="c1">#: confidence of the match (0..1)</span>
     <span class="n">algorithm</span><span class="p">:</span> <span class="n">FunctionAlgorithm</span>  <span class="c1">#: algorithm used for the match</span></div>
 
+    <span class="c1"># fmt: on</span>
 
 
 <div class="viewcode-block" id="BasicBlockMatch">
@@ -154,12 +160,15 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A match between two basic blocks</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1">#: ID of the match in database</span>
-    <span class="n">function_match</span><span class="p">:</span> <span class="n">FunctionMatch</span>  <span class="c1">#: FunctionMatch associated with this match</span>
-    <span class="n">address1</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1">#: basic block address in primary</span>
-    <span class="n">address2</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1">#: basic block address in secondary</span>
+
+    <span class="c1"># fmt: off</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>                         <span class="c1">#: ID of the match in database</span>
+    <span class="n">function_match</span><span class="p">:</span> <span class="n">FunctionMatch</span>   <span class="c1">#: FunctionMatch associated with this match</span>
+    <span class="n">address1</span><span class="p">:</span> <span class="nb">int</span>                   <span class="c1">#: basic block address in primary</span>
+    <span class="n">address2</span><span class="p">:</span> <span class="nb">int</span>                   <span class="c1">#: basic block address in secondary</span>
     <span class="n">algorithm</span><span class="p">:</span> <span class="n">BasicBlockAlgorithm</span>  <span class="c1">#: algorithm used to match the basic blocks</span></div>
 
+    <span class="c1"># fmt: on</span>
 
 
 <div class="viewcode-block" id="BindiffFile">
@@ -173,16 +182,18 @@
 <span class="sd">    It also provides some methods to create a database and to add entries</span>
 <span class="sd">    in the database.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">permission</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ro&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param file: path to Bindiff database</span>
 <span class="sd">        :param permission: permission to use for opening database (default: ro)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">file</span>
-        
+
         <span class="c1"># Open database</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file:</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="si">}</span><span class="s2">?mode=</span><span class="si">{</span><span class="n">permission</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        
+
+        <span class="c1"># fmt: off</span>
         <span class="c1"># Global variables</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: Overall similarity</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: Overall diffing confidence</span>
@@ -195,20 +206,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_file</span><span class="p">:</span> <span class="n">File</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1">#: Primary file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_file</span><span class="p">:</span> <span class="n">File</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: Secondary file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+        <span class="c1"># fmt: on</span>
 
         <span class="c1"># Function matches</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">FunctionMatch</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1">#: FunctionMatch indexed by addresses in primary</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_functions_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">FunctionMatch</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: FunctionMatch indexed by addresses in secondary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
+            <span class="nb">int</span><span class="p">,</span> <span class="n">FunctionMatch</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: FunctionMatch indexed by addresses in primary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_functions_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
+            <span class="nb">int</span><span class="p">,</span> <span class="n">FunctionMatch</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: FunctionMatch indexed by addresses in secondary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_function_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
 
-        <span class="c1"># Basicblock matches</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">BasicBlockMatch</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1">#: Basic block match from primary</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_basicblock_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">BasicBlockMatch</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: Basic block match from secondary</span>
+        <span class="c1"># Basicblock matches:  BB-addr -&gt; fun-addr -&gt; match</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
+            <span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">BasicBlockMatch</span><span class="p">]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: Basic block match from primary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_basicblock_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
+            <span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">BasicBlockMatch</span><span class="p">]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: Basic block match from secondary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_basicblock_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
 
         <span class="c1"># Instruction matches</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">primary_instruction_match</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_instruction_match</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># {inst_addr : {match_func_addr : match_inst_addr}}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_instruction_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_instruction_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_instruction_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
 
     <span class="nd">@property</span>
@@ -216,14 +237,22 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of functions inside primary that are not matched</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_file</span><span class="o">.</span><span class="n">functions</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_file</span><span class="o">.</span><span class="n">libfunctions</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">primary_file</span><span class="o">.</span><span class="n">functions</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_file</span><span class="o">.</span><span class="n">libfunctions</span>
+            <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">unmatched_secondary_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of functions inside secondary that are not matched</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_file</span><span class="o">.</span><span class="n">functions</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_file</span><span class="o">.</span><span class="n">libfunctions</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">secondary_file</span><span class="o">.</span><span class="n">functions</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">secondary_file</span><span class="o">.</span><span class="n">libfunctions</span>
+            <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">function_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionMatch</span><span class="p">]:</span>
@@ -237,7 +266,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of matched basic blocks in primary (and secondary)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">bb_matches</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bb_matches</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">x</span> <span class="k">for</span> <span class="n">bb_matches</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bb_matches</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_load_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -256,7 +287,9 @@
 <span class="sd">        :param cursor: sqlite3 cursor to the DB</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT created, modified, similarity, confidence FROM metadata&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">created</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">modified</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">created</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">modified</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="n">query</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">created</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">created</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modified</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modified</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">))</span>  <span class="c1"># round the value to 3 decimals</span>
@@ -287,7 +320,9 @@
         <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">fun_id</span><span class="p">,</span> <span class="n">bb_addr1</span><span class="p">,</span> <span class="n">bb_addr2</span><span class="p">,</span> <span class="n">bb_algo</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
             <span class="n">fun_match</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">fun_id</span><span class="p">]</span>
             <span class="k">assert</span> <span class="n">fun_id</span> <span class="o">==</span> <span class="n">mapping</span><span class="p">[</span><span class="n">fun_id</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
-            <span class="n">bmatch</span> <span class="o">=</span> <span class="n">BasicBlockMatch</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">fun_match</span><span class="p">,</span> <span class="n">bb_addr1</span><span class="p">,</span> <span class="n">bb_addr2</span><span class="p">,</span> <span class="n">BasicBlockAlgorithm</span><span class="p">(</span><span class="n">bb_algo</span><span class="p">))</span>
+            <span class="n">bmatch</span> <span class="o">=</span> <span class="n">BasicBlockMatch</span><span class="p">(</span>
+                <span class="nb">id</span><span class="p">,</span> <span class="n">fun_match</span><span class="p">,</span> <span class="n">bb_addr1</span><span class="p">,</span> <span class="n">bb_addr2</span><span class="p">,</span> <span class="n">BasicBlockAlgorithm</span><span class="p">(</span><span class="n">bb_algo</span><span class="p">)</span>
+            <span class="p">)</span>
 
             <span class="c1"># As a basic block address can be in multiple functions create a nested dictionnary</span>
             <span class="k">if</span> <span class="n">bb_addr1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="p">:</span>
@@ -332,6 +367,7 @@
 <span class="sd">        Initialize the database by creating all the tables</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">conn</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="c1"># fmt: off</span>
         <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                     CREATE TABLE file (id INTEGER PRIMARY KEY, filename TEXT, exefilename TEXT, hash CHARACTER(40),</span>
 <span class="s2">                     functions INT, libfunctions INT, calls INT, basicblocks INT, libbasicblocks INT, edges INT,</span>
@@ -356,15 +392,26 @@
 <span class="s2">                     CREATE TABLE instruction (basicblockid INT, address1 BIGINT, address2 BIGINT,</span>
 <span class="s2">                     FOREIGN KEY(basicblockid) REFERENCES basicblock(id))&quot;&quot;&quot;</span><span class="p">)</span>
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="c1"># fmt: on</span>
 
-        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;INSERT INTO basicblockalgorithm(name) VALUES (&quot;basicBlock: edges prime product&quot;)&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT INTO basicblockalgorithm(name) VALUES (&quot;basicBlock: edges prime product&quot;)&quot;&quot;&quot;</span>
+        <span class="p">)</span>
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="BindiffFile.create">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.create">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">primary</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">secondary</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;BindiffFile&#39;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">primary</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BindiffFile&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new Bindiff database object in the file given in `filename`.</span>
 <span class="sd">        It only takes two binaries.</span>
@@ -387,16 +434,19 @@
         <span class="c1"># Save primary</span>
         <span class="n">file1</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span>
         <span class="n">hash1</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">file1</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="k">if</span> <span class="n">file1</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;INSERT INTO file (filename, exefilename, hash) VALUES (:filename, :name, :hash)&quot;&quot;&quot;</span><span class="p">,</span>
-                     <span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">file1</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">file1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="n">hash1</span><span class="p">})</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT INTO file (filename, exefilename, hash) VALUES (:filename, :name, :hash)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">file1</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">file1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="n">hash1</span><span class="p">},</span>
+        <span class="p">)</span>
 
-        
         <span class="c1"># Save secondary</span>
         <span class="n">file2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">secondary</span><span class="p">)</span>
         <span class="n">hash2</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">file2</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="k">if</span> <span class="n">file2</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;INSERT INTO file (filename, exefilename, hash) VALUES (:filename, :name, :hash)&quot;&quot;&quot;</span><span class="p">,</span>
-                     <span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">file2</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">file2</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="n">hash2</span><span class="p">})</span>
-                
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT INTO file (filename, exefilename, hash) VALUES (:filename, :name, :hash)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">file2</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">file2</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="n">hash2</span><span class="p">},</span>
+        <span class="p">)</span>
+
         <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            INSERT INTO metadata (version, file1, file2, description, created, modified, similarity, confidence)</span>
@@ -406,21 +456,31 @@
                 <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
                 <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="n">desc</span><span class="p">,</span>
                 <span class="s2">&quot;created&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">),</span>
-                <span class="s2">&quot;modified&quot;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">),</span> <span class="c1"># modified has to be filled so initialize it to the creation time</span>
+                <span class="s2">&quot;modified&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                    <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
+                <span class="p">),</span>  <span class="c1"># modified has to be filled so initialize it to the creation time</span>
                 <span class="s2">&quot;similarity&quot;</span><span class="p">:</span> <span class="n">similarity</span><span class="p">,</span>
-                <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="n">confidence</span>
-            <span class="p">}</span>
+                <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="n">confidence</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">)</span>
-        
+
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
         <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">BindiffFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">permission</span><span class="o">=</span><span class="s2">&quot;rw&quot;</span><span class="p">)</span></div>
 
 
-
 <div class="viewcode-block" id="BindiffFile.add_function_match">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.add_function_match">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_function_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_name1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fun_name2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">identical_bbs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">add_function_match</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fun_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">fun_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">fun_name1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">fun_name2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">identical_bbs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a function match in database.</span>
 
@@ -446,15 +506,17 @@
                 <span class="s2">&quot;name2&quot;</span><span class="p">:</span> <span class="n">fun_name2</span><span class="p">,</span>
                 <span class="s2">&quot;similarity&quot;</span><span class="p">:</span> <span class="n">similarity</span><span class="p">,</span>
                 <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="n">confidence</span><span class="p">,</span>
-                <span class="s2">&quot;identical_bbs&quot;</span><span class="p">:</span> <span class="n">identical_bbs</span>
-            <span class="p">}</span>
+                <span class="s2">&quot;identical_bbs&quot;</span><span class="p">:</span> <span class="n">identical_bbs</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">lastrowid</span></div>
 
 
 <div class="viewcode-block" id="BindiffFile.add_basic_block_match">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.add_basic_block_match">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_basic_block_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">add_basic_block_match</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">fun_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr2</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a basic block match in database.</span>
 
@@ -477,7 +539,7 @@
                 <span class="s2">&quot;address1&quot;</span><span class="p">:</span> <span class="n">bb_addr1</span><span class="p">,</span>
                 <span class="s2">&quot;address2&quot;</span><span class="p">:</span> <span class="n">bb_addr2</span><span class="p">,</span>
                 <span class="s2">&quot;algorithm&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
-            <span class="p">}</span>
+            <span class="p">},</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">lastrowid</span></div>
 
@@ -502,13 +564,15 @@
                 <span class="s2">&quot;address1&quot;</span><span class="p">:</span> <span class="n">inst_addr1</span><span class="p">,</span>
                 <span class="s2">&quot;address2&quot;</span><span class="p">:</span> <span class="n">inst_addr2</span><span class="p">,</span>
                 <span class="s2">&quot;basicblockid&quot;</span><span class="p">:</span> <span class="n">entry</span><span class="p">,</span>
-            <span class="p">}</span>
+            <span class="p">},</span>
         <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BindiffFile.update_file_infos">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.update_file_infos">[docs]</a>
-    <span class="k">def</span> <span class="nf">update_file_infos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lib_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">update_file_infos</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">entry_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lib_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_count</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update information about a binary in database (function, basic block count ...)</span>
 
@@ -597,7 +661,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

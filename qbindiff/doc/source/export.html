@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -135,43 +135,32 @@ SQLite format.</p>
 <p>QBinDiff results can be exported to a BinDiff compatible format. Then, the diff can be seen with the BinDiff graphic interface.</p>
 <p>Given a <code class="docutils literal notranslate"><span class="pre">differ</span></code> object initialized, with two binaries to diffs, the diffing and export results can be saved as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">matches</span> <span class="o">=</span> <span class="n">differ</span><span class="o">.</span><span class="n">compute_matching</span><span class="p">()</span>
-<span class="n">differ</span><span class="o">.</span><span class="n">export_to_bindiff</span><span class="p">(</span><span class="s1">&#39;/path/to/output.BinDiff&#39;</span><span class="p">))</span>
+<span class="n">differ</span><span class="o">.</span><span class="n">export_to_bindiff</span><span class="p">(</span><span class="s1">&#39;/path/to/output.BinDiff&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="csv">
 <h2>CSV<a class="headerlink" href="#csv" title="Link to this heading">¶</a></h2>
 <p>If the diff, does not represent a binary diff, or for further processing the diff
-can also be saved in .csv file.</p>
-<p>TODO: We really have to write the CSV ourselves ? There is not utility functions?</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+it can also be saved in .csv file.
+This is the default file format as it is very lightweight and fast to generate.</p>
+<p>It can either be obtained using the CLI option <code class="docutils literal notranslate"><span class="pre">-ff</span> <span class="pre">csv</span></code> or by calling the right API as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">FunctionType</span>
 
-<span class="n">matches</span> <span class="o">=</span> <span class="n">differ</span><span class="o">.</span><span class="n">compute_matching</span><span class="p">()</span>
+<span class="n">matches</span><span class="p">:</span> <span class="n">Mapping</span> <span class="o">=</span> <span class="n">differ</span><span class="o">.</span><span class="n">compute_matching</span><span class="p">()</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/output.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">((</span>
-        <span class="s1">&#39;path_primary&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;func_addr_primary&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;func_name_primary&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;path_secondary&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;func_addr_secondary&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;func_name_secondary&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;similarity&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;confidence&#39;</span>
-    <span class="p">))</span>
+<span class="c1"># This only exports base fields (address, similarity, confidence)</span>
+<span class="n">matches</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;/path/to/output.csv&quot;</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">((</span>
-            <span class="n">differ</span><span class="o">.</span><span class="n">primary</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="nb">hex</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">primary</span><span class="o">.</span><span class="n">addr</span><span class="p">),</span>
-            <span class="k">match</span><span class="o">.</span><span class="n">primary</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="n">differ</span><span class="o">.</span><span class="n">secondary</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="nb">hex</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">secondary</span><span class="o">.</span><span class="n">addr</span><span class="p">),</span>
-            <span class="k">match</span><span class="o">.</span><span class="n">primary</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="k">match</span><span class="o">.</span><span class="n">similarity</span><span class="p">,</span>
-            <span class="k">match</span><span class="o">.</span><span class="n">confidence</span>
-        <span class="p">))</span>
+<span class="c1"># Add extra &quot;name&quot; field</span>
+<span class="n">matches</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;/path/to/output.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add extra &quot;name&quot; field and custom field</span>
+<span class="n">matches</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s2">&quot;/path/to/output.csv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s2">&quot;is_library&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">FunctionType</span><span class="o">.</span><span class="n">library</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -270,7 +259,7 @@ can also be saved in .csv file.</p>
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../../../_sources/qbindiff/doc/source/export.rst.txt" rel="nofollow">Show Source</a>.
     </footer>

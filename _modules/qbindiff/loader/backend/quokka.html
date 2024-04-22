@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -124,8 +124,7 @@
 <span class="kn">import</span> <span class="nn">quokka</span>
 <span class="kn">import</span> <span class="nn">quokka.types</span>
 <span class="kn">import</span> <span class="nn">networkx</span>
-<span class="kn">import</span> <span class="nn">capstone</span>
-<span class="kn">from</span> <span class="nn">capstone</span> <span class="kn">import</span> <span class="n">CS_OP_REG</span><span class="p">,</span> <span class="n">CS_OP_IMM</span><span class="p">,</span> <span class="n">CS_OP_MEM</span><span class="p">,</span> <span class="n">CS_GRP_JUMP</span>
+<span class="kn">import</span> <span class="nn">capstone</span>  <span class="c1"># type: ignore[import-untyped]</span>
 
 <span class="c1"># local imports</span>
 <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">Structure</span>
@@ -145,6 +144,7 @@
     <span class="n">OperandType</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
+<span class="kn">from</span> <span class="nn">qbindiff.loader.backend.utils</span> <span class="kn">import</span> <span class="n">convert_operand_type</span>
 
 
 <span class="c1"># Aliases</span>
@@ -228,18 +228,29 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="n">ProgramBackendQuokka</span><span class="p">],</span>
         <span class="n">cs_instruction</span><span class="p">:</span> <span class="s2">&quot;capstone.CsInsn&quot;</span><span class="p">,</span>
         <span class="n">cs_operand</span><span class="p">:</span> <span class="n">capstoneOperand</span><span class="p">,</span>
         <span class="n">cs_operand_position</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">OperandBackendQuokka</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_program</span> <span class="o">=</span> <span class="n">program</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="o">=</span> <span class="n">cs_instruction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span> <span class="o">=</span> <span class="n">cs_operand</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand_position</span> <span class="o">=</span> <span class="n">cs_operand_position</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">op_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_operand_position</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramBackendQuokka</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapper on weak reference on ProgramBackendQuokka&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">program</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">())</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Trying to access an already expired weak reference on ProgramBackendQuokka&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">program</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -254,28 +265,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperandType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the capstone operand type&quot;&quot;&quot;</span>
-        <span class="n">op</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span>
-        <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">unknown</span>
-        <span class="n">cs_op_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span><span class="o">.</span><span class="n">type</span>
-
-        <span class="k">if</span> <span class="n">cs_op_type</span> <span class="o">==</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_OP_REG</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">register</span>
-        <span class="k">elif</span> <span class="n">cs_op_type</span> <span class="o">==</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_OP_IMM</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">immediate</span>
-        <span class="k">elif</span> <span class="n">cs_op_type</span> <span class="o">==</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_OP_MEM</span><span class="p">:</span>
-            <span class="c1"># A displacement is represented as [reg+hex] (example : [rdi+0x1234])</span>
-            <span class="c1"># Then, base (reg) and disp (hex) should be different of 0</span>
-            <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">base</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">disp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">displacement</span>
-            <span class="c1"># A phrase is represented as [reg1 + reg2] (example : [rdi + eax])</span>
-            <span class="c1"># Then, base (reg1) and index (reg2) should be different of 0</span>
-            <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">base</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">phrase</span>
-            <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">disp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">typ</span> <span class="o">=</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">displacement</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized capstone type </span><span class="si">{</span><span class="n">cs_op_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">typ</span>
+        <span class="c1"># Get capstone type</span>
+        <span class="k">return</span> <span class="n">convert_operand_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">qb_prog</span><span class="o">.</span><span class="n">capstone</span><span class="o">.</span><span class="n">arch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OperandBackendQuokka.is_immediate">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.OperandBackendQuokka.is_immediate">[docs]</a>
@@ -304,7 +295,7 @@
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">InstructionBackendQuokka</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">program</span> <span class="o">=</span> <span class="n">program</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_program</span> <span class="o">=</span> <span class="n">program</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qb_instr</span> <span class="o">=</span> <span class="n">qb_instruction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="o">=</span> <span class="n">qb_instruction</span><span class="o">.</span><span class="n">cs_inst</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -330,24 +321,39 @@
 <span class="sd">        Cast the quokka references to qbindiff reference types</span>
 
 <span class="sd">        :param references: list of Quokka references</span>
-<span class="sd">        :return: list of corresponding references cast to qbindiff type</span>
+<span class="sd">        :returns: list of corresponding references cast to qbindiff type</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">ret_ref</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ret_ref</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReferenceTarget</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">references</span><span class="p">:</span>
             <span class="k">match</span> <span class="n">ref</span><span class="p">:</span>
                 <span class="k">case</span> <span class="n">quokka</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Data</span><span class="p">():</span>
                     <span class="n">data_type</span> <span class="o">=</span> <span class="n">convert_data_type</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
                     <span class="n">ret_ref</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Data</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="n">ref</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">ref</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
                 <span class="k">case</span> <span class="n">quokka</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">Structure</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">):</span>
-                    <span class="n">ret_ref</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="p">()</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+                    <span class="n">ret_ref</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
                 <span class="k">case</span> <span class="n">quokka</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">StructureMember</span><span class="p">(</span><span class="n">structure</span><span class="o">=</span><span class="n">qbe_struct</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">):</span>
-                    <span class="n">ret_ref</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="p">()</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="n">qbe_struct</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">member_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="n">member</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="n">qbe_struct</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">member_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Cannot retrieve the structure member named `</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">`&quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot; from structure `</span><span class="si">{</span><span class="n">qbe_struct</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">` during reference parsing&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">ret_ref</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
                 <span class="k">case</span> <span class="n">quokka</span><span class="o">.</span><span class="n">Instruction</span><span class="p">():</span>  <span class="c1"># Not implemented for now</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Skipping instruction reference&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret_ref</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramBackendQuokka</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapper on weak reference on ProgramBackendQuokka&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">program</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">())</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Trying to access an already expired weak reference on ProgramBackendQuokka&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">program</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
@@ -387,11 +393,12 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">iter</span><span class="p">([])</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="n">OperandBackendQuokka</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">operands</span><span class="p">)</span>
+            <span class="n">OperandBackendQuokka</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">operands</span><span class="p">)</span>
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of groups of this instruction. Groups are capstone based but enriched.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -616,8 +623,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">qb_prog</span> <span class="o">=</span> <span class="n">quokka</span><span class="o">.</span><span class="n">Program</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="n">exec_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_exec_path</span> <span class="o">=</span> <span class="n">exec_path</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_callgraph</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fun_names</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {fun_name : fun_address}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_callgraph</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>  <span class="c1"># type: ignore[var-annotated]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fun_names</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {fun_name : fun_address}</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">functions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">FunctionBackendQuokka</span><span class="p">]:</span>
@@ -653,9 +660,12 @@
 
         <span class="n">struct_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">qbe_struct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">qb_prog</span><span class="o">.</span><span class="n">structures</span><span class="p">:</span>
-            <span class="n">struct</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span>
-                <span class="n">convert_struct_type</span><span class="p">(</span><span class="n">qbe_struct</span><span class="o">.</span><span class="n">type</span><span class="p">),</span> <span class="n">qbe_struct</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">qbe_struct</span><span class="o">.</span><span class="n">size</span>
-            <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">struct_size</span> <span class="o">:=</span> <span class="n">qbe_struct</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Normally this should never happen.&quot;</span>
+                    <span class="s2">&quot; Struct with size None encountered. name = `</span><span class="si">{qbe_struct.name}</span><span class="s2">`&quot;</span>
+                <span class="p">)</span>
+            <span class="n">struct</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="n">convert_struct_type</span><span class="p">(</span><span class="n">qbe_struct</span><span class="o">.</span><span class="n">type</span><span class="p">),</span> <span class="n">qbe_struct</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">struct_size</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">qbe_struct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">struct</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span>
                     <span class="n">offset</span><span class="p">,</span>
@@ -770,7 +780,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

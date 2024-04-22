@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="_static/documentation_options.js?v=3b889da3"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -222,14 +222,16 @@
       <ul>
         <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.algorithm">(bindiff.file.FunctionMatch attribute)</a>
 </li>
-        <li><a href="differs/bindiff.html#bindiff.types.AlgorithmMixin.algorithm">(bindiff.types.AlgorithmMixin property)</a>
-</li>
       </ul></li>
-      <li><a href="differs/bindiff.html#bindiff.types.AlgorithmMixin">AlgorithmMixin (class in bindiff.types)</a>
-</li>
-      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Anchors">Anchors (in module qbindiff.types)</a>
-</li>
       <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport.architecture">architecture (binexport.program.ProgramBinExport property)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.arm_memory_management">arm_memory_management (qbindiff.loader.types.OperandType attribute)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.arm_setend">arm_setend (qbindiff.loader.types.OperandType attribute)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.arm_sme">arm_sme (qbindiff.loader.types.OperandType attribute)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.ArrayLike1D">ArrayLike1D (in module qbindiff.types)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.DataType.ASCII">ASCII (qbindiff.loader.types.DataType attribute)</a>
 </li>
@@ -256,8 +258,6 @@
       <li><a href="qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport">BasicBlockBackendBinExport (class in qbindiff.loader.backend.binexport)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.BasicBlockBackendQuokka">BasicBlockBackendQuokka (class in qbindiff.loader.backend.quokka)</a>
-</li>
-      <li><a href="differs/bindiff.html#bindiff.types.BasicBlockBinDiff">BasicBlockBinDiff (class in bindiff.types)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport">BasicBlockBinExport (class in binexport.function)</a>
 </li>
@@ -424,8 +424,6 @@
       <ul>
         <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.confidence">(bindiff.file.FunctionMatch attribute)</a>
 </li>
-        <li><a href="differs/bindiff.html#bindiff.types.SimilarityMixin.confidence">(bindiff.types.SimilarityMixin property)</a>
-</li>
         <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Match.confidence">(qbindiff.types.Match attribute)</a>
 </li>
       </ul></li>
@@ -433,13 +431,9 @@
 </li>
       <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.Constant">Constant (class in qbindiff.features)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.wlgk.BOWLSH.copy">copy() (qbindiff.features.wlgk.BOWLSH method)</a>
-
-      <ul>
-        <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.copy">(qbindiff.Program method)</a>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.coprocessor">coprocessor (qbindiff.loader.types.OperandType attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.ProgramBackendBinExport.cortexm">cortexm (qbindiff.loader.backend.binexport.ProgramBackendBinExport property)</a>
+      <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.wlgk.BOWLSH.copy">copy() (qbindiff.features.wlgk.BOWLSH method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/distances.html#qbindiff.Distance.cosine">cosine (qbindiff.Distance attribute)</a>
 
@@ -491,15 +485,11 @@
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.LoaderType.diaphora">diaphora (qbindiff.loader.types.LoaderType attribute)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.types.DictMatchMixin">DictMatchMixin (class in bindiff.types)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.Differ">Differ (class in qbindiff)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.DiGraphDiffer">DiGraphDiffer (class in qbindiff)</a>
-</li>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.displacement">displacement (qbindiff.loader.types.OperandType attribute)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/passes.html#qbindiff.passes.FeaturePass.distance">distance() (qbindiff.passes.FeaturePass method)</a>
 </li>
@@ -597,8 +587,6 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.far">far (qbindiff.loader.types.OperandType attribute)</a>
-</li>
       <li><a href="qbindiff/doc/source/api/visitor.html#qbindiff.visitor.NoVisitor.feature_extractors">feature_extractors (qbindiff.visitor.NoVisitor property)</a>
 
       <ul>
@@ -625,6 +613,8 @@
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.DataType.FLOAT">FLOAT (qbindiff.loader.types.DataType attribute)</a>
 </li>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.float_point">float_point (qbindiff.loader.types.OperandType attribute)</a>
+</li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Function.flowgraph">flowgraph (qbindiff.Function property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.follow_through">follow_through() (qbindiff.Program method)</a>
@@ -649,15 +639,13 @@
 </li>
       <li><a href="differs/bindiff.html#bindiff.BinDiff.from_binexport_files">from_binexport_files() (bindiff.BinDiff static method)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.from_ida">from_ida() (qbindiff.Program static method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.from_ida">from_ida() (qbindiff.Program static method)</a>
+</li>
       <li><a href="exporter/binexport.html#binexport.types.FunctionType.from_proto">from_proto() (binexport.types.FunctionType static method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.from_quokka">from_quokka() (qbindiff.Program static method)</a>
-</li>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.fromkeys">fromkeys() (qbindiff.Program method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.full_keys">full_keys() (qbindiff.features.extractor.FeatureCollector method)</a>
 </li>
@@ -691,8 +679,6 @@
 </li>
       <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.FunctionBackendQuokka">FunctionBackendQuokka (class in qbindiff.loader.backend.quokka)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.types.FunctionBinDiff">FunctionBinDiff (class in bindiff.types)</a>
-</li>
       <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport">FunctionBinExport (class in binexport.function)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FunctionFeatureExtractor">FunctionFeatureExtractor (class in qbindiff.features.extractor)</a>
@@ -719,15 +705,29 @@
 </li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.GenericGraph">GenericGraph (class in qbindiff)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.GenericPass">GenericPass (class in qbindiff.types)</a>
+      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.GenericNode">GenericNode (class in qbindiff)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Function.get">get() (qbindiff.Function method)</a>
+      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.GenericPostPass">GenericPostPass (class in qbindiff.types)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.GenericPrePass">GenericPrePass (class in qbindiff.types)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.get">get() (qbindiff.features.extractor.FeatureCollector method)</a>
 
       <ul>
+        <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Function.get">(qbindiff.Function method)</a>
+</li>
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.get">(qbindiff.Program method)</a>
 </li>
       </ul></li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.get_function">get_function() (qbindiff.Program method)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Function.get_label">get_label() (qbindiff.Function method)</a>
+
+      <ul>
+        <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.GenericNode.get_label">(qbindiff.GenericNode method)</a>
+</li>
+      </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.get_match">get_match() (bindiff.BinDiff method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.GenericGraph.get_node">get_node() (qbindiff.GenericGraph method)</a>
 
@@ -741,14 +741,14 @@
         <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.get_similarities">(qbindiff.QBinDiff method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.ProgramBackendQuokka.get_structure">get_structure() (qbindiff.loader.backend.quokka.ProgramBackendQuokka method)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.graph">graph (binexport.function.FunctionBinExport property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Graph">Graph (in module qbindiff.types)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend.graph">graph (qbindiff.loader.backend.AbstractFunctionBackend property)</a>
 
       <ul>
@@ -791,10 +791,96 @@
 </li>
       <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.hash_matching">hash_matching (bindiff.types.FunctionAlgorithm attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.hash_matching_four_inst_min">hash_matching_four_inst_min (bindiff.types.BasicBlockAlgorithm attribute)</a>
 </li>
+      <li><a href="qbindiff/doc/source/api/distances.html#qbindiff.Distance.haussmann">haussmann (qbindiff.Distance attribute)</a>
+
+      <ul>
+        <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Distance.haussmann">(qbindiff.types.Distance attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.haussmann">haussmann() (in module qbindiff.passes.metrics)</a>
+</li>
+      <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.Address.help_msg">help_msg (qbindiff.features.Address attribute)</a>
+
+      <ul>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.BBlockNb.help_msg">(qbindiff.features.BBlockNb attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.BytesHash.help_msg">(qbindiff.features.BytesHash attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.ChildNb.help_msg">(qbindiff.features.ChildNb attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.Constant.help_msg">(qbindiff.features.Constant attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.CyclomaticComplexity.help_msg">(qbindiff.features.CyclomaticComplexity attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.DatName.help_msg">(qbindiff.features.DatName attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.BasicBlockFeatureExtractor.help_msg">(qbindiff.features.extractor.BasicBlockFeatureExtractor attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureExtractor.help_msg">(qbindiff.features.extractor.FeatureExtractor attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FunctionFeatureExtractor.help_msg">(qbindiff.features.extractor.FunctionFeatureExtractor attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.InstructionFeatureExtractor.help_msg">(qbindiff.features.extractor.InstructionFeatureExtractor attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.OperandFeatureExtractor.help_msg">(qbindiff.features.extractor.OperandFeatureExtractor attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.FuncName.help_msg">(qbindiff.features.FuncName attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.GraphCommunities.help_msg">(qbindiff.features.GraphCommunities attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.GraphDensity.help_msg">(qbindiff.features.GraphDensity attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.GraphDiameter.help_msg">(qbindiff.features.GraphDiameter attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.GraphMeanDegree.help_msg">(qbindiff.features.GraphMeanDegree attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.GraphNbComponents.help_msg">(qbindiff.features.GraphNbComponents attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.GraphTransitivity.help_msg">(qbindiff.features.GraphTransitivity attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.GroupsCategory.help_msg">(qbindiff.features.GroupsCategory attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.ImpName.help_msg">(qbindiff.features.ImpName attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.InstNB.help_msg">(qbindiff.features.InstNB attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.JumpNb.help_msg">(qbindiff.features.JumpNb attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.LibName.help_msg">(qbindiff.features.LibName attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.MaxChildNb.help_msg">(qbindiff.features.MaxChildNb attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.MaxInsNB.help_msg">(qbindiff.features.MaxInsNB attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.MaxParentNb.help_msg">(qbindiff.features.MaxParentNb attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.MDIndex.help_msg">(qbindiff.features.MDIndex attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.MeanInsNB.help_msg">(qbindiff.features.MeanInsNB attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.MnemonicSimple.help_msg">(qbindiff.features.MnemonicSimple attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.MnemonicTyped.help_msg">(qbindiff.features.MnemonicTyped attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.ParentNb.help_msg">(qbindiff.features.ParentNb attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.ReadWriteAccess.help_msg">(qbindiff.features.ReadWriteAccess attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.RelativeNb.help_msg">(qbindiff.features.RelativeNb attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.SmallPrimeNumbers.help_msg">(qbindiff.features.SmallPrimeNumbers attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.StronglyConnectedComponents.help_msg">(qbindiff.features.StronglyConnectedComponents attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.StrRef.help_msg">(qbindiff.features.StrRef attribute)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.WeisfeilerLehman.help_msg">(qbindiff.features.WeisfeilerLehman attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.wlgk.BOWLSH.hyperplanes">hyperplanes (qbindiff.features.wlgk.BOWLSH property)</a>
 </li>
   </ul></td>
@@ -866,12 +952,8 @@
 </li>
       <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.InstructionBackendQuokka">InstructionBackendQuokka (class in qbindiff.loader.backend.quokka)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.types.InstructionBinDiff">InstructionBinDiff (class in bindiff.types)</a>
-</li>
       <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport">InstructionBinExport (class in binexport.instruction)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.InstructionFeatureExtractor">InstructionFeatureExtractor (class in qbindiff.features.extractor)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.File.instructions">instructions (bindiff.file.File attribute)</a>
@@ -888,6 +970,8 @@
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.BasicBlock.instructions">(qbindiff.loader.BasicBlock property)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="exporter/binexport.html#binexport.types.FunctionType.INVALID">INVALID (binexport.types.FunctionType attribute)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.FunctionType.invalid">invalid (qbindiff.loader.types.FunctionType attribute)</a>
@@ -928,11 +1012,9 @@
 </li>
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.is_match_secondary">is_match_secondary() (qbindiff.mapping.Mapping method)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.types.MatchMixin.is_matched">is_matched() (bindiff.types.MatchMixin method)</a>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.is_matched">is_matched() (bindiff.BinDiff method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Function.is_thunk">is_thunk() (qbindiff.Function method)</a>
-</li>
-      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Item">Item (in module qbindiff.types)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.items">items() (binexport.function.FunctionBinExport method)</a>
 
@@ -944,24 +1026,22 @@
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.items">(qbindiff.Program method)</a>
 </li>
       </ul></li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.iter_basicblock_matches">iter_basicblock_matches() (bindiff.BinDiff method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.iter_function_matches">iter_function_matches() (bindiff.BinDiff method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.iter_instruction_matches">iter_instruction_matches() (bindiff.BinDiff method)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="qbindiff/doc/source/api/distances.html#qbindiff.Distance.jaccard_strong">jaccard_strong (qbindiff.Distance attribute)</a>
-
-      <ul>
-        <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Distance.jaccard_strong">(qbindiff.types.Distance attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.jaccard_strong">jaccard_strong() (in module qbindiff.passes.metrics)</a>
-</li>
       <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.jump_sequence_matching">jump_sequence_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.JumpNb">JumpNb (class in qbindiff.features)</a>
 </li>
   </ul></td>
@@ -1106,8 +1186,6 @@
 </li>
       <li><a href="qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher.mapping">mapping (qbindiff.matcher.Matcher property)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.types.MatchMixin.match">match (bindiff.types.MatchMixin property)</a>
-</li>
       <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Match">Match (class in qbindiff.types)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.match_import_functions">match_import_functions() (qbindiff.QBinDiff method)</a>
@@ -1118,7 +1196,7 @@
 </li>
       <li><a href="qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher">Matcher (class in qbindiff.matcher)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.types.MatchMixin">MatchMixin (class in bindiff.types)</a>
+      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.Differ.matching_iterator">matching_iterator() (qbindiff.Differ method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Matrix">Matrix (in module qbindiff.types)</a>
 </li>
@@ -1233,25 +1311,19 @@
 </li>
       <li><a href="differs/bindiff.html#bindiff.types.FunctionAlgorithm.name_hash_matching">name_hash_matching (bindiff.types.FunctionAlgorithm attribute)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_item_primary">nb_item_primary (qbindiff.mapping.Mapping property)</a>
+      <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_match">nb_match (qbindiff.mapping.Mapping property)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_item_secondary">nb_item_secondary (qbindiff.mapping.Mapping property)</a>
+      <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_nodes_primary">nb_nodes_primary (qbindiff.mapping.Mapping property)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.types.DictMatchMixin.nb_match">nb_match (bindiff.types.DictMatchMixin property)</a>
-
-      <ul>
-        <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_match">(qbindiff.mapping.Mapping property)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="differs/bindiff.html#bindiff.types.DictMatchMixin.nb_unmatch">nb_unmatch (bindiff.types.DictMatchMixin property)</a>
+      <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_nodes_secondary">nb_nodes_secondary (qbindiff.mapping.Mapping property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_unmatched_primary">nb_unmatched_primary (qbindiff.mapping.Mapping property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.nb_unmatched_secondary">nb_unmatched_secondary (qbindiff.mapping.Mapping property)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.near">near (qbindiff.loader.types.OperandType attribute)</a>
+      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Node">Node (in module qbindiff.types)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.GenericGraph.node_labels">node_labels (qbindiff.GenericGraph property)</a>
 
@@ -1259,6 +1331,8 @@
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.node_labels">(qbindiff.Program property)</a>
 </li>
       </ul></li>
+      <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.NodeLabel">NodeLabel (in module qbindiff.types)</a>
+</li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.GenericGraph.nodes">nodes (qbindiff.GenericGraph property)</a>
 
       <ul>
@@ -1269,12 +1343,8 @@
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.FunctionType.normal">normal (qbindiff.loader.types.FunctionType attribute)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.Differ.normalize">normalize() (qbindiff.Differ method)</a>
-
-      <ul>
-        <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.normalize">(qbindiff.QBinDiff method)</a>
+      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.normalize">normalize() (qbindiff.QBinDiff method)</a>
 </li>
-      </ul></li>
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.normalized_similarity">normalized_similarity (qbindiff.mapping.Mapping property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/visitor.html#qbindiff.visitor.NoVisitor">NoVisitor (class in qbindiff.visitor)</a>
@@ -1345,8 +1415,6 @@
 </li>
       <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.pb_operand">pb_operand (binexport.operand.OperandBinExport property)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.phrase">phrase (qbindiff.loader.types.OperandType attribute)</a>
-</li>
       <li><a href="tools/idascript.html#idascript.ida.IDA.pid">pid (idascript.ida.IDA property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.pop">pop() (qbindiff.Program method)</a>
@@ -1354,6 +1422,8 @@
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.popitem">popitem() (qbindiff.Program method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Positive">Positive (in module qbindiff.types)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.preload">preload() (binexport.function.FunctionBinExport method)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.BinDiff.primary">primary (bindiff.BinDiff attribute)</a>
 
@@ -1367,15 +1437,21 @@
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.primary_basicblock_match">primary_basicblock_match (bindiff.file.BindiffFile attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.primary_file">primary_file (bindiff.file.BindiffFile attribute)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.primary_functions_match">primary_functions_match (bindiff.file.BindiffFile attribute)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.primary_matched">primary_matched (qbindiff.mapping.Mapping property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.primary_unmatched">primary_unmatched (qbindiff.mapping.Mapping property)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.primary_unmatched_basic_block">primary_unmatched_basic_block() (bindiff.BinDiff method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.primary_unmatched_function">primary_unmatched_function() (bindiff.BinDiff method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.primary_unmatched_instruction">primary_unmatched_instruction() (bindiff.BinDiff method)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.prime_matching_four_inst_min">prime_matching_four_inst_min (bindiff.types.BasicBlockAlgorithm attribute)</a>
 </li>
@@ -1391,6 +1467,8 @@
         <li><a href="qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher.process">(qbindiff.matcher.Matcher method)</a>
 </li>
       </ul></li>
+      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.Differ.process_iterator">process_iterator() (qbindiff.Differ method)</a>
+</li>
       <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.program">program (binexport.function.BasicBlockBinExport property)</a>
 
       <ul>
@@ -1404,12 +1482,16 @@
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program">Program (class in qbindiff)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport.program">program (qbindiff.loader.backend.binexport.BasicBlockBackendBinExport property)</a>
+
+      <ul>
+        <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.InstructionBackendQuokka.program">(qbindiff.loader.backend.quokka.InstructionBackendQuokka property)</a>
 </li>
+        <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.OperandBackendQuokka.program">(qbindiff.loader.backend.quokka.OperandBackendQuokka property)</a>
+</li>
+      </ul></li>
       <li><a href="qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.ProgramBackendBinExport">ProgramBackendBinExport (class in qbindiff.loader.backend.binexport)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.ProgramBackendQuokka">ProgramBackendQuokka (class in qbindiff.loader.backend.quokka)</a>
-</li>
-      <li><a href="differs/bindiff.html#bindiff.types.ProgramBinDiff">ProgramBinDiff (class in bindiff.types)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.program.ProgramBinExport">ProgramBinExport (class in binexport.program)</a>
 </li>
@@ -1476,6 +1558,8 @@
 </li>
       <li><a href="qbindiff/doc/source/api/passes.html#qbindiff.passes.FeaturePass.register_extractor">register_extractor() (qbindiff.passes.FeaturePass method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.register_feature_extractor">register_feature_extractor() (qbindiff.QBinDiff method)</a>
 
       <ul>
@@ -1486,15 +1570,13 @@
         <li><a href="qbindiff/doc/source/api/visitor.html#qbindiff.visitor.Visitor.register_feature_extractor">(qbindiff.visitor.Visitor method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_function_feature_callback">register_function_feature_callback() (qbindiff.visitor.ProgramVisitor method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_instruction_feature_callback">register_instruction_feature_callback() (qbindiff.visitor.ProgramVisitor method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_operand_feature_callback">register_operand_feature_callback() (qbindiff.visitor.ProgramVisitor method)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.Differ.register_postpass">register_postpass() (qbindiff.Differ method)</a>
+      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.register_postpass">register_postpass() (qbindiff.QBinDiff method)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.Differ.register_prepass">register_prepass() (qbindiff.Differ method)</a>
 </li>
@@ -1511,8 +1593,6 @@
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.remove_match">remove_match() (qbindiff.mapping.Mapping method)</a>
 </li>
       <li><a href="tools/idascript.html#idascript.ida.IDA.returncode">returncode (idascript.ida.IDA property)</a>
-</li>
-      <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.Differ.run_passes">run_passes() (qbindiff.Differ method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1548,6 +1628,12 @@
 </li>
       <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.secondary_unmatched">secondary_unmatched (qbindiff.mapping.Mapping property)</a>
 </li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.secondary_unmatched_basic_block">secondary_unmatched_basic_block() (bindiff.BinDiff method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.secondary_unmatched_function">secondary_unmatched_function() (bindiff.BinDiff method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff.secondary_unmatched_instruction">secondary_unmatched_instruction() (bindiff.BinDiff method)</a>
+</li>
       <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.self_loop_matching">self_loop_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.set_function_filter">set_function_filter() (qbindiff.Program method)</a>
@@ -1561,15 +1647,11 @@
       <ul>
         <li><a href="differs/bindiff.html#bindiff.file.FunctionMatch.similarity">(bindiff.file.FunctionMatch attribute)</a>
 </li>
-        <li><a href="differs/bindiff.html#bindiff.types.SimilarityMixin.similarity">(bindiff.types.SimilarityMixin property)</a>
-</li>
         <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.similarity">(qbindiff.mapping.Mapping property)</a>
 </li>
         <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Match.similarity">(qbindiff.types.Match attribute)</a>
 </li>
       </ul></li>
-      <li><a href="differs/bindiff.html#bindiff.types.SimilarityMixin">SimilarityMixin (class in bindiff.types)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.SimMatrix">SimMatrix (in module qbindiff.types)</a>
@@ -1636,6 +1718,8 @@
 </li>
       <li><a href="tools/idascript.html#idascript.ida.IDA.timeout">timeout (idascript.ida.IDA attribute)</a>
 </li>
+      <li><a href="qbindiff/doc/source/api/mapping.html#qbindiff.mapping.Mapping.to_csv">to_csv() (qbindiff.mapping.Mapping method)</a>
+</li>
       <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.to_sparse_vector">to_sparse_vector() (qbindiff.features.extractor.FeatureCollector method)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport.type">type (binexport.expression.ExpressionBinExport property)</a>
@@ -1666,32 +1750,22 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.uncached_blocks">uncached_blocks (binexport.function.FunctionBinExport property)</a>
-</li>
-      <li><a href="exporter/binexport.html#binexport.operand.OperandBinExport.uncached_expressions">uncached_expressions (binexport.operand.OperandBinExport property)</a>
-</li>
-      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.uncached_instructions">uncached_instructions (binexport.function.BasicBlockBinExport property)</a>
-</li>
-      <li><a href="exporter/binexport.html#binexport.instruction.InstructionBinExport.uncached_operands">uncached_operands (binexport.instruction.InstructionBinExport property)</a>
-</li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.StructureType.UNION">UNION (qbindiff.loader.types.StructureType attribute)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.DataType.UNKNOWN">UNKNOWN (qbindiff.loader.types.DataType attribute)</a>
 </li>
-      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.LoaderType.unknown">unknown (qbindiff.loader.types.LoaderType attribute)</a>
-
-      <ul>
-        <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.unknown">(qbindiff.loader.types.OperandType attribute)</a>
+      <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.unknown">unknown (qbindiff.loader.types.OperandType attribute)</a>
 </li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.ReferenceType.UNKNOWN">UNKNOWN (qbindiff.loader.types.ReferenceType attribute)</a>
 
       <ul>
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.StructureType.UNKNOWN">(qbindiff.loader.types.StructureType attribute)</a>
 </li>
       </ul></li>
+      <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.unload">unload() (binexport.function.FunctionBinExport method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend.unload_blocks">unload_blocks() (qbindiff.loader.backend.AbstractFunctionBackend method)</a>
 
       <ul>
@@ -2020,7 +2094,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

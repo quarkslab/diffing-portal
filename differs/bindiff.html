@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -298,6 +298,21 @@ and then load a BinDiff instance.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.get_match">
+<span class="sig-name descname"><span class="pre">get_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#bindiff.file.FunctionMatch" title="bindiff.file.FunctionMatch"><span class="pre">FunctionMatch</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.get_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.get_match" title="Link to this definition">¶</a></dt>
+<dd><p>Get the function that matches the provided one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>function</strong> – A function that belongs either to primary or secondary</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple with the matched function and the match object if there is a match for
+the provided function, otherwise None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="bindiff.BinDiff.is_installation_ok">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_installation_ok</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.is_installation_ok"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.is_installation_ok" title="Link to this definition">¶</a></dt>
 <dd><p>Check that bindiff is properly installed and can be found
@@ -309,10 +324,121 @@ on the system.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.is_matched">
+<span class="sig-name descname"><span class="pre">is_matched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.is_matched"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.is_matched" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>function</strong> – A function that belongs either to primary or secondary.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if there is a match for the provided function, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.iter_basicblock_matches">
+<span class="sig-name descname"><span class="pre">iter_basicblock_matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">function2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#bindiff.file.BasicBlockMatch" title="bindiff.file.BasicBlockMatch"><span class="pre">BasicBlockMatch</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.iter_basicblock_matches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.iter_basicblock_matches" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of all the matched basic blocks between the two provided functions.
+Each element of the list is a tuple containing the basic blocks of the primary and secondary
+functions and the BasicBlockMatch object describing the match.
+The first function must be part of the primary program while the second function must be
+part of the secondary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>function1</strong> – A function of the primary program</p></li>
+<li><p><strong>function2</strong> – A function of the secondary program</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuple, each containing the primary basic block, the secondary basic block
+and the BasicBlockMatch object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.iter_function_matches">
+<span class="sig-name descname"><span class="pre">iter_function_matches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#bindiff.file.FunctionMatch" title="bindiff.file.FunctionMatch"><span class="pre">FunctionMatch</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.iter_function_matches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.iter_function_matches" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of all the matched functions. Each element of the list is a tuple containing
+the function in the primary program, the matched function in the secondary program and the
+FunctionMatch object describing the match</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of tuple, each containing the primary function, the secondary function and
+the FunctionMatch object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.iter_instruction_matches">
+<span class="sig-name descname"><span class="pre">iter_instruction_matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">block2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><span class="pre">InstructionBinExport</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../exporter/binexport.html#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><span class="pre">InstructionBinExport</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.iter_instruction_matches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.iter_instruction_matches" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of all the matched instructions between the two provided basic blocks.
+Each element of the list is a tuple containing the instructions of the primary and secondary
+basic blocks.
+The first basic block must belong to the primary program while the second one must be
+part of the secondary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>block1</strong> – A basic block belonging to the primary program</p></li>
+<li><p><strong>block2</strong> – A basic block belonging to the secondary program</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuple, each containing the primary instruction and the secondary instruction</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bindiff.BinDiff.primary">
 <span class="sig-name descname"><span class="pre">primary</span></span><a class="headerlink" href="#bindiff.BinDiff.primary" title="Link to this definition">¶</a></dt>
 <dd><p>Primary BinExport object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.primary_unmatched_basic_block">
+<span class="sig-name descname"><span class="pre">primary_unmatched_basic_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.primary_unmatched_basic_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.primary_unmatched_basic_block" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of the unmatched basic blocks in the provided function.
+The function must be part of the primary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>function</strong> – A function of the primary program</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of unmatched basic blocks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.primary_unmatched_function">
+<span class="sig-name descname"><span class="pre">primary_unmatched_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.primary_unmatched_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.primary_unmatched_function" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of the unmatched functions in the primary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of unmatched functions in primary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.primary_unmatched_instruction">
+<span class="sig-name descname"><span class="pre">primary_unmatched_instruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><span class="pre">InstructionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.primary_unmatched_instruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.primary_unmatched_instruction" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of the unmatched instructions in the provided basic block.
+The basic block must be part of the primary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bb</strong> – A basic block belonging to the primary program</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of unmatched instructions</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -338,6 +464,47 @@ the diffing result in the given file</p>
 <dt class="sig sig-object py" id="bindiff.BinDiff.secondary">
 <span class="sig-name descname"><span class="pre">secondary</span></span><a class="headerlink" href="#bindiff.BinDiff.secondary" title="Link to this definition">¶</a></dt>
 <dd><p>Secondary BinExport object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.secondary_unmatched_basic_block">
+<span class="sig-name descname"><span class="pre">secondary_unmatched_basic_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.secondary_unmatched_basic_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.secondary_unmatched_basic_block" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of the unmatched basic blocks in the provided function.
+The function must be part of the secondary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>function</strong> – A function of the secondary program</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of unmatched basic blocks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.secondary_unmatched_function">
+<span class="sig-name descname"><span class="pre">secondary_unmatched_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.secondary_unmatched_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.secondary_unmatched_function" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of the unmatched functions in the secondary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of unmatched functions in secondary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.BinDiff.secondary_unmatched_instruction">
+<span class="sig-name descname"><span class="pre">secondary_unmatched_instruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><span class="pre">BasicBlockBinExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><span class="pre">InstructionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/bindiff/bindiff.html#BinDiff.secondary_unmatched_instruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.BinDiff.secondary_unmatched_instruction" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of the unmatched instructions in the provided basic block.
+The basic block must be part of the secondary program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bb</strong> – A basic block belonging to the secondary program</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of unmatched instructions</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -454,7 +621,7 @@ It only takes two binaries.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bindiff.file.BindiffFile.created">
-<span class="sig-name descname"><span class="pre">created</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.12)"><span class="pre">datetime</span></a></em><a class="headerlink" href="#bindiff.file.BindiffFile.created" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">created</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#bindiff.file.BindiffFile.created" title="Link to this definition">¶</a></dt>
 <dd><p>Database creation date</p>
 </dd></dl>
 
@@ -472,7 +639,7 @@ It only takes two binaries.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bindiff.file.BindiffFile.modified">
-<span class="sig-name descname"><span class="pre">modified</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.12)"><span class="pre">datetime</span></a></em><a class="headerlink" href="#bindiff.file.BindiffFile.modified" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">modified</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#bindiff.file.BindiffFile.modified" title="Link to this definition">¶</a></dt>
 <dd><p>Database last modification date</p>
 </dd></dl>
 
@@ -732,19 +899,7 @@ It only takes two binaries.</p>
 
 </dd></dl>
 
-<dl class="py class" id="module-bindiff.types">
-<dt class="sig sig-object py" id="bindiff.types.AlgorithmMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">AlgorithmMixin</span></span><a class="reference internal" href="../_modules/bindiff/types.html#AlgorithmMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.AlgorithmMixin" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Mixin class representing the matching algorithm as given by bindiff</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="bindiff.types.AlgorithmMixin.algorithm">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">algorithm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#bindiff.types.BasicBlockAlgorithm" title="bindiff.types.BasicBlockAlgorithm"><span class="pre">BasicBlockAlgorithm</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#bindiff.types.FunctionAlgorithm" title="bindiff.types.FunctionAlgorithm"><span class="pre">FunctionAlgorithm</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#bindiff.types.AlgorithmMixin.algorithm" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class enum">
+<dl class="py class enum" id="module-bindiff.types">
 <dt class="sig sig-object py" id="bindiff.types.BasicBlockAlgorithm">
 <em class="property"><span class="pre">enum</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">BasicBlockAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bindiff/types.html#BasicBlockAlgorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.BasicBlockAlgorithm" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a></p>
@@ -858,47 +1013,12 @@ bindiff so hardcoded here)</p>
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="bindiff.types.BasicBlockBinDiff">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">BasicBlockBinDiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pb_bb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinExport2.BasicBlock</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bindiff/types.html#BasicBlockBinDiff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.BasicBlockBinDiff" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#bindiff.types.DictMatchMixin" title="bindiff.types.DictMatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictMatchMixin</span></code></a>, <a class="reference internal" href="#bindiff.types.AlgorithmMixin" title="bindiff.types.AlgorithmMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlgorithmMixin</span></code></a>, <a class="reference internal" href="../exporter/binexport.html#binexport.function.BasicBlockBinExport" title="binexport.basic_block.BasicBlockBinExport"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicBlockBinExport</span></code></a></p>
-<p>Diffed basic block. Enrich BasicBlockBinExport with the match and
-algorithm attributes (and theirs associated methods).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>program</strong> – Weak reference to the program</p></li>
-<li><p><strong>function</strong> – Weak reference to the function</p></li>
-<li><p><strong>pb_bb</strong> – protobuf definition of the basic block</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py exception">
 <dt class="sig sig-object py" id="bindiff.types.BindiffNotFound">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">BindiffNotFound</span></span><a class="reference internal" href="../_modules/bindiff/types.html#BindiffNotFound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.BindiffNotFound" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 <p>Exception raised if Bindiff binary cannot be found
 when trying to diff two binaries.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bindiff.types.DictMatchMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">DictMatchMixin</span></span><a class="reference internal" href="../_modules/bindiff/types.html#DictMatchMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.DictMatchMixin" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#bindiff.types.MatchMixin" title="bindiff.types.MatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatchMixin</span></code></a></p>
-<p>Extension of MatchMixin applied on dict object to compute
-the number of matched / unmatched object within the dict.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="bindiff.types.DictMatchMixin.nb_match">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nb_match</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#bindiff.types.DictMatchMixin.nb_match" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="bindiff.types.DictMatchMixin.nb_unmatch">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nb_unmatch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#bindiff.types.DictMatchMixin.nb_unmatch" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class enum">
@@ -1010,92 +1130,6 @@ bindiff so hardcoded here)</p>
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="bindiff.types.FunctionBinDiff">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">FunctionBinDiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pb_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinExport2.FlowGraph</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_import</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bindiff/types.html#FunctionBinDiff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.FunctionBinDiff" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#bindiff.types.DictMatchMixin" title="bindiff.types.DictMatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictMatchMixin</span></code></a>, <a class="reference internal" href="#bindiff.types.AlgorithmMixin" title="bindiff.types.AlgorithmMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlgorithmMixin</span></code></a>, <a class="reference internal" href="#bindiff.types.SimilarityMixin" title="bindiff.types.SimilarityMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimilarityMixin</span></code></a>, <a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionBinExport</span></code></a></p>
-<p>Function class to represent a diffed function. Enrich FunctionBinExport
-with math, similarity, confidence and algorithm attributes.</p>
-<p>Constructor. Iterates the FlowGraph structure and initialize all the
-basic blocks and instruction accordingly.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>program</strong> – weak reference to program (used to navigate pb fields contained inside)</p></li>
-<li><p><strong>pb_fun</strong> – FlowGraph protobuf structure</p></li>
-<li><p><strong>is_import</strong> – whether or not it’s an import function (if so does not initialize bb etc..)</p></li>
-<li><p><strong>addr</strong> – address of the function (info avalaible in the call graph)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bindiff.types.InstructionBinDiff">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">InstructionBinDiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReferenceType</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../exporter/binexport.html#binexport.function.FunctionBinExport" title="binexport.function.FunctionBinExport"><span class="pre">FunctionBinExport</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bindiff/types.html#InstructionBinDiff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.InstructionBinDiff" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#bindiff.types.MatchMixin" title="bindiff.types.MatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatchMixin</span></code></a>, <a class="reference internal" href="../exporter/binexport.html#binexport.instruction.InstructionBinExport" title="binexport.instruction.InstructionBinExport"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstructionBinExport</span></code></a></p>
-<p>Diff instruction. Simply add the match attribute to the
-InstructionBinExport class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>program</strong> – Weak reference to the program</p></li>
-<li><p><strong>function</strong> – Weak reference to the function</p></li>
-<li><p><strong>addr</strong> – address of the instruction (computed outside)</p></li>
-<li><p><strong>i_idx</strong> – instruction index in the protobuf data structure</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bindiff.types.MatchMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">MatchMixin</span></span><a class="reference internal" href="../_modules/bindiff/types.html#MatchMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.MatchMixin" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Mixin class to represent a match between two object.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="bindiff.types.MatchMixin.is_matched">
-<span class="sig-name descname"><span class="pre">is_matched</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/bindiff/types.html#MatchMixin.is_matched"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.MatchMixin.is_matched" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="bindiff.types.MatchMixin.match">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">match</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#bindiff.types.MatchMixin.match" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bindiff.types.ProgramBinDiff">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">ProgramBinDiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bindiff/types.html#ProgramBinDiff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.ProgramBinDiff" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#bindiff.types.DictMatchMixin" title="bindiff.types.DictMatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictMatchMixin</span></code></a>, <a class="reference internal" href="#bindiff.types.SimilarityMixin" title="bindiff.types.SimilarityMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimilarityMixin</span></code></a>, <a class="reference internal" href="../exporter/binexport.html#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgramBinExport</span></code></a></p>
-<p>Program class to represent a diffed binary. Basically enrich
-a ProgramBinExport class with match, similarity, confidence
-attributes and the associated methods.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file</strong> – BinExport file path</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bindiff.types.SimilarityMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">SimilarityMixin</span></span><a class="reference internal" href="../_modules/bindiff/types.html#SimilarityMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.SimilarityMixin" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Mixing class to represent a similarity between to entities, with confidence level.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="bindiff.types.SimilarityMixin.confidence">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">confidence</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#bindiff.types.SimilarityMixin.confidence" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="bindiff.types.SimilarityMixin.similarity">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">similarity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#bindiff.types.SimilarityMixin.similarity" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </section>
 </section>
 </section>
@@ -1185,7 +1219,7 @@ attributes and the associated methods.</p>
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
 <a class="reference internal" href="../_sources/differs/bindiff.rst.txt" rel="nofollow">Show Source</a>.
     </footer>

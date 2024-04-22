@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -100,10 +100,10 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">idascript</span> <span class="kn">import</span> <span class="n">IDA_BINARY</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">Manager</span>
 <span class="kn">import</span> <span class="nn">queue</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="n">TIMEOUT_RETURNCODE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
@@ -372,28 +372,21 @@
 <span class="sd">    on a bunch of files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_data_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
-    <span class="n">_script_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">_running</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
-
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_worker_handle</span><span class="p">(</span><span class="n">bin_file</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Worker function run concurrently</span>
+    <span class="k">def</span> <span class="nf">_worker</span><span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">file</span> <span class="o">=</span> <span class="n">ingress</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
-<span class="sd">        :param bin_file: binary file to analyse</span>
-<span class="sd">        :return: return code, name of binary file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+                <span class="n">ida</span> <span class="o">=</span> <span class="n">IDA</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+                <span class="n">ida</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">ida</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
 
-        <span class="n">ida</span> <span class="o">=</span> <span class="n">IDA</span><span class="p">(</span><span class="n">bin_file</span><span class="p">,</span> <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_script_file</span><span class="p">,</span> <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_params</span><span class="p">,</span> <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_timeout</span><span class="p">)</span>
-
-        <span class="n">ida</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">ida</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-        <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_data_queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">res</span><span class="p">,</span> <span class="n">bin_file</span><span class="p">))</span>
-        
-        <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">bin_file</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">egress</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">file</span><span class="p">,</span> <span class="n">res</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+                <span class="k">break</span>
 
 <div class="viewcode-block" id="MultiIDA.map">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.MultiIDA.map">[docs]</a>
@@ -402,7 +395,7 @@
             <span class="n">script</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterator the generator sent and apply the script file on each</span>
 <span class="sd">        file concurrently on a bunch of IDA workers. The function consume</span>
@@ -417,29 +410,32 @@
 <span class="sd">        :return: generator of files processed (return code, file path)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_running</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MultiIDAAlreadyRunning</span><span class="p">()</span>
-
-        <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span>
-
-        <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_script_file</span> <span class="o">=</span> <span class="n">script</span>
-
-        <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">params</span>
-
-        <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span>
-
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+        <span class="n">ingress</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="n">egress</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
         <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">workers</span><span class="p">)</span>
-        <span class="n">task</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">MultiIDA</span><span class="o">.</span><span class="n">_worker_handle</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Launch all workers</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">workers</span><span class="p">):</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">MultiIDA</span><span class="o">.</span><span class="n">_worker</span><span class="p">,</span> <span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">))</span>
+
+        <span class="c1"># Pre-fill ingress queue</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">generator</span><span class="p">:</span>
+            <span class="n">ingress</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_data_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">data</span>
-            <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">ready</span><span class="p">():</span>
+            <span class="n">path</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">egress</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">yield</span> <span class="n">path</span><span class="p">,</span> <span class="n">res</span>
+
+            <span class="c1"># once all items have been processed</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">total</span><span class="p">:</span>
                 <span class="k">break</span>
-        <span class="n">MultiIDA</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+        <span class="n">pool</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div>
 </div>
 
 </pre></div>
@@ -502,7 +498,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -110,24 +110,28 @@
 <span class="c1"># limitations under the License.</span>
 
 <span class="sd">&quot;&quot;&quot;Standard passes</span>
-
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">tqdm</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">lil_matrix</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">lil_matrix</span>  <span class="c1"># type: ignore[import-untyped]</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Program</span>
 <span class="kn">from</span> <span class="nn">qbindiff.visitor</span> <span class="kn">import</span> <span class="n">ProgramVisitor</span>
 <span class="kn">from</span> <span class="nn">qbindiff.features.manager</span> <span class="kn">import</span> <span class="n">FeatureKeyManager</span>
-<span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span><span class="p">,</span> <span class="n">FeatureCollector</span>
 <span class="kn">from</span> <span class="nn">qbindiff.passes.metrics</span> <span class="kn">import</span> <span class="n">pairwise_distances</span>
 <span class="kn">from</span> <span class="nn">qbindiff.utils</span> <span class="kn">import</span> <span class="n">is_debug</span>
 <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">SimMatrix</span><span class="p">,</span> <span class="n">Distance</span>
+
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span><span class="p">,</span> <span class="n">FeatureCollector</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span>
 
 
 <div class="viewcode-block" id="FeaturePass">
@@ -145,8 +149,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_distance</span> <span class="o">=</span> <span class="n">distance</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_distances</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Distance</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_visitor</span> <span class="o">=</span> <span class="n">ProgramVisitor</span><span class="p">()</span>
+
+        <span class="c1"># These two attributes exist only to keep an access to the FeatureCollector for each function</span>
+        <span class="c1"># Please note that **not** every the function might be present in the dictionary.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
 <div class="viewcode-block" id="FeaturePass.distance">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/passes.html#qbindiff.passes.FeaturePass.distance">[docs]</a>
@@ -194,9 +203,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">feature_matrix</span> <span class="o">=</span> <span class="n">lil_matrix</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">node_label</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span>
-            <span class="n">features</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">is_debug</span><span class="p">()</span>
-        <span class="p">):</span>
+        <span class="k">for</span> <span class="n">node_label</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">vec</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">to_sparse_vector</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">features_main_keys</span><span class="p">)</span>
             <span class="n">feature_matrix</span><span class="p">[</span><span class="n">node_to_index</span><span class="p">[</span><span class="n">node_label</span><span class="p">]]</span> <span class="o">=</span> <span class="n">vec</span>
         <span class="k">return</span> <span class="n">feature_matrix</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
@@ -281,8 +288,8 @@
             <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Distance calculated&quot;</span><span class="p">)</span>
-        <span class="c1"># Normalize</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sim_matrix</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sim_matrix</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Normalize. Haussmann distance comes already normalized</span>
+        <span class="k">if</span> <span class="n">distance</span> <span class="o">!=</span> <span class="n">Distance</span><span class="o">.</span><span class="n">haussmann</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">sim_matrix</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sim_matrix</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">sim_matrix</span> <span class="o">/=</span> <span class="n">sim_matrix</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="n">sim_matrix</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sim_matrix</span>
 
@@ -293,15 +300,16 @@
         <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
         <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
         <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
-        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">primary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
+        <span class="n">secondary_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span><span class="p">],</span>
         <span class="n">fill</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the similarity matrix by calculating the distance between the feature</span>
 <span class="sd">        vectors.</span>
 
 <span class="sd">        :param fill: if True the whole matrix will be erased before writing in it</span>
+<span class="sd">        :returns: An iterator in the range [0, 1000] (used for tracking progress).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># fill the matrix with -1 (not-set value)</span>
@@ -324,15 +332,35 @@
         <span class="c1"># Extract the features</span>
         <span class="n">primary</span><span class="o">.</span><span class="n">set_function_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">label</span><span class="p">:</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ignore_primary</span><span class="p">)</span>
         <span class="n">secondary</span><span class="o">.</span><span class="n">set_function_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">label</span><span class="p">:</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ignore_secondary</span><span class="p">)</span>
+
+        <span class="c1"># Dirty hack to count the number of functions that pass the filter</span>
+        <span class="n">primary_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">secondary_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">primary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">primary_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">secondary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">secondary_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># scale factor for the iterator</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">/</span> <span class="p">(</span><span class="n">primary_count</span> <span class="o">+</span> <span class="n">secondary_count</span><span class="p">)</span>
+
         <span class="n">key_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># ((label, node), iteration)</span>
 
-        <span class="n">primary_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">key_fun</span><span class="o">=</span><span class="n">key_fun</span><span class="p">)</span>
-        <span class="n">secondary_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">secondary</span><span class="p">,</span> <span class="n">key_fun</span><span class="o">=</span><span class="n">key_fun</span><span class="p">)</span>
+        <span class="c1"># { node_label : FeatureCollector } In this case node_label is the function address</span>
+        <span class="n">primary_features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">secondary_features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">collector</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">key_fun</span><span class="o">=</span><span class="n">key_fun</span><span class="p">)):</span>
+            <span class="n">primary_features</span><span class="p">[</span><span class="n">addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">collector</span>
+            <span class="k">yield</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">collector</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">secondary</span><span class="p">,</span> <span class="n">key_fun</span><span class="o">=</span><span class="n">key_fun</span><span class="p">)):</span>
+            <span class="n">secondary_features</span><span class="p">[</span><span class="n">addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">collector</span>
+            <span class="k">yield</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="p">(</span><span class="n">primary_count</span> <span class="o">+</span> <span class="n">i</span><span class="p">)))</span>
         <span class="n">primary</span><span class="o">.</span><span class="n">set_function_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">secondary</span><span class="o">.</span><span class="n">set_function_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">p_features</span> <span class="o">=</span> <span class="n">primary_features</span>
-        <span class="n">s_features</span> <span class="o">=</span> <span class="n">secondary_features</span>
+        <span class="c1"># Populate it only when they are both filled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_features</span> <span class="o">=</span> <span class="n">primary_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secondary_features</span> <span class="o">=</span> <span class="n">secondary_features</span>
 
         <span class="c1"># Get the weights of each feature</span>
         <span class="n">f_weights</span> <span class="o">=</span> <span class="p">{}</span>
@@ -341,7 +369,7 @@
 
         <span class="c1"># Get all the keys and subkeys of the features</span>
         <span class="c1"># features_keys is a dict: {main_key: set(subkeys), ...}</span>
-        <span class="n">features_keys</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">features_keys</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">features</span> <span class="ow">in</span> <span class="p">(</span><span class="n">primary_features</span><span class="p">,</span> <span class="n">secondary_features</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">f_collector</span> <span class="ow">in</span> <span class="n">features</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                 <span class="k">for</span> <span class="n">main_key</span><span class="p">,</span> <span class="n">subkey_list</span> <span class="ow">in</span> <span class="n">f_collector</span><span class="o">.</span><span class="n">full_keys</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -405,8 +433,7 @@
             <span class="n">result_matrix</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim_matrix</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">secondary_mapping</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">ignore_secondary</span><span class="p">):</span>
             <span class="n">result_matrix</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim_matrix</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
-        <span class="n">sim_matrix</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">result_matrix</span>
-        <span class="k">return</span> <span class="n">p_features</span><span class="p">,</span> <span class="n">s_features</span></div>
+        <span class="n">sim_matrix</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">result_matrix</span></div>
 
 </pre></div>
             <div class="clearer"></div>
@@ -468,7 +495,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>
