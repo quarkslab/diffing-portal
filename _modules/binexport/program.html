@@ -127,6 +127,9 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_pb</span> <span class="o">=</span> <span class="n">BinExport2</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>  <span class="c1">#: Binexport file path</span>
+
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pb</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">architecture</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;32&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="mh">0xFFFFFFFFFFFFFFFF</span>

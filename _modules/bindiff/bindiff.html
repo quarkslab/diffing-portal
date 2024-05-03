@@ -253,8 +253,8 @@
                 <span class="c1"># The block has been match but in another function thus unmatched here</span>
                 <span class="k">if</span> <span class="n">function</span><span class="o">.</span><span class="n">addr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">maps</span><span class="p">:</span>
                     <span class="n">bbs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">bbs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">bbs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">bbs</span>
 
 <div class="viewcode-block" id="BinDiff.primary_unmatched_basic_block">
@@ -463,7 +463,8 @@
 <div class="viewcode-block" id="BinDiff.from_binary_files">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.from_binary_files">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_binary_files</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">p2_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;BinDiff&quot;</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_binary_files</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">p2_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                          <span class="n">override</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;BinDiff&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Diff two executable files. Thus it export .BinExport files from IDA</span>
 <span class="sd">        and then diff the two resulting files in BinDiff.</span>
@@ -471,16 +472,14 @@
 <span class="sd">        :param p1_path: primary binary file to diff</span>
 <span class="sd">        :param p2_path: secondary binary file to diff</span>
 <span class="sd">        :param diff_out: output file for the diff</span>
+<span class="sd">        :param override: override Binexports files and diffing</span>
 <span class="sd">        :return: BinDiff object representing the diff</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">p1</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="o">.</span><span class="n">from_binary_file</span><span class="p">(</span><span class="n">p1_path</span><span class="p">)</span>
-        <span class="n">p2</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="o">.</span><span class="n">from_binary_file</span><span class="p">(</span><span class="n">p2_path</span><span class="p">)</span>
-        <span class="n">p1_binexport</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p1_path</span><span class="si">}</span><span class="s2">.BinExport&quot;</span><span class="p">)</span>
-        <span class="n">p2_binexport</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p2_path</span><span class="si">}</span><span class="s2">.BinExport&quot;</span><span class="p">)</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="o">.</span><span class="n">from_binary_file</span><span class="p">(</span><span class="n">p1_path</span><span class="p">,</span> <span class="n">override</span><span class="o">=</span><span class="n">override</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="o">.</span><span class="n">from_binary_file</span><span class="p">(</span><span class="n">p2_path</span><span class="p">,</span> <span class="n">override</span><span class="o">=</span><span class="n">override</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p1</span> <span class="ow">and</span> <span class="n">p2</span><span class="p">:</span>
-            <span class="n">retcode</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">raw_diffing</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">BinDiff</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span> <span class="k">if</span> <span class="n">retcode</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">from_binexport_files</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">,</span> <span class="n">override</span><span class="o">=</span><span class="n">override</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;p1 or p2 could not have been &#39;binexported&#39;&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span></div>
@@ -490,20 +489,29 @@
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.from_binexport_files">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_binexport_files</span><span class="p">(</span>
-        <span class="n">p1_binexport</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="n">p1_binexport</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">p2_binexport</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">override</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;BinDiff&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Diff two binexport files. Diff the two binexport files with bindiff</span>
 <span class="sd">        and then load a BinDiff instance.</span>
 
-<span class="sd">        :param p1_binexport: primary binexport file to diff</span>
-<span class="sd">        :param p2_binexport: secondary binexport file to diff</span>
+<span class="sd">        :param p1_binexport: primary binexport file to diff (path or object)</span>
+<span class="sd">        :param p2_binexport: secondary binexport file to diff (path or object)</span>
 <span class="sd">        :param diff_out: output file for the diff</span>
+<span class="sd">        :param override: override Binexports files and diffing</span>
 <span class="sd">        :return: BinDiff object representing the diff</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p1_path</span> <span class="o">=</span> <span class="n">p1_binexport</span><span class="o">.</span><span class="n">path</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">ProgramBinExport</span><span class="p">)</span> <span class="k">else</span> <span class="n">p1_binexport</span>
+        <span class="n">p2_path</span> <span class="o">=</span> <span class="n">p2_binexport</span><span class="o">.</span><span class="n">path</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p2_binexport</span><span class="p">,</span> <span class="n">ProgramBinExport</span><span class="p">)</span> <span class="k">else</span> <span class="n">p2_binexport</span>
 
-        <span class="n">retcode</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">raw_diffing</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">BinDiff</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span> <span class="k">if</span> <span class="n">retcode</span> <span class="k">else</span> <span class="kc">None</span></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">diff_out</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">or</span> <span class="n">override</span><span class="p">:</span>
+            <span class="n">retcode</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">raw_diffing</span><span class="p">(</span><span class="n">p1_path</span><span class="p">,</span> <span class="n">p2_path</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">BinDiff</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span> <span class="k">if</span> <span class="n">retcode</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BinDiff</span><span class="p">(</span><span class="n">p1_binexport</span><span class="p">,</span> <span class="n">p2_binexport</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">)</span></div>
 
 
     <span class="nd">@staticmethod</span>
