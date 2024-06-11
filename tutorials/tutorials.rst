@@ -4,6 +4,7 @@ Exporters
 .. toctree::
     :maxdepth: 1
 
+    BinExport: Quick Start <binexport_quickstart.ipynb>
     Quokka: String Deciphering <ex1_string_decipher.ipynb>
 
 
