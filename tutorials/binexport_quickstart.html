@@ -534,7 +534,32 @@ main &gt; websAspInit &gt; formsDefine &gt; formVirtualSv &gt; strcpy
 </pre></div></div>
 </div>
 <p>This can gives us an idea of which functions to look at when searching for a vulnerability.</p>
-</section>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+
+  var tmp = coll[i].nextElementSibling;
+  tmp.style.display = "none";
+  tmp.nextElementSibling.style.display = "none";
+
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    var content2 = content.nextElementSibling;
+    if (content.style.display === "none") {
+      content.style.display = "";
+      content2.style.display = "";
+      this.innerHTML = "Hide Solution";
+    } else {
+      content.style.display = "none";
+      content2.style.display = "none";
+      this.innerHTML = "Show Solution";
+    }
+  });
+}
+</script></section>
 </section>
 
             <div class="clearer"></div>
