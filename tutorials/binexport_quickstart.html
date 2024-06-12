@@ -131,15 +131,7 @@
 <section id="Introduction">
 <h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
 <p>The sample to work on has been extracted from the firmware of a edimax router (BR6478AC V2) and it is known to be vulnerable to CVE-2023-49351. It can be downloaded below.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">div</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;text-align: center;&quot;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;../_static/tutorials/edimax_practical.tar.gz&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;fa fa-download fa-lg&quot;</span><span class="o">&gt;&lt;/</span><span class="n">i</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">binary</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">div</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
-</pre></div>
-</div>
-</div>
-<p>It’s a MIPS ELF executable that acts as a HTTP server. We are interested in finding all the functions that call a potentially unsafe primitive function (like <code class="docutils literal notranslate"><span class="pre">strcpy</span></code>).</p>
+<div style="text-align: center;"><a href="../_static/tutorials/edimax_practical.tar.gz"><i class="fa fa-download fa-lg"></i><br/>binary.tar.gz</a></div><br/><p>It’s a MIPS ELF executable that acts as a HTTP server. We are interested in finding all the functions that call a potentially unsafe primitive function (like <code class="docutils literal notranslate"><span class="pre">strcpy</span></code>).</p>
 <p>Let’s use python-binexport to list them.</p>
 </section>
 <section id="I.-Loading-the-program">
@@ -170,15 +162,7 @@
 <section id="II.-Listing-interesting-functions">
 <h2>II. Listing interesting functions<a class="headerlink" href="#II.-Listing-interesting-functions" title="Link to this heading">¶</a></h2>
 <p>We are interested in listing all the functions that call a potentially vulnerable function, like <code class="docutils literal notranslate"><span class="pre">strcpy</span></code> for example. This can be achieved by using the <a class="reference external" href="https://diffing.quarkslab.com/exporter/binexport.html#binexport.function.FunctionBinExport.parents">FunctionBinExport.parents</a> API.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">button</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;collapsible&quot;</span><span class="o">&gt;</span><span class="n">Show</span> <span class="n">Solution</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
@@ -254,15 +238,7 @@ formVirtualSv
 <section id="III.-Find-interesting-paths-in-the-CG">
 <h2>III. Find interesting paths in the CG<a class="headerlink" href="#III.-Find-interesting-paths-in-the-CG" title="Link to this heading">¶</a></h2>
 <p>Now what if we wanted to show the path in the CG (Call Graph) that leads to the execution of one of those functions from <code class="docutils literal notranslate"><span class="pre">main</span></code>?</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">button</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;collapsible&quot;</span><span class="o">&gt;</span><span class="n">Show</span> <span class="n">Solution</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
+<button type="button" class="collapsible">Show Solution</button><div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
