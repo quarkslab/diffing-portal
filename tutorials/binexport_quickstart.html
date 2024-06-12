@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>python-binexport: Quick Start &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../_static/insipid.js"></script>
+    <script defer src="../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quokka: String Deciphering" href="ex1_string_decipher.html" />
+    <link rel="prev" title="Exporters" href="tutorials.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="tutorials.html" accesskey="U">Exporters</a>
+            <a class="top" href="#">python-binexport: Quick Start</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="tutorials.html" class="nav-icon previous" title="previous:&#13;Exporters" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="ex1_string_decipher.html" class="nav-icon next" title="next:&#13;Quokka: String Deciphering" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="tutorials.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Exporters
+          </span>
+        </div>
+      </a>
+      <a class="next" href="ex1_string_decipher.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Quokka: String Deciphering
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="python-binexport:-Quick-Start">
+<h1>python-binexport: Quick Start<a class="headerlink" href="#python-binexport:-Quick-Start" title="Link to this heading">¶</a></h1>
+<section id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<p>The sample to work on has been extracted from the firmware of a edimax router (BR6478AC V2) and it is known to be vulnerable to CVE-2023-49351. It can be downloaded below.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">div</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;text-align: center;&quot;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;../_static/tutorials/edimax_practical.tar.gz&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;fa fa-download fa-lg&quot;</span><span class="o">&gt;&lt;/</span><span class="n">i</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">binary</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">div</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>It’s a MIPS ELF executable that acts as a HTTP server. We are interested in finding all the functions that call a potentially unsafe primitive function (like <code class="docutils literal notranslate"><span class="pre">strcpy</span></code>).</p>
+<p>Let’s use python-binexport to list them.</p>
+</section>
+<section id="I.-Loading-the-program">
+<h2>I. Loading the program<a class="headerlink" href="#I.-Loading-the-program" title="Link to this heading">¶</a></h2>
+<p>If the program has not been exported with BinExport, it can be exported with:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+
+<span class="n">program</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="o">.</span><span class="n">from_binary_file</span><span class="p">(</span><span class="s2">&quot;./webs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Otherwise it can be directly loaded with:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+
+<span class="n">program</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="s2">&quot;./webs.BinExport&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="II.-Listing-interesting-functions">
+<h2>II. Listing interesting functions<a class="headerlink" href="#II.-Listing-interesting-functions" title="Link to this heading">¶</a></h2>
+<p>We are interested in listing all the functions that call a potentially vulnerable function, like <code class="docutils literal notranslate"><span class="pre">strcpy</span></code> for example. This can be achieved by using the <a class="reference external" href="https://diffing.quarkslab.com/exporter/binexport.html#binexport.function.FunctionBinExport.parents">FunctionBinExport.parents</a> API.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">button</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;collapsible&quot;</span><span class="o">&gt;</span><span class="n">Show</span> <span class="n">Solution</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the vulnerable function</span>
+<span class="n">strcpy</span> <span class="o">=</span> <span class="n">program</span><span class="o">.</span><span class="n">fun_names</span><span class="p">[</span><span class="s2">&quot;strcpy&quot;</span><span class="p">]</span>
+
+<span class="n">targets</span> <span class="o">=</span> <span class="n">strcpy</span><span class="o">.</span><span class="n">parents</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">targets</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+formiNICWdsEncrypt
+dhcpClientList
+CharFilter4
+formWpsStart
+formQoS
+wlSiteSurveyTbl
+getInfo
+formWIRESch
+get_dir
+formiNICSiteSurvey
+formiNICWpsStart
+wliNICSiteSurveyonlyTbl
+websFormDefine
+formFilter
+getiNICIndex
+formiNICbasic
+formVPNuser
+wlSurveyOnlyTbl
+formiNICEncrypt
+formEZQoS
+formTriggerPort
+websAspDefine
+formWlAc
+CharFilter2
+formWlSiteSurvey
+formWdsEncrypt
+WIRESchList
+ACPCList
+USBFolderSelect
+formPortFw
+sub_434E40
+wliNICSiteSurveyTbl
+wispSiteSurveyTbl5G
+CharFilter3
+formDNSProxyrules
+formUSBAccount
+CharFilter5
+getIndex
+CharFilter0
+formWlEncrypt
+formWlbasic
+formiNICAc
+CharFilter6
+setWAN
+getiNICInfo
+wispSiteSurveyTbl
+getInAddr
+apmib_set
+getWlSiteSurveyRequest
+formSaveText
+formUSBFolder
+apmib_get
+formVirtualSv
+</pre></div></div>
+</div>
+</section>
+<section id="III.-Find-interesting-paths-in-the-CG">
+<h2>III. Find interesting paths in the CG<a class="headerlink" href="#III.-Find-interesting-paths-in-the-CG" title="Link to this heading">¶</a></h2>
+<p>Now what if we wanted to show the path in the CG (Call Graph) that leads to the execution of one of those functions from <code class="docutils literal notranslate"><span class="pre">main</span></code>?</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">button</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;collapsible&quot;</span><span class="o">&gt;</span><span class="n">Show</span> <span class="n">Solution</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">FunctionBinExport</span>
+
+
+<span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;main&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &gt; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+        <span class="k">return</span>
+
+    <span class="k">for</span> <span class="n">caller</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">caller</span><span class="p">)</span>
+        <span class="n">dfs</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+    <span class="n">dfs</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">[</span><span class="n">strcpy</span><span class="p">,</span> <span class="n">target</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+main &gt; websAspInit &gt; formsDefine &gt; formiNICWdsEncrypt &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; dhcpClientList &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; virtualSvList &gt; CharFilter4 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlAcList &gt; CharFilter4 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; portFwList &gt; CharFilter4 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICAcList &gt; CharFilter4 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; macFilterList &gt; CharFilter4 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; ACPCList &gt; CharFilter4 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; triggerPortList &gt; CharFilter4 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWpsStart &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formQoS &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlSiteSurveyTbl &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWIRESch &gt; strcpy
+main &gt; loop &gt; process_requests &gt; read_header &gt; process_header_end &gt; init_get &gt; get_dir &gt; strcpy
+main &gt; loop &gt; process_requests &gt; read_header &gt; process_header_end &gt; init_get2 &gt; get_dir &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICSiteSurvey &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICWpsStart &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICSiteSurveyonlyTbl &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; websFormDefine &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formFilter &gt; strcpy
+main &gt; websAspInit &gt; getiNICVar &gt; getiNICIndex &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICIndex &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICbasic &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVPNuser &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlSurveyOnlyTbl &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICEncrypt &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formEZQoS &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTriggerPort &gt; strcpy
+main &gt; websAspInit &gt; websAspDefine &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; websAspDefine &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlAc &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICInfo &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICSiteSurveyTbl &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wispSiteSurveyTbl5G &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlSiteSurvey &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wispSiteSurveyTbl &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlSurveyOnlyTbl &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlSiteSurveyTbl &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICSiteSurvey &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICSiteSurveyonlyTbl &gt; CharFilter2 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlSiteSurvey &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWdsEncrypt &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; WIRESchList &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; ACPCList &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; USBFolderSelect &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPortFw &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICSiteSurveyTbl &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wispSiteSurveyTbl5G &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formFilter &gt; CharFilter3 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICAc &gt; CharFilter3 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTriggerPort &gt; CharFilter3 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlAc &gt; CharFilter3 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVirtualSv &gt; CharFilter3 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPortFw &gt; CharFilter3 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formDNSProxyrules &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBAccount &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; CharFilter5 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICInfo &gt; CharFilter5 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getIndex &gt; strcpy
+main &gt; websAspInit &gt; getVar &gt; getIndex &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlbasic &gt; CharFilter0 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlEncrypt &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlbasic &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICAc &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; CharFilter6 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICInfo &gt; CharFilter6 &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; setWAN &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICInfo &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wispSiteSurveyTbl &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICInfo &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getIndex &gt; isDhcpClientExist &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; getVar &gt; getIndex &gt; isDhcpClientExist &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; getiNICVar &gt; getiNICIndex &gt; isDhcpClientExist &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICIndex &gt; isDhcpClientExist &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICInfo &gt; isDhcpClientExist &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; isDhcpClientExist &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formFilter &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formrefresh &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formQoS &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTcpipSetup &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVirtualSv &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPortFw &gt; getInAddr &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTELBPSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wiz_5in1_redirect &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formAdvanceSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICWdsEncrypt &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; saveAndReboot &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; chkLink &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formOpMode &gt; opModeHandler &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formEZQoSMode &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICWpsStart &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; setWifi &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICbasic &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVPNuser &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBmanage &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTriggerPort &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPSSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPortFw &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formStcIpSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formALGSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICEnableSwitch &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWpsEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formMultipleSSID &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formDynIpSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBdevice &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formNatEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWIRESch &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formHWNATSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formEZQoS &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTcpipSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formReManagementSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPasswordSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUPNPSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlbasic &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formStaDrvSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formSaveText &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTimeZoneSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formAdvManagement &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICAdvanceSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVirtualSv &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formQoS &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICSiteSurvey &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formFwEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlanSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPPPoESetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWifiEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPPTPSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUrlb &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formDDNSSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlSiteSurvey &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWdsEncrypt &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICWpsEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formDNSProxyrules &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formLicence &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlEnableSwitch &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formIgmpEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlEncrypt &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPOWERSch &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formSDHCP &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPreventionSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWanTcpipSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlEnable &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVPNsetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formFilter &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICEncrypt &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlAc &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICMultipleSSID &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBAccount &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formAPModeSwitch &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICAc &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; setWAN &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formL2TPSetup &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBFolder &gt; apmib_set &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICSiteSurveyTbl &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wispSiteSurveyTbl5G &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlSiteSurvey &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wispSiteSurveyTbl &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlSurveyOnlyTbl &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlSiteSurveyTbl &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICSiteSurvey &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICSiteSurveyonlyTbl &gt; getWlSiteSurveyRequest &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formSaveText &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBFolder &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formAdvanceSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICWdsEncrypt &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; saveAndReboot &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlSiteSurveyTbl &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; chkLink &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; setWifi &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; StcRoutList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBmanage &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICbasic &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVPNuser &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTriggerPort &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; DNSPROXYURLList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; WIRESchList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPortFw &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; FolderShow &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formStcIpSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formALGSetup &gt; apmib_get &gt; strcpy
+main &gt; loop &gt; process_requests &gt; read_header &gt; process_header_end &gt; auth_authorize &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; resetWebs &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formSaveConfigSec &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; getiNICVar &gt; getiNICIndex &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICIndex &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWpsStart &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formSaveConfig &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formwizResetDefault &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getIndex &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; getVar &gt; getIndex &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICWpsStart &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formResetDefault &gt; apmib_reinit &gt; apmib_init &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWpsEnable &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBdevice &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; URLBList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getInfo &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWIRESch &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; Wan1QosList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; macFilterList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; USBDevAccount &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formHWNATSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formEZQoS &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTcpipSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formReManagementSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formApply &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; ACPCList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICSiteSurveyTbl &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPasswordSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUPNPSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlbasic &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; OpenVpnAccountList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; POWERSchList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formStaDrvSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formSaveText &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formTimeZoneSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICAdvanceSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVirtualSv &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; triggerPortList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; USBDevFolder &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formQoS &gt; apmib_get &gt; strcpy
+main &gt; loop &gt; process_requests &gt; read_header &gt; process_header_end &gt; auth_authorize &gt; auth_check_userpass2 &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formFwEnable &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; portFwList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; EZQosList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; getiNICVar &gt; getiNICIndex &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICIndex &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wliNICAcList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPPTPSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUrlb &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formDDNSSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWdsEncrypt &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formDNSProxyrules &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; virtualSvList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formIgmpEnable &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlEncrypt &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; AccountShow &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPOWERSch &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formSDHCP &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formPreventionSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; SDHCPList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWanTcpipSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; wlAcList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formFilter &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; DMZList &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICEncrypt &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formWlAc &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; QosShow &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; showWebsPasswd &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBAccount &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getIndex &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; getVar &gt; getIndex &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formAPModeSwitch &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formiNICAc &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; setWAN &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; getiNICInfo &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formL2TPSetup &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formUSBFolder &gt; apmib_get &gt; strcpy
+main &gt; websAspInit &gt; formsDefine &gt; formVirtualSv &gt; strcpy
+</pre></div></div>
+</div>
+<p>This can gives us an idea of which functions to look at when searching for a vulnerability.</p>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Exporters</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BinExport: Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex1_string_decipher.html">Quokka: String Deciphering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html#qbindiff">QBinDiff</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="tutorials.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Exporters
+          </span>
+        </div>
+      </a>
+      <a class="next" href="ex1_string_decipher.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Quokka: String Deciphering
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../_sources/tutorials/binexport_quickstart.ipynb.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

@@ -25,7 +25,7 @@
    "id": "45ddb8be-776b-46b9-87d6-2ef56782e856",
    "metadata": {},
    "source": [
-    "Its an ELF executable, for which all strings used internally are ciphered with a custom algorithm.\n",
+    "It's an ELF executable, for which all strings used internally are ciphered with a custom algorithm.\n",
     "The deciphering function is at ``0x804f7e0`` and uses a custom calling convention where the two firsts parameters are provided through ``edx`` and ``eax``. The function takes as parameters two unrelated strings and decipher them with the\n",
     "key ``0x37``. Strings are deciphered in-place.\n",
     "\n",

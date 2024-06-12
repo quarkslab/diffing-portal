@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -17,14 +17,14 @@
     <script src="../_static/documentation_options.js?v=3b889da3"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script defer src="../_static/insipid.js"></script>
     <script defer src="../_static/insipid-sidebar.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Symbol Porting" href="03a_diffing_porting_symbols.html" />
-    <link rel="prev" title="Exporters" href="tutorials.html" />
+    <link rel="prev" title="python-binexport: Quick Start" href="binexport_quickstart.html" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head><body>
@@ -88,7 +88,7 @@
       </div>
     </header>
     <nav>
-      <a href="tutorials.html" class="nav-icon previous" title="previous:&#13;Exporters" aria-label="Previous topic" accesskey="P" tabindex="-1">
+      <a href="binexport_quickstart.html" class="nav-icon previous" title="previous:&#13;python-binexport: Quick Start" aria-label="Previous topic" accesskey="P" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
       </a>
       <a href="03a_diffing_porting_symbols.html" class="nav-icon next" title="next:&#13;Symbol Porting" aria-label="Next topic" accesskey="N" tabindex="-1">
@@ -97,14 +97,14 @@
     </nav>
 
     <nav class="relbar">
-      <a class="previous" href="tutorials.html" aria-label="Previous topic" >
+      <a class="previous" href="binexport_quickstart.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Exporters
+            python-binexport: Quick Start
           </span>
         </div>
       </a>
@@ -131,7 +131,7 @@
 <section id="Introduction">
 <h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
 <p>The sample to work on is a <code class="docutils literal notranslate"><span class="pre">Mirai</span></code> malware sample. It can be retrieve below.</p>
-<div style="text-align: center;"><a href="../_static/tutorials/practical1_string_decipher.tar.gz"><i class="fa fa-download fa-lg"></i><br/>binary</a></div><br/><p>Its an ELF executable, for which all strings used internally are ciphered with a custom algorithm. The deciphering function is at <code class="docutils literal notranslate"><span class="pre">0x804f7e0</span></code> and uses a custom calling convention where the two firsts parameters are provided through <code class="docutils literal notranslate"><span class="pre">edx</span></code> and <code class="docutils literal notranslate"><span class="pre">eax</span></code>. The function takes as parameters two unrelated strings and decipher them with the key <code class="docutils literal notranslate"><span class="pre">0x37</span></code>. Strings are deciphered in-place.</p>
+<div style="text-align: center;"><a href="../_static/tutorials/practical1_string_decipher.tar.gz"><i class="fa fa-download fa-lg"></i><br/>binary</a></div><br/><p>It’s an ELF executable, for which all strings used internally are ciphered with a custom algorithm. The deciphering function is at <code class="docutils literal notranslate"><span class="pre">0x804f7e0</span></code> and uses a custom calling convention where the two firsts parameters are provided through <code class="docutils literal notranslate"><span class="pre">edx</span></code> and <code class="docutils literal notranslate"><span class="pre">eax</span></code>. The function takes as parameters two unrelated strings and decipher them with the key <code class="docutils literal notranslate"><span class="pre">0x37</span></code>. Strings are deciphered in-place.</p>
 <p>This function is called many times to decipher all strings used. The figure below summarizes the problem.</p>
 <figure class="align-center">
     <img alt="summary Mirai deciphering process", src="../_static/tutorials/mirai_deciphering_process.png"/>
@@ -581,6 +581,7 @@ for (i = 0; i < coll.length; i++) {
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Exporters</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="binexport_quickstart.html">BinExport: Quick Start</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Quokka: String Deciphering</a></li>
 </ul>
 </li>
@@ -609,14 +610,14 @@ for (i = 0; i < coll.length; i++) {
     </div>
 
     <nav class="relbar">
-      <a class="previous" href="tutorials.html" aria-label="Previous topic" >
+      <a class="previous" href="binexport_quickstart.html" aria-label="Previous topic" >
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
         </div>
         <div class="title">
           <span class="text">
             <span class="direction">previous</span>
-            Exporters
+            python-binexport: Quick Start
           </span>
         </div>
       </a>
