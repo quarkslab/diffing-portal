@@ -113,7 +113,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span><span class="p">,</span> <span class="n">IntFlag</span><span class="p">,</span> <span class="n">auto</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 <span class="kn">import</span> <span class="nn">enum_tools.documentation</span>
 
@@ -224,6 +224,54 @@
     <span class="n">STRUC</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># doc: Reference is a structure</span>
     <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: Reference type is unknown</span></div>
 
+
+
+<span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
+<span class="k">class</span> <span class="nc">InstructionGroup</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstraction for the instruction group, for now rely on capstone ones.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">GRP_INVALID</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># doc: Uninitialized/invalid group</span>
+    <span class="n">GRP_JUMP</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># doc: Jump instructions (conditional+direct+indirect jumps)</span>
+    <span class="n">GRP_CALL</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># doc: Call instructions</span>
+    <span class="n">GRP_RET</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># doc: Return group</span>
+    <span class="n">GRP_INT</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># doc: Interrupt instructions (int+syscall)</span>
+    <span class="n">GRP_IRET</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># doc: Interrupt return instructions</span>
+    <span class="n">GRP_PRIVILEGE</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># doc: Privileged instructions</span>
+    <span class="n">GRP_BRANCH_RELATIVE</span> <span class="o">=</span> <span class="mi">7</span>  <span class="c1"># doc: Relative branching instructions</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">fromint</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cast an integer to InstructionGroup type&quot;&quot;&quot;</span>
+        <span class="c1"># Return an invalid group if cast is not possible</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">InstructionGroup</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">InstructionGroup</span> <span class="k">else</span> <span class="n">InstructionGroup</span><span class="o">.</span><span class="n">GRP_INVALID</span>
+        <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_capstone</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">capstone_group</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cast a capstone group to InstructionGroup type&quot;&quot;&quot;</span>
+        <span class="c1"># Wrap capstone group using our custom type</span>
+        <span class="c1"># Note: This only works because the mappings between the enums are the same</span>
+        <span class="k">if</span> <span class="n">capstone_group</span> <span class="ow">in</span> <span class="n">InstructionGroup</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">InstructionGroup</span><span class="p">(</span><span class="n">capstone_group</span><span class="p">)</span>
+
+        <span class="c1"># Raise an exception if cast is not possible</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Misalignment between capstone group </span><span class="si">{</span><span class="n">capstone_group</span><span class="si">}</span><span class="s2"> and InstructionGroup&quot;</span>
+        <span class="p">)</span>
+
+
+<span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
+<span class="k">class</span> <span class="nc">ProgramCapability</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines the capabilities that are supported by a Program backed</span>
+<span class="sd">    by a specific backend loader</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PCODE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INSTR_GROUP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 
 
 <span class="n">ReferenceTarget</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="s2">&quot;Data | Structure | StructureMember&quot;</span>

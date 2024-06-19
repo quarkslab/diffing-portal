@@ -253,6 +253,12 @@ define a unique key and a function call that is to be called by the visitor.</p>
 <dd><p>feature name (short)</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.FeatureExtractor.required_capabilities">
+<span class="sig-name descname"><span class="pre">required_capabilities</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#qbindiff.features.extractor.FeatureExtractor.required_capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>By default there are no required capabilities</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.FeatureExtractor.weight">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#qbindiff.features.extractor.FeatureExtractor.weight" title="Link to this definition">¶</a></dt>
@@ -285,6 +291,12 @@ to be implemented by all its inheriting classes.</p>
 <dt class="sig sig-object py" id="qbindiff.features.extractor.FunctionFeatureExtractor.key">
 <span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.FunctionFeatureExtractor.key" title="Link to this definition">¶</a></dt>
 <dd><p>feature name (short)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.FunctionFeatureExtractor.required_capabilities">
+<span class="sig-name descname"><span class="pre">required_capabilities</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#qbindiff.features.extractor.FunctionFeatureExtractor.required_capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>By default there are no required capabilities</p>
 </dd></dl>
 
 <dl class="py method">
@@ -338,6 +350,12 @@ to be implemented by all its inheriting classes.</p>
 <dd><p>feature name (short)</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.BasicBlockFeatureExtractor.required_capabilities">
+<span class="sig-name descname"><span class="pre">required_capabilities</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#qbindiff.features.extractor.BasicBlockFeatureExtractor.required_capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>By default there are no required capabilities</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.BasicBlockFeatureExtractor.visit_basic_block">
 <span class="sig-name descname"><span class="pre">visit_basic_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">basicblock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.loader.BasicBlock" title="qbindiff.loader.basic_block.BasicBlock"><span class="pre">BasicBlock</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/features/extractor.html#BasicBlockFeatureExtractor.visit_basic_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.features.extractor.BasicBlockFeatureExtractor.visit_basic_block" title="Link to this definition">¶</a></dt>
@@ -389,6 +407,12 @@ be implemented by all its inheriting classes.</p>
 <dd><p>feature name (short)</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.InstructionFeatureExtractor.required_capabilities">
+<span class="sig-name descname"><span class="pre">required_capabilities</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#qbindiff.features.extractor.InstructionFeatureExtractor.required_capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>By default there are no required capabilities</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qbindiff.features.extractor.InstructionFeatureExtractor.visit_instruction">
 <span class="sig-name descname"><span class="pre">visit_instruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.Program" title="qbindiff.loader.program.Program"><span class="pre">Program</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="loader.html#qbindiff.loader.Instruction" title="qbindiff.loader.instruction.Instruction"><span class="pre">Instruction</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qbindiff.features.extractor.FeatureCollector" title="qbindiff.features.extractor.FeatureCollector"><span class="pre">FeatureCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../_modules/qbindiff/features/extractor.html#InstructionFeatureExtractor.visit_instruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qbindiff.features.extractor.InstructionFeatureExtractor.visit_instruction" title="Link to this definition">¶</a></dt>
@@ -438,6 +462,12 @@ implemented by all its inheriting classes.</p>
 <dt class="sig sig-object py" id="qbindiff.features.extractor.OperandFeatureExtractor.key">
 <span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#qbindiff.features.extractor.OperandFeatureExtractor.key" title="Link to this definition">¶</a></dt>
 <dd><p>feature name (short)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qbindiff.features.extractor.OperandFeatureExtractor.required_capabilities">
+<span class="sig-name descname"><span class="pre">required_capabilities</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#qbindiff.features.extractor.OperandFeatureExtractor.required_capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>By default there are no required capabilities</p>
 </dd></dl>
 
 <dl class="py method">

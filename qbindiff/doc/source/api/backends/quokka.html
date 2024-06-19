@@ -141,6 +141,12 @@
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.quokka.ProgramBackendQuokka.capabilities">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">capabilities</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ProgramCapability</span></em><a class="headerlink" href="#qbindiff.loader.backend.quokka.ProgramBackendQuokka.capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the supported capabilities</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.quokka.ProgramBackendQuokka.exec_path">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exec_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.quokka.ProgramBackendQuokka.exec_path" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the executable path</p>
@@ -325,8 +331,8 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.quokka.InstructionBackendQuokka.groups">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.quokka.InstructionBackendQuokka.groups" title="Link to this definition">¶</a></dt>
-<dd><p>Returns a list of groups of this instruction. Groups are capstone based but enriched.</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">InstructionGroup</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.quokka.InstructionBackendQuokka.groups" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of groups of this instruction.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -351,6 +357,13 @@ The id is MAX_ID if there is no capstone instruction available.</p>
 <dd class="field-odd"><p>list of Quokka operands</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.quokka.InstructionBackendQuokka.pcode_ops">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pcode_ops</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">PcodeOp</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.quokka.InstructionBackendQuokka.pcode_ops" title="Link to this definition">¶</a></dt>
+<dd><p>List of PcodeOp associated with the instruction.
+Provided with the PCODE capability</p>
 </dd></dl>
 
 <dl class="py property">

@@ -140,6 +140,12 @@
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.capabilities">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">capabilities</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ProgramCapability</span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the supported capabilities</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.ProgramBackendBinExport.exec_path">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exec_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.ProgramBackendBinExport.exec_path" title="Link to this definition">¶</a></dt>
 <dd><p>Guess the raw binary name by removing the final .BinExport</p>
@@ -301,8 +307,8 @@ WARNING: Not supported by BinExport</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.groups">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.groups" title="Link to this definition">¶</a></dt>
-<dd><p>Returns a list of groups of this instruction</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">InstructionGroup</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.groups" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of groups of this instruction.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -321,6 +327,13 @@ WARNING: Not supported by BinExport</p>
 <dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.operands">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.binexport.OperandBackendBinExport" title="qbindiff.loader.backend.binexport.OperandBackendBinExport"><span class="pre">OperandBackendBinExport</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.operands" title="Link to this definition">¶</a></dt>
 <dd><p>Returns an iterator over backend operand objects</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.binexport.InstructionBackendBinExport.pcode_ops">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pcode_ops</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">PcodeOp</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.binexport.InstructionBackendBinExport.pcode_ops" title="Link to this definition">¶</a></dt>
+<dd><p>List of PcodeOp associated with the instruction.
+Provided with the PCODE capability</p>
 </dd></dl>
 
 <dl class="py property">

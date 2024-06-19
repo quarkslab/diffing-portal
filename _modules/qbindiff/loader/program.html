@@ -115,6 +115,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">MutableMapping</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">from</span> <span class="nn">qbindiff.abstract</span> <span class="kn">import</span> <span class="n">GenericGraph</span>
 <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Function</span>
@@ -126,6 +127,7 @@
     <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span>
     <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Structure</span>
     <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.abstract</span> <span class="kn">import</span> <span class="n">AbstractProgramBackend</span>
+    <span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">ProgramCapability</span>
     <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
 
 
@@ -138,32 +140,64 @@
 <span class="sd">    It is a :py:class:`MutableMapping`, where keys are function addresses and</span>
 <span class="sd">    values are :py:class:`Function` objects.</span>
 
+<span class="sd">    :param path: Path to the main file to load (depends on the underlying backend)</span>
+<span class="sd">    :param loader: The loader type. If not provided, the loader is inferred from the path</span>
+<span class="sd">    :param backend: Optional parameter to provide the object instance implementing the</span>
+<span class="sd">                    AbstractProgramBackend interface</span>
+<span class="sd">    :param args: extra parameters passed to the Backend</span>
+<span class="sd">    :param kwargs: extra parameters forwarded to the backend constructor</span>
+
 <span class="sd">    The node label is the function address, the node itself is the :py:class:`Function` object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">:</span> <span class="n">LoaderType</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">loader</span><span class="p">:</span> <span class="n">LoaderType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">backend</span><span class="p">:</span> <span class="n">AbstractProgramBackend</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">loader</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">backend</span> <span class="o">:=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;backend&quot;</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># if a backend instance is directly provided use it</span>
+        <span class="k">if</span> <span class="n">loader</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">backend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">backend</span>  <span class="c1"># Load directly from instanciated backend</span>
 
-        <span class="k">elif</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">ida</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.ida</span> <span class="kn">import</span> <span class="n">ProgramBackendIDA</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendIDA</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-        <span class="k">elif</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.binexport</span> <span class="kn">import</span> <span class="n">ProgramBackendBinExport</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendBinExport</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-        <span class="k">elif</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">quokka</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.quokka</span> <span class="kn">import</span> <span class="n">ProgramBackendQuokka</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendQuokka</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Loader: </span><span class="si">%s</span><span class="s2"> not implemented&quot;</span> <span class="o">%</span> <span class="n">loader</span><span class="p">)</span>
+            <span class="c1"># Both loader and backend provided. Loader take precedence, warn the user.</span>
+            <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Both backend and loader provided for program </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">.&quot;</span>
+                    <span class="s2">&quot;The loader will take priority and the backend will be ignored.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Try to infer it</span>
+            <span class="k">if</span> <span class="n">loader</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.Quokka&quot;</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
+                    <span class="n">loader</span> <span class="o">=</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">quokka</span>
+                <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.BinExport&quot;</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
+                    <span class="n">loader</span> <span class="o">=</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span>
+
+            <span class="c1"># Match the resulting loader</span>
+            <span class="k">if</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">ida</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.ida</span> <span class="kn">import</span> <span class="n">ProgramBackendIDA</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendIDA</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.binexport</span> <span class="kn">import</span> <span class="n">ProgramBackendBinExport</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendBinExport</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">quokka</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.quokka</span> <span class="kn">import</span> <span class="n">ProgramBackendQuokka</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendQuokka</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loader: </span><span class="si">{</span><span class="n">loader</span><span class="si">}</span><span class="s2"> not implemented&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Function</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># underlying dictionary containing the functions</span>
@@ -184,7 +218,7 @@
 <span class="sd">        :return: Program instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Program.from_quokka">
@@ -199,7 +233,7 @@
 <span class="sd">        :return: Program instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">quokka</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">exec_path</span><span class="o">=</span><span class="n">exec_path</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">exec_path</span><span class="o">=</span><span class="n">exec_path</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">quokka</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Program.from_ida">
@@ -212,7 +246,7 @@
 <span class="sd">        :return: Program instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">ida</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">ida</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Program.from_backend">
@@ -223,7 +257,7 @@
 <span class="sd">        Load the Program from an instanciated program backend object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">)</span></div>
 
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -442,7 +476,15 @@
             <span class="bp">self</span><span class="p">[</span><span class="n">c_addr</span><span class="p">]</span><span class="o">.</span><span class="n">parents</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">to_remove</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">callgraph</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">to_remove</span><span class="p">,</span> <span class="n">c_addr</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">callgraph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">to_remove</span><span class="p">)</span></div>
-</div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramCapability</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the underlying backend capabilities</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">capabilities</span></div>
 
 </pre></div>
             <div class="clearer"></div>

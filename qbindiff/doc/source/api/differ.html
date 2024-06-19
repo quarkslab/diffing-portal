@@ -230,11 +230,11 @@ a tuple (node_label, node)</p>
 <li><p><strong>primary</strong> – primary graph</p></li>
 <li><p><strong>secondary</strong> – secondary graph</p></li>
 <li><p><strong>sparsity_ratio</strong> – the sparsity ratio enforced to the similarity matrix
-of type py:class:<cite>qbindiff.types.Ratio</cite></p></li>
+of type <a class="reference internal" href="types.html#qbindiff.types.Ratio" title="qbindiff.types.Ratio"><code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types.Ratio</span></code></a></p></li>
 <li><p><strong>tradeoff</strong> – tradeoff ratio bewteen node similarity (tradeoff=1.0)
-and edge similarity (tradeoff=0.0) of type py:class:<cite>qbindiff.types.Ratio</cite></p></li>
+and edge similarity (tradeoff=0.0) of type <a class="reference internal" href="types.html#qbindiff.types.Ratio" title="qbindiff.types.Ratio"><code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types.Ratio</span></code></a></p></li>
 <li><p><strong>epsilon</strong> – perturbation parameter to enforce convergence and speed up computation,
-of type py:class:<cite>qbindiff.types.Positive</cite>. The greatest the fastest, but least accurate</p></li>
+of type <a class="reference internal" href="types.html#qbindiff.types.Positive" title="qbindiff.types.Positive"><code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types.Positive</span></code></a>. The greatest the fastest, but least accurate</p></li>
 <li><p><strong>maxiter</strong> – maximum number of message passing iterations</p></li>
 <li><p><strong>sparse_row</strong> – Whether to build the sparse similarity matrix considering its
 entirety or processing it row per row</p></li>
@@ -366,12 +366,12 @@ functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>primary</strong> – The primary binary of type py:class:<cite>qbindiff.loader.Program</cite></p></li>
-<li><p><strong>secondary</strong> – The secondary binary of type py:class:<cite>qbindiff.loader.Program</cite></p></li>
+<li><p><strong>primary</strong> – The primary binary of type <code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.loader.Program</span></code></p></li>
+<li><p><strong>secondary</strong> – The secondary binary of type <code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.loader.Program</span></code></p></li>
 <li><p><strong>distance</strong> – the distance function used when comparing the feature vector
 extracted from the graphs.</p></li>
 <li><p><strong>normalize</strong> – Normalize the two programs Call Graphs with a series of heuristics. Look at
-<a href="#id1"><span class="problematic" id="id2">:py:method:`normalize`</span></a> for more information.</p></li>
+<a class="reference internal" href="#qbindiff.QBinDiff.normalize" title="qbindiff.QBinDiff.normalize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize()</span></code></a> for more information.</p></li>
 </ul>
 </dd>
 </dl>
@@ -419,9 +419,9 @@ similarity to 1. This anchoring phase is necessary to obtain a good match.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sim_matrix</strong> – The similarity matrix of between the primary and secondary, of
-type py:class:<cite>qbindiff.types:SimMatrix</cite></p></li>
-<li><p><strong>primary</strong> – The primary binary of type py:class:<cite>qbindiff.loader.Program</cite></p></li>
-<li><p><strong>secondary</strong> – The secondary binary of type py:class:<cite>qbindiff.loader.Program</cite></p></li>
+type <code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types:SimMatrix</span></code></p></li>
+<li><p><strong>primary</strong> – The primary binary of type <code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.loader.Program</span></code></p></li>
+<li><p><strong>secondary</strong> – The secondary binary of type <code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.loader.Program</span></code></p></li>
 <li><p><strong>primary_mapping</strong> – Mapping between the primary function addresses and their corresponding index</p></li>
 <li><p><strong>secondary_mapping</strong> – Mapping between the secondary function addresses and their corresponding index</p></li>
 </ul>
@@ -435,7 +435,7 @@ type py:class:<cite>qbindiff.types:SimMatrix</cite></p></li>
 <dd><p>Normalize the input Program. In some cases, this can create an exception, caused by a thunk function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>program</strong> – the program of type py:class:<cite>qbindiff.loader.Program</cite> to normalize.</p>
+<dd class="field-odd"><p><strong>program</strong> – the program of type <code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.loader.Program</span></code> to normalize.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the normalized program</p>
@@ -451,7 +451,7 @@ computation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>extractor_class</strong> – A feature extractor of type py:class:<cite>qbindiff.features.extractor</cite></p></li>
+<li><p><strong>extractor_class</strong> – A feature extractor of type <code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.features.extractor</span></code></p></li>
 <li><p><strong>weight</strong> – Weight associated to the corresponding feature. Default is 1.</p></li>
 <li><p><strong>distance</strong> – Distance used only for this feature. It does not make sense to use it with bnb feature,
 but it can be useful for the WeisfeilerLehman feature.</p></li>
@@ -491,11 +491,11 @@ the matches considering certain features extracted.</p>
 <li><p><strong>primary</strong> – primary graph</p></li>
 <li><p><strong>secondary</strong> – secondary graph</p></li>
 <li><p><strong>sparsity_ratio</strong> – the sparsity ratio enforced to the similarity matrix
-of type py:class:<cite>qbindiff.types.Ratio</cite></p></li>
+of type <a class="reference internal" href="types.html#qbindiff.types.Ratio" title="qbindiff.types.Ratio"><code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types.Ratio</span></code></a></p></li>
 <li><p><strong>tradeoff</strong> – tradeoff ratio bewteen node similarity (tradeoff=1.0)
-and edge similarity (tradeoff=0.0) of type py:class:<cite>qbindiff.types.Ratio</cite></p></li>
+and edge similarity (tradeoff=0.0) of type <a class="reference internal" href="types.html#qbindiff.types.Ratio" title="qbindiff.types.Ratio"><code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types.Ratio</span></code></a></p></li>
 <li><p><strong>epsilon</strong> – perturbation parameter to enforce convergence and speed up computation,
-of type py:class:<cite>qbindiff.types.Positive</cite>. The greatest the fastest, but least accurate</p></li>
+of type <a class="reference internal" href="types.html#qbindiff.types.Positive" title="qbindiff.types.Positive"><code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types.Positive</span></code></a>. The greatest the fastest, but least accurate</p></li>
 <li><p><strong>maxiter</strong> – maximum number of message passing iterations</p></li>
 <li><p><strong>sparse_row</strong> – Whether to build the sparse similarity matrix considering its
 entirety or processing it row per row</p></li>
@@ -508,7 +508,7 @@ entirety or processing it row per row</p></li>
 <dd><p>Initialize the similarity matrix</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sim_matrix</strong> – The similarity matrix of type py:class:<cite>qbindiff.types.SimMatrix</cite></p>
+<dd class="field-odd"><p><strong>sim_matrix</strong> – The similarity matrix of type <a class="reference internal" href="types.html#qbindiff.types.SimMatrix" title="qbindiff.types.SimMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">qbindiff.types.SimMatrix</span></code></a></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>

@@ -142,6 +142,12 @@ It represents a generic backend loader for a Program</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractProgramBackend.capabilities">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">capabilities</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ProgramCapability</span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractProgramBackend.capabilities" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the supported capabilities</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractProgramBackend.exec_path">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exec_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractProgramBackend.exec_path" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the executable path</p>
@@ -155,7 +161,7 @@ It represents a generic backend loader for a Program</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractProgramBackend.functions">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">functions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractFunctionBackend" title="qbindiff.loader.backend.abstract.AbstractFunctionBackend"><span class="pre">AbstractFunctionBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractProgramBackend.functions" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">functions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractFunctionBackend" title="qbindiff.loader.backend.AbstractFunctionBackend"><span class="pre">AbstractFunctionBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractProgramBackend.functions" title="Link to this definition">¶</a></dt>
 <dd><p>Returns an iterator over backend function objects.</p>
 </dd></dl>
 
@@ -190,7 +196,7 @@ It represents a generic backend loader for a Function.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractFunctionBackend.basic_blocks">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basic_blocks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractBasicBlockBackend" title="qbindiff.loader.backend.abstract.AbstractBasicBlockBackend"><span class="pre">AbstractBasicBlockBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractFunctionBackend.basic_blocks" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basic_blocks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractBasicBlockBackend" title="qbindiff.loader.backend.AbstractBasicBlockBackend"><span class="pre">AbstractBasicBlockBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractFunctionBackend.basic_blocks" title="Link to this definition">¶</a></dt>
 <dd><p>Returns an iterator over backend basic blocks objects.</p>
 </dd></dl>
 
@@ -255,7 +261,7 @@ It represents a generic backend loader for a BasicBlock</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractBasicBlockBackend.instructions">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractInstructionBackend" title="qbindiff.loader.backend.abstract.AbstractInstructionBackend"><span class="pre">AbstractInstructionBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractBasicBlockBackend.instructions" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractInstructionBackend" title="qbindiff.loader.backend.AbstractInstructionBackend"><span class="pre">AbstractInstructionBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractBasicBlockBackend.instructions" title="Link to this definition">¶</a></dt>
 <dd><p>Returns an iterator over backend instruction objects</p>
 </dd></dl>
 
@@ -296,8 +302,9 @@ It represents a generic backend loader for a Instruction</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractInstructionBackend.groups">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractInstructionBackend.groups" title="Link to this definition">¶</a></dt>
-<dd><p>Returns a list of groups of this instruction</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">InstructionGroup</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractInstructionBackend.groups" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of groups of this instruction.
+Provided with the INSTR_GROUP capability</p>
 </dd></dl>
 
 <dl class="py property">
@@ -321,8 +328,15 @@ relies on IDA IDs while quokka relies on capstone IDs)</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractInstructionBackend.operands">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractOperandBackend" title="qbindiff.loader.backend.abstract.AbstractOperandBackend"><span class="pre">AbstractOperandBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractInstructionBackend.operands" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qbindiff.loader.backend.AbstractOperandBackend" title="qbindiff.loader.backend.AbstractOperandBackend"><span class="pre">AbstractOperandBackend</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractInstructionBackend.operands" title="Link to this definition">¶</a></dt>
 <dd><p>Returns an iterator over backend operand objects</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qbindiff.loader.backend.AbstractInstructionBackend.pcode_ops">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pcode_ops</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">PcodeOp</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#qbindiff.loader.backend.AbstractInstructionBackend.pcode_ops" title="Link to this definition">¶</a></dt>
+<dd><p>List of PcodeOp associated with the instruction.
+Provided with the PCODE capability</p>
 </dd></dl>
 
 <dl class="py property">

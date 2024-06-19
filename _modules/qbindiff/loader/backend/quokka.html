@@ -118,7 +118,7 @@
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="c1"># third party imports</span>
 <span class="kn">import</span> <span class="nn">quokka</span>
@@ -142,10 +142,15 @@
     <span class="n">ReferenceType</span><span class="p">,</span>
     <span class="n">ReferenceTarget</span><span class="p">,</span>
     <span class="n">OperandType</span><span class="p">,</span>
+    <span class="n">InstructionGroup</span><span class="p">,</span>
+    <span class="n">ProgramCapability</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
 <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.utils</span> <span class="kn">import</span> <span class="n">convert_operand_type</span>
 
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pypcode</span> <span class="kn">import</span> <span class="n">PcodeOp</span>
 
 <span class="c1"># Aliases</span>
 <span class="n">capstoneOperand</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># Relaxed typing</span>
@@ -398,12 +403,11 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionGroup</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a list of groups of this instruction. Groups are capstone based but enriched.</span>
+<span class="sd">        Returns a list of groups of this instruction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="p">[]</span>  <span class="c1"># Not supported</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">InstructionGroup</span><span class="o">.</span><span class="n">from_capstone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">groups</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -427,7 +431,15 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the bytes representation of the instruction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qb_instr</span><span class="o">.</span><span class="n">bytes</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qb_instr</span><span class="o">.</span><span class="n">bytes</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pcode_ops</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PcodeOp</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List of PcodeOp associated with the instruction.</span>
+<span class="sd">        Provided with the PCODE capability</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qb_instr</span><span class="o">.</span><span class="n">pcode_insts</span></div>
 
 
 
@@ -718,7 +730,14 @@
 <span class="sd">        Returns the executable path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exec_path</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exec_path</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramCapability</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the supported capabilities</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ProgramCapability</span><span class="o">.</span><span class="n">INSTR_GROUP</span> <span class="o">|</span> <span class="n">ProgramCapability</span><span class="o">.</span><span class="n">PCODE</span></div>
 
 </pre></div>
             <div class="clearer"></div>
