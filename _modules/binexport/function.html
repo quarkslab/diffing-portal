@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
@@ -96,13 +96,12 @@
             
 <h1>Source code for binexport.function</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">import</span> <span class="nn">networkx</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">binexport.utils</span> <span class="kn">import</span> <span class="n">get_basic_block_addr</span>
+<span class="kn">from</span> <span class="nn">binexport.utils</span> <span class="kn">import</span> <span class="n">get_basic_block_addr</span><span class="p">,</span> <span class="n">logger</span>
 <span class="kn">from</span> <span class="nn">binexport.basic_block</span> <span class="kn">import</span> <span class="n">BasicBlockBinExport</span>
 <span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">FunctionType</span>
 
@@ -155,7 +154,7 @@
 
         <span class="k">if</span> <span class="n">is_import</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Missing function address for imported function&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Missing function address for imported function&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">assert</span> <span class="n">pb_fun</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;pb_fun must be provided&quot;</span>
@@ -310,7 +309,7 @@
             <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">basic_block</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="n">bblocks</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2"> basic block address (0x</span><span class="si">{</span><span class="n">basic_block</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">) already in(idx:</span><span class="si">{</span><span class="n">bb_idx</span><span class="si">}</span><span class="s2">)&quot;</span>
                 <span class="p">)</span>
 
@@ -395,7 +394,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 
           <div class="sidebar-resize-handle"></div>
@@ -450,7 +449,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Diffing Graphs only &#8212; Diffing Portal</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
+    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script src="../_static/documentation_options.js?v=3b889da3"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer src="../_static/insipid.js"></script>
+    <script defer src="../_static/insipid-sidebar.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Diffing Two Programs" href="qbindiff-basic-diffing.html" />
+    <link rel="prev" title="Firmware Diffing" href="04c_firmware_diffing.html" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head><body>
+    <script type="text/javascript">
+        document.body.classList.add('js');
+    </script>
+    <input type="checkbox" id="sidebar-checkbox" style="display: none;">
+    <label id="overlay" for="sidebar-checkbox"></label>
+    <div class="sidebar-resize-handle"></div>
+    <script type="text/javascript">
+        try {
+            let sidebar = localStorage.getItem('sphinx-sidebar');
+            const sidebar_width = localStorage.getItem('sphinx-sidebar-width');
+            if (sidebar_width) {
+                document.documentElement.style.setProperty('--sidebar-width', sidebar_width);
+            }
+            // show sidebar on wide screen
+            if (!sidebar && window.matchMedia('(min-width: 100rem)').matches) {
+                sidebar = 'visible';
+                // NB: We don't store the value in localStorage!
+            }
+            if (sidebar === 'visible') {
+                document.getElementById('sidebar-checkbox').checked = true;
+            }
+        } catch(e) {
+            console.info(e);
+        }
+    </script>
+    <header id="topbar-placeholder">
+      <div id="topbar">
+        <div id="titlebar">
+          <div class="buttons">
+            <label for="sidebar-checkbox" id="sidebar-button" role="button" tabindex="0" aria-controls="sphinxsidebar" accesskey="M">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
+            </label>
+            <button id="search-button" type="button" title="Search" aria-label="Search" aria-expanded="false" aria-controls="search-form" accesskey="S">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+            </button>
+          </div>
+          <div class="title">
+            <a class="parent" href="tutorials.html" accesskey="U">Exporters</a>
+            <a class="top" href="#">Diffing Graphs only</a>
+          </div>
+          <div class="buttons">
+            <button id="fullscreen-button" type="button" aria-hidden="true">
+              <span class="enable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z"/></svg>
+              </span>
+              <span class="disable">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="searchbox" role="search">
+          <form id="search-form" class="search" style="display: none" action="../search.html" method="get">
+            <input type="search" name="q" placeholder="Search ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <button>Go</button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <a href="04c_firmware_diffing.html" class="nav-icon previous" title="previous:&#13;Firmware Diffing" aria-label="Previous topic" accesskey="P" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>
+      </a>
+      <a href="qbindiff-basic-diffing.html" class="nav-icon next" title="next:&#13;Diffing Two Programs" aria-label="Next topic" accesskey="N" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg>
+      </a>
+    </nav>
+
+    <nav class="relbar">
+      <a class="previous" href="04c_firmware_diffing.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Firmware Diffing
+          </span>
+        </div>
+      </a>
+      <a class="next" href="qbindiff-basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Diffing Two Programs
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+<section id="diffing-graphs-only">
+<h1>Diffing Graphs only<a class="headerlink" href="#diffing-graphs-only" title="Link to this heading">¶</a></h1>
+<p>QBinDiff is able to perform graph matching, whether this graph is a Control Flow Graph (CFG),
+a Call Graph (CG), or something completely unrelated.
+We demonstrated this in our <a class="reference external" href="https://blog.quarkslab.com/qbindiff-a-modular-diffing-toolkit.html">introductory blog post</a>
+with the protein-protein interaction (PPI) networks of different species in bioinformatics.</p>
+<p>In this tutorial, we will focus our attention on the CFG of EVM smart contracts.</p>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">¶</a></h2>
+<p>The Ethereum Virtual Machine (EVM) is a RISC stack-based architecture.
+It is used by Ethereum and other compatible chains to execute smart contracts,
+the core programs of decentralized applications on these platforms.</p>
+<p>In addition to the lack of native support from tools such as QBinDiff, BinExport, and Quokka,
+the EVM bytecode lacks an explicit structure to identify functions:
+all the control flow is performed with only conditional and unconditional jumps (<code class="docutils literal notranslate"><span class="pre">JUMPI</span></code>, <code class="docutils literal notranslate"><span class="pre">JUMP</span></code>),
+that read the destination address on the stack.
+This design leads to particular patterns in the bytecode, for example:</p>
+<ul class="simple">
+<li><p>the start of the bytecode contains a dispatcher, acting like a giant switch statement,
+that is responsible for jumping into the called external/public function;</p></li>
+<li><p>to call internal functions and other forms of duplicated code,
+the caller pushes a return address onto the stack before executing a jump instruction.</p></li>
+</ul>
+<p>However, several tools let you recover the CFG of the smart contract
+(some even detect functions with varying degrees of success).
+From this information alone, this tutorial will guide you with diffing an example smart contract.</p>
+</section>
+<section id="how-to-diff">
+<h2>How to diff<a class="headerlink" href="#how-to-diff" title="Link to this heading">¶</a></h2>
+<p>In this tutorial, we will diff two versions of an example smart contract.
+One allows its user’s balance to go negative but not the other.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">vulnerable.sol</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">fixed.sol</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">SPDX</span><span class="o">-</span><span class="n">License</span><span class="o">-</span><span class="n">Identifier</span><span class="p">:</span> <span class="n">MIT</span>
+
+<span class="n">pragma</span> <span class="n">solidity</span> <span class="mf">0.8.25</span><span class="p">;</span>
+
+<span class="n">contract</span> <span class="n">SimpleToken</span> <span class="p">{</span>
+    <span class="n">mapping</span><span class="p">(</span><span class="n">address</span> <span class="o">=&gt;</span> <span class="nb">int</span><span class="p">)</span> <span class="n">public</span> <span class="n">balances</span><span class="p">;</span>
+    
+    <span class="n">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1000e18</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="n">function</span> <span class="n">sendToken</span><span class="p">(</span><span class="n">address</span> <span class="n">_recipient</span><span class="p">,</span> <span class="nb">int</span> <span class="n">_amount</span><span class="p">)</span> <span class="n">public</span> <span class="p">{</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">_amount</span><span class="p">;</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">_recipient</span><span class="p">]</span> <span class="o">+=</span> <span class="n">_amount</span><span class="p">;</span>
+    <span class="p">}</span>   
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">SPDX</span><span class="o">-</span><span class="n">License</span><span class="o">-</span><span class="n">Identifier</span><span class="p">:</span> <span class="n">MIT</span>
+
+<span class="n">pragma</span> <span class="n">solidity</span> <span class="mf">0.8.25</span><span class="p">;</span>
+
+<span class="n">contract</span> <span class="n">SimpleToken</span> <span class="p">{</span>
+    <span class="n">mapping</span><span class="p">(</span><span class="n">address</span> <span class="o">=&gt;</span> <span class="n">uint</span><span class="p">)</span> <span class="n">public</span> <span class="n">balances</span><span class="p">;</span>
+    
+    <span class="n">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1000e18</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="n">function</span> <span class="n">sendToken</span><span class="p">(</span><span class="n">address</span> <span class="n">_recipient</span><span class="p">,</span> <span class="n">uint</span> <span class="n">_amount</span><span class="p">)</span> <span class="n">public</span> <span class="p">{</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">_amount</span><span class="p">;</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">_recipient</span><span class="p">]</span> <span class="o">+=</span> <span class="n">_amount</span><span class="p">;</span>
+    <span class="p">}</span>   
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">608060405234801561001057600080</span><span class="n">fd5b50600436106100365760003560</span>
+<span class="n">e01c80630f7428b91461003b57806327e235e314610050575b600080fd5b</span>
+<span class="mf">61004e6100493660046100</span><span class="n">f3565b610082565b005b61007061005e366004</span>
+<span class="mi">61011</span><span class="n">d565b60006020819052908152604090205481565b60405190815260</span>
+<span class="mi">200160405180910390</span><span class="n">f35b33600090815260208190526040812080548392</span>
+<span class="mi">906100</span><span class="n">a1908490610155565b90915550506001600160a01b038216600090</span>
+<span class="mi">815260208190526040812080548392906100</span><span class="n">ce90849061017c565b909155</span>
+<span class="mi">50505050565</span><span class="n">b80356001600160a01b03811681146100ee57600080fd5b91</span>
+<span class="mi">9050565</span><span class="n">b6000806040838503121561010657600080fd5b61010f836100d7</span>
+<span class="mi">565</span><span class="n">b946020939093013593505050565b60006020828403121561012f5760</span>
+<span class="mi">0080</span><span class="n">fd5b610138826100d7565b9392505050565b634e487b7160e01b6000</span>
+<span class="mi">52601160045260246000</span><span class="n">fd5b818103600083128015838313168383128216</span>
+<span class="mi">17156101755761017561013</span><span class="n">f565b5092915050565b808201828112600083</span>
+<span class="mi">128015821682158216171561019</span><span class="n">c5761019c61013f565b50509291505056</span>
+<span class="n">fea264697066735822122078995ea6ebd8bd5d1333cde4da1d4ade3eee62</span>
+<span class="n">af048e42232dbc3ed6cd682aba64736f6c63430008190033</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">608060405234801561001057600080</span><span class="n">fd5b50600436106100365760003560</span>
+<span class="n">e01c806327e235e31461003b578063412664ae1461006d575b600080fd5b</span>
+<span class="mi">61005</span><span class="n">b6100493660046100f3565b60006020819052908152604090205481</span>
+<span class="mi">565</span><span class="n">b60405190815260200160405180910390f35b61008061007b36600461</span>
+<span class="mi">0115565</span><span class="n">b610082565b005b33600090815260208190526040812080548392</span>
+<span class="mi">906100</span><span class="n">a1908490610155565b90915550506001600160a01b038216600090</span>
+<span class="mi">815260208190526040812080548392906100</span><span class="n">ce90849061016e565b909155</span>
+<span class="mi">50505050565</span><span class="n">b80356001600160a01b03811681146100ee57600080fd5b91</span>
+<span class="mi">9050565</span><span class="n">b60006020828403121561010557600080fd5b61010e826100d756</span>
+<span class="mi">5</span><span class="n">b9392505050565b6000806040838503121561012857600080fd5b610131</span>
+<span class="mi">836100</span><span class="n">d7565b946020939093013593505050565b634e487b7160e01b6000</span>
+<span class="mi">52601160045260246000</span><span class="n">fd5b818103818111156101685761016861013f56</span>
+<span class="mi">5</span><span class="n">b92915050565b808201808211156101685761016861013f56fea2646970</span>
+<span class="mi">66735822122024</span><span class="n">ea090b39258ab97fbe93f3646eb22d1d2cc2aedc4b74e1</span>
+<span class="n">c3861562ad940d0364736f6c63430008190033</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>To this end, we will use QBinDiff’s <code class="docutils literal notranslate"><span class="pre">DiGraphDiffer</span></code> to compare their CFG.</p>
+<section id="generate-the-graphs">
+<h3>Generate the graphs<a class="headerlink" href="#generate-the-graphs" title="Link to this heading">¶</a></h3>
+<p>The first step is to recover the CFG from the bytecode of the smart contracts.
+While not trivial, this has been solved by several tools already.
+We recommend <a class="reference external" href="https://github.com/SeUniVr/EtherSolve/">EtherSolve</a> (java)
+or <a class="reference external" href="https://github.com/usyd-blockchain/vandal/">vandal</a> (python).</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>java<span class="w"> </span>-jar<span class="w"> </span>EtherSolve.jar<span class="w"> </span>-r<span class="w"> </span>-j<span class="w"> </span>vulnerable.evm
+</pre></div>
+</div>
+<p>The command above generates a file named <code class="docutils literal notranslate"><span class="pre">Analysis_&lt;datetime&gt;.json</span></code>.
+In this file, the CFG can be found under the <code class="docutils literal notranslate"><span class="pre">runtimeCfg</span></code> field.
+Note that edges are stored under <code class="docutils literal notranslate"><span class="pre">runtimeCfg.successors</span></code> (and sometimes have duplicate entries).</p>
+<p>QBinDiff’s differ expects <code class="docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code> as inputs, so we will need to adapt the data a little bit:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_ethersolve</span><span class="p">(</span><span class="n">analysis</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
+    <span class="c1"># Filter the desired attributes and set the node ID as the basic block&#39;s offset</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;stack_balance&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;stackBalance&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;bytecode&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;bytecodeHex&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;opcodes&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;parsedOpcodes&quot;</span><span class="p">],</span>
+        <span class="p">}</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">analysis</span><span class="p">[</span><span class="s2">&quot;runtimeCfg&quot;</span><span class="p">][</span><span class="s2">&quot;nodes&quot;</span><span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Generate an edge for each successor of each node</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;from&quot;</span><span class="p">],</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">}</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;to&quot;</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">analysis</span><span class="p">[</span><span class="s2">&quot;runtimeCfg&quot;</span><span class="p">][</span><span class="s2">&quot;successors&quot;</span><span class="p">]</span>
+    <span class="p">]</span>
+    <span class="c1"># Flatten the list</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">links</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+
+    <span class="c1"># Create the networkx.DiGraph</span>
+    <span class="n">nx_node_link</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;directed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;multigraph&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="n">nodes</span><span class="p">,</span> <span class="s2">&quot;links&quot;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">networkx</span><span class="o">.</span><span class="n">node_link_graph</span><span class="p">(</span><span class="n">nx_node_link</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="optional-write-heuristics">
+<h3>(optional) Write heuristics<a class="headerlink" href="#optional-write-heuristics" title="Link to this heading">¶</a></h3>
+<p>When matching nodes, we can help the differ by setting an initial similarity score between each pair of nodes.
+These scores are gathered in the similarity matrix, initialized to all 1,
+meaning every node is initially believed to be similar to all nodes.</p>
+<p>If you have access to some heuristic for similarity between nodes,
+you can add a prepass that will be executed before matching nodes to alter the similarity matrix.</p>
+<p>For example, we have access to the stack balance of each basic block.
+This value indicates how many words the basic block pushes or pops from the stack.
+Intuitively, similar blocks should have the same stack balance.</p>
+<p>You can find more information <a class="reference external" href="../qbindiff/doc/source/api/differ.html#qbindiff.Differ.register_prepass">here</a>
+on how to create a prepass.</p>
+<p>In this example, we first arrange nodes by stack balance in each graph,
+then reduce the similarity of nodes that do not share the same stack balance.</p>
+<p>Note that the nodes’ IDs are their offset, and do not correspond to the row or column in the similarity matrix.
+The correspondance is given by the <code class="docutils literal notranslate"><span class="pre">primary_n2i</span></code> and <code class="docutils literal notranslate"><span class="pre">secondary_n2i</span></code> mappings.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prepass_stack_balance</span><span class="p">(</span>
+    <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
+    <span class="n">primary</span><span class="p">:</span> <span class="n">qbindiff</span><span class="o">.</span><span class="n">GenericGraph</span><span class="p">,</span>
+    <span class="n">secondary</span><span class="p">:</span> <span class="n">qbindiff</span><span class="o">.</span><span class="n">GenericGraph</span><span class="p">,</span>
+    <span class="n">primary_n2i</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">secondary_n2i</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Arrange nodes indices by stack balance</span>
+
+    <span class="c1">## Primary node indices by stack balance</span>
+    <span class="n">primary_index</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1">## Secondary node indices by stack balance</span>
+    <span class="n">secondary_index</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1">## Populate primary_index and secondary_index</span>
+    <span class="k">for</span> <span class="n">graph</span><span class="p">,</span> <span class="n">n2i</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">primary_n2i</span><span class="p">,</span> <span class="n">primary_index</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">secondary</span><span class="p">,</span> <span class="n">secondary_n2i</span><span class="p">,</span> <span class="n">secondary_index</span><span class="p">),</span>
+    <span class="p">):</span>
+        <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+            <span class="n">balance</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;stack_balance&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">balance</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
+                <span class="n">index</span><span class="p">[</span><span class="n">balance</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">index</span><span class="p">[</span><span class="n">balance</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n2i</span><span class="p">[</span><span class="n">node_id</span><span class="p">])</span>
+
+    <span class="c1"># Reduce the similarity of nodes that do not share the same stack balance by 60%</span>
+    <span class="k">for</span> <span class="n">primary_balance</span><span class="p">,</span> <span class="n">primary_indices</span> <span class="ow">in</span> <span class="n">primary_index</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">secondary_balance</span><span class="p">,</span> <span class="n">secondary_indices</span> <span class="ow">in</span> <span class="n">secondary_index</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">primary_balance</span> <span class="o">==</span> <span class="n">secondary_balance</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">primary_indices</span><span class="p">:</span>
+                <span class="n">sim_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">secondary_indices</span><span class="p">]</span> <span class="o">*=</span> <span class="mf">0.4</span>
+</pre></div>
+</div>
+</section>
+<section id="perform-the-match">
+<h3>Perform the match<a class="headerlink" href="#perform-the-match" title="Link to this heading">¶</a></h3>
+<p>Once you have the CFG in a <code class="docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code> object,
+and have optionally written some prepasses, performing the mapping is simple:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">differ</span> <span class="o">=</span> <span class="n">qbindiff</span><span class="o">.</span><span class="n">DiGraphDiffer</span><span class="p">(</span>
+    <span class="n">primary_cfg</span><span class="p">,</span>
+    <span class="n">secondary_cfg</span><span class="p">,</span>
+    <span class="n">sparsity_ratio</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">tradeoff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">differ</span><span class="o">.</span><span class="n">register_prepass</span><span class="p">(</span><span class="n">prepass_stack_balance</span><span class="p">)</span>  <span class="c1"># optional</span>
+<span class="n">mapping</span> <span class="o">=</span> <span class="n">differ</span><span class="o">.</span><span class="n">compute_matching</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can experiment with the tradeoff and epsilon values,
+depending on the nature of the diffing performed.
+As general guidelines:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tradeoff</span></code> gives more weight to the topology when close to 0,
+and more weight to the similarity when close to 1.
+It should be set strictly between 0 and 1.
+The better your heuristics, the higher its value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">epsilon</span></code> controls the convergence speed.
+It should not be set to 0, and be as close to 1 as you can afford to wait.
+For this simple example, a conservative low value is not an issue.</p></li>
+<li><p>you should adjust how much your prepasses affect the similarity matrix,
+depending on the quality of your heuristics.</p></li>
+</ul>
+<p>For this example, we performed an exhaustive search of these parameters,
+when compared to a ground truth matching.
+In these maps, <code class="docutils literal notranslate"><span class="pre">epsilon</span></code> and <code class="docutils literal notranslate"><span class="pre">tradeoff</span></code> correspond to the above parameters,
+while <code class="docutils literal notranslate"><span class="pre">stack</span> <span class="pre">balance</span> <span class="pre">weight</span></code> controls how much the stack balance prepass impacts the similarity matrix.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><img alt="../_images/stack-balance-weight-epsilon.png" src="../_images/stack-balance-weight-epsilon.png" />
+</td>
+<td><img alt="../_images/stack-balance-weight-tradeoff.png" src="../_images/stack-balance-weight-tradeoff.png" />
+</td>
+<td><img alt="../_images/tradeoff-epsilon.png" src="../_images/tradeoff-epsilon.png" />
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="process-the-result">
+<h3>Process the result<a class="headerlink" href="#process-the-result" title="Link to this heading">¶</a></h3>
+<p>Now that you have a mapping between nodes of the primary and secondary graphs,
+you can process it however you like, for example to compute similarity score.</p>
+<p>Here we show a visualization of the resulting diff, revealing interesting aspects of the modification:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>From signed to unsigned operations</p></th>
+<th class="head"><p>CFG rewiring</p></th>
+<th class="head"><p>Dispatcher update</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><img alt="../_images/diff-signedness.png" src="../_images/diff-signedness.png" />
+</td>
+<td><img alt="../_images/diff-cfg.png" src="../_images/diff-cfg.png" />
+</td>
+<td><img alt="../_images/diff-dispatcher.png" src="../_images/diff-dispatcher.png" />
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+
+          <div class="sidebar-resize-handle"></div>
+
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Exporters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/binexport.html">Binexport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exporter/quokka.html">Quokka</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Qbindiff</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/how.html">How it works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../qbindiff/doc/source/api/qbindiff.html">QBinDiff API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-party differs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../differs/bindiff.html">Bindiff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../differs/diaphora.html">Diaphora</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Exporters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html#python-bindiff">Python-bindiff</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html#qbindiff">QBinDiff</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Diffing Graphs only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qbindiff-basic-diffing.html">Diffing Two Programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features-choosing.html">Choosing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diffing-custom-anchors.html">Diffing with Custom Anchors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-passes.html">Using Qbindiff Pass Mechanism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom-backend-loader.html">Custom Backend Loader</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/idascript.html">Idascript</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/academia.html">Academic Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/industry.html">Industry Publications</a></li>
+</ul>
+
+<div><hr class="docutils"></div>
+<ul>
+  <li class="toctree-l1"><a class="reference internal" href="../genindex.html" accesskey="I">General Index</a></li>
+  <li class="toctree-l1"><a class="reference internal" href="../py-modindex.html">Python Module Index</a></li>
+</ul>
+<div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <nav class="relbar">
+      <a class="previous" href="04c_firmware_diffing.html" aria-label="Previous topic" >
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+        </div>
+        <div class="title">
+          <span class="text">
+            <span class="direction">previous</span>
+            Firmware Diffing
+          </span>
+        </div>
+      </a>
+      <a class="next" href="qbindiff-basic-diffing.html" aria-label="Next topic" >
+        <div class="title">
+          <span class="text">
+            <span class="direction">next</span>
+            Diffing Two Programs
+          </span>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/></svg>
+        </div>
+      </a>
+    </nav>
+
+    <footer role="contentinfo">
+      &#169; Copyright 2023 Quarkslab.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+      <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
+<a class="reference internal" href="../_sources/tutorials/graph-only-diffing.rst.txt" rel="nofollow">Show Source</a>.
+    </footer>
+  </body>
+</html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
@@ -97,7 +97,6 @@
 <h1>Source code for binexport.program</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">networkx</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
@@ -106,6 +105,7 @@
 <span class="kn">from</span> <span class="nn">binexport.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
 <span class="kn">from</span> <span class="nn">binexport.function</span> <span class="kn">import</span> <span class="n">FunctionBinExport</span>
 <span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">FunctionType</span>
+<span class="kn">from</span> <span class="nn">binexport.utils</span> <span class="kn">import</span> <span class="n">logger</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">Addr</span>
@@ -165,7 +165,7 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pb_fun</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">flow_graph</span><span class="p">):</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">FunctionBinExport</span><span class="p">(</span><span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">pb_fun</span><span class="o">=</span><span class="n">pb_fun</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Address collision for 0x</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Address collision for 0x</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">coll</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
             <span class="n">count_f</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -180,7 +180,7 @@
                 <span class="p">)</span>
                 <span class="n">count_imp</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">address</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing function address: 0x</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing function address: 0x</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
                 <span class="k">continue</span>
 
             <span class="bp">self</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">address</span><span class="p">]</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">FunctionType</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
@@ -202,7 +202,7 @@
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fun_names</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;total all:</span><span class="si">{</span><span class="n">count_f</span><span class="si">}</span><span class="s2">, imported:</span><span class="si">{</span><span class="n">count_imp</span><span class="si">}</span><span class="s2"> collision:</span><span class="si">{</span><span class="n">coll</span><span class="si">}</span><span class="s2"> (total:</span><span class="si">{</span><span class="n">count_f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">count_imp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">coll</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 
@@ -261,7 +261,7 @@
 
         <span class="k">if</span> <span class="n">retcode</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="c1"># Still continue if retcode != 0, because idat64 something crashes but still manage to export file</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">exec_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> failed to export [ret:</span><span class="si">{</span><span class="n">retcode</span><span class="si">}</span><span class="s2">, binexport:</span><span class="si">{</span><span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span><span class="si">}</span><span class="s2">]&quot;</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -269,7 +269,7 @@
         <span class="k">if</span> <span class="n">binexport_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">binexport_file</span><span class="p">)</span> <span class="k">if</span> <span class="n">open_export</span> <span class="k">else</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">exec_file</span><span class="si">}</span><span class="s2"> can&#39;t find binexport generated&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">exec_file</span><span class="si">}</span><span class="s2"> can&#39;t find binexport generated&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
@@ -300,7 +300,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 
           <div class="sidebar-resize-handle"></div>
@@ -355,7 +355,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>
