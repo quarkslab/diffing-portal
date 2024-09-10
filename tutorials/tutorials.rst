@@ -24,6 +24,7 @@ QBinDiff
 .. toctree::
     :maxdepth: 1
 
+    Diffing Graphs only <graph-only-diffing>
     Diffing Two Programs <qbindiff-basic-diffing>
     Choosing Features <features-choosing>
     Diffing with Custom Anchors <diffing-custom-anchors>
