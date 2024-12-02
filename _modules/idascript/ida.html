@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script src="../../_static/documentation_options.js?v=3b889da3"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -185,11 +185,13 @@
                  <span class="n">binary_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
                  <span class="n">script_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">script_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+                 <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">exit_virtualenv</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param binary_file: path of the binary file to analyse</span>
 <span class="sd">        :param script_file: path to the Python script to execute on the binary (if required)</span>
 <span class="sd">        :param script_params: additional parameters to send either to the script or IDA directly</span>
+<span class="sd">        :param exit_virtualenv: exit current virtual env before calling IDA</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">binary_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
@@ -202,6 +204,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1">#: list of paramaters given to IDA</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">timeout</span>  <span class="c1">#: Timeout for IDA execution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exit_virtualenv</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">exit_virtualenv</span>
 
         <span class="k">if</span> <span class="n">script_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Mode IDAPython</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_idapython</span><span class="p">(</span><span class="n">script_file</span><span class="p">,</span> <span class="n">script_params</span><span class="p">)</span>
@@ -268,6 +271,11 @@
         <span class="n">env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
         <span class="n">env</span><span class="p">[</span><span class="s2">&quot;TVHEADLESS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
         <span class="n">env</span><span class="p">[</span><span class="s2">&quot;TERM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;xterm&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exit_virtualenv</span><span class="p">:</span>
+            <span class="n">venv</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;VIRTUAL_ENV&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">venv</span><span class="p">:</span>
+                <span class="n">paths</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+                <span class="n">env</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">venv</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
             <span class="n">cmd_line</span><span class="p">,</span>
@@ -373,12 +381,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_worker</span><span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_worker</span><span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">exit_virtualenv</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">file</span> <span class="o">=</span> <span class="n">ingress</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
-                <span class="n">ida</span> <span class="o">=</span> <span class="n">IDA</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+                <span class="n">ida</span> <span class="o">=</span> <span class="n">IDA</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">exit_virtualenv</span><span class="p">)</span>
                 <span class="n">ida</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
                 <span class="n">res</span> <span class="o">=</span> <span class="n">ida</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
 
@@ -395,7 +403,8 @@
             <span class="n">script</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">exit_virtualenv</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterator the generator sent and apply the script file on each</span>
 <span class="sd">        file concurrently on a bunch of IDA workers. The function consume</span>
@@ -407,6 +416,7 @@
 <span class="sd">        :param params: list of parameters to send to the script</span>
 <span class="sd">        :param workers: number of workers to trigger in parallel</span>
 <span class="sd">        :param timeout: timeout for IDA runs (-1 means infinity)</span>
+<span class="sd">        :param exit_virtualenv: exit current virtualenv before calling IDA</span>
 <span class="sd">        :return: generator of files processed (return code, file path)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -417,7 +427,7 @@
 
         <span class="c1"># Launch all workers</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">workers</span><span class="p">):</span>
-            <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">MultiIDA</span><span class="o">.</span><span class="n">_worker</span><span class="p">,</span> <span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">))</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">MultiIDA</span><span class="o">.</span><span class="n">_worker</span><span class="p">,</span> <span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">exit_virtualenv</span><span class="p">))</span>
 
         <span class="c1"># Pre-fill ingress queue</span>
         <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
@@ -498,7 +508,7 @@
 
     <footer role="contentinfo">
       &#169; Copyright 2023 Quarkslab.
-      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+      Created using <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
       <a class="reference external" href="https://insipid-sphinx-theme.readthedocs.io/">Insipid Theme</a>.
     </footer>
   </body>

@@ -9,15 +9,19 @@
     "\n",
     "## Introduction\n",
     "\n",
-    "The sample to work on is a ``Mirai`` malware sample. It can be retrieve below. "
+    "The sample to work on is a ``Mirai`` malware sample. It can be retrieve below (password: ``infected\\`). "
    ]
   },
   {
    "cell_type": "raw",
    "id": "169554bc-5f65-402d-924b-87f5ed9a9bd2",
-   "metadata": {},
+   "metadata": {
+    "vscode": {
+     "languageId": "raw"
+    }
+   },
    "source": [
-    "<div style=\"text-align: center;\"><a href=\"../_static/tutorials/practical1_string_decipher.tar.gz\"><i class=\"fa fa-download fa-lg\"></i><br/>binary</a></div><br/>"
+    "<div style=\"text-align: center;\"><a href=\"../_static/tutorials/mirai.zip\"><i class=\"fa fa-download fa-lg\"></i><br/>binary</a></div><br/>"
    ]
   },
   {
