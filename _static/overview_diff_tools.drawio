@@ -91,7 +91,7 @@
             <mxGeometry x="365" y="640" width="120" height="60" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="" link="https://github.com/quarkslab/python-binexport/blob/main/binexport/program.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-18">
+        <UserObject label="" link="https://github.com/quarkslab/python-binexport/blob/main/src/binexport/program.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-18">
           <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-8" target="t7TJ7foM8erzeyl97hb3-3">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
@@ -101,7 +101,7 @@
             <mxGeometry x="485" y="400" width="140" height="40" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="" link="https://github.com/quarkslab/python-bindiff/blob/main/bindiff/bindiff.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-14">
+        <UserObject label="" link="https://github.com/quarkslab/python-bindiff/blob/main/src/bindiff/bindiff.py" linkTarget="_blank" id="t7TJ7foM8erzeyl97hb3-14">
           <mxCell style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="t7TJ7foM8erzeyl97hb3-9" target="t7TJ7foM8erzeyl97hb3-2">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
