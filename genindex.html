@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/style.css?v=f97287ed" />
@@ -149,6 +149,8 @@
 </li>
       <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.add_feature">add_feature() (qbindiff.features.extractor.FeatureCollector method)</a>
 </li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.add_file_matched">add_file_matched() (bindiff.file.BindiffFile method)</a>
+</li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.add_function_match">add_function_match() (bindiff.file.BindiffFile method)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.add_instruction_match">add_instruction_match() (bindiff.file.BindiffFile method)</a>
@@ -253,6 +255,8 @@
       </ul></li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.BasicBlock">BasicBlock (class in qbindiff.loader)</a>
 </li>
+      <li><a href="differs/bindiff.html#bindiff.types.basicblock_algorithm_str">basicblock_algorithm_str() (in module bindiff.types)</a>
+</li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.basicblock_matches">basicblock_matches (bindiff.file.BindiffFile property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport">BasicBlockBackendBinExport (class in qbindiff.loader.backend.binexport)</a>
@@ -287,10 +291,12 @@
       </ul></li>
       <li><a href="tools/idascript.html#idascript.ida.IDA.bin_file">bin_file (idascript.ida.IDA attribute)</a>
 </li>
-      <li><a href="differs/bindiff.html#bindiff.BinDiff">BinDiff (class in bindiff)</a>
+      <li><a href="exporter/binexport.html#binexport.types.DisassemblerBackend.BINARY_NINJA">BINARY_NINJA (binexport.types.DisassemblerBackend attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.BinDiff">BinDiff (class in bindiff)</a>
+</li>
       <li>
     bindiff.types
 
@@ -407,8 +413,6 @@
       </ul></li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.clear">clear() (qbindiff.Program method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractInstructionBackend.comment">comment (qbindiff.loader.backend.AbstractInstructionBackend property)</a>
 
       <ul>
@@ -419,6 +423,10 @@
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.Instruction.comment">(qbindiff.loader.Instruction property)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.commit">commit() (bindiff.file.BindiffFile method)</a>
+</li>
       <li><a href="qbindiff/doc/source/api/matcher.html#qbindiff.matcher.belief_propagation.BeliefMWM.compute">compute() (qbindiff.matcher.belief_propagation.BeliefMWM method)</a>
 
       <ul>
@@ -440,6 +448,8 @@
       <li><a href="qbindiff/doc/source/api/matcher.html#qbindiff.matcher.Matcher.confidence_score">confidence_score (qbindiff.matcher.Matcher property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/features.html#qbindiff.features.Constant">Constant (class in qbindiff.features)</a>
+</li>
+      <li><a href="exporter/binexport.html#binexport.function.BasicBlockBinExport.contiguous_ranges">contiguous_ranges (binexport.function.BasicBlockBinExport property)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType.coprocessor">coprocessor (qbindiff.loader.types.OperandType attribute)</a>
 </li>
@@ -557,14 +567,14 @@
         <li><a href="qbindiff/doc/source/api/matcher.html#qbindiff.matcher.belief_propagation.BeliefQAP.epsilon">(qbindiff.matcher.belief_propagation.BeliefQAP attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/distances.html#qbindiff.Distance.euclidean">euclidean (qbindiff.Distance attribute)</a>
 
       <ul>
         <li><a href="qbindiff/doc/source/api/types.html#qbindiff.types.Distance.euclidean">(qbindiff.types.Distance attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractProgramBackend.exec_path">exec_path (qbindiff.loader.backend.AbstractProgramBackend property)</a>
 
       <ul>
@@ -579,6 +589,16 @@
 </li>
       <li><a href="differs/bindiff.html#bindiff.types.BasicBlockAlgorithm.exit_point_matching">exit_point_matching (bindiff.types.BasicBlockAlgorithm attribute)</a>
 </li>
+      <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractProgramBackend.export_path">export_path (qbindiff.loader.backend.AbstractProgramBackend property)</a>
+
+      <ul>
+        <li><a href="qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.ProgramBackendBinExport.export_path">(qbindiff.loader.backend.binexport.ProgramBackendBinExport property)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.ProgramBackendQuokka.export_path">(qbindiff.loader.backend.quokka.ProgramBackendQuokka property)</a>
+</li>
+        <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.export_path">(qbindiff.Program property)</a>
+</li>
+      </ul></li>
       <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.export_to_bindiff">export_to_bindiff() (qbindiff.QBinDiff method)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.expression.ExpressionBinExport">ExpressionBinExport (class in binexport.expression)</a>
@@ -681,6 +701,8 @@
       </ul></li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Function">Function (class in qbindiff)</a>
 </li>
+      <li><a href="differs/bindiff.html#bindiff.types.function_algorithm_str">function_algorithm_str() (in module bindiff.types)</a>
+</li>
       <li><a href="differs/bindiff.html#bindiff.file.BasicBlockMatch.function_match">function_match (bindiff.file.BasicBlockMatch attribute)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.function_matches">function_matches (bindiff.file.BindiffFile property)</a>
@@ -751,9 +773,11 @@
         <li><a href="qbindiff/doc/source/api/differ.html#qbindiff.QBinDiff.get_similarities">(qbindiff.QBinDiff method)</a>
 </li>
       </ul></li>
+      <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.ProgramBackendQuokka.get_structure">get_structure() (qbindiff.loader.backend.quokka.ProgramBackendQuokka method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.ProgramBackendQuokka.get_structure">get_structure() (qbindiff.loader.backend.quokka.ProgramBackendQuokka method)</a>
+      <li><a href="exporter/binexport.html#binexport.types.DisassemblerBackend.GHIDRA">GHIDRA (binexport.types.DisassemblerBackend attribute)</a>
 </li>
       <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.graph">graph (binexport.function.FunctionBinExport property)</a>
 </li>
@@ -917,8 +941,12 @@
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.Instruction.id">(qbindiff.loader.Instruction property)</a>
 </li>
       </ul></li>
-      <li><a href="tools/idascript.html#idascript.ida.IDA">IDA (class in idascript.ida)</a>
+      <li><a href="exporter/binexport.html#binexport.types.DisassemblerBackend.IDA">IDA (binexport.types.DisassemblerBackend attribute)</a>
+
+      <ul>
+        <li><a href="tools/idascript.html#idascript.ida.IDA">(class in idascript.ida)</a>
 </li>
+      </ul></li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.LoaderType.ida">ida (qbindiff.loader.types.LoaderType attribute)</a>
 </li>
       <li><a href="tools/idascript.html#idascript.ida.IDAException">IDAException</a>
@@ -968,6 +996,8 @@
 </li>
       <li><a href="qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.InstructionFeatureExtractor">InstructionFeatureExtractor (class in qbindiff.features.extractor)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="differs/bindiff.html#bindiff.file.File.instructions">instructions (bindiff.file.File attribute)</a>
 
       <ul>
@@ -982,8 +1012,6 @@
         <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.BasicBlock.instructions">(qbindiff.loader.BasicBlock property)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="exporter/binexport.html#binexport.types.FunctionType.INVALID">INVALID (binexport.types.FunctionType attribute)</a>
 </li>
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.loader.types.FunctionType.invalid">invalid (qbindiff.loader.types.FunctionType attribute)</a>
@@ -1872,8 +1900,6 @@
       </ul></li>
       <li><a href="exporter/binexport.html#binexport.function.FunctionBinExport.unload">unload() (binexport.function.FunctionBinExport method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qbindiff/doc/source/api/backends/abstract.html#qbindiff.loader.backend.AbstractFunctionBackend.unload_blocks">unload_blocks() (qbindiff.loader.backend.AbstractFunctionBackend method)</a>
 
       <ul>
@@ -1882,6 +1908,8 @@
         <li><a href="qbindiff/doc/source/api/backends/quokka.html#qbindiff.loader.backend.quokka.FunctionBackendQuokka.unload_blocks">(qbindiff.loader.backend.quokka.FunctionBackendQuokka method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.unmatched_primary_count">unmatched_primary_count (bindiff.file.BindiffFile property)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.unmatched_secondary_count">unmatched_secondary_count (bindiff.file.BindiffFile property)</a>
@@ -1889,6 +1917,8 @@
       <li><a href="qbindiff/doc/source/api/loader.html#qbindiff.Program.update">update() (qbindiff.Program method)</a>
 </li>
       <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.update_file_infos">update_file_infos() (bindiff.file.BindiffFile method)</a>
+</li>
+      <li><a href="differs/bindiff.html#bindiff.file.BindiffFile.update_samebb_function_match">update_samebb_function_match() (bindiff.file.BindiffFile method)</a>
 </li>
   </ul></td>
 </tr></table>

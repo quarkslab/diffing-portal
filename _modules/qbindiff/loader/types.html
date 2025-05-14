@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.loader.types &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,20 +112,24 @@
 <span class="sd">&quot;&quot;&quot;Types</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span><span class="p">,</span> <span class="n">IntFlag</span><span class="p">,</span> <span class="n">auto</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
-<span class="kn">import</span> <span class="nn">enum_tools.documentation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span><span class="p">,</span> <span class="n">IntFlag</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">enum_tools.documentation</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_once</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader.data</span> <span class="kn">import</span> <span class="n">Data</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader.structure</span> <span class="kn">import</span> <span class="n">Structure</span><span class="p">,</span> <span class="n">StructureMember</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Data</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Structure</span><span class="p">,</span> <span class="n">StructureMember</span>
 
 
 <div class="viewcode-block" id="LoaderType">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.types.LoaderType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">LoaderType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LoaderType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enum of different loaders (supported or not)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -140,7 +144,7 @@
 <div class="viewcode-block" id="OperandType">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.types.OperandType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">OperandType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OperandType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    All the operand types as defined by IDA</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -162,7 +166,7 @@
 <div class="viewcode-block" id="FunctionType">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.types.FunctionType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">FunctionType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function types as defined by IDA.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -179,7 +183,7 @@
 <div class="viewcode-block" id="DataType">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.types.DataType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">DataType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Types of data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -199,7 +203,7 @@
 <div class="viewcode-block" id="StructureType">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.types.StructureType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">StructureType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StructureType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Different structure types.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -214,7 +218,7 @@
 <div class="viewcode-block" id="ReferenceType">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.types.ReferenceType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">ReferenceType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReferenceType</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reference types.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -227,7 +231,7 @@
 
 
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">InstructionGroup</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InstructionGroup</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstraction for the instruction group, for now rely on capstone ones.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -242,29 +246,31 @@
     <span class="n">GRP_BRANCH_RELATIVE</span> <span class="o">=</span> <span class="mi">7</span>  <span class="c1"># doc: Relative branching instructions</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">fromint</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fromint</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Cast an integer to InstructionGroup type&quot;&quot;&quot;</span>
         <span class="c1"># Return an invalid group if cast is not possible</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">InstructionGroup</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">InstructionGroup</span> <span class="k">else</span> <span class="n">InstructionGroup</span><span class="o">.</span><span class="n">GRP_INVALID</span>
-        <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">InstructionGroup</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">InstructionGroup</span><span class="o">.</span><span class="n">GRP_INVALID</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_capstone</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">capstone_group</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_capstone</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">capstone_group</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Cast a capstone group to InstructionGroup type&quot;&quot;&quot;</span>
         <span class="c1"># Wrap capstone group using our custom type</span>
         <span class="c1"># Note: This only works because the mappings between the enums are the same</span>
-        <span class="k">if</span> <span class="n">capstone_group</span> <span class="ow">in</span> <span class="n">InstructionGroup</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">InstructionGroup</span><span class="p">(</span><span class="n">capstone_group</span><span class="p">)</span>
-
-        <span class="c1"># Raise an exception if cast is not possible</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Misalignment between capstone group </span><span class="si">{</span><span class="n">capstone_group</span><span class="si">}</span><span class="s2"> and InstructionGroup&quot;</span>
-        <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c1"># Log once the unsupported</span>
+            <span class="n">log_once</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARN</span><span class="p">,</span>
+                     <span class="sa">f</span><span class="s2">&quot;Misalignment between capstone group </span><span class="si">{</span><span class="n">capstone_group</span><span class="si">}</span><span class="s2"> and InstructionGroup&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">InstructionGroup</span><span class="o">.</span><span class="n">GRP_INVALID</span>
 
 
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">ProgramCapability</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProgramCapability</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Defines the capabilities that are supported by a Program backed</span>
 <span class="sd">    by a specific backend loader</span>

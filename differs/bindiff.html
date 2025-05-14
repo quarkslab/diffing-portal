@@ -7,7 +7,7 @@
 
     <title>Bindiff &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
@@ -167,7 +167,7 @@ with the two binaries to be able to navigate the changes.</p>
 <section id="usage-as-a-python-module">
 <h3>Usage as a python module<a class="headerlink" href="#usage-as-a-python-module" title="Link to this heading">¶</a></h3>
 <p>The simplest way to get the programs, already exported with BinExport, diffed, is:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">bindiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinDiff</span>
 
 <span class="n">diff</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="o">.</span><span class="n">from_binary_files</span><span class="p">(</span><span class="s2">&quot;sample1.exe&quot;</span><span class="p">,</span> <span class="s2">&quot;sample2.exe&quot;</span><span class="p">,</span> <span class="s2">&quot;out.BinDiff&quot;</span><span class="p">)</span>
 
@@ -176,7 +176,7 @@ with the two binaries to be able to navigate the changes.</p>
 </pre></div>
 </div>
 <p>To load the diffing results of an <strong>existing</strong> diff.BinDiff file, do:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">bindiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinDiff</span>
 
 <span class="n">diff</span> <span class="o">=</span> <span class="n">BinDiff</span><span class="p">(</span><span class="s2">&quot;sample1.BinExport&quot;</span><span class="p">,</span> <span class="s2">&quot;sample2.BinExport&quot;</span><span class="p">,</span> <span class="s2">&quot;diff.BinDiff&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">similarity</span><span class="p">,</span> <span class="n">diff</span><span class="o">.</span><span class="n">confidence</span><span class="p">)</span>
@@ -185,8 +185,8 @@ with the two binaries to be able to navigate the changes.</p>
 </pre></div>
 </div>
 <p>But programs can be instanciated separately:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
-<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">binexport</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBinExport</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bindiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinDiff</span>
 <span class="n">p1</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="s2">&quot;sample1.BinExport&quot;</span><span class="p">)</span>
 <span class="n">p2</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="s2">&quot;sample2.BinExport&quot;</span><span class="p">)</span>
 
@@ -527,19 +527,18 @@ in the database.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file</strong> – path to Bindiff database</p></li>
-<li><p><strong>permission</strong> – permission to use for opening database (default: ro)</p></li>
+<li><p><strong>permission</strong> – database permissions (default: ro)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="bindiff.file.BindiffFile.add_basic_block_match">
-<span class="sig-name descname"><span class="pre">add_basic_block_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun_addr1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun_addr2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb_addr1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb_addr2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/bindiff/file.html#BindiffFile.add_basic_block_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.file.BindiffFile.add_basic_block_match" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_basic_block_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funentry_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb_addr1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb_addr2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/bindiff/file.html#BindiffFile.add_basic_block_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.file.BindiffFile.add_basic_block_match" title="Link to this definition">¶</a></dt>
 <dd><p>Add a basic block match in database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fun_addr1</strong> – function address of basic block in primary</p></li>
-<li><p><strong>fun_addr2</strong> – function address of basic block in secondary</p></li>
+<li><p><strong>funentry_id</strong> – Db Id of the function match</p></li>
 <li><p><strong>bb_addr1</strong> – basic block address in primary</p></li>
 <li><p><strong>bb_addr2</strong> – basic block address in secondary</p></li>
 </ul>
@@ -548,6 +547,36 @@ in the database.</p>
 <dd class="field-even"><p>id of the row inserted in database.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.file.BindiffFile.add_file_matched">
+<span class="sig-name descname"><span class="pre">add_file_matched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">executable_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">functions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libfunctions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basicblocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libbasicblocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libedges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instructions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libinstructions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bindiff/file.html#BindiffFile.add_file_matched"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.file.BindiffFile.add_file_matched" title="Link to this definition">¶</a></dt>
+<dd><p>Add a file matched.
+Only export_name and hash are mandatory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Warning<span class="colon">:</span></dt>
+<dd class="field-odd"><p>not providing the other field might not
+render correctly in Bindiff, or IDA plugins.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>export_name</strong> – Export filename (with extension).</p></li>
+<li><p><strong>hash</strong> – SHA256 hash of the executable</p></li>
+<li><p><strong>executable_name</strong> – Executable filename (if none is provided, export without extension)</p></li>
+<li><p><strong>functions</strong> – number of functions</p></li>
+</ul>
+</dd>
+</dl>
+<p>:param libfunctions:number of library functions
+:param calls: number of calls
+:param basicblocks: number of basic blocks
+:param libbasicblocks: number of library basic blocks
+:param edges: number of CFG edges
+:param libedges: number of library CFG edges
+:param instructions: number of instructions
+:param libinstructions: number of library instructions
+:return: None</p>
 </dd></dl>
 
 <dl class="py method">
@@ -593,6 +622,12 @@ in the database.</p>
 <dd><p>Returns the list of matched basic blocks in primary (and secondary)</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.file.BindiffFile.commit">
+<span class="sig-name descname"><span class="pre">commit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/bindiff/file.html#BindiffFile.commit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.file.BindiffFile.commit" title="Link to this definition">¶</a></dt>
+<dd><p>Commit all pending transaction in the database.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bindiff.file.BindiffFile.confidence">
 <span class="sig-name descname"><span class="pre">confidence</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bindiff.file.BindiffFile.confidence" title="Link to this definition">¶</a></dt>
@@ -601,15 +636,13 @@ in the database.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bindiff.file.BindiffFile.create">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">secondary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#bindiff.file.BindiffFile" title="bindiff.file.BindiffFile"><span class="pre">BindiffFile</span></a></span></span><a class="reference internal" href="../_modules/bindiff/file.html#BindiffFile.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.file.BindiffFile.create" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#bindiff.file.BindiffFile" title="bindiff.file.BindiffFile"><span class="pre">BindiffFile</span></a></span></span><a class="reference internal" href="../_modules/bindiff/file.html#BindiffFile.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.file.BindiffFile.create" title="Link to this definition">¶</a></dt>
 <dd><p>Create a new Bindiff database object in the file given in <cite>filename</cite>.
 It only takes two binaries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filename</strong> – database file path</p></li>
-<li><p><strong>primary</strong> – path to primary binary</p></li>
-<li><p><strong>secondary</strong> – path to secondary binary</p></li>
 <li><p><strong>version</strong> – version of the differ used</p></li>
 <li><p><strong>desc</strong> – description of the database</p></li>
 <li><p><strong>similarity</strong> – similarity score between to two binaries</p></li>
@@ -712,6 +745,20 @@ It only takes two binaries.</p>
 <li><p><strong>lib_count</strong> – number of functions flagged as libraries</p></li>
 <li><p><strong>bb_count</strong> – number of basic blocks</p></li>
 <li><p><strong>inst_count</strong> – number of instructions</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bindiff.file.BindiffFile.update_samebb_function_match">
+<span class="sig-name descname"><span class="pre">update_samebb_function_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funentry_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">same_bb_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/bindiff/file.html#BindiffFile.update_samebb_function_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.file.BindiffFile.update_samebb_function_match" title="Link to this definition">¶</a></dt>
+<dd><p>Update same basicblock information in function table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>funentry_id</strong> – id of function matvch entry</p></li>
+<li><p><strong>same_bb_count</strong> – number of identical basic blocks</p></li>
 </ul>
 </dd>
 </dl>
@@ -1132,6 +1179,16 @@ bindiff so hardcoded here)</p>
 <dd></dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bindiff.types.basicblock_algorithm_str">
+<span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">basicblock_algorithm_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#bindiff.types.BasicBlockAlgorithm" title="bindiff.types.BasicBlockAlgorithm"><span class="pre">BasicBlockAlgorithm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/bindiff/types.html#basicblock_algorithm_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.basicblock_algorithm_str" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bindiff.types.function_algorithm_str">
+<span class="sig-prename descclassname"><span class="pre">bindiff.types.</span></span><span class="sig-name descname"><span class="pre">function_algorithm_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#bindiff.types.FunctionAlgorithm" title="bindiff.types.FunctionAlgorithm"><span class="pre">FunctionAlgorithm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/bindiff/types.html#function_algorithm_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bindiff.types.function_algorithm_str" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </section>

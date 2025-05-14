@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.loader.instruction &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,34 +112,34 @@
 <span class="sd">&quot;&quot;&quot;Instruction</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.loader.backend</span> <span class="kn">import</span> <span class="n">AbstractInstructionBackend</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">Operand</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">ReferenceType</span><span class="p">,</span> <span class="n">ReferenceTarget</span>
-<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractInstructionBackend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">Operand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReferenceType</span><span class="p">,</span> <span class="n">ReferenceTarget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Addr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pypcode</span> <span class="kn">import</span> <span class="n">PcodeOp</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">InstructionGroup</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pypcode</span><span class="w"> </span><span class="kn">import</span> <span class="n">PcodeOp</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstructionGroup</span>
 
 
 <div class="viewcode-block" id="Instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.Instruction">[docs]</a>
-<span class="k">class</span> <span class="nc">Instruction</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Instruction</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Defines an Instruction object that wrap the backend using under the scene.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">AbstractInstructionBackend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">AbstractInstructionBackend</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">backend</span>  <span class="c1"># Load directly from instanciated backend</span>
 
 <div class="viewcode-block" id="Instruction.from_backend">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.Instruction.from_backend">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="n">AbstractInstructionBackend</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Instruction</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="n">AbstractInstructionBackend</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Instruction</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the Instruction from an instanciated instruction backend object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -148,7 +148,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the address of the instruction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -156,7 +156,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">addr</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">mnemonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mnemonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the instruction mnemonic as a string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -164,7 +164,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">mnemonic</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">ReferenceType</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReferenceTarget</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">ReferenceType</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReferenceTarget</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns all the references towards the instruction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -172,7 +172,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">references</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">data_references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Data</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data_references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Data</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of data that are referenced by the instruction</span>
 
@@ -186,7 +186,7 @@
             <span class="k">return</span> <span class="p">[]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">operands</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Operand</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">operands</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Operand</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of operands as Operand object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -194,7 +194,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">Operand</span><span class="o">.</span><span class="n">from_backend</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">operands</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionGroup</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionGroup</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of groups of this instruction.</span>
 
@@ -205,7 +205,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">groups</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the instruction ID as int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -213,7 +213,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Comment as set in IDA on the instruction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -221,7 +221,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">comment</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the bytes representation of the instruction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -229,7 +229,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">bytes</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pcode_ops</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PcodeOp</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pcode_ops</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PcodeOp</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List of PcodeOp associated with the instruction.</span>
 
@@ -238,13 +238,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">pcode_ops</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mnemonic</span><span class="p">,</span>
             <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">operands</span><span class="p">),</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;Inst:</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 </pre></div>

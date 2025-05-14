@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>idascript.ida &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -95,22 +95,22 @@
           <div class="body" role="main">
             
 <h1>Source code for idascript.ida</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">enum</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">idascript</span> <span class="kn">import</span> <span class="n">IDA_BINARY</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">Manager</span>
-<span class="kn">import</span> <span class="nn">queue</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Generator</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">idascript</span><span class="w"> </span><span class="kn">import</span> <span class="n">IDA_BINARY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">Manager</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">queue</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="n">TIMEOUT_RETURNCODE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
 
 <div class="viewcode-block" id="IDAException">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDAException">[docs]</a>
-<span class="k">class</span> <span class="nc">IDAException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IDAException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for exceptions in the module.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -121,7 +121,7 @@
 
 <div class="viewcode-block" id="IDANotStared">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDANotStared">[docs]</a>
-<span class="k">class</span> <span class="nc">IDANotStared</span><span class="p">(</span><span class="n">IDAException</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IDANotStared</span><span class="p">(</span><span class="n">IDAException</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This exception is raised when attempting</span>
 <span class="sd">    to call a function of the `IDA` class before</span>
@@ -134,7 +134,7 @@
 
 <div class="viewcode-block" id="IDAModeNotSet">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDAModeNotSet">[docs]</a>
-<span class="k">class</span> <span class="nc">IDAModeNotSet</span><span class="p">(</span><span class="n">IDAException</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IDAModeNotSet</span><span class="p">(</span><span class="n">IDAException</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This exception is raised when the IDA Mode has not been set before calling `start`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -145,7 +145,7 @@
 
 <div class="viewcode-block" id="MultiIDAAlreadyRunning">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.MultiIDAAlreadyRunning">[docs]</a>
-<span class="k">class</span> <span class="nc">MultiIDAAlreadyRunning</span><span class="p">(</span><span class="n">IDAException</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultiIDAAlreadyRunning</span><span class="p">(</span><span class="n">IDAException</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception raised if the `map` function of MultiIDA</span>
 <span class="sd">    is called while another map operation is still pending.</span>
@@ -157,7 +157,7 @@
 
 
 
-<span class="k">class</span> <span class="nc">IDAMode</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IDAMode</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Different modes possible for the IDA class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -174,14 +174,14 @@
 
 <div class="viewcode-block" id="IDA">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDA">[docs]</a>
-<span class="k">class</span> <span class="nc">IDA</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IDA</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing an IDA execution on a given file</span>
 <span class="sd">    with a given script. This class is a wrapper to</span>
 <span class="sd">    subprocess IDA.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">binary_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
                  <span class="n">script_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">script_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -211,7 +211,7 @@
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># Direct mode</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_direct</span><span class="p">(</span><span class="n">script_params</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_set_idapython</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">script_params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_idapython</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">script_params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set IDAPython script parameter.</span>
 
@@ -233,7 +233,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&quot;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">script_params</span><span class="p">]</span> <span class="k">if</span> <span class="n">script_params</span> <span class="k">else</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">IDAMode</span><span class="o">.</span><span class="n">IDAPYTHON</span>
 
-    <span class="k">def</span> <span class="nf">_set_direct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script_options</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_direct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script_options</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set parameters script in direct mode</span>
 
@@ -250,7 +250,7 @@
 
 <div class="viewcode-block" id="IDA.start">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDA.start">[docs]</a>
-    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Start the IDA process on the binary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -287,7 +287,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">returncode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">returncode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the returncode of the process. Raise IDANotStart</span>
 <span class="sd">        if called before launching the process.</span>
@@ -299,7 +299,7 @@
             <span class="k">raise</span> <span class="n">IDANotStared</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">terminated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">terminated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Boolean function returning True if the process is terminated</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -313,7 +313,7 @@
             <span class="k">raise</span> <span class="n">IDANotStared</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the PID of the IDA process</span>
 
@@ -327,7 +327,7 @@
 
 <div class="viewcode-block" id="IDA.wait">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDA.wait">[docs]</a>
-    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Wait for the process to finish. This function hangs until</span>
 <span class="sd">        the process terminate. A timeout can be given which raises</span>
@@ -346,7 +346,7 @@
 
 <div class="viewcode-block" id="IDA.terminate">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDA.terminate">[docs]</a>
-    <span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Call terminate on the IDA process (kill -15)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -359,7 +359,7 @@
 
 <div class="viewcode-block" id="IDA.kill">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.IDA.kill">[docs]</a>
-    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Call kill on the IDA subprocess (kill -9)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -374,14 +374,14 @@
 
 <div class="viewcode-block" id="MultiIDA">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.MultiIDA">[docs]</a>
-<span class="k">class</span> <span class="nc">MultiIDA</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultiIDA</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class to trigger multiple IDA processes concurrently</span>
 <span class="sd">    on a bunch of files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_worker</span><span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">exit_virtualenv</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_worker</span><span class="p">(</span><span class="n">ingress</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">exit_virtualenv</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">file</span> <span class="o">=</span> <span class="n">ingress</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -399,7 +399,7 @@
 <div class="viewcode-block" id="MultiIDA.map">
 <a class="viewcode-back" href="../../tools/idascript.html#idascript.ida.MultiIDA.map">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="n">generator</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="n">generator</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
             <span class="n">script</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -439,7 +439,7 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">path</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">egress</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">yield</span> <span class="n">path</span><span class="p">,</span> <span class="n">res</span>
+            <span class="k">yield</span> <span class="n">res</span><span class="p">,</span> <span class="n">path</span>
 
             <span class="c1"># once all items have been processed</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">total</span><span class="p">:</span>

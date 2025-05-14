@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bindiff.bindiff &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -95,19 +95,19 @@
           <div class="body" role="main">
             
 <h1>Source code for bindiff.bindiff</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span><span class="p">,</span> <span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="n">InstructionBinExport</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">binexport</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBinExport</span><span class="p">,</span> <span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="n">InstructionBinExport</span>
 
-<span class="kn">from</span> <span class="nn">bindiff.types</span> <span class="kn">import</span> <span class="n">BindiffNotFound</span>
-<span class="kn">from</span> <span class="nn">bindiff.file</span> <span class="kn">import</span> <span class="n">BindiffFile</span><span class="p">,</span> <span class="n">FunctionMatch</span><span class="p">,</span> <span class="n">BasicBlockMatch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">BindiffNotFound</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bindiff.file</span><span class="w"> </span><span class="kn">import</span> <span class="n">BindiffFile</span><span class="p">,</span> <span class="n">FunctionMatch</span><span class="p">,</span> <span class="n">BasicBlockMatch</span>
 
 
 <span class="n">BINDIFF_BINARY</span> <span class="o">=</span> <span class="kc">None</span>
@@ -115,7 +115,7 @@
 <span class="n">BIN_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bindiff&quot;</span><span class="p">,</span> <span class="s2">&quot;bindiff.exe&quot;</span><span class="p">,</span> <span class="s2">&quot;differ&quot;</span><span class="p">]</span>
 
 
-<span class="k">def</span> <span class="nf">_check_bin_names</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_bin_names</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if one of the BinDiff binary exists</span>
 
@@ -131,7 +131,7 @@
     <span class="k">return</span> <span class="kc">False</span>
 
 
-<span class="k">def</span> <span class="nf">_check_environ</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_environ</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if BinDiff is already installed</span>
 
@@ -142,7 +142,7 @@
     <span class="k">return</span> <span class="kc">False</span>
 
 
-<span class="k">def</span> <span class="nf">_check_default_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_default_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if BinDiff is installed at its default location</span>
 
@@ -151,7 +151,7 @@
     <span class="k">return</span> <span class="n">_check_bin_names</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/opt/zynamics/BinDiff/bin&quot;</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">_check_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if the environment variable PATH contains BinDiff binaries</span>
 
@@ -166,7 +166,7 @@
 
 <div class="viewcode-block" id="BinDiff">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff">[docs]</a>
-<span class="k">class</span> <span class="nc">BinDiff</span><span class="p">(</span><span class="n">BindiffFile</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BinDiff</span><span class="p">(</span><span class="n">BindiffFile</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    BinDiff class. Parse the diffing result of Bindiff and apply it to the two</span>
 <span class="sd">    ProgramBinExport given. All the diff result is embedded in the two programs</span>
@@ -177,7 +177,7 @@
 <span class="sd">                 additional attributes and method to the class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">primary</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">secondary</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
@@ -197,7 +197,7 @@
 
 <div class="viewcode-block" id="BinDiff.primary_unmatched_function">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.primary_unmatched_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">primary_unmatched_function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">primary_unmatched_function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a list of the unmatched functions in the primary program.</span>
 
@@ -212,7 +212,7 @@
 
 <div class="viewcode-block" id="BinDiff.secondary_unmatched_function">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.secondary_unmatched_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">secondary_unmatched_function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">secondary_unmatched_function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a list of the unmatched functions in the secondary program.</span>
 
@@ -227,7 +227,7 @@
 
 <div class="viewcode-block" id="BinDiff.iter_function_matches">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.iter_function_matches">[docs]</a>
-    <span class="k">def</span> <span class="nf">iter_function_matches</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iter_function_matches</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">FunctionMatch</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -244,7 +244,7 @@
         <span class="p">]</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_unmatched_bbs</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_unmatched_bbs</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span><span class="p">,</span> <span class="nb">map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">BasicBlockMatch</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BasicBlockBinExport</span><span class="p">]:</span>
         <span class="n">bbs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -259,7 +259,7 @@
 
 <div class="viewcode-block" id="BinDiff.primary_unmatched_basic_block">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.primary_unmatched_basic_block">[docs]</a>
-    <span class="k">def</span> <span class="nf">primary_unmatched_basic_block</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">primary_unmatched_basic_block</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BasicBlockBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -274,7 +274,7 @@
 
 <div class="viewcode-block" id="BinDiff.secondary_unmatched_basic_block">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.secondary_unmatched_basic_block">[docs]</a>
-    <span class="k">def</span> <span class="nf">secondary_unmatched_basic_block</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">secondary_unmatched_basic_block</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BasicBlockBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -289,7 +289,7 @@
 
 <div class="viewcode-block" id="BinDiff.iter_basicblock_matches">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.iter_basicblock_matches">[docs]</a>
-    <span class="k">def</span> <span class="nf">iter_basicblock_matches</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iter_basicblock_matches</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">function1</span><span class="p">:</span> <span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">function2</span><span class="p">:</span> <span class="n">FunctionBinExport</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="n">BasicBlockMatch</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -312,7 +312,7 @@
         <span class="k">return</span> <span class="n">items</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_unmatched_instrs</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_unmatched_instrs</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="nb">map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionBinExport</span><span class="p">]:</span>
         <span class="n">instrs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -323,7 +323,7 @@
 
 <div class="viewcode-block" id="BinDiff.primary_unmatched_instruction">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.primary_unmatched_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">primary_unmatched_instruction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">BasicBlockBinExport</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">primary_unmatched_instruction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">BasicBlockBinExport</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a list of the unmatched instructions in the provided basic block.</span>
 <span class="sd">        The basic block must be part of the primary program.</span>
@@ -336,7 +336,7 @@
 
 <div class="viewcode-block" id="BinDiff.secondary_unmatched_instruction">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.secondary_unmatched_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">secondary_unmatched_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">secondary_unmatched_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">BasicBlockBinExport</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -351,7 +351,7 @@
 
 <div class="viewcode-block" id="BinDiff.iter_instruction_matches">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.iter_instruction_matches">[docs]</a>
-    <span class="k">def</span> <span class="nf">iter_instruction_matches</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iter_instruction_matches</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">block1</span><span class="p">:</span> <span class="n">BasicBlockBinExport</span><span class="p">,</span> <span class="n">block2</span><span class="p">:</span> <span class="n">BasicBlockBinExport</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">InstructionBinExport</span><span class="p">,</span> <span class="n">InstructionBinExport</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -375,7 +375,7 @@
 
 <div class="viewcode-block" id="BinDiff.get_match">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.get_match">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_match</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_match</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">,</span> <span class="n">FunctionMatch</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -396,7 +396,7 @@
 
 <div class="viewcode-block" id="BinDiff.is_matched">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.is_matched">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param function: A function that belongs either to primary or secondary.</span>
 <span class="sd">        :return: True if there is a match for the provided function, False otherwise</span>
@@ -407,7 +407,7 @@
 <div class="viewcode-block" id="BinDiff.raw_diffing">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.raw_diffing">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">raw_diffing</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">p2_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">out_diff</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">raw_diffing</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">p2_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">out_diff</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Static method to diff two binexport files against each other and storing</span>
 <span class="sd">        the diffing result in the given file</span>
@@ -425,6 +425,14 @@
         <span class="n">f1</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">p1_path</span><span class="p">)</span>
         <span class="n">f2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">p2_path</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">f1</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file &#39;</span><span class="si">{</span><span class="n">p1_path</span><span class="si">}</span><span class="s2">&#39; doesn&#39;t exist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">f2</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file &#39;</span><span class="si">{</span><span class="n">p2_path</span><span class="si">}</span><span class="s2">&#39; doesn&#39;t exist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+            
         <span class="n">cmd_line</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">BINDIFF_BINARY</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span>
             <span class="sa">f</span><span class="s2">&quot;--primary=</span><span class="si">{</span><span class="n">p1_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -463,7 +471,7 @@
 <div class="viewcode-block" id="BinDiff.from_binary_files">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.from_binary_files">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_binary_files</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">p2_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_binary_files</span><span class="p">(</span><span class="n">p1_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">p2_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                           <span class="n">override</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;BinDiff&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Diff two executable files. Thus it export .BinExport files from IDA</span>
@@ -488,7 +496,7 @@
 <div class="viewcode-block" id="BinDiff.from_binexport_files">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.from_binexport_files">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_binexport_files</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_binexport_files</span><span class="p">(</span>
         <span class="n">p1_binexport</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">p2_binexport</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">diff_out</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -515,7 +523,7 @@
 
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_configure_bindiff_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_configure_bindiff_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check BinDiff access paths</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -530,7 +538,7 @@
 <div class="viewcode-block" id="BinDiff.assert_installation_ok">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.assert_installation_ok">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">assert_installation_ok</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assert_installation_ok</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Assert BinDiff is installed</span>
 
@@ -545,7 +553,7 @@
 <div class="viewcode-block" id="BinDiff.is_installation_ok">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.BinDiff.is_installation_ok">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_installation_ok</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_installation_ok</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check that bindiff is properly installed and can be found</span>
 <span class="sd">        on the system.</span>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>binexport.types &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -95,12 +95,12 @@
           <div class="body" role="main">
             
 <h1>Source code for binexport.types</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">import</span> <span class="nn">enum</span>
-<span class="kn">import</span> <span class="nn">enum_tools.documentation</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">enum_tools.documentation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span>
 
-<span class="kn">from</span> <span class="nn">binexport.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">binexport.binexport2_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinExport2</span>
 
 
 <span class="n">Addr</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span>
@@ -110,7 +110,7 @@
 <div class="viewcode-block" id="FunctionType">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.types.FunctionType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">FunctionType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function types as defined by IDA</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -126,7 +126,7 @@
 <div class="viewcode-block" id="FunctionType.from_proto">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.types.FunctionType.from_proto">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="n">function_type</span><span class="p">:</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">CallGraph</span><span class="o">.</span><span class="n">Vertex</span><span class="o">.</span><span class="n">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="n">function_type</span><span class="p">:</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">CallGraph</span><span class="o">.</span><span class="n">Vertex</span><span class="o">.</span><span class="n">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionType</span><span class="p">:</span>
         <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">BinExport2</span><span class="o">.</span><span class="n">CallGraph</span><span class="o">.</span><span class="n">Vertex</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">:</span> <span class="n">FunctionType</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">,</span>
             <span class="n">BinExport2</span><span class="o">.</span><span class="n">CallGraph</span><span class="o">.</span><span class="n">Vertex</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">LIBRARY</span><span class="p">:</span> <span class="n">FunctionType</span><span class="o">.</span><span class="n">LIBRARY</span><span class="p">,</span>
@@ -143,7 +143,7 @@
 <div class="viewcode-block" id="ExpressionType">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.types.ExpressionType">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">ExpressionType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExpressionType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Expression type derived from protobuf expression types.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -156,6 +156,22 @@
     <span class="n">SYMBOL</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>           <span class="c1"># doc: symbol expression</span>
     <span class="n">REGISTER</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>         <span class="c1"># doc: register expression</span>
     <span class="n">SIZE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>             <span class="c1"># doc: size expression (byte, dword ..)</span></div>
+
+    <span class="c1"># fmt: on</span>
+
+
+<div class="viewcode-block" id="DisassemblerBackend">
+<a class="viewcode-back" href="../../exporter/binexport.html#binexport.types.DisassemblerBackend">[docs]</a>
+<span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DisassemblerBackend</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List of dissasemblers supported.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># fmt: off</span>
+    <span class="n">IDA</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>           <span class="c1"># doc: IDA backend</span>
+    <span class="n">GHIDRA</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>        <span class="c1"># doc: Ghidra backend</span>
+    <span class="n">BINARY_NINJA</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>  <span class="c1"># doc: BinaryNinja backend </span></div>
 
     <span class="c1"># fmt: on</span>
 </pre></div>

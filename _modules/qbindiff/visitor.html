@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.visitor &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -115,13 +115,13 @@
 <span class="sd">pattern to a GenericGraph as well as its standard implementations.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">BasicBlock</span><span class="p">,</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">Operand</span>
-<span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">BasicBlock</span><span class="p">,</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">Operand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.features.extractor</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">FeatureCollector</span><span class="p">,</span>
     <span class="n">FeatureExtractor</span><span class="p">,</span>
     <span class="n">FunctionFeatureExtractor</span><span class="p">,</span>
@@ -129,8 +129,8 @@
     <span class="n">InstructionFeatureExtractor</span><span class="p">,</span>
     <span class="n">OperandFeatureExtractor</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qbindiff.utils</span> <span class="kn">import</span> <span class="n">is_debug</span>
-<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Graph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_debug</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span>
 
 <span class="c1"># TODO use python 3.12 syntax (see PEP 695)</span>
 <span class="n">_Graph_T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;_Graph_T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Graph</span><span class="p">)</span>
@@ -138,7 +138,7 @@
 
 <div class="viewcode-block" id="Visitor">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.Visitor">[docs]</a>
-<span class="k">class</span> <span class="nc">Visitor</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">_Graph_T</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Visitor</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">_Graph_T</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract class representing interface that a visitor</span>
 <span class="sd">    must implements to work with a Differ object.</span>
@@ -146,7 +146,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">feature_extractors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FeatureExtractor</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">feature_extractors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FeatureExtractor</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of registered features extractor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -155,7 +155,7 @@
 
 <div class="viewcode-block" id="Visitor.visit">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.Visitor.visit">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">_Graph_T</span><span class="p">,</span> <span class="n">key_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -184,7 +184,7 @@
 <div class="viewcode-block" id="Visitor.visit_item">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.Visitor.visit_item">[docs]</a>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">visit_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">_Graph_T</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">_Graph_T</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Abstract method meant to perform the visit of the item.</span>
 <span class="sd">        It receives an environment in parameter that is meant to be filled.</span>
@@ -199,7 +199,7 @@
 <div class="viewcode-block" id="Visitor.register_feature_extractor">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.Visitor.register_feature_extractor">[docs]</a>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">register_feature_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fte</span><span class="p">:</span> <span class="n">FeatureExtractor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_feature_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fte</span><span class="p">:</span> <span class="n">FeatureExtractor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register an instanciated feature extractor on the visitor.</span>
 
@@ -213,18 +213,18 @@
 
 <div class="viewcode-block" id="NoVisitor">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.NoVisitor">[docs]</a>
-<span class="k">class</span> <span class="nc">NoVisitor</span><span class="p">(</span><span class="n">Visitor</span><span class="p">[</span><span class="n">Graph</span><span class="p">]):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoVisitor</span><span class="p">(</span><span class="n">Visitor</span><span class="p">[</span><span class="n">Graph</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Trivial visitor that doesn&#39;t traverse the graph</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">feature_extractors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FeatureExtractor</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">feature_extractors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FeatureExtractor</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="NoVisitor.visit">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.NoVisitor.visit">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">key_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">FeatureCollector</span><span class="p">]:</span>
         <span class="c1"># By default use the iteration counter as a unique key</span>
@@ -236,7 +236,7 @@
 
 <div class="viewcode-block" id="NoVisitor.register_feature_extractor">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.NoVisitor.register_feature_extractor">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_feature_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fte</span><span class="p">:</span> <span class="n">FeatureExtractor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_feature_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fte</span><span class="p">:</span> <span class="n">FeatureExtractor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;NoVisitor is being used. The feature </span><span class="si">{</span><span class="n">fte</span><span class="o">.</span><span class="n">key</span><span class="si">}</span><span class="s2"> will be ignored&quot;</span><span class="p">)</span></div>
 </div>
 
@@ -244,13 +244,13 @@
 
 <div class="viewcode-block" id="ProgramVisitor">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor">[docs]</a>
-<span class="k">class</span> <span class="nc">ProgramVisitor</span><span class="p">(</span><span class="n">Visitor</span><span class="p">[</span><span class="n">Program</span><span class="p">]):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProgramVisitor</span><span class="p">(</span><span class="n">Visitor</span><span class="p">[</span><span class="n">Program</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class aiming at providing a generic program visitor which calls</span>
 <span class="sd">    the different feature extractor on the appropriate items.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_feature_extractors</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basic_block_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
@@ -259,7 +259,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.visit_item">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.visit_item">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Visit a program item according to its type.</span>
 
@@ -280,7 +280,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.register_feature_extractor">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_feature_extractor">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_feature_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fte</span><span class="p">:</span> <span class="n">FeatureExtractor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_feature_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fte</span><span class="p">:</span> <span class="n">FeatureExtractor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register an instanciated feature extractor on the visitor.</span>
 
@@ -301,7 +301,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.register_function_feature_callback">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_function_feature_callback">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_function_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_function_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Feature callback at function granularity</span>
 
@@ -312,7 +312,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.register_basic_block_feature_callback">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_basic_block_feature_callback">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_basic_block_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_basic_block_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Feature callback at basic block granularity</span>
 
@@ -323,7 +323,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.register_instruction_feature_callback">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_instruction_feature_callback">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_instruction_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_instruction_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Feature callback at function granularity</span>
 
@@ -335,7 +335,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.register_operand_feature_callback">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.register_operand_feature_callback">[docs]</a>
-    <span class="k">def</span> <span class="nf">register_operand_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_operand_feature_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Feature callback at function granularity</span>
 
@@ -347,7 +347,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.visit_function">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Visit the given function with the feature extractors registered beforehand.</span>
 
@@ -368,7 +368,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.visit_basic_block">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.visit_basic_block">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_basic_block</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_basic_block</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">basic_block</span><span class="p">:</span> <span class="n">BasicBlock</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -390,7 +390,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.visit_instruction">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -411,7 +411,7 @@
 
 <div class="viewcode-block" id="ProgramVisitor.visit_operand">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/visitor.html#qbindiff.visitor.ProgramVisitor.visit_operand">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_operand</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_operand</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">operand</span><span class="p">:</span> <span class="n">Operand</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -427,7 +427,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">feature_extractors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">feature_extractors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feature_extractors</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
 
 </pre></div>

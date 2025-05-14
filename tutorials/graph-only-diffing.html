@@ -7,7 +7,7 @@
 
     <title>Diffing Graphs only &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
@@ -256,7 +256,7 @@ or <a class="reference external" href="https://github.com/usyd-blockchain/vandal
 In this file, the CFG can be found under the <code class="docutils literal notranslate"><span class="pre">runtimeCfg</span></code> field.
 Note that edges are stored under <code class="docutils literal notranslate"><span class="pre">runtimeCfg.successors</span></code> (and sometimes have duplicate entries).</p>
 <p>QBinDiff’s differ expects <code class="docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code> as inputs, so we will need to adapt the data a little bit:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_ethersolve</span><span class="p">(</span><span class="n">analysis</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">process_ethersolve</span><span class="p">(</span><span class="n">analysis</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
     <span class="c1"># Filter the desired attributes and set the node ID as the basic block&#39;s offset</span>
     <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">{</span>
@@ -299,7 +299,7 @@ on how to create a prepass.</p>
 then reduce the similarity of nodes that do not share the same stack balance.</p>
 <p>Note that the nodes’ IDs are their offset, and do not correspond to the row or column in the similarity matrix.
 The correspondance is given by the <code class="docutils literal notranslate"><span class="pre">primary_n2i</span></code> and <code class="docutils literal notranslate"><span class="pre">secondary_n2i</span></code> mappings.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prepass_stack_balance</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">prepass_stack_balance</span><span class="p">(</span>
     <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
     <span class="n">primary</span><span class="p">:</span> <span class="n">qbindiff</span><span class="o">.</span><span class="n">GenericGraph</span><span class="p">,</span>
     <span class="n">secondary</span><span class="p">:</span> <span class="n">qbindiff</span><span class="o">.</span><span class="n">GenericGraph</span><span class="p">,</span>

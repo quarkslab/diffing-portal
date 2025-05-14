@@ -7,7 +7,7 @@
 
     <title>Idascript &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
@@ -178,8 +178,8 @@ executing idapython scripts on one or multiple binary files in an easy manner.</
 script given by <code class="docutils literal notranslate"><span class="pre">ida_pro.qexit(num)</span></code>.</p>
 </div></blockquote>
 <p>As a recall an idapython script should be architectured like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ida_auto</span>
-<span class="kn">import</span> <span class="nn">ida_pro</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ida_auto</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ida_pro</span>
 
 <span class="n">ida_auto</span><span class="o">.</span><span class="n">auto_wait</span><span class="p">()</span> <span class="c1"># wait for the pre-analysis of IDA to be terminated</span>
 
@@ -208,7 +208,7 @@ which ave the following mime type: <code class="docutils literal notranslate"><s
 <p><strong>Single file analysis</strong></p>
 <p>A single file analysis can performed as follow:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;IDA_PATH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;/path/to/ida&quot;</span> <span class="c1"># If not given to the interpreter directly</span>
-<span class="kn">from</span> <span class="nn">idascript</span> <span class="kn">import</span> <span class="n">IDA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">idascript</span><span class="w"> </span><span class="kn">import</span> <span class="n">IDA</span>
 <span class="n">ida</span> <span class="o">=</span> <span class="n">IDA</span><span class="p">(</span><span class="s2">&quot;/path/binary&quot;</span><span class="p">,</span> <span class="s2">&quot;/path/script&quot;</span><span class="p">,</span> <span class="p">[])</span>
 <span class="n">ida</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="n">retcode</span> <span class="o">=</span> <span class="n">ida</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
@@ -220,7 +220,7 @@ which ave the following mime type: <code class="docutils literal notranslate"><s
 <p><strong>Multiple file analysis</strong></p>
 <p>This works almost similarly to single file analysis except that a file
 iterator should be given. A simple usage is:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">idascript</span> <span class="kn">import</span> <span class="n">MultiIDA</span><span class="p">,</span> <span class="n">iter_binary_files</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">idascript</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiIDA</span><span class="p">,</span> <span class="n">iter_binary_files</span>
 <span class="n">generator</span> <span class="o">=</span> <span class="n">iter_binary_files</span><span class="p">(</span><span class="s1">&#39;/path/to/bins&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">retcode</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="ow">in</span> <span class="n">MultiIDA</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">generator</span><span class="p">,</span> <span class="s2">&quot;/path/script&quot;</span><span class="p">,</span> <span class="p">[]):</span>
     <span class="c1"># Do what you want with analysed files yielded</span>
@@ -233,11 +233,11 @@ iterator should be given. A simple usage is:</p>
 <p>We might be led to write our own file iterator depending on our needs. Let’s consider we want
 to analyse only files that have never been analysed namely the ones not having a <code class="docutils literal notranslate"><span class="pre">.i64</span></code> associated.
 Thus, we can derive our own generator from <code class="docutils literal notranslate"><span class="pre">iter_binary_files</span></code> like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">idascript</span> <span class="kn">import</span> <span class="n">MultiIDA</span><span class="p">,</span> <span class="n">iter_binary_files</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">idascript</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiIDA</span><span class="p">,</span> <span class="n">iter_binary_files</span>
 
-<span class="k">def</span> <span class="nf">my_custom_generator</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_custom_generator</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">iter_binary_files</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
         <span class="n">i64_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;.i64&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">i64_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>

@@ -7,7 +7,7 @@
 
     <title>Binexport &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css?v=f97287ed" />
@@ -181,7 +181,7 @@ might be supported in the future.</p>
 The main entry point is the class <code class="docutils literal notranslate"><span class="pre">ProgramBinExport</span></code> which triggers the
 loading of the whole file. Here is a snippet to iterate on every expression
 of every instruction in the program:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">binexport</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">binexport</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBinExport</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">ProgramBinExport</span><span class="p">(</span><span class="s2">&quot;myprogram.BinExport&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">fun_addr</span><span class="p">,</span> <span class="n">fun</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -237,7 +237,7 @@ reference all functions based on their address.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="binexport.program.ProgramBinExport.from_binary_file">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_binary_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exec_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">open_export</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/binexport/program.html#ProgramBinExport.from_binary_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.program.ProgramBinExport.from_binary_file" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_binary_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exec_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">open_export</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#binexport.types.DisassemblerBackend" title="binexport.types.DisassemblerBackend"><span class="pre">DisassemblerBackend</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DisassemblerBackend.IDA</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#binexport.program.ProgramBinExport" title="binexport.program.ProgramBinExport"><span class="pre">ProgramBinExport</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/binexport/program.html#ProgramBinExport.from_binary_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.program.ProgramBinExport.from_binary_file" title="Link to this definition">¶</a></dt>
 <dd><p>Generate the .BinExport file for the given program and return an instance
 of ProgramBinExport.</p>
 <div class="admonition warning">
@@ -251,6 +251,7 @@ of ProgramBinExport.</p>
 <li><p><strong>output_file</strong> – BinExport output file</p></li>
 <li><p><strong>open_export</strong> – whether or not to open the binexport after export</p></li>
 <li><p><strong>override</strong> – Override the .BinExport if already existing. (default false)</p></li>
+<li><p><strong>backend</strong> – The backend to use. (Either ‘IDA’ or ‘Ghidra’)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -447,6 +448,20 @@ of the dictionary.</p>
 <dt class="sig sig-object py" id="binexport.function.BasicBlockBinExport.bytes">
 <span class="sig-name descname"><span class="pre">bytes</span></span><a class="headerlink" href="#binexport.function.BasicBlockBinExport.bytes" title="Link to this definition">¶</a></dt>
 <dd><p>bytes of the basic block</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="binexport.function.BasicBlockBinExport.contiguous_ranges">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">contiguous_ranges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Addr</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#binexport.function.BasicBlockBinExport.contiguous_ranges" title="Link to this definition">¶</a></dt>
+<dd><p>The contiguous ranges of instructions contained in this basic block. That identifies
+the <em>real</em> basic blocks, as BinExport’s basic blocks do not necessarily represent a
+contiguous block of instructions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of tuples (begin address, bytes), each of them representing a contiguous
+block of instructions.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -680,6 +695,31 @@ None if it is the root.</p></li>
 <dt class="sig sig-object py" id="binexport.types.Addr">
 <span class="sig-prename descclassname"><span class="pre">binexport.types.</span></span><span class="sig-name descname"><span class="pre">Addr</span></span><a class="headerlink" href="#binexport.types.Addr" title="Link to this definition">¶</a></dt>
 <dd><p>An integer representing an address within a program</p>
+</dd></dl>
+
+<dl class="py class enum">
+<dt class="sig sig-object py" id="binexport.types.DisassemblerBackend">
+<em class="property"><span class="pre">enum</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">binexport.types.</span></span><span class="sig-name descname"><span class="pre">DisassemblerBackend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/binexport/types.html#DisassemblerBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#binexport.types.DisassemblerBackend" title="Link to this definition">¶</a></dt>
+<dd><p>List of dissasemblers supported.</p>
+<p>Valid values are as follows:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.DisassemblerBackend.IDA">
+<span class="sig-name descname"><span class="pre">IDA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;DisassemblerBackend.IDA:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#binexport.types.DisassemblerBackend.IDA" title="Link to this definition">¶</a></dt>
+<dd><p>IDA backend</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.DisassemblerBackend.GHIDRA">
+<span class="sig-name descname"><span class="pre">GHIDRA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;DisassemblerBackend.GHIDRA:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#binexport.types.DisassemblerBackend.GHIDRA" title="Link to this definition">¶</a></dt>
+<dd><p>Ghidra backend</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="binexport.types.DisassemblerBackend.BINARY_NINJA">
+<span class="sig-name descname"><span class="pre">BINARY_NINJA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;DisassemblerBackend.BINARY_NINJA:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#binexport.types.DisassemblerBackend.BINARY_NINJA" title="Link to this definition">¶</a></dt>
+<dd><p>BinaryNinja backend</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class enum">

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>binexport.operand &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -95,30 +95,30 @@
           <div class="body" role="main">
             
 <h1>Source code for binexport.operand</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">binexport.expression</span> <span class="kn">import</span> <span class="n">ExpressionBinExport</span>
-<span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">ExpressionType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">binexport.expression</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExpressionBinExport</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">binexport.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExpressionType</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">weakref</span>
-    <span class="kn">from</span> <span class="nn">.program</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
-    <span class="kn">from</span> <span class="nn">.function</span> <span class="kn">import</span> <span class="n">FunctionBinExport</span>
-    <span class="kn">from</span> <span class="nn">.instruction</span> <span class="kn">import</span> <span class="n">InstructionBinExport</span>
-    <span class="kn">from</span> <span class="nn">.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">weakref</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.program</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBinExport</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.function</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionBinExport</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.instruction</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstructionBinExport</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.binexport2_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinExport2</span>
 
 
 <div class="viewcode-block" id="OperandBinExport">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.operand.OperandBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">OperandBinExport</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OperandBinExport</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Operand object.</span>
 <span class="sd">    Provide access to the underlying expression.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="n">ProgramBinExport</span><span class="p">],</span>
         <span class="n">function</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="n">FunctionBinExport</span><span class="p">],</span>
@@ -136,19 +136,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_instruction</span> <span class="o">=</span> <span class="n">instruction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">=</span> <span class="n">op_idx</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Formatted string of the operand (shown in-order)</span>
 
 <span class="sd">        :return: string of the operand</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
-            <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="n">ExpressionBinExport</span><span class="p">):</span>
+        <span class="k">class</span><span class="w"> </span><span class="nc">Tree</span><span class="p">:</span>
+            <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="n">ExpressionBinExport</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span>
 
-            <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Binary operator</span>
                     <span class="n">left</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                     <span class="n">right</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -182,18 +182,18 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramBinExport</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramBinExport</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Program object associated to this operand.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionBinExport</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionBinExport</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function object associated to this operand.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -201,21 +201,21 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_function</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">instruction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InstructionBinExport</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instruction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InstructionBinExport</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instruction object associated to this operand.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instruction</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pb_operand</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Operand</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pb_operand</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinExport2</span><span class="o">.</span><span class="n">Operand</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Protobuf operand object in the protobuf structure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">operand</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ExpressionBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ExpressionBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterates over all the operand expression in a pre-order manner</span>
 <span class="sd">        (binary operator first).</span>

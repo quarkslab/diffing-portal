@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bindiff.file &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -95,21 +95,20 @@
           <div class="body" role="main">
             
 <h1>Source code for bindiff.file</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
-<span class="kn">import</span> <span class="nn">ctypes</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sqlite3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ctypes</span>
 
-<span class="kn">from</span> <span class="nn">bindiff.types</span> <span class="kn">import</span> <span class="n">FunctionAlgorithm</span><span class="p">,</span> <span class="n">BasicBlockAlgorithm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionAlgorithm</span><span class="p">,</span> <span class="n">BasicBlockAlgorithm</span><span class="p">,</span> <span class="n">function_algorithm_str</span><span class="p">,</span> <span class="n">basicblock_algorithm_str</span>
 
 
 <div class="viewcode-block" id="File">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.File">[docs]</a>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">File</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">File</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    File diffed in database.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -135,7 +134,7 @@
 <div class="viewcode-block" id="FunctionMatch">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.FunctionMatch">[docs]</a>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">FunctionMatch</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionMatch</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A match between two functions in database.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -156,7 +155,7 @@
 <div class="viewcode-block" id="BasicBlockMatch">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BasicBlockMatch">[docs]</a>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">BasicBlockMatch</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BasicBlockMatch</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A match between two basic blocks</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -173,7 +172,7 @@
 
 <div class="viewcode-block" id="BindiffFile">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile">[docs]</a>
-<span class="k">class</span> <span class="nc">BindiffFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BindiffFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Bindiff database file.</span>
 <span class="sd">    The class seemlessly parse the database and allowing retrieving</span>
@@ -183,11 +182,13 @@
 <span class="sd">    in the database.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">permission</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ro&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">permission</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ro&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param file: path to Bindiff database</span>
-<span class="sd">        :param permission: permission to use for opening database (default: ro)</span>
+<span class="sd">        :param permission: database permissions (default: ro)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">permission</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="s2">&quot;rw&quot;</span><span class="p">]</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">file</span>
 
         <span class="c1"># Open database</span>
@@ -200,13 +201,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>       <span class="c1">#: version of the differ used for diffing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">created</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: Database creation date</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modified</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1">#: Database last modification date</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+
 
         <span class="c1"># Files</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_file</span><span class="p">:</span> <span class="n">File</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1">#: Primary file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_file</span><span class="p">:</span> <span class="n">File</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#: Secondary file</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
-        <span class="c1"># fmt: on</span>
 
         <span class="c1"># Function matches</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
@@ -215,7 +214,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_functions_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
             <span class="nb">int</span><span class="p">,</span> <span class="n">FunctionMatch</span>
         <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: FunctionMatch indexed by addresses in secondary</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_function_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
 
         <span class="c1"># Basicblock matches:  BB-addr -&gt; fun-addr -&gt; match</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
@@ -224,16 +222,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_basicblock_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
             <span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">BasicBlockMatch</span><span class="p">]</span>
         <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#: Basic block match from secondary</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_basicblock_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+
 
         <span class="c1"># Instruction matches</span>
         <span class="c1"># {inst_addr : {match_func_addr : match_inst_addr}}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_instruction_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_instruction_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_instruction_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+
+        <span class="c1"># If &#39;ro&#39;, load database content</span>
+        <span class="k">if</span> <span class="n">permission</span> <span class="o">==</span> <span class="s2">&quot;ro&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_function_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_basicblock_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_instruction_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">())</span>
+
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">unmatched_primary_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unmatched_primary_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of functions inside primary that are not matched</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -244,7 +250,7 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">unmatched_secondary_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unmatched_secondary_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of functions inside secondary that are not matched</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -255,14 +261,14 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">function_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionMatch</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">function_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">FunctionMatch</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of matched functions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">basicblock_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BasicBlockMatch</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basicblock_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">BasicBlockMatch</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of matched basic blocks in primary (and secondary)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -270,19 +276,19 @@
             <span class="n">x</span> <span class="k">for</span> <span class="n">bb_matches</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_basicblock_match</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bb_matches</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_load_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load diffing file stored in a DB file</span>
 
 <span class="sd">        :param cursor: sqlite3 cursor to the DB</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">files</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM file&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+        <span class="c1"># assert len(files) &gt;= 2</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="o">*</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secondary_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="o">*</span><span class="n">files</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load diffing metadata as stored in the DB file</span>
 
@@ -297,7 +303,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">similarity</span><span class="p">))</span>  <span class="c1"># round the value to 3 decimals</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">confidence</span><span class="p">))</span>  <span class="c1"># round the value to 3 decimals</span>
 
-    <span class="k">def</span> <span class="nf">_load_function_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_function_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load matched functions stored in a DB file</span>
 
@@ -311,7 +317,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">primary_functions_match</span><span class="p">[</span><span class="n">addr1</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">secondary_functions_match</span><span class="p">[</span><span class="n">addr2</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
 
-    <span class="k">def</span> <span class="nf">_load_basicblock_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_basicblock_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load matched basic blocks stored in a DB file</span>
 
@@ -337,7 +343,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">secondary_basicblock_match</span><span class="p">[</span><span class="n">bb_addr2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">fun_match</span><span class="o">.</span><span class="n">address2</span><span class="p">:</span> <span class="n">bmatch</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">_load_instruction_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_instruction_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load matched instructions stored in a DB file</span>
 
@@ -364,7 +370,7 @@
 <div class="viewcode-block" id="BindiffFile.init_database">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.init_database">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">init_database</span><span class="p">(</span><span class="n">db</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_database</span><span class="p">(</span><span class="n">db</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the database by creating all the tables</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -378,7 +384,7 @@
 <span class="s2">                     CREATE TABLE metadata (version TEXT, file1 INTEGER, file2 INTEGER, description TEXT, created DATE,</span>
 <span class="s2">                     modified DATE, similarity DOUBLE PRECISION, confidence DOUBLE PRECISION,</span>
 <span class="s2">                     FOREIGN KEY(file1) REFERENCES file(id), FOREIGN KEY(file2) REFERENCES file(id))&quot;&quot;&quot;</span><span class="p">)</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE functionalgorithm (id SMALLINT PRIMARY KEY, name TEXT)&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE functionalgorithm (id INTEGER PRIMARY KEY, name TEXT)&quot;&quot;&quot;</span><span class="p">)</span>
         <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                     CREATE TABLE function (id INTEGER PRIMARY KEY, address1 BIGINT, name1 TEXT, address2 BIGINT,</span>
 <span class="s2">                     name2 TEXT, similarity DOUBLE PRECISION, confidence DOUBLE PRECISION, flags INTEGER,</span>
@@ -396,19 +402,14 @@
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
         <span class="c1"># fmt: on</span>
 
-        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT INTO basicblockalgorithm(name) VALUES (&quot;basicBlock: edges prime product&quot;)&quot;&quot;&quot;</span>
-        <span class="p">)</span>
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="BindiffFile.create">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.create">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span>
         <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">primary</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">secondary</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">similarity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -419,8 +420,6 @@
 <span class="sd">        It only takes two binaries.</span>
 
 <span class="sd">        :param filename: database file path</span>
-<span class="sd">        :param primary: path to primary binary</span>
-<span class="sd">        :param secondary: path to secondary binary</span>
 <span class="sd">        :param version: version of the differ used</span>
 <span class="sd">        :param desc: description of the database</span>
 <span class="sd">        :param similarity: similarity score between to two binaries</span>
@@ -432,22 +431,6 @@
         <span class="n">BindiffFile</span><span class="o">.</span><span class="n">init_database</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
 
         <span class="n">conn</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-
-        <span class="c1"># Save primary</span>
-        <span class="n">file1</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span>
-        <span class="n">hash1</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">file1</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="k">if</span> <span class="n">file1</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT INTO file (filename, exefilename, hash) VALUES (:filename, :name, :hash)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">file1</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">file1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="n">hash1</span><span class="p">},</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Save secondary</span>
-        <span class="n">file2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">secondary</span><span class="p">)</span>
-        <span class="n">hash2</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">file2</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="k">if</span> <span class="n">file2</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT INTO file (filename, exefilename, hash) VALUES (:filename, :name, :hash)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">file2</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">file2</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="n">hash2</span><span class="p">},</span>
-        <span class="p">)</span>
 
         <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
@@ -466,14 +449,96 @@
             <span class="p">},</span>
         <span class="p">)</span>
 
+        <span class="c1"># Fill functionalgorithm table</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">FunctionAlgorithm</span><span class="p">:</span>
+            <span class="n">algo_str</span> <span class="o">=</span> <span class="n">function_algorithm_str</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;INSERT INTO functionalgorithm (name) VALUES (:name)&quot;&quot;&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;function: </span><span class="si">{</span><span class="n">algo_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Fill basicblockalgorithm table</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">BasicBlockAlgorithm</span><span class="p">:</span>
+            <span class="n">algo_str</span> <span class="o">=</span> <span class="n">basicblock_algorithm_str</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;INSERT INTO basicblockalgorithm (name) VALUES (:name)&quot;&quot;&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;basicBlock: </span><span class="si">{</span><span class="n">algo_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+            <span class="p">)</span>
+
+
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
         <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">BindiffFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">permission</span><span class="o">=</span><span class="s2">&quot;rw&quot;</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="BindiffFile.add_file_matched">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.add_file_matched">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_file_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                         <span class="n">export_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                         <span class="nb">hash</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                         <span class="n">executable_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                         <span class="n">functions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">libfunctions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">calls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">basicblocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">libbasicblocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">edges</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">libedges</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">instructions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">libinstructions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a file matched.</span>
+<span class="sd">        Only export_name and hash are mandatory.</span>
+
+<span class="sd">        :warning: not providing the other field might not</span>
+<span class="sd">                  render correctly in Bindiff, or IDA plugins.</span>
+
+<span class="sd">        :param export_name: Export filename (with extension).</span>
+<span class="sd">        :param hash: SHA256 hash of the executable</span>
+<span class="sd">        :param executable_name: Executable filename (if none is provided, export without extension)</span>
+<span class="sd">        :param functions: number of functions</span>
+<span class="sd">        :param libfunctions:number of library functions</span>
+<span class="sd">        :param calls: number of calls</span>
+<span class="sd">        :param basicblocks: number of basic blocks</span>
+<span class="sd">        :param libbasicblocks: number of library basic blocks</span>
+<span class="sd">        :param edges: number of CFG edges</span>
+<span class="sd">        :param libedges: number of library CFG edges</span>
+<span class="sd">        :param instructions: number of instructions</span>
+<span class="sd">        :param libinstructions: number of library instructions</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">export_p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">export_name</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">export_p</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;exefilename&quot;</span><span class="p">:</span> <span class="n">executable_name</span> <span class="k">if</span> <span class="n">executable_name</span> <span class="k">else</span> <span class="n">export_p</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">,</span>
+            <span class="s2">&quot;functions&quot;</span><span class="p">:</span> <span class="n">functions</span><span class="p">,</span>
+            <span class="s2">&quot;libfunctions&quot;</span><span class="p">:</span> <span class="n">libfunctions</span><span class="p">,</span>
+            <span class="s2">&quot;calls&quot;</span><span class="p">:</span> <span class="n">calls</span><span class="p">,</span>
+            <span class="s2">&quot;basicblocks&quot;</span><span class="p">:</span> <span class="n">basicblocks</span><span class="p">,</span>
+            <span class="s2">&quot;libbasicblocks&quot;</span><span class="p">:</span> <span class="n">libbasicblocks</span><span class="p">,</span>
+            <span class="s2">&quot;edges&quot;</span><span class="p">:</span> <span class="n">edges</span><span class="p">,</span>
+            <span class="s2">&quot;libedges&quot;</span><span class="p">:</span> <span class="n">libedges</span><span class="p">,</span>
+            <span class="s2">&quot;instructions&quot;</span><span class="p">:</span> <span class="n">instructions</span><span class="p">,</span>
+            <span class="s2">&quot;libinstructions&quot;</span><span class="p">:</span> <span class="n">libinstructions</span>
+        <span class="p">}</span>
+
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">dotkeys</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;:</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;INSERT INTO file (</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="si">}</span><span class="s2">) VALUES (</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dotkeys</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+            <span class="n">params</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="BindiffFile.add_function_match">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.add_function_match">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_function_match</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_function_match</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">fun_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">fun_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -498,8 +563,21 @@
         <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
         <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            INSERT INTO function (address1, address2, name1, name2, similarity, confidence, basicblocks)</span>
-<span class="sd">            VALUES (:address1, :address2, :name1, :name2, :similarity, :confidence, :identical_bbs)</span>
+<span class="sd">            INSERT INTO function (address1,</span>
+<span class="sd">                                  address2,</span>
+<span class="sd">                                  name1,</span>
+<span class="sd">                                  name2,</span>
+<span class="sd">                                  similarity,</span>
+<span class="sd">                                  confidence,</span>
+<span class="sd">                                  flags,</span>
+<span class="sd">                                  algorithm,</span>
+<span class="sd">                                  evaluate,</span>
+<span class="sd">                                  commentsported,</span>
+<span class="sd">                                  basicblocks,</span>
+<span class="sd">                                  edges,</span>
+<span class="sd">                                  instructions)</span>
+<span class="sd">            VALUES (:address1, :address2, :name1, :name2, :similarity,</span>
+<span class="sd">                    :confidence, 0, 19, 0, 0, :identical_bbs, 0, 0)</span>
 <span class="sd">            &quot;&quot;&quot;</span><span class="p">,</span>
             <span class="p">{</span>
                 <span class="s2">&quot;address1&quot;</span><span class="p">:</span> <span class="n">fun_addr1</span><span class="p">,</span>
@@ -516,14 +594,13 @@
 
 <div class="viewcode-block" id="BindiffFile.add_basic_block_match">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.add_basic_block_match">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_basic_block_match</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">fun_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr2</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_basic_block_match</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">funentry_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_addr2</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a basic block match in database.</span>
 
-<span class="sd">        :param fun_addr1: function address of basic block in primary</span>
-<span class="sd">        :param fun_addr2: function address of basic block in secondary</span>
+<span class="sd">        :param funentry_id: Db Id of the function match</span>
 <span class="sd">        :param bb_addr1: basic block address in primary</span>
 <span class="sd">        :param bb_addr2: basic block address in secondary</span>
 <span class="sd">        :return: id of the row inserted in database.</span>
@@ -532,15 +609,15 @@
 
         <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            INSERT INTO basicblock (functionid, address1, address2, algorithm)</span>
-<span class="sd">            VALUES ((SELECT id FROM function WHERE address1=:function_address1 AND address2=:function_address2), :address1, :address2, :algorithm)</span>
+<span class="sd">            INSERT INTO basicblock (functionid, address1, address2, algorithm, evaluate)</span>
+<span class="sd">            VALUES (:funentry_id, :address1, :address2, :algorithm, :evaluate)</span>
 <span class="sd">            &quot;&quot;&quot;</span><span class="p">,</span>
             <span class="p">{</span>
-                <span class="s2">&quot;function_address1&quot;</span><span class="p">:</span> <span class="n">fun_addr1</span><span class="p">,</span>
-                <span class="s2">&quot;function_address2&quot;</span><span class="p">:</span> <span class="n">fun_addr2</span><span class="p">,</span>
+                <span class="s2">&quot;funentry_id&quot;</span><span class="p">:</span> <span class="n">funentry_id</span><span class="p">,</span>
                 <span class="s2">&quot;address1&quot;</span><span class="p">:</span> <span class="n">bb_addr1</span><span class="p">,</span>
                 <span class="s2">&quot;address2&quot;</span><span class="p">:</span> <span class="n">bb_addr2</span><span class="p">,</span>
                 <span class="s2">&quot;algorithm&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;evaluate&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span>
             <span class="p">},</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">lastrowid</span></div>
@@ -548,7 +625,7 @@
 
 <div class="viewcode-block" id="BindiffFile.add_instruction_match">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.add_instruction_match">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_instruction_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_instruction_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_addr1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_addr2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add an instruction match in database.</span>
 
@@ -572,7 +649,7 @@
 
 <div class="viewcode-block" id="BindiffFile.update_file_infos">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.update_file_infos">[docs]</a>
-    <span class="k">def</span> <span class="nf">update_file_infos</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_file_infos</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">entry_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fun_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lib_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bb_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_count</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -599,7 +676,40 @@
                 <span class="s2">&quot;basicblocks&quot;</span><span class="p">:</span> <span class="n">bb_count</span><span class="p">,</span>
                 <span class="s2">&quot;instructions&quot;</span><span class="p">:</span> <span class="n">inst_count</span><span class="p">,</span>
             <span class="p">},</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="BindiffFile.update_samebb_function_match">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.update_samebb_function_match">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_samebb_function_match</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">funentry_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">same_bb_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update same basicblock information in function table</span>
+
+<span class="sd">        :param funentry_id: id of function matvch entry</span>
+<span class="sd">        :param same_bb_count: number of identical basic blocks</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            UPDATE function SET basicblocks = :bb_count WHERE id = :entry_id</span>
+<span class="sd">            &quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;entry_id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">funentry_id</span><span class="p">),</span>
+                <span class="s2">&quot;bb_count&quot;</span><span class="p">:</span> <span class="n">same_bb_count</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="BindiffFile.commit">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.file.BindiffFile.commit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Commit all pending transaction in the database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 </div>
 

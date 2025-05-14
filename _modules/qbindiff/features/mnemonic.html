@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.features.mnemonic &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,16 +112,16 @@
 <span class="sd">&quot;&quot;&quot;Features releated to the mnemonic of the instruction</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">InstructionFeatureExtractor</span><span class="p">,</span> <span class="n">FeatureCollector</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Instruction</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">ProgramCapability</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.features.extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstructionFeatureExtractor</span><span class="p">,</span> <span class="n">FeatureCollector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Instruction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramCapability</span>
 
 
 <div class="viewcode-block" id="PcodeMnemonicSimple">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.PcodeMnemonicSimple">[docs]</a>
-<span class="k">class</span> <span class="nc">PcodeMnemonicSimple</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PcodeMnemonicSimple</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pcode mnemonic feature.</span>
 <span class="sd">    It extracts a dictionary with mnemonic as key and 1 as value.</span>
@@ -132,7 +132,7 @@
 
 <div class="viewcode-block" id="PcodeMnemonicSimple.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.PcodeMnemonicSimple.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">pcode_count</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -150,7 +150,7 @@
 
 <div class="viewcode-block" id="MnemonicSimple">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MnemonicSimple">[docs]</a>
-<span class="k">class</span> <span class="nc">MnemonicSimple</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MnemonicSimple</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mnemonic feature.</span>
 <span class="sd">    It extracts a dictionary with mnemonic as key and 1 as value.</span>
@@ -160,7 +160,7 @@
 
 <div class="viewcode-block" id="MnemonicSimple.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MnemonicSimple.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">collector</span><span class="o">.</span><span class="n">add_dict_feature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="p">{</span><span class="n">instruction</span><span class="o">.</span><span class="n">mnemonic</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span></div>
@@ -170,7 +170,7 @@
 
 <div class="viewcode-block" id="MnemonicTyped">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MnemonicTyped">[docs]</a>
-<span class="k">class</span> <span class="nc">MnemonicTyped</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MnemonicTyped</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Typed mnemonic feature.</span>
 <span class="sd">    It extracts a dictionary where key is a combination of the mnemonic</span>
@@ -183,7 +183,7 @@
 
 <div class="viewcode-block" id="MnemonicTyped.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MnemonicTyped.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">mnemonic</span> <span class="o">=</span> <span class="n">instruction</span><span class="o">.</span><span class="n">mnemonic</span>
@@ -198,7 +198,7 @@
 
 <div class="viewcode-block" id="GroupsCategory">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GroupsCategory">[docs]</a>
-<span class="k">class</span> <span class="nc">GroupsCategory</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupsCategory</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Categorization of instructions feature.</span>
 <span class="sd">    It can correspond to instructions subset (XMM, AES etc..),</span>
@@ -220,7 +220,7 @@
 
 <div class="viewcode-block" id="GroupsCategory.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GroupsCategory.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">instruction</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>

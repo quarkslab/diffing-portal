@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>binexport.expression &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -95,21 +95,21 @@
           <div class="body" role="main">
             
 <h1>Source code for binexport.expression</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">binexport.binexport2_pb2</span> <span class="kn">import</span> <span class="n">BinExport2</span>
-<span class="kn">from</span> <span class="nn">binexport.types</span> <span class="kn">import</span> <span class="n">ExpressionType</span>
-<span class="kn">from</span> <span class="nn">binexport.utils</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">binexport.binexport2_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinExport2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">binexport.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExpressionType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">binexport.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">.program</span> <span class="kn">import</span> <span class="n">ProgramBinExport</span>
-    <span class="kn">from</span> <span class="nn">.function</span> <span class="kn">import</span> <span class="n">FunctionBinExport</span>
-    <span class="kn">from</span> <span class="nn">.instruction</span> <span class="kn">import</span> <span class="n">InstructionBinExport</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.program</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBinExport</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.function</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionBinExport</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.instruction</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstructionBinExport</span>
 
 
-<span class="k">def</span> <span class="nf">to_signed</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_signed</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Signed representation of `n` using `mask`</span>
 
@@ -124,7 +124,7 @@
 
 <div class="viewcode-block" id="ExpressionBinExport">
 <a class="viewcode-back" href="../../exporter/binexport.html#binexport.expression.ExpressionBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">ExpressionBinExport</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExpressionBinExport</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that represent an expression node in the expression tree for a specific</span>
 <span class="sd">    operand. The tree is inverted (each node has an edge to its parent)</span>
@@ -151,7 +151,7 @@
         <span class="mi">64</span><span class="p">:</span> <span class="s2">&quot;zmmword&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">program</span><span class="p">:</span> <span class="n">ProgramBinExport</span><span class="p">,</span>
         <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span><span class="p">,</span>
@@ -178,11 +178,11 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_parse_protobuf</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">instruction</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExpressionType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExpressionType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the type as defined in `ExpressionType` of the expression, after the protobuf parsing</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -190,7 +190,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the value of the expression, after the protobuf parsing</span>
 
@@ -199,7 +199,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the depth of the node in the tree (root is depth 0).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -207,7 +207,7 @@
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">_parse_protobuf</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_protobuf</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">program</span><span class="p">:</span> <span class="n">ProgramBinExport</span><span class="p">,</span>
         <span class="n">function</span><span class="p">:</span> <span class="n">FunctionBinExport</span><span class="p">,</span>

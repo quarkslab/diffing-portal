@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.passes.metrics &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -127,29 +127,29 @@
 <span class="sd">OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">sklearn.metrics</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">distance</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">issparse</span><span class="p">,</span> <span class="n">csr_matrix</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">from</span> <span class="nn">qbindiff.passes.fast_metrics</span> <span class="kn">import</span> <span class="n">sparse_canberra</span><span class="p">,</span> <span class="n">sparse_haussmann</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Distance</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.metrics</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial</span><span class="w"> </span><span class="kn">import</span> <span class="n">distance</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">issparse</span><span class="p">,</span> <span class="n">csr_matrix</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.passes.fast_metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">sparse_canberra</span><span class="p">,</span> <span class="n">sparse_haussmann</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Distance</span>
 
 
-<span class="k">def</span> <span class="nf">_validate_vector</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_vector</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">u</span>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input vector should be 1-D.&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_validate_weights</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_weights</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">_validate_vector</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">w</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input weights should be all non-negative&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">w</span>
 
 
-<span class="k">def</span> <span class="nf">_map_distance_to_scipy</span><span class="p">(</span><span class="n">metric</span><span class="p">:</span> <span class="n">Distance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_map_distance_to_scipy</span><span class="p">(</span><span class="n">metric</span><span class="p">:</span> <span class="n">Distance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Map a qbindiff.Distance to a scipy/scikit-learn compatible string&quot;&quot;&quot;</span>
 
     <span class="k">match</span> <span class="n">metric</span><span class="p">:</span>
@@ -161,7 +161,7 @@
 
 <div class="viewcode-block" id="canberra_distances">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.canberra_distances">[docs]</a>
-<span class="k">def</span> <span class="nf">canberra_distances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">canberra_distances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the canberra distances between the vectors in X and Y using the optional</span>
 <span class="sd">    array of weights w.</span>
@@ -208,7 +208,7 @@
 
 <div class="viewcode-block" id="haussmann">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.haussmann">[docs]</a>
-<span class="k">def</span> <span class="nf">haussmann</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">haussmann</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Custom distance that takes inspiration from the jaccard index and the canberra distance.</span>
 <span class="sd">    If computes the distance between the vectors in X and Y using the optional array of weights w.</span>
@@ -278,7 +278,7 @@
 
 <div class="viewcode-block" id="pairwise_distances">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/metrics.html#qbindiff.passes.metrics.pairwise_distances">[docs]</a>
-<span class="k">def</span> <span class="nf">pairwise_distances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="n">Distance</span> <span class="o">=</span> <span class="n">Distance</span><span class="o">.</span><span class="n">euclidean</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pairwise_distances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="n">Distance</span> <span class="o">=</span> <span class="n">Distance</span><span class="o">.</span><span class="n">euclidean</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the distance matrix from a vector array X and Y.</span>
 <span class="sd">    The returned matrix is the pairwise distance between the arrays from both X and Y.</span>

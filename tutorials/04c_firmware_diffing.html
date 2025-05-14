@@ -7,7 +7,7 @@
 
     <title>Firmware Diffing &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -183,8 +183,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span><span class="p">,</span> <span class="n">BindiffFile</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bindiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinDiff</span><span class="p">,</span> <span class="n">BindiffFile</span>
 
 <span class="n">binexports1</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;binexports/RAX30-V1.0.7.78_1.img_extract&quot;</span><span class="p">)</span>
 <span class="n">binexports2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;binexports/RAX30-V1.0.9.90_3.img_extract&quot;</span><span class="p">)</span>
@@ -211,10 +211,10 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">IntProgress</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
-<span class="kn">from</span> <span class="nn">bindiff</span> <span class="kn">import</span> <span class="n">BinDiff</span><span class="p">,</span> <span class="n">BindiffFile</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntProgress</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bindiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinDiff</span><span class="p">,</span> <span class="n">BindiffFile</span>
 
 <span class="n">diff_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;diffs/&quot;</span><span class="p">)</span>
 

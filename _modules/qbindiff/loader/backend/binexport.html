@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.loader.backend.binexport &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/style.css?v=f97287ed" />
@@ -113,31 +113,31 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1"># builtin imports</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">weakref</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">weakref</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
 
 <span class="c1"># third-party imports</span>
-<span class="kn">import</span> <span class="nn">capstone</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">import</span> <span class="nn">binexport</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">import</span> <span class="nn">binexport.types</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">import</span> <span class="nn">networkx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">capstone</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">binexport</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">binexport.types</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span>
 
 <span class="c1"># local imports</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.backend</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">AbstractProgramBackend</span><span class="p">,</span>
     <span class="n">AbstractFunctionBackend</span><span class="p">,</span>
     <span class="n">AbstractBasicBlockBackend</span><span class="p">,</span>
     <span class="n">AbstractInstructionBackend</span><span class="p">,</span>
     <span class="n">AbstractOperandBackend</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.backend.utils</span> <span class="kn">import</span> <span class="n">convert_operand_type</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Structure</span>
-<span class="kn">from</span> <span class="nn">qbindiff.utils</span> <span class="kn">import</span> <span class="n">log_once</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_operand_type</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Structure</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_once</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">FunctionType</span><span class="p">,</span>
     <span class="n">ReferenceType</span><span class="p">,</span>
     <span class="n">ReferenceTarget</span><span class="p">,</span>
@@ -147,7 +147,7 @@
 <span class="p">)</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Addr</span>
 
 <span class="c1"># Type aliases</span>
 <span class="n">beFunction</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">binexport</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">FunctionBinExport</span>
@@ -156,13 +156,13 @@
 
 
 <span class="c1"># === General purpose utils functions ===</span>
-<span class="k">def</span> <span class="nf">_get_capstone_disassembler</span><span class="p">(</span><span class="n">binexport_arch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">capstone_context</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_capstone_disassembler</span><span class="p">(</span><span class="n">binexport_arch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">capstone_context</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="n">context</span> <span class="o">=</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="n">context</span><span class="o">.</span><span class="n">detail</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">context</span>
 
-    <span class="k">if</span> <span class="n">binexport_arch</span> <span class="o">==</span> <span class="s2">&quot;x86-32&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">binexport_arch</span> <span class="o">==</span> <span class="s2">&quot;x86-32&quot;</span> <span class="ow">or</span> <span class="n">binexport_arch</span> <span class="o">==</span> <span class="s2">&quot;x86&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">capstone_context</span><span class="p">(</span><span class="n">capstone</span><span class="o">.</span><span class="n">CS_ARCH_X86</span><span class="p">,</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_32</span> <span class="o">|</span> <span class="n">mode</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">binexport_arch</span> <span class="o">==</span> <span class="s2">&quot;x86-64&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">capstone_context</span><span class="p">(</span><span class="n">capstone</span><span class="o">.</span><span class="n">CS_ARCH_X86</span><span class="p">,</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CS_MODE_64</span> <span class="o">|</span> <span class="n">mode</span><span class="p">)</span>
@@ -178,10 +178,10 @@
     <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Architecture </span><span class="si">{</span><span class="n">binexport_arch</span><span class="si">}</span><span class="s2"> has not be implemented&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">is_same_mnemonic</span><span class="p">(</span><span class="n">mnemonic1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mnemonic2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_same_mnemonic</span><span class="p">(</span><span class="n">mnemonic1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mnemonic2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check whether two mnemonics are the same&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">mnemonic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">mnemonic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">mnemonic</span> <span class="o">==</span> <span class="s2">&quot;ldmia&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;ldm&quot;</span>
         <span class="k">return</span> <span class="n">mnemonic</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;lo&quot;</span><span class="p">,</span> <span class="s2">&quot;cc&quot;</span><span class="p">)</span>
@@ -200,7 +200,7 @@
     <span class="k">return</span> <span class="kc">False</span>
 
 
-<span class="k">def</span> <span class="nf">parse_architecture_flag</span><span class="p">(</span><span class="n">arch_mode_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_architecture_flag</span><span class="p">(</span><span class="n">arch_mode_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the capstone architecture corresponding to the string passed as parameter.</span>
 <span class="sd">    The format should be something like &#39;CS_ARCH_any:[CS_MODE_any, ...]&quot;&quot;&quot;</span>
 
@@ -239,8 +239,8 @@
 
 <div class="viewcode-block" id="OperandBackendBinExport">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.OperandBackendBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">OperandBackendBinExport</span><span class="p">(</span><span class="n">AbstractOperandBackend</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OperandBackendBinExport</span><span class="p">(</span><span class="n">AbstractOperandBackend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">cs</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span><span class="p">,</span>
         <span class="n">cs_instruction</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">,</span>
@@ -254,11 +254,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span> <span class="o">=</span> <span class="n">cs_operand</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand_position</span> <span class="o">=</span> <span class="n">cs_operand_position</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">op_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_operand_position</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the immediate value (not addresses) used by the operand.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -268,13 +268,13 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperandType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperandType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the capstone operand type&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">convert_operand_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">arch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_operand</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OperandBackendBinExport.is_immediate">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.OperandBackendBinExport.is_immediate">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_immediate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_immediate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns whether the operand is an immediate value (not considering addresses)&quot;&quot;&quot;</span>
         <span class="c1"># Ignore jumps since the target is an immediate</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">immediate</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">capstone</span><span class="o">.</span><span class="n">CS_GRP_JUMP</span><span class="p">)</span></div>
@@ -284,23 +284,23 @@
 
 <div class="viewcode-block" id="InstructionBackendBinExport">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.InstructionBackendBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">InstructionBackendBinExport</span><span class="p">(</span><span class="n">AbstractInstructionBackend</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span><span class="p">,</span> <span class="n">cs_instruction</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InstructionBackendBinExport</span><span class="p">(</span><span class="n">AbstractInstructionBackend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">Cs</span><span class="p">,</span> <span class="n">cs_instruction</span><span class="p">:</span> <span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">InstructionBackendBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="n">cs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="o">=</span> <span class="n">cs_instruction</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">address</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">mnemonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mnemonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">mnemonic</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">ReferenceType</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReferenceTarget</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">ReferenceType</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReferenceTarget</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns all the references towards the instruction</span>
 <span class="sd">        BinExport only exports data references&#39; address so no data type nor value.</span>
@@ -308,7 +308,7 @@
         <span class="k">return</span> <span class="p">{}</span>  <span class="c1"># Not supported</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">operands</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">OperandBackendBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">operands</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">OperandBackendBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an iterator over backend operand objects&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">iter</span><span class="p">([])</span>
@@ -318,23 +318,23 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionGroup</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InstructionGroup</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of groups of this instruction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">InstructionGroup</span><span class="o">.</span><span class="n">from_capstone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">groups</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the capstone instruction ID&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># Not supported</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the bytes representation of the instruction&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs_instr</span><span class="o">.</span><span class="n">bytes</span><span class="p">)</span></div>
 
@@ -342,20 +342,20 @@
 
 <div class="viewcode-block" id="BasicBlockBackendBinExport">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.BasicBlockBackendBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">BasicBlockBackendBinExport</span><span class="p">(</span><span class="n">AbstractBasicBlockBackend</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="n">ProgramBackendBinExport</span><span class="p">],</span> <span class="n">be_block</span><span class="p">:</span> <span class="n">beBasicBlock</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BasicBlockBackendBinExport</span><span class="p">(</span><span class="n">AbstractBasicBlockBackend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="n">ProgramBackendBinExport</span><span class="p">],</span> <span class="n">be_block</span><span class="p">:</span> <span class="n">beBasicBlock</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BasicBlockBackendBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_program</span> <span class="o">=</span> <span class="n">program</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">be_block</span> <span class="o">=</span> <span class="n">be_block</span>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The numbers of instructions in the basic block</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">be_block</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_guess_thumb_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instr_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">mnemonic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_guess_thumb_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instr_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">mnemonic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Guess wether the instruction is thumb or not&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instr_bytes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Must be an error</span>
@@ -399,7 +399,7 @@
             <span class="sa">f</span><span class="s2">&quot;(consider setting it manually)&quot;</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_disassemble</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_disassemble</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">bb_asm</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">correct_mnemonic</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">correct_size</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">capstone</span><span class="o">.</span><span class="n">CsInsn</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -421,7 +421,7 @@
         <span class="n">capstone_mode</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># No need to guess the context for these arch</span>
-        <span class="k">if</span> <span class="n">arch</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;x86&quot;</span><span class="p">,</span> <span class="s2">&quot;x86-64&quot;</span><span class="p">,</span> <span class="s2">&quot;MIPS-32&quot;</span><span class="p">,</span> <span class="s2">&quot;MIPS-64&quot;</span><span class="p">,</span> <span class="s2">&quot;ARM-64&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">arch</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;x86&quot;</span><span class="p">,</span> <span class="s2">&quot;x86-32&quot;</span><span class="p">,</span> <span class="s2">&quot;x86-64&quot;</span><span class="p">,</span> <span class="s2">&quot;MIPS-32&quot;</span><span class="p">,</span> <span class="s2">&quot;MIPS-64&quot;</span><span class="p">,</span> <span class="s2">&quot;ARM-64&quot;</span><span class="p">):</span>
             <span class="k">pass</span>
 
         <span class="c1"># For arm thumb use appropriate context guessing heuristics</span>
@@ -437,7 +437,7 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">disasm</span><span class="p">(</span><span class="n">bb_asm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramBackendBinExport</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramBackendBinExport</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapper on weak reference on ProgramBackendBinExport&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">program</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">())</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
@@ -446,11 +446,11 @@
         <span class="k">return</span> <span class="n">program</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_block</span><span class="o">.</span><span class="n">addr</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">instructions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">InstructionBackendBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instructions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">InstructionBackendBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an iterator over backend instruction objects&quot;&quot;&quot;</span>
 
         <span class="c1"># Generates the first instruction and use it to guess the context for capstone</span>
@@ -465,21 +465,21 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">bytes</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructions</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="FunctionBackendBinExport">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.FunctionBackendBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">FunctionBackendBinExport</span><span class="p">(</span><span class="n">AbstractFunctionBackend</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="n">ProgramBackendBinExport</span><span class="p">],</span> <span class="n">be_func</span><span class="p">:</span> <span class="n">beFunction</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionBackendBinExport</span><span class="p">(</span><span class="n">AbstractFunctionBackend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="n">ProgramBackendBinExport</span><span class="p">],</span> <span class="n">be_func</span><span class="p">:</span> <span class="n">beFunction</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FunctionBackendBinExport</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">be_func</span> <span class="o">=</span> <span class="n">be_func</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_program</span> <span class="o">=</span> <span class="n">program</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">basic_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">BasicBlockBackendBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basic_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">BasicBlockBackendBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an iterator over backend basic blocks objects&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="n">BasicBlockBackendBinExport</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">,</span> <span class="n">bb</span><span class="p">)</span>
@@ -487,27 +487,27 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Addr</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The address of the function&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_func</span><span class="o">.</span><span class="n">addr</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;networkx.DiGraph&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;networkx.DiGraph&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The Control Flow Graph of the function&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_func</span><span class="o">.</span><span class="n">graph</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Addr</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Addr</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set of function parents in the call graph&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">func</span><span class="o">.</span><span class="n">addr</span> <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_func</span><span class="o">.</span><span class="n">parents</span><span class="p">}</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">children</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Addr</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">children</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Addr</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set of function children in the call graph&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">func</span><span class="o">.</span><span class="n">addr</span> <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_func</span><span class="o">.</span><span class="n">children</span><span class="p">}</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The type of the function (as defined by IDA)&quot;&quot;&quot;</span>
 
         <span class="n">f_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_func</span><span class="o">.</span><span class="n">type</span>
@@ -525,12 +525,12 @@
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function type </span><span class="si">{</span><span class="n">f_type</span><span class="si">}</span><span class="s2"> not implemented&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_func</span><span class="o">.</span><span class="n">name</span>
 
 <div class="viewcode-block" id="FunctionBackendBinExport.is_import">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.FunctionBackendBinExport.is_import">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_import</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_import</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;True if the function is imported&quot;&quot;&quot;</span>
         <span class="c1"># Should we consider also FunctionType.thunk?</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">FunctionType</span><span class="o">.</span><span class="n">imported</span><span class="p">,</span> <span class="n">FunctionType</span><span class="o">.</span><span class="n">extern</span><span class="p">)</span></div>
@@ -540,12 +540,13 @@
 
 <div class="viewcode-block" id="ProgramBackendBinExport">
 <a class="viewcode-back" href="../../../../qbindiff/doc/source/api/backends/binexport.html#qbindiff.loader.backend.binexport.ProgramBackendBinExport">[docs]</a>
-<span class="k">class</span> <span class="nc">ProgramBackendBinExport</span><span class="p">(</span><span class="n">AbstractProgramBackend</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">arch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProgramBackendBinExport</span><span class="p">(</span><span class="n">AbstractProgramBackend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">arch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exec_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">be_prog</span> <span class="o">=</span> <span class="n">binexport</span><span class="o">.</span><span class="n">ProgramBinExport</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">architecture_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_prog</span><span class="o">.</span><span class="n">architecture</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exec_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">exec_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fun_names</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {fun_name : fun_address}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -563,11 +564,11 @@
             <span class="c1"># self.cs will be set at basic block level</span>
             <span class="c1"># self.cs = _get_capstone_disassembler(self.be_prog.architecture)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">functions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">FunctionBackendBinExport</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">functions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">FunctionBackendBinExport</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an iterator over backend function objects&quot;&quot;&quot;</span>
 
         <span class="n">functions</span> <span class="o">=</span> <span class="p">[]</span>
@@ -579,11 +580,11 @@
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">functions</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_prog</span><span class="o">.</span><span class="n">name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">structures</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Structure</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">structures</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Structure</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of structures defined in program.</span>
 <span class="sd">        WARNING: Not supported by BinExport</span>
@@ -592,25 +593,35 @@
         <span class="k">return</span> <span class="p">[]</span>  <span class="c1"># Not supported</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">callgraph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;networkx.DiGraph&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">callgraph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;networkx.DiGraph&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">be_prog</span><span class="o">.</span><span class="n">callgraph</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">fun_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fun_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dictionary with function name as key and the function address as value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_names</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">exec_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exec_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Guess the raw binary name by removing the final .BinExport</span>
+<span class="sd">        Returns the executable path if it has been provided, otherwise try to guess it</span>
+<span class="sd">        by removing the final .BinExport suffix</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.BinExport&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exec_path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exec_path</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.BinExport&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="c1"># Try to guess it as best effort</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramCapability</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the .Binexport path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">be_prog</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramCapability</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the supported capabilities</span>
 <span class="sd">        &quot;&quot;&quot;</span>

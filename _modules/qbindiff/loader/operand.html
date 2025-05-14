@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.loader.operand &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,29 +112,29 @@
 <span class="sd">&quot;&quot;&quot;Operand</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.loader.backend</span> <span class="kn">import</span> <span class="n">AbstractOperandBackend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractOperandBackend</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">OperandType</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">OperandType</span>
 
 
 <div class="viewcode-block" id="Operand">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.Operand">[docs]</a>
-<span class="k">class</span> <span class="nc">Operand</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Operand</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represent an operand object which hide the underlying backend implementation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">AbstractOperandBackend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">AbstractOperandBackend</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">backend</span>  <span class="c1"># Load directly from instanciated backend</span>
 
 <div class="viewcode-block" id="Operand.from_backend">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.Operand.from_backend">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="n">AbstractOperandBackend</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Operand</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="n">AbstractOperandBackend</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Operand</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the Operand from an instanciated operand backend object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -143,7 +143,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperandType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperandType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The operand type as int as defined in the IDA API.</span>
 <span class="sd">        Example : 1 corresponds to a register (ex: rax)</span>
@@ -152,7 +152,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">type</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The immediate value (not addresses) used by the operand.</span>
 <span class="sd">        If not returns None.</span>
@@ -164,7 +164,7 @@
 
 <div class="viewcode-block" id="Operand.is_immediate">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.loader.Operand.is_immediate">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_immediate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_immediate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether the operand is an immediate (not considering addresses)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -172,10 +172,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">is_immediate</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;Op:</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 </pre></div>

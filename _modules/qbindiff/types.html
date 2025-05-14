@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.types &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -115,23 +115,23 @@
 <span class="sd">used by qbindiff.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span><span class="p">,</span> <span class="n">csr_array</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
-<span class="kn">import</span> <span class="nn">enum_tools.documentation</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">csr_matrix</span><span class="p">,</span> <span class="n">csr_array</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">enum_tools.documentation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.abstract</span> <span class="kn">import</span> <span class="n">GenericGraph</span><span class="p">,</span> <span class="n">GenericNode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.abstract</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericGraph</span><span class="p">,</span> <span class="n">GenericNode</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span>
-    <span class="kn">from</span> <span class="nn">qbindiff</span> <span class="kn">import</span> <span class="n">Program</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">FeatureCollector</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.features.extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureCollector</span>
 
 <span class="n">FeatureValue</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -230,10 +230,10 @@
 
 <div class="viewcode-block" id="GenericPrePass">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/types.html#qbindiff.GenericPrePass">[docs]</a>
-<span class="k">class</span> <span class="nc">GenericPrePass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenericPrePass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function type for Pre Passes&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
         <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
@@ -259,10 +259,10 @@
 
 <div class="viewcode-block" id="GenericPostPass">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/types.html#qbindiff.GenericPostPass">[docs]</a>
-<span class="k">class</span> <span class="nc">GenericPostPass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenericPostPass</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function type for Post Passes&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
         <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
@@ -295,7 +295,7 @@
 <div class="viewcode-block" id="Distance">
 <a class="viewcode-back" href="../../qbindiff/doc/source/api/types.html#qbindiff.Distance">[docs]</a>
 <span class="nd">@enum_tools</span><span class="o">.</span><span class="n">documentation</span><span class="o">.</span><span class="n">document_enum</span>
-<span class="k">class</span> <span class="nc">Distance</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Distance</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enum of different (supported) distances used to compute the similarity matrix based on chosen features.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

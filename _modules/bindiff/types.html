@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bindiff.types &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=f97287ed" />
@@ -95,12 +95,12 @@
           <div class="body" role="main">
             
 <h1>Source code for bindiff.types</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span>
 
 
 <div class="viewcode-block" id="BindiffNotFound">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.BindiffNotFound">[docs]</a>
-<span class="k">class</span> <span class="nc">BindiffNotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BindiffNotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception raised if Bindiff binary cannot be found</span>
 <span class="sd">    when trying to diff two binaries.</span>
@@ -112,7 +112,7 @@
 
 <div class="viewcode-block" id="BasicBlockAlgorithm">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.BasicBlockAlgorithm">[docs]</a>
-<span class="k">class</span> <span class="nc">BasicBlockAlgorithm</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BasicBlockAlgorithm</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic block matching algorithm enum. (id&#39;s does not seem to change in</span>
 <span class="sd">    bindiff so hardcoded here)</span>
@@ -141,9 +141,38 @@
 
 
 
+<div class="viewcode-block" id="basicblock_algorithm_str">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.basicblock_algorithm_str">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">basicblock_algorithm_str</span><span class="p">(</span><span class="n">algo</span><span class="p">:</span> <span class="n">BasicBlockAlgorithm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">match</span> <span class="n">algo</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">edges_prime_product</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;edges prime product&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">hash_matching_four_inst_min</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;hash matching (4 instructions minimum)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">prime_matching_four_inst_min</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;prime matching (4 instructions minimum)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">call_reference_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;call reference matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">string_references_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;string reference matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">edges_md_index_top_down</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;edges MD index (top down)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">md_index_matching_top_down</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;MD index matching (top down)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">edges_md_index_bottom_up</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;edges MD index (bottom up)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">md_index_matching_bottom_up</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;MD index matching (bottom up)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">relaxed_md_index_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;relaxed MD index matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">prime_matching_no_inst_min</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;prime matching (0 instructions minimum)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">edges_lengauer_tarjan_dominated</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;edges Lengauer Tarjan dominated&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">loop_entry_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;loop entry matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">self_loop_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;self loop matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">entry_point_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;entry point matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">exit_point_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;exit point matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">instruction_count_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;instruction count matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">jump_sequence_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;jump sequence matching&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">propagation_size_one</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;propagation (size==1)&quot;</span>
+        <span class="k">case</span> <span class="n">BasicBlockAlgorithm</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;manual&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="kc">False</span></div>
+
+
+
 <div class="viewcode-block" id="FunctionAlgorithm">
 <a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.FunctionAlgorithm">[docs]</a>
-<span class="k">class</span> <span class="nc">FunctionAlgorithm</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionAlgorithm</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function matching algorithm enum. (id&#39;s does not seem to change in</span>
 <span class="sd">    bindiff so hardcoded here)</span>
@@ -168,6 +197,32 @@
     <span class="n">call_sequence_matching_sequence</span> <span class="o">=</span> <span class="mi">17</span>
     <span class="n">call_reference_matching</span> <span class="o">=</span> <span class="mi">18</span>
     <span class="n">manual</span> <span class="o">=</span> <span class="mi">19</span></div>
+
+
+<div class="viewcode-block" id="function_algorithm_str">
+<a class="viewcode-back" href="../../differs/bindiff.html#bindiff.types.function_algorithm_str">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">function_algorithm_str</span><span class="p">(</span><span class="n">algo</span><span class="p">:</span> <span class="n">FunctionAlgorithm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">match</span> <span class="n">algo</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">name_hash_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;name hash matching&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">hash_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;hash matching&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">edges_flowgraph_md_index</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;edges flowgraph MD index&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">edges_callgraph_md_index</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;edges callgraph MD index&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">md_index_matching_flowgraph_top_down</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;MD index matching (flowgraph MD index, top down)&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">md_index_matching_flowgraph_bottom_up</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;MD index matching (flowgraph MD index, bottom up)&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">prime_signature_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;signature matching&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">md_index_matching_callGraph_top_down</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;MD index matching (callGraph MD index, top down)&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">md_index_matching_callGraph_bottom_up</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;MD index matching (callGraph MD index, bottom up)&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">relaxed_md_index_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;MD index matching&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">instruction_count</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;instruction count&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">address_sequence</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;address sequence&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">string_references</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;string references&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">loop_count_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;loop count matching&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">call_sequence_matching_exact</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;call sequence matching(exact)&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">call_sequence_matching_topology</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;call sequence matching(topology)&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">call_sequence_matching_sequence</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;call sequence matching(sequence)&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">call_reference_matching</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;call rerferences matching&quot;</span>
+        <span class="k">case</span> <span class="n">FunctionAlgorithm</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;manual&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span> <span class="k">assert</span> <span class="kc">False</span></div>
 
 </pre></div>
             <div class="clearer"></div>

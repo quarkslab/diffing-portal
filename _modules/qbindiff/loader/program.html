@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.loader.program &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,28 +112,29 @@
 <span class="sd">&quot;&quot;&quot;Program</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">MutableMapping</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutableMapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.abstract</span> <span class="kn">import</span> <span class="n">GenericGraph</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Function</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">LoaderType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.abstract</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericGraph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoaderType</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">networkx</span>
-    <span class="kn">from</span> <span class="nn">networkx.classes.reportviews</span> <span class="kn">import</span> <span class="n">OutEdgeView</span>
-    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Structure</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.abstract</span> <span class="kn">import</span> <span class="n">AbstractProgramBackend</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">ProgramCapability</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Addr</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">networkx.classes.reportviews</span><span class="w"> </span><span class="kn">import</span> <span class="n">OutEdgeView</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Structure</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend.abstract</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractProgramBackend</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramCapability</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Addr</span>
 
 
 <div class="viewcode-block" id="Program">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program">[docs]</a>
-<span class="k">class</span> <span class="nc">Program</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">,</span> <span class="n">GenericGraph</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Program</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">,</span> <span class="n">GenericGraph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Program class that shadows the underlying program backend used.</span>
 
@@ -150,7 +151,7 @@
 <span class="sd">    The node label is the function address, the node itself is the :py:class:`Function` object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
         <span class="o">*</span><span class="n">args</span><span class="p">,</span>
@@ -182,17 +183,17 @@
 
             <span class="c1"># Match the resulting loader</span>
             <span class="k">if</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">ida</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.ida</span> <span class="kn">import</span> <span class="n">ProgramBackendIDA</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend.ida</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBackendIDA</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendIDA</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
             <span class="k">elif</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.binexport</span> <span class="kn">import</span> <span class="n">ProgramBackendBinExport</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend.binexport</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBackendBinExport</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendBinExport</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
             <span class="k">elif</span> <span class="n">loader</span> <span class="o">==</span> <span class="n">LoaderType</span><span class="o">.</span><span class="n">quokka</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">qbindiff.loader.backend.quokka</span> <span class="kn">import</span> <span class="n">ProgramBackendQuokka</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.backend.quokka</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramBackendQuokka</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">ProgramBackendQuokka</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -206,7 +207,7 @@
 <div class="viewcode-block" id="Program.from_binexport">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.from_binexport">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_binexport</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">arch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_binexport</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">arch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exec_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the Program using the binexport backend</span>
 
@@ -215,16 +216,17 @@
 <span class="sd">                     useful when the binexport&#39;ed architecture is not enough to</span>
 <span class="sd">                     correctly disassemble the binary (for example with arm</span>
 <span class="sd">                     thumb2 or some mips modes).</span>
+<span class="sd">        :param exec_path: Optional path to raw executable binary</span>
 <span class="sd">        :return: Program instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">,</span> <span class="n">exec_path</span><span class="o">=</span><span class="n">exec_path</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">LoaderType</span><span class="o">.</span><span class="n">binexport</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Program.from_quokka">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.from_quokka">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_quokka</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exec_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_quokka</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exec_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the Program using the Quokka backend.</span>
 
@@ -239,7 +241,7 @@
 <div class="viewcode-block" id="Program.from_ida">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.from_ida">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_ida</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_ida</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the program using the IDA backend</span>
 
@@ -252,7 +254,7 @@
 <div class="viewcode-block" id="Program.from_backend">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.from_backend">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="n">AbstractProgramBackend</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="n">AbstractProgramBackend</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the Program from an instanciated program backend object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -260,10 +262,10 @@
         <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;Program:</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Function</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Function</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over all functions located in the program, using the filter registered.</span>
 
@@ -272,19 +274,19 @@
 
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_load_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Load the functions from the backend&quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">function</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">Function</span><span class="o">.</span><span class="n">from_backend</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">functions</span><span class="p">):</span>
@@ -292,7 +294,7 @@
 
 <div class="viewcode-block" id="Program.items">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.items">[docs]</a>
-    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Function</span><span class="p">]]:</span>  <span class="c1"># type: ignore[override]</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Function</span><span class="p">]]:</span>  <span class="c1"># type: ignore[override]</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over the items. Each item is {address: :py:class:`Function`}</span>
 
@@ -306,7 +308,7 @@
 
 <div class="viewcode-block" id="Program.get_node">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.get_node">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_label</span><span class="p">:</span> <span class="n">Addr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Function</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_label</span><span class="p">:</span> <span class="n">Addr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Function</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the function identified by the address ``node_label``</span>
 
@@ -318,7 +320,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">node_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Addr</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">node_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Addr</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over the functions&#39; address</span>
 
@@ -328,7 +330,7 @@
         <span class="k">yield from</span> <span class="nb">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Function</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Function</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over the functions</span>
 
@@ -338,7 +340,7 @@
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutEdgeView</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutEdgeView</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Addr</span><span class="p">,</span> <span class="n">Addr</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over the edges. An edge is a pair (addr_a, addr_b)</span>
 
@@ -348,7 +350,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">callgraph</span><span class="o">.</span><span class="n">edges</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the name of the program as defined by the backend</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -356,7 +358,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">structures</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Structure</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">structures</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Structure</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of structures defined in program</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -364,16 +366,24 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">structures</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">exec_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exec_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The executable path if it has been specified, None otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">exec_path</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The exported file path if it has been specified, None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">export_path</span>
+        <span class="k">return</span> <span class="n">exp</span> <span class="k">if</span> <span class="n">exp</span> <span class="k">else</span> <span class="kc">None</span>
+
 <div class="viewcode-block" id="Program.set_function_filter">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.set_function_filter">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_function_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Addr</span><span class="p">],</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_function_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Addr</span><span class="p">],</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter out some functions, to ignore them in later processing.</span>
 
@@ -389,7 +399,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">callgraph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">callgraph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The function callgraph with a Networkx DiGraph</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -400,7 +410,7 @@
 
 <div class="viewcode-block" id="Program.get_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.get_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Function</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Function</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the function by its name</span>
 
@@ -413,7 +423,7 @@
 
 <div class="viewcode-block" id="Program.follow_through">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.follow_through">[docs]</a>
-    <span class="k">def</span> <span class="nf">follow_through</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_remove</span><span class="p">:</span> <span class="n">Addr</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Addr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">follow_through</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_remove</span><span class="p">:</span> <span class="n">Addr</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Addr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Replace node `to_remove` with a follow-through edge from every parent of the</span>
 <span class="sd">        node with the node `target`.</span>
@@ -448,7 +458,7 @@
 
 <div class="viewcode-block" id="Program.remove_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/loader.html#qbindiff.Program.remove_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">remove_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_remove</span><span class="p">:</span> <span class="n">Addr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_remove</span><span class="p">:</span> <span class="n">Addr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the node ``to_remove`` from the Call Graph of the program.</span>
 
@@ -479,7 +489,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramCapability</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramCapability</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the underlying backend capabilities</span>
 <span class="sd">        &quot;&quot;&quot;</span>

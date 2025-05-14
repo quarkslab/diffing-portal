@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.features.artefact &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,19 +112,19 @@
 <span class="sd">&quot;&quot;&quot;Generic features</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">no_type_check</span>
-<span class="kn">from</span> <span class="nn">re</span> <span class="kn">import</span> <span class="n">Pattern</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">no_type_check</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">re</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pattern</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.features.extractor</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">FeatureCollector</span><span class="p">,</span>
     <span class="n">FunctionFeatureExtractor</span><span class="p">,</span>
     <span class="n">InstructionFeatureExtractor</span><span class="p">,</span>
     <span class="n">OperandFeatureExtractor</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">ReferenceType</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">ReferenceType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Program</span><span class="p">,</span>
     <span class="n">Function</span><span class="p">,</span>
     <span class="n">Instruction</span><span class="p">,</span>
@@ -137,7 +137,7 @@
 
 <div class="viewcode-block" id="Address">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.Address">[docs]</a>
-<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Address</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Address of the function as a feature</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -146,7 +146,7 @@
 
 <div class="viewcode-block" id="Address.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.Address.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">addr</span>
         <span class="n">collector</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 </div>
@@ -155,7 +155,7 @@
 
 <div class="viewcode-block" id="DatName">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.DatName">[docs]</a>
-<span class="k">class</span> <span class="nc">DatName</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DatName</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    References to data in the instruction (as retrieved by the backend loader).</span>
 <span class="sd">    This feature maps the data value to the number of reference occurences to it.</span>
@@ -173,7 +173,7 @@
 <div class="viewcode-block" id="DatName.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.DatName.visit_instruction">[docs]</a>
     <span class="nd">@no_type_check</span>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">ref_type</span><span class="p">,</span> <span class="n">references</span> <span class="ow">in</span> <span class="n">instruction</span><span class="o">.</span><span class="n">references</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -203,7 +203,7 @@
 
 <div class="viewcode-block" id="StrRef">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.StrRef">[docs]</a>
-<span class="k">class</span> <span class="nc">StrRef</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StrRef</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    References to strings in the instruction.</span>
 <span class="sd">    This feature maps the string to the number of occurences to it.</span>
@@ -213,7 +213,7 @@
 
 <div class="viewcode-block" id="StrRef.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.StrRef.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">instruction</span><span class="o">.</span><span class="n">data_references</span><span class="p">:</span>
@@ -225,7 +225,7 @@
 
 <div class="viewcode-block" id="Constant">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.Constant">[docs]</a>
-<span class="k">class</span> <span class="nc">Constant</span><span class="p">(</span><span class="n">OperandFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Constant</span><span class="p">(</span><span class="n">OperandFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Numeric constant (32/64bits) in the instruction (not addresses).</span>
 <span class="sd">    This maps numerical values to the number of occurences to it.</span>
@@ -236,7 +236,7 @@
 
 <div class="viewcode-block" id="Constant.visit_operand">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.Constant.visit_operand">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_operand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">operand</span><span class="p">:</span> <span class="n">Operand</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_operand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">operand</span><span class="p">:</span> <span class="n">Operand</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">operand</span><span class="o">.</span><span class="n">is_immediate</span><span class="p">():</span>
             <span class="n">collector</span><span class="o">.</span><span class="n">add_dict_feature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">operand</span><span class="o">.</span><span class="n">value</span><span class="p">):</span> <span class="mi">1</span><span class="p">})</span>  <span class="c1"># This should be a string</span></div>
 </div>
@@ -245,7 +245,7 @@
 
 <div class="viewcode-block" id="FuncName">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.FuncName">[docs]</a>
-<span class="k">class</span> <span class="nc">FuncName</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FuncName</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Match the function names.</span>
 <span class="sd">    Optionally the constructor takes a regular expression pattern to exclude function names</span>
@@ -253,7 +253,7 @@
 
     <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;fname&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">excluded_regex</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">excluded_regex</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param args: parameters of a feature extractor</span>
 <span class="sd">        :param excluded_regex: regex to apply in order to exclude names</span>
@@ -264,7 +264,7 @@
 
 <div class="viewcode-block" id="FuncName.is_excluded">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.FuncName.is_excluded">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_excluded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_excluded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns if the function should be excluded (and not considered) based on an optional regex</span>
 
@@ -279,7 +279,7 @@
 
 <div class="viewcode-block" id="FuncName.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.FuncName.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_excluded</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
             <span class="c1"># We cannot properly exclude the name since a zero feature vector will</span>
             <span class="c1"># have a distance of zero (hence similarity of 1) with any other zero</span>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.features.graph &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,30 +112,30 @@
 <span class="sd">&quot;&quot;&quot;Features that uses the topology of the CFG</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">import</span> <span class="nn">networkx</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">community</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">no_type_check</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">community</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">no_type_check</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.features.extractor</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">FunctionFeatureExtractor</span><span class="p">,</span>
     <span class="n">InstructionFeatureExtractor</span><span class="p">,</span>
     <span class="n">OperandFeatureExtractor</span><span class="p">,</span>
     <span class="n">FeatureCollector</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">Operand</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">OperandType</span><span class="p">,</span> <span class="n">InstructionGroup</span><span class="p">,</span> <span class="n">ProgramCapability</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">Operand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">OperandType</span><span class="p">,</span> <span class="n">InstructionGroup</span><span class="p">,</span> <span class="n">ProgramCapability</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Operand</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Operand</span>
 
 
 <div class="viewcode-block" id="BBlockNb">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.BBlockNb">[docs]</a>
-<span class="k">class</span> <span class="nc">BBlockNb</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BBlockNb</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of basic blocks in the function as a feature.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -144,7 +144,7 @@
 
 <div class="viewcode-block" id="BBlockNb.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.BBlockNb.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
@@ -155,7 +155,7 @@
 
 <div class="viewcode-block" id="StronglyConnectedComponents">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.StronglyConnectedComponents">[docs]</a>
-<span class="k">class</span> <span class="nc">StronglyConnectedComponents</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StronglyConnectedComponents</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of strongly connected components in a function CFG.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -164,7 +164,7 @@
 
 <div class="viewcode-block" id="StronglyConnectedComponents.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.StronglyConnectedComponents.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">networkx</span><span class="o">.</span><span class="n">strongly_connected_components</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="p">)))</span>
@@ -175,7 +175,7 @@
 
 <div class="viewcode-block" id="BytesHash">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.BytesHash">[docs]</a>
-<span class="k">class</span> <span class="nc">BytesHash</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BytesHash</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Hash of the function, using the instructions sorted by addresses.</span>
 <span class="sd">    The hashing function used is MD5.</span>
@@ -185,7 +185,7 @@
 
 <div class="viewcode-block" id="BytesHash.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.BytesHash.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">bytes_seq</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
@@ -200,7 +200,7 @@
 
 <div class="viewcode-block" id="CyclomaticComplexity">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.CyclomaticComplexity">[docs]</a>
-<span class="k">class</span> <span class="nc">CyclomaticComplexity</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CyclomaticComplexity</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cyclomatic complexity of the function CFG.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -209,7 +209,7 @@
 
 <div class="viewcode-block" id="CyclomaticComplexity.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.CyclomaticComplexity.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">e</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
@@ -223,7 +223,7 @@
 
 <div class="viewcode-block" id="MDIndex">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MDIndex">[docs]</a>
-<span class="k">class</span> <span class="nc">MDIndex</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MDIndex</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    MD-Index of the function, based on</span>
 <span class="sd">    `&lt;https://www.sto.nato.int/publications/STO%20Meeting%20Proceedings/RTO-MP-IST-091/MP-IST-091-26.pdf&gt;`_.</span>
@@ -242,7 +242,7 @@
 <div class="viewcode-block" id="MDIndex.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MDIndex.visit_function">[docs]</a>
     <span class="nd">@no_type_check</span>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -286,7 +286,7 @@
 
 <div class="viewcode-block" id="JumpNb">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.JumpNb">[docs]</a>
-<span class="k">class</span> <span class="nc">JumpNb</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">JumpNb</span><span class="p">(</span><span class="n">InstructionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of jumps in the function.</span>
 <span class="sd">    Requires INSTR_GROUP capability</span>
@@ -297,7 +297,7 @@
 
 <div class="viewcode-block" id="JumpNb.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.JumpNb.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">InstructionGroup</span><span class="o">.</span><span class="n">GRP_JUMP</span> <span class="ow">in</span> <span class="n">instruction</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>
@@ -308,7 +308,7 @@
 
 <div class="viewcode-block" id="SmallPrimeNumbers">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.SmallPrimeNumbers">[docs]</a>
-<span class="k">class</span> <span class="nc">SmallPrimeNumbers</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SmallPrimeNumbers</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Small-Prime-Number based on mnemonics, as defined</span>
 <span class="sd">    in `Bindiff &lt;https://www.sto.nato.int/publications/STO%20Meeting%20Proceedings/RTO-MP-IST-091/MP-IST-091-26.pdf&gt;`_.</span>
@@ -327,7 +327,7 @@
 <div class="viewcode-block" id="SmallPrimeNumbers.primesbelow">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.SmallPrimeNumbers.primesbelow">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">primesbelow</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">primesbelow</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Utility function that returns a list of all the primes below n.</span>
 <span class="sd">        This comes from `Diaphora &lt;https://github.com/joxeankoret/diaphora/blob/master/jkutils/factor.py&gt;`_</span>
@@ -352,7 +352,7 @@
 
 <div class="viewcode-block" id="SmallPrimeNumbers.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.SmallPrimeNumbers.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">mnemonics</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -376,7 +376,7 @@
 
 <div class="viewcode-block" id="ReadWriteAccess">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.ReadWriteAccess">[docs]</a>
-<span class="k">class</span> <span class="nc">ReadWriteAccess</span><span class="p">(</span><span class="n">OperandFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReadWriteAccess</span><span class="p">(</span><span class="n">OperandFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of memory access in the function.</span>
 <span class="sd">    Both read and write.</span>
@@ -386,7 +386,7 @@
 
 <div class="viewcode-block" id="ReadWriteAccess.visit_operand">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.ReadWriteAccess.visit_operand">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_operand</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_operand</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">operand</span><span class="p">:</span> <span class="n">Operand</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">operand</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">OperandType</span><span class="o">.</span><span class="n">memory</span><span class="p">:</span>
@@ -397,7 +397,7 @@
 
 <div class="viewcode-block" id="MaxParentNb">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MaxParentNb">[docs]</a>
-<span class="k">class</span> <span class="nc">MaxParentNb</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaxParentNb</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Maximum number of parent of a basic block in the function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -406,7 +406,7 @@
 
 <div class="viewcode-block" id="MaxParentNb.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MaxParentNb.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -422,7 +422,7 @@
 
 <div class="viewcode-block" id="MaxChildNb">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MaxChildNb">[docs]</a>
-<span class="k">class</span> <span class="nc">MaxChildNb</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaxChildNb</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Maximum number of children of a basic block in the function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -431,7 +431,7 @@
 
 <div class="viewcode-block" id="MaxChildNb.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MaxChildNb.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -447,7 +447,7 @@
 
 <div class="viewcode-block" id="MaxInsNB">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MaxInsNB">[docs]</a>
-<span class="k">class</span> <span class="nc">MaxInsNB</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaxInsNB</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Max number of instructions per basic blocks in the function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -456,7 +456,7 @@
 
 <div class="viewcode-block" id="MaxInsNB.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MaxInsNB.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -470,7 +470,7 @@
 
 <div class="viewcode-block" id="MeanInsNB">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MeanInsNB">[docs]</a>
-<span class="k">class</span> <span class="nc">MeanInsNB</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MeanInsNB</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mean number of instructions per basic blocks in the function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -479,7 +479,7 @@
 
 <div class="viewcode-block" id="MeanInsNB.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.MeanInsNB.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -493,7 +493,7 @@
 
 <div class="viewcode-block" id="InstNB">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.InstNB">[docs]</a>
-<span class="k">class</span> <span class="nc">InstNB</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InstNB</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of instructions in the function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -502,7 +502,7 @@
 
 <div class="viewcode-block" id="InstNB.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.InstNB.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bblock</span><span class="o">.</span><span class="n">instructions</span><span class="p">)</span> <span class="k">for</span> <span class="n">bblock</span> <span class="ow">in</span> <span class="n">function</span><span class="p">)</span>
@@ -513,7 +513,7 @@
 
 <div class="viewcode-block" id="GraphMeanDegree">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphMeanDegree">[docs]</a>
-<span class="k">class</span> <span class="nc">GraphMeanDegree</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphMeanDegree</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mean degree of the function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -522,7 +522,7 @@
 
 <div class="viewcode-block" id="GraphMeanDegree.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphMeanDegree.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">n_node</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="p">)</span>
@@ -534,7 +534,7 @@
 
 <div class="viewcode-block" id="GraphDensity">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphDensity">[docs]</a>
-<span class="k">class</span> <span class="nc">GraphDensity</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphDensity</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Density of the function flow graph (CFG).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -543,7 +543,7 @@
 
 <div class="viewcode-block" id="GraphDensity.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphDensity.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="p">)</span>
@@ -554,7 +554,7 @@
 
 <div class="viewcode-block" id="GraphNbComponents">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphNbComponents">[docs]</a>
-<span class="k">class</span> <span class="nc">GraphNbComponents</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphNbComponents</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of components in the function (non-connected flow graphs).</span>
 <span class="sd">    (This can happen in the way IDA disassemble functions)</span>
@@ -564,7 +564,7 @@
 
 <div class="viewcode-block" id="GraphNbComponents.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphNbComponents.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">networkx</span><span class="o">.</span><span class="n">connected_components</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="o">.</span><span class="n">to_undirected</span><span class="p">())))</span>
@@ -575,7 +575,7 @@
 
 <div class="viewcode-block" id="GraphDiameter">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphDiameter">[docs]</a>
-<span class="k">class</span> <span class="nc">GraphDiameter</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphDiameter</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Graph diameter of the function flow graph (CFG).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -584,7 +584,7 @@
 
 <div class="viewcode-block" id="GraphDiameter.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphDiameter.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">components</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">networkx</span><span class="o">.</span><span class="n">connected_components</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="o">.</span><span class="n">to_undirected</span><span class="p">()))</span>
@@ -603,7 +603,7 @@
 
 <div class="viewcode-block" id="GraphTransitivity">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphTransitivity">[docs]</a>
-<span class="k">class</span> <span class="nc">GraphTransitivity</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphTransitivity</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transitivity of the function flow graph (CFG).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -612,7 +612,7 @@
 
 <div class="viewcode-block" id="GraphTransitivity.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphTransitivity.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">transitivity</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="p">)</span>
@@ -623,7 +623,7 @@
 
 <div class="viewcode-block" id="GraphCommunities">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphCommunities">[docs]</a>
-<span class="k">class</span> <span class="nc">GraphCommunities</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphCommunities</span><span class="p">(</span><span class="n">FunctionFeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of graph communities (Louvain modularity).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -632,7 +632,7 @@
 
 <div class="viewcode-block" id="GraphCommunities.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/features.html#qbindiff.features.GraphCommunities.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">partition</span> <span class="o">=</span> <span class="n">community</span><span class="o">.</span><span class="n">best_partition</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">flowgraph</span><span class="o">.</span><span class="n">to_undirected</span><span class="p">())</span>

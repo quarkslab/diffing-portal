@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.features.extractor &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,19 +112,19 @@
 <span class="sd">&quot;&quot;&quot;Interface of the feature extractor</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">lil_array</span>  <span class="c1"># type: ignore[import-untyped]</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">lil_array</span>  <span class="c1"># type: ignore[import-untyped]</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">qbindiff.features.manager</span> <span class="kn">import</span> <span class="n">FeatureKeyManager</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">BasicBlock</span><span class="p">,</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">Operand</span>
-<span class="kn">from</span> <span class="nn">qbindiff.loader.types</span> <span class="kn">import</span> <span class="n">ProgramCapability</span>
-<span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">Positive</span><span class="p">,</span> <span class="n">SparseVector</span><span class="p">,</span> <span class="n">FeatureValue</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.features.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureKeyManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">BasicBlock</span><span class="p">,</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">Operand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramCapability</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Positive</span><span class="p">,</span> <span class="n">SparseVector</span><span class="p">,</span> <span class="n">FeatureValue</span>
 
 
 <div class="viewcode-block" id="FeatureCollector">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector">[docs]</a>
-<span class="k">class</span> <span class="nc">FeatureCollector</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FeatureCollector</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The FeatureCollector is in charge of aggregate all the features</span>
 <span class="sd">    values so that it can compute the vector embedding.</span>
@@ -133,12 +133,12 @@
 <span class="sd">    score can either be a number or a dict.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FeatureValue</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
 <div class="viewcode-block" id="FeatureCollector.get">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.get">[docs]</a>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FeatureValue</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FeatureValue</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the FeatureValue associated to a feature key, None if the feature</span>
 <span class="sd">        key doesn&#39;t exists.</span>
@@ -152,7 +152,7 @@
 
 <div class="viewcode-block" id="FeatureCollector.add_feature">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.add_feature">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a feature value in the collector. Features are responsible to call</span>
 <span class="sd">        this function to register a value with its own name.</span>
@@ -169,7 +169,7 @@
 
 <div class="viewcode-block" id="FeatureCollector.add_dict_feature">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.add_dict_feature">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_dict_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_dict_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a feature value in the collector if the value is a dictionary of string to float.</span>
 
@@ -188,7 +188,7 @@
 
 <div class="viewcode-block" id="FeatureCollector.feature_vector">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.feature_vector">[docs]</a>
-    <span class="k">def</span> <span class="nf">feature_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FeatureValue</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">feature_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FeatureValue</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show the feature vector in a dictionary fashion.</span>
 
@@ -199,7 +199,7 @@
 
 <div class="viewcode-block" id="FeatureCollector.full_keys">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.full_keys">[docs]</a>
-    <span class="k">def</span> <span class="nf">full_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dict in which keys are the keys of the features and values are the subkeys.</span>
 <span class="sd">        If a Feature directly maps to a float value, the set will be empty.</span>
@@ -219,7 +219,7 @@
 
 <div class="viewcode-block" id="FeatureCollector.to_sparse_vector">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureCollector.to_sparse_vector">[docs]</a>
-    <span class="k">def</span> <span class="nf">to_sparse_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">main_key_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">SparseVector</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_sparse_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">main_key_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">SparseVector</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform the collection to a sparse feature vector.</span>
 
@@ -249,8 +249,8 @@
 
 
 
-<span class="k">class</span> <span class="nc">FeatureExtractorMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FeatureExtractorMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># Check if a local &quot;help_msg&quot; attribute has been defined in the class</span>
         <span class="k">if</span> <span class="s2">&quot;help_msg&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">help_msg</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -258,7 +258,7 @@
 
 <div class="viewcode-block" id="FeatureExtractor">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FeatureExtractor">[docs]</a>
-<span class="k">class</span> <span class="nc">FeatureExtractor</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">FeatureExtractorMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FeatureExtractor</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">FeatureExtractorMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class that represent a feature extractor which sole contraints are to</span>
 <span class="sd">    define a unique key and a function call that is to be called by the visitor.</span>
@@ -268,21 +268,21 @@
     <span class="n">help_msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1">#: CLI help message</span>
     <span class="n">required_capabilities</span> <span class="o">=</span> <span class="n">ProgramCapability</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1">#: By default there are no required capabilities</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="n">Positive</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="n">Positive</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param weight: weight to apply to this feature</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span> <span class="o">=</span> <span class="n">weight</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Positive</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Positive</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Weight applied to the feature</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span>
 
     <span class="nd">@weight</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Positive</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Positive</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the weight to the feature.</span>
 
@@ -294,7 +294,7 @@
 
 <div class="viewcode-block" id="FunctionFeatureExtractor">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FunctionFeatureExtractor">[docs]</a>
-<span class="k">class</span> <span class="nc">FunctionFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function extractor feature. It inherits FeatureExtractor</span>
 <span class="sd">    and defines the method :py:meth:`visit_function` that has</span>
@@ -303,7 +303,7 @@
 
 <div class="viewcode-block" id="FunctionFeatureExtractor.visit_function">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.FunctionFeatureExtractor.visit_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_function</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_function</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Function</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -321,7 +321,7 @@
 
 <div class="viewcode-block" id="BasicBlockFeatureExtractor">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.BasicBlockFeatureExtractor">[docs]</a>
-<span class="k">class</span> <span class="nc">BasicBlockFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BasicBlockFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic Block extractor feature. It inherits from FeatureExtractor</span>
 <span class="sd">    and defines the method :py:meth:`visit_basic_block` that has</span>
@@ -330,7 +330,7 @@
 
 <div class="viewcode-block" id="BasicBlockFeatureExtractor.visit_basic_block">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.BasicBlockFeatureExtractor.visit_basic_block">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_basic_block</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_basic_block</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">basicblock</span><span class="p">:</span> <span class="n">BasicBlock</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -348,7 +348,7 @@
 
 <div class="viewcode-block" id="InstructionFeatureExtractor">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.InstructionFeatureExtractor">[docs]</a>
-<span class="k">class</span> <span class="nc">InstructionFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InstructionFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Instruction extractor feature. It inherits from FeatureExtractor</span>
 <span class="sd">    and defines the method :py:meth:`visit_instruction` that has to</span>
@@ -357,7 +357,7 @@
 
 <div class="viewcode-block" id="InstructionFeatureExtractor.visit_instruction">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.InstructionFeatureExtractor.visit_instruction">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_instruction</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_instruction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">instruction</span><span class="p">:</span> <span class="n">Instruction</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -375,7 +375,7 @@
 
 <div class="viewcode-block" id="OperandFeatureExtractor">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.OperandFeatureExtractor">[docs]</a>
-<span class="k">class</span> <span class="nc">OperandFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OperandFeatureExtractor</span><span class="p">(</span><span class="n">FeatureExtractor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Operand extractor feature. It inherits from FeatureExtractor</span>
 <span class="sd">    and defines the method :py:meth:`visit_operand` that has to be</span>
@@ -384,7 +384,7 @@
 
 <div class="viewcode-block" id="OperandFeatureExtractor.visit_operand">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/extractor.html#qbindiff.features.extractor.OperandFeatureExtractor.visit_operand">[docs]</a>
-    <span class="k">def</span> <span class="nf">visit_operand</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_operand</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">operand</span><span class="p">:</span> <span class="n">Operand</span><span class="p">,</span> <span class="n">collector</span><span class="p">:</span> <span class="n">FeatureCollector</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

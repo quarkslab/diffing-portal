@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>qbindiff.passes.utils &#8212; Diffing Portal</title>
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/insipid.css?v=b2d00be7" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=f97287ed" />
@@ -112,19 +112,19 @@
 <span class="sd">&quot;&quot;&quot;Utilities</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.loader</span> <span class="kn">import</span> <span class="n">Program</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.types</span> <span class="kn">import</span> <span class="n">SimMatrix</span><span class="p">,</span> <span class="n">FeatureValue</span><span class="p">,</span> <span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span>
-    <span class="kn">from</span> <span class="nn">qbindiff.features.extractor</span> <span class="kn">import</span> <span class="n">FeatureCollector</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimMatrix</span><span class="p">,</span> <span class="n">FeatureValue</span><span class="p">,</span> <span class="n">Addr</span><span class="p">,</span> <span class="n">Idx</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qbindiff.features.extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureCollector</span>
 
 
 <div class="viewcode-block" id="ZeroPass">
 <a class="viewcode-back" href="../../../qbindiff/doc/source/api/passes.html#qbindiff.passes.ZeroPass">[docs]</a>
-<span class="k">def</span> <span class="nf">ZeroPass</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ZeroPass</span><span class="p">(</span>
     <span class="n">sim_matrix</span><span class="p">:</span> <span class="n">SimMatrix</span><span class="p">,</span>
     <span class="n">primary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
     <span class="n">secondary</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
